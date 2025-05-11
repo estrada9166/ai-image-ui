@@ -1,0 +1,21 @@
+{
+  "name": "revenowl",
+  "compatibility_date": "2024-09-23",
+  "compatibility_flags": ["nodejs_compat"],
+  "pages_build_output_dir": ".vercel/output/static",
+  "dev": {
+    "port": 3000
+  },
+  "vars": {
+    "NEXT_PUBLIC_POSTHOG_HOST": "https://us.i.posthog.com",
+    "NEXT_PUBLIC_POSTHOG_KEY": "phc_M4sl4Sv6Ydzhry1DGJeUGor7I78CApQp8B2U7vAiVy5",
+    "NEXT_PUBLIC_STARTUP_ANNUAL_URL": "https://buy.stripe.com/fZe8Ac1U189ndlC288",
+    "NEXT_PUBLIC_STARTUP_MONTHLY_URL": "https://buy.stripe.com/4gw4jW2Y53T71CU9AB",
+    "NEXT_PUBLIC_GROWTH_ANNUAL_URL": "https://buy.stripe.com/dR66s48ip2P33L27su",
+    "NEXT_PUBLIC_GROWTH_MONTHLY_URL": "https://buy.stripe.com/dR6eYA7el75ja9q003",
+    "NEXT_PUBLIC_STARTER_ANNUAL_URL": "https://buy.stripe.com/4gw8AcaqxexLa9q148",
+    "NEXT_PUBLIC_STARTER_MONTHLY_URL": "https://buy.stripe.com/4gw2bOeGN4Xb95m6ot",
+    "NEXT_PUBLIC_CLIENT_URL": "https://revenowl.com",
+    "NEXT_PUBLIC_SERVER_URL": "https://api.revenowl.com"
+  }
+}
