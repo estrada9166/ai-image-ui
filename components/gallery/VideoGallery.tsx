@@ -1,37 +1,35 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { ImageStatusEnum, ImageTypeOptionsEnum } from "@/gql/graphql";
+import { GenAiStatusEnum } from "@/gql/graphql";
 import { Skeleton } from "../ui/skeleton";
 import { graphql } from "../../gql";
 import { useQuery } from "urql";
+import { Download } from "lucide-react";
 
-type Image = {
+type Video = {
   id: string;
-  imageUrl?: string | null;
+  videoUrl?: string | null;
   prompt?: string | null;
+  negativePrompt?: string | null;
   status: string;
 };
 
-type ImageWithIndex = Image & {
+type VideoWithIndex = Video & {
   index: number;
 };
 
-const ImageGalleryQuery = graphql(/* GraphQL */ `
-  query ImageGallery(
-    $first: Int
-    $after: String
-    $type: ImageTypeOptionsEnum!
-  ) {
-    images(first: $first, after: $after, type: $type) {
+const VideoGalleryQuery = graphql(/* GraphQL */ `
+  query VideoGallery($first: Int, $after: String) {
+    videos(first: $first, after: $after) {
       edges {
         node {
           id
           prompt
+          negativePrompt
           status
-          imageUrl
+          videoUrl
         }
       }
       pageInfo {
@@ -42,23 +40,36 @@ const ImageGalleryQuery = graphql(/* GraphQL */ `
   }
 `);
 
-export function ImageGallery({
-  type,
+export function VideoGallery({
   shouldRefetch,
+  setVideoUrl,
+  createdVideoId,
 }: {
-  type: ImageTypeOptionsEnum;
-  shouldRefetch: boolean;
+  shouldRefetch?: boolean;
+  setVideoUrl?: (videoUrl: string) => void;
+  createdVideoId?: string | null;
 }) {
   const [after, setAfter] = useState<string | null | undefined>();
 
   const [{ data }, reExecuteQuery] = useQuery({
-    query: ImageGalleryQuery,
-    variables: { first: 30, after, type },
+    query: VideoGalleryQuery,
+    variables: { first: 30, after },
   });
 
-  const [selectedImage, setSelectedImage] = useState<ImageWithIndex | null>(
+  const [selectedVideo, setSelectedVideo] = useState<VideoWithIndex | null>(
     null
   );
+
+  useEffect(() => {
+    if (createdVideoId && setVideoUrl) {
+      const video = data?.videos.edges.find(
+        (video: { node: Video }) => video.node.id === createdVideoId
+      );
+      if (video?.node.videoUrl) {
+        setVideoUrl(video.node.videoUrl);
+      }
+    }
+  }, [createdVideoId, data?.videos.edges, setVideoUrl]);
 
   useEffect(() => {
     if (shouldRefetch) {
@@ -67,20 +78,20 @@ export function ImageGallery({
   }, [shouldRefetch, reExecuteQuery]);
 
   useEffect(() => {
-    const hasPendingImage = data?.images.edges.some(
-      (image) => image.node.status === ImageStatusEnum.Pending
+    const hasPendingVideo = data?.videos.edges.some(
+      (video: { node: Video }) => video.node.status === GenAiStatusEnum.Pending
     );
 
     let intervalId: NodeJS.Timeout | null = null;
 
-    if (hasPendingImage) {
+    if (hasPendingVideo) {
       // Immediately execute once
       reExecuteQuery({ requestPolicy: "network-only" });
 
       // Set up interval to check every 5 seconds
       intervalId = setInterval(() => {
         reExecuteQuery({ requestPolicy: "network-only" });
-      }, 5000);
+      }, 4000);
     }
 
     // Clean up the interval on unmount
@@ -89,32 +100,57 @@ export function ImageGallery({
         clearInterval(intervalId);
       }
     };
-  }, [data?.images.edges, reExecuteQuery]);
+  }, [data?.videos.edges, reExecuteQuery]);
 
-  const handleImageClick = (image: Image, index: number) => {
-    setSelectedImage({ ...image, index });
+  const handleVideoClick = (video: Video, index: number) => {
+    setSelectedVideo({ ...video, index });
   };
 
   const closeModal = () => {
-    setSelectedImage(null);
+    setSelectedVideo(null);
+  };
+
+  const handleDownloadVideo = async (
+    videoUrl: string | null | undefined,
+    e: React.MouseEvent
+  ) => {
+    e.stopPropagation();
+    if (!videoUrl) return;
+
+    try {
+      const response = await fetch(videoUrl);
+      if (!response.ok) throw new Error("Network response was not ok");
+
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = "generated-video.mp4";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Error downloading video:", error);
+    }
   };
 
   return (
     <>
       <InfiniteScroll
         className="grid grid-cols-1 md:grid-cols-3 gap-4"
-        dataLength={data?.images.edges.length ?? 0}
-        next={() => setAfter(data?.images.pageInfo.endCursor)}
-        hasMore={data?.images.pageInfo.hasNextPage ?? false}
+        dataLength={data?.videos.edges.length ?? 0}
+        next={() => setAfter(data?.videos.pageInfo.endCursor)}
+        hasMore={data?.videos.pageInfo.hasNextPage ?? false}
         loader={<Skeleton className="w-full h-full" />}
       >
-        {data?.images.edges.map((image, index) => (
+        {data?.videos.edges.map((video: { node: Video }, index: number) => (
           <div
-            key={`${image.node.id}-${index}`}
+            key={`${video.node.id}-${index}`}
             className="aspect-square relative rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-md"
-            onClick={() => handleImageClick(image.node, index)}
+            onClick={() => handleVideoClick(video.node, index)}
           >
-            {image.node.status === ImageStatusEnum.Pending ? (
+            {video.node.status === GenAiStatusEnum.Pending ? (
               <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
                 <div className="flex flex-col items-center">
                   <svg
@@ -138,52 +174,37 @@ export function ImageGallery({
                     ></path>
                   </svg>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Generating image...
+                    Generating video...
                   </p>
                 </div>
               </div>
             ) : (
-              <img
-                src={image.node.imageUrl || ""}
-                alt={`Generated image ${index + 1}`}
+              <video
+                src={video.node.videoUrl || ""}
+                poster={
+                  video.node.videoUrl ? undefined : "/video-placeholder.jpg"
+                }
                 className="w-full h-full object-cover"
               />
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
-            <Link href={`/dashboard/video-creation?image=${image.node.id}`}>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-                className="absolute top-2 right-2 p-1.5 rounded-full bg-purple-500 text-white hover:bg-purple-600 transition-colors transform scale-110 shadow-md opacity-70 hover:opacity-100"
-                aria-label="Edit video"
-                title="Animate this image"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                </svg>
-                <span className="sr-only">Animate image</span>
-              </button>
-            </Link>
+            <button
+              onClick={(e) => handleDownloadVideo(video.node.videoUrl, e)}
+              className="absolute top-2 right-2 p-1.5 rounded-full bg-purple-500 text-white hover:bg-purple-600 transition-colors transform scale-110 shadow-md opacity-70 hover:opacity-100"
+              aria-label="Download video"
+              title="Download video"
+            >
+              <Download size={16} />
+              <span className="sr-only">Download video</span>
+            </button>
             <div className="absolute bottom-0 left-0 right-0 p-3 text-white text-base font-semibold">
-              {image.node.prompt || `Generated image ${index + 1}`}
+              {video.node.prompt || `Generated video ${index + 1}`}
             </div>
           </div>
         ))}
       </InfiniteScroll>
 
-      {selectedImage && (
+      {selectedVideo && (
         <div
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
           onClick={closeModal}
@@ -192,12 +213,10 @@ export function ImageGallery({
             className="relative max-w-4xl max-h-[90vh] w-full"
             onClick={(e) => e.stopPropagation()}
           >
-            <img
-              src={selectedImage.imageUrl || ""}
-              alt={
-                selectedImage.prompt ||
-                `Generated image ${selectedImage.index + 1}`
-              }
+            <video
+              src={selectedVideo.videoUrl || ""}
+              controls
+              autoPlay
               className="w-full h-auto max-h-[90vh] object-contain"
             />
             <button
@@ -221,8 +240,8 @@ export function ImageGallery({
               </svg>
             </button>
             <div className="absolute bottom-0 left-0 right-0 p-4 bg-black/50 text-white">
-              {selectedImage.prompt ||
-                `Generated image ${selectedImage.index + 1}`}
+              {selectedVideo.prompt ||
+                `Generated video ${selectedVideo.index + 1}`}
             </div>
           </div>
         </div>

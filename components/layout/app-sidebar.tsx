@@ -36,6 +36,11 @@ const data = {
       icon: LayoutDashboardIcon,
     },
     {
+      title: "Gallery",
+      url: "/dashboard/gallery",
+      icon: LayoutDashboardIcon,
+    },
+    {
       title: "Image",
       url: "/dashboard/image-creation",
       icon: ListIcon,

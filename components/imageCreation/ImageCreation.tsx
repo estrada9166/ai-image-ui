@@ -9,7 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { graphql } from "@/gql";
 import { ImageTypeOptionsEnum } from "../../gql/graphql";
 import { useMutation } from "urql";
-import { ImageGallery } from "../imageGallery/ImageGallery";
+import { ImageGallery } from "../gallery/ImageGallery";
 
 const ImageCreationMutation = graphql(/* GraphQL */ `
   mutation ImageCreation($input: ImageCreationInput!) {
