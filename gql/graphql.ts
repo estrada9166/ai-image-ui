@@ -47,6 +47,7 @@ export type ForgotPasswordInput = {
 export enum GenAiStatusEnum {
   Failed = 'FAILED',
   Generated = 'GENERATED',
+  NonGenerated = 'NON_GENERATED',
   Pending = 'PENDING'
 }
 
@@ -82,17 +83,12 @@ export type ImageEdge = {
   node: Image;
 };
 
-export type ImageEditInput = {
-  imageIds: Array<Scalars['String']['input']>;
-  prompt: Scalars['String']['input'];
-};
-
 /** Type of the image */
 export enum ImageTypeOptionsEnum {
   Created = 'CREATED',
   Edited = 'EDITED',
   Product = 'PRODUCT',
-  Ugc = 'UGC'
+  UserUploaded = 'USER_UPLOADED'
 }
 
 export type Me = Node & UserLike & {
@@ -108,7 +104,6 @@ export type Mutation = {
   confirmUserEmail?: Maybe<Me>;
   forgotPassword: Scalars['Boolean']['output'];
   imageCreation: Image;
-  imageEdit: Image;
   resetPassword: Scalars['Boolean']['output'];
   signIn: Me;
   signOut: Scalars['Boolean']['output'];
@@ -130,11 +125,6 @@ export type MutationForgotPasswordArgs = {
 
 export type MutationImageCreationArgs = {
   input: ImageCreationInput;
-};
-
-
-export type MutationImageEditArgs = {
-  input: ImageEditInput;
 };
 
 

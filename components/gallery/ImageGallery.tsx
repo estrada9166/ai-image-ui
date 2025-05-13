@@ -63,12 +63,14 @@ export function ImageGallery({
   );
 
   useEffect(() => {
+    return;
     if (shouldRefetch) {
       reExecuteQuery({ requestPolicy: "network-only" });
     }
   }, [shouldRefetch, reExecuteQuery]);
 
   useEffect(() => {
+    return;
     const hasPendingImage = data?.images.edges.some(
       (image) => image.node.status === GenAiStatusEnum.Pending
     );
