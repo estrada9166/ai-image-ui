@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ImageIcon, Wand2, Sparkles, RefreshCw } from "lucide-react";
+import { ImageIcon, Wand2, Sparkles, RefreshCw, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,6 +10,14 @@ import { graphql } from "@/gql";
 import { ImageTypeOptionsEnum } from "../../gql/graphql";
 import { useMutation } from "urql";
 import { ImageGallery } from "../gallery/ImageGallery";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { CameraOptionsEnum, AspectRatioOptionsEnum } from "@/gql/graphql";
 
 const ImageCreationMutation = graphql(/* GraphQL */ `
   mutation ImageCreation($input: ImageCreationInput!) {
@@ -29,8 +37,44 @@ type ImageCreation = {
   imageUrl?: string | null;
 };
 
+// Predefined prompt ideas
+const promptIdeas = [
+  {
+    id: "1",
+    text: "A professional with short brown hair wearing a business suit in an office setting",
+  },
+  {
+    id: "2",
+    text: "A creative artist with colorful clothes in a bright studio with paint splashes",
+  },
+  {
+    id: "3",
+    text: "A tech enthusiast with glasses in a modern workspace surrounded by gadgets",
+  },
+  {
+    id: "4",
+    text: "A nature lover with casual attire hiking in a lush green forest",
+  },
+  {
+    id: "5",
+    text: "A fitness enthusiast in workout clothes at a gym with exercise equipment",
+  },
+];
+
+// Available aspect ratios
+const aspectRatios = [
+  { value: AspectRatioOptionsEnum.Square, label: "Square (1:1)" },
+  { value: AspectRatioOptionsEnum.Portrait, label: "Portrait (9:16)" },
+  { value: AspectRatioOptionsEnum.Landscape, label: "Landscape (16:9)" },
+];
+
 export default function ImageCreation() {
   const [imagePrompt, setImagePrompt] = useState("");
+  const [avatarType, setAvatarType] = useState(CameraOptionsEnum.NoSelfie);
+  const [selectedPromptIdea, setSelectedPromptIdea] = useState("");
+  const [aspectRatio, setAspectRatio] = useState(
+    AspectRatioOptionsEnum.Portrait
+  );
 
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [shouldRefetch, setShouldRefetch] = useState(false);
@@ -38,16 +82,23 @@ export default function ImageCreation() {
   const [, generateImage] = useMutation(ImageCreationMutation);
 
   const handleGenerateImage = async () => {
+    console.log("avatarType", avatarType);
+    console.log("imagePrompt", imagePrompt);
+    console.log("aspectRatio", aspectRatio);
     if (!imagePrompt.trim()) return;
 
     setIsGeneratingImage(true);
 
     try {
       setShouldRefetch(true);
+      setImagePrompt("");
+      setSelectedPromptIdea("");
       await generateImage({
         input: {
           prompt: imagePrompt,
           type: ImageTypeOptionsEnum.Created,
+          camera: avatarType,
+          aspectRatio: aspectRatio,
         },
       });
     } catch (error) {
@@ -55,6 +106,14 @@ export default function ImageCreation() {
     } finally {
       setIsGeneratingImage(false);
       setShouldRefetch(false);
+    }
+  };
+
+  const handlePromptIdeaChange = (value: string) => {
+    setSelectedPromptIdea(value);
+    const selectedIdea = promptIdeas.find((idea) => idea.id === value);
+    if (selectedIdea) {
+      setImagePrompt(selectedIdea.text);
     }
   };
 
@@ -82,14 +141,75 @@ export default function ImageCreation() {
               <div>
                 <h2 className="text-xl font-semibold mb-2 flex items-center gap-2 text-purple-700 dark:text-purple-400">
                   <Sparkles className="h-5 w-5" />
-                  Describe your image
+                  Create your image
                 </h2>
                 <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">
-                  Be detailed and specific for the best results. Try including
-                  style, mood, colors, and composition.
+                  Describe yourself or the person you want to create an avatar
+                  for. Be specific about features, style, and appearance.
                 </p>
+
+                <div className="flex flex-col md:flex-row gap-3 mb-3">
+                  <div className="w-full md:w-1/4">
+                    <Select
+                      value={avatarType}
+                      onValueChange={setAvatarType as (value: string) => void}
+                    >
+                      <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm">
+                        <SelectValue placeholder="Avatar type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value={CameraOptionsEnum.Selfie}>
+                          Selfie
+                        </SelectItem>
+                        <SelectItem value={CameraOptionsEnum.NoSelfie}>
+                          No Selfie
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="w-full md:w-1/4">
+                    <Select
+                      value={aspectRatio}
+                      onValueChange={setAspectRatio as (value: string) => void}
+                    >
+                      <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm">
+                        <SelectValue placeholder="Aspect ratio" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {aspectRatios.map((ratio) => (
+                          <SelectItem key={ratio.value} value={ratio.value}>
+                            {ratio.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="w-full md:w-2/4">
+                    <Select
+                      value={selectedPromptIdea}
+                      onValueChange={handlePromptIdeaChange}
+                    >
+                      <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm">
+                        <SelectValue placeholder="Choose a prompt idea or write your own" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {promptIdeas.map((idea) => (
+                          <SelectItem key={idea.id} value={idea.id}>
+                            <div className="flex items-center gap-2">
+                              <BookOpen className="h-4 w-4" />
+                              <span className="truncate">
+                                {idea.text.substring(0, 50)}...
+                              </span>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
                 <Textarea
-                  placeholder="A serene landscape with mountains, a crystal clear lake reflecting the sky, and a small wooden cabin nestled among pine trees at sunset with golden light..."
+                  placeholder="A professional-looking person with short brown hair, blue eyes, wearing a business suit..."
                   className="min-h-[120px] resize-none border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500"
                   value={imagePrompt}
                   onChange={(e) => setImagePrompt(e.target.value)}
@@ -97,10 +217,13 @@ export default function ImageCreation() {
                 />
               </div>
 
-              <div className="flex justify-end gap-2">
+              <div className="flex justify-end gap-2 mt-4">
                 <Button
                   variant="outline"
-                  onClick={() => setImagePrompt("")}
+                  onClick={() => {
+                    setImagePrompt("");
+                    setSelectedPromptIdea("");
+                  }}
                   disabled={!imagePrompt.trim() || isGeneratingImage}
                   className="border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20"
                 >
@@ -166,6 +289,7 @@ export default function ImageCreation() {
             <ImageGallery
               type={ImageTypeOptionsEnum.Created}
               shouldRefetch={shouldRefetch}
+              showPrompt={false}
             />
           </motion.div>
         </AnimatePresence>

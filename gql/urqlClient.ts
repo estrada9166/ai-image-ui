@@ -8,6 +8,7 @@ export function createUrqlClient(cookie?: string) {
     resolvers: {
       Query: {
         images: relayPagination(),
+        videos: relayPagination(),
       },
     },
   });

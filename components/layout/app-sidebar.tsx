@@ -3,13 +3,12 @@
 import * as React from "react";
 import {
   LayoutDashboardIcon,
-  ListIcon,
-  BarChartIcon,
-  FolderIcon,
   SettingsIcon,
   HelpCircleIcon,
   Sparkles,
-  ImageIcon,
+  VideoIcon,
+  BookImageIcon,
+  CropIcon,
 } from "lucide-react";
 
 import { NavMain } from "./nav-main";
@@ -38,32 +37,17 @@ const data = {
     {
       title: "Gallery",
       url: "/dashboard/gallery",
-      icon: LayoutDashboardIcon,
-    },
-    {
-      title: "Image",
-      url: "/dashboard/image-creation",
-      icon: ListIcon,
+      icon: BookImageIcon,
     },
     {
       title: "Image Edit",
       url: "/dashboard/image-edit",
-      icon: ImageIcon,
-    },
-    {
-      title: "Product Edit",
-      url: "/dashboard/product-edit",
-      icon: ImageIcon,
-    },
-    {
-      title: "Avatar",
-      url: "/dashboard/avatar",
-      icon: BarChartIcon,
+      icon: CropIcon,
     },
     {
       title: "Videos creation",
       url: "/dashboard/video-creation",
-      icon: FolderIcon,
+      icon: VideoIcon,
     },
   ],
 

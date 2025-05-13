@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ImageIcon,
   VideoIcon,
@@ -101,18 +101,23 @@ export default function VideoCreation() {
     if (!videoUrl) return;
 
     try {
-      const response = await fetch(videoUrl);
-      if (!response.ok) throw new Error("Network response was not ok");
-
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
+      // Create a link element
       const a = document.createElement("a");
-      a.href = blobUrl;
+
+      // Set the href to the video URL
+      a.href = videoUrl;
+
+      // Set a filename for the download
       a.download = "generated-video.mp4";
+
+      // Append to the document
       document.body.appendChild(a);
+
+      // Trigger the download
       a.click();
+
+      // Clean up
       document.body.removeChild(a);
-      URL.revokeObjectURL(blobUrl);
     } catch (error) {
       console.error("Error downloading video:", error);
     }
@@ -233,7 +238,7 @@ export default function VideoCreation() {
               Select an image from your gallery
             </h2>
             <div className="max-w-4xl mx-auto">
-              <ImageGallery />
+              <ImageGallery showPrompt={false} />
             </div>
           </motion.div>
         </div>
@@ -243,7 +248,7 @@ export default function VideoCreation() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50 dark:from-gray-900 dark:to-purple-950/30">
-      <div className="container mx-auto max-w-7xl px-6 py-12 flex justify-center items-center">
+      <div className="container mx-auto max-w-7xl px-6 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -512,12 +517,30 @@ export default function VideoCreation() {
           </Card>
         </motion.div>
       </div>
-      <div className="container mx-auto max-w-7xl px-6 pb-16">
-        <VideoGallery
-          shouldRefetch={shouldRefetch}
-          setVideoUrl={setVideoUrl}
-          createdVideoId={createdVideoId}
-        />
+
+      <div className="container mx-auto max-w-7xl px-6 pb-8">
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="space-y-4"
+          >
+            <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <VideoIcon className="h-5 w-5 text-purple-500" />
+              Your Creations
+              <span className="text-sm text-gray-500 dark:text-gray-400 font-normal"></span>
+            </h3>
+
+            <VideoGallery
+              shouldRefetch={shouldRefetch}
+              setVideoUrl={setVideoUrl}
+              createdVideoId={createdVideoId}
+              showPrompt={false}
+            />
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );

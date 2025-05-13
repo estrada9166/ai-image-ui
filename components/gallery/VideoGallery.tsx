@@ -41,10 +41,12 @@ const VideoGalleryQuery = graphql(/* GraphQL */ `
 `);
 
 export function VideoGallery({
+  showPrompt = true,
   shouldRefetch,
   setVideoUrl,
   createdVideoId,
 }: {
+  showPrompt?: boolean;
   shouldRefetch?: boolean;
   setVideoUrl?: (videoUrl: string) => void;
   createdVideoId?: string | null;
@@ -85,13 +87,9 @@ export function VideoGallery({
     let intervalId: NodeJS.Timeout | null = null;
 
     if (hasPendingVideo) {
-      // Immediately execute once
-      reExecuteQuery({ requestPolicy: "network-only" });
-
-      // Set up interval to check every 5 seconds
       intervalId = setInterval(() => {
         reExecuteQuery({ requestPolicy: "network-only" });
-      }, 4000);
+      }, 60000); // Check every minute (60,000 ms)
     }
 
     // Clean up the interval on unmount
@@ -100,25 +98,26 @@ export function VideoGallery({
         clearInterval(intervalId);
       }
     };
-  }, [data?.videos.edges, reExecuteQuery]);
+  }, [data?.videos?.edges?.length, reExecuteQuery]);
 
   const handleVideoClick = (video: Video, index: number) => {
-    setSelectedVideo({ ...video, index });
+    // Only allow clicking if the video is not pending
+    if (video.status !== GenAiStatusEnum.Pending) {
+      setSelectedVideo({ ...video, index });
+    }
   };
 
   const closeModal = () => {
     setSelectedVideo(null);
   };
 
-  const handleDownloadVideo = async (
-    videoUrl: string | null | undefined,
-    e: React.MouseEvent
-  ) => {
+  const handleDownloadVideo = async (video: Video, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!videoUrl) return;
+    // Don't allow download if video is pending
+    if (video.status === GenAiStatusEnum.Pending || !video.videoUrl) return;
 
     try {
-      const response = await fetch(videoUrl);
+      const response = await fetch(video.videoUrl);
       if (!response.ok) throw new Error("Network response was not ok");
 
       const blob = await response.blob();
@@ -138,7 +137,7 @@ export function VideoGallery({
   return (
     <>
       <InfiniteScroll
-        className="grid grid-cols-1 md:grid-cols-3 gap-4"
+        className="grid grid-cols-1 md:grid-cols-5 gap-4"
         dataLength={data?.videos.edges.length ?? 0}
         next={() => setAfter(data?.videos.pageInfo.endCursor)}
         hasMore={data?.videos.pageInfo.hasNextPage ?? false}
@@ -147,7 +146,11 @@ export function VideoGallery({
         {data?.videos.edges.map((video: { node: Video }, index: number) => (
           <div
             key={`${video.node.id}-${index}`}
-            className="aspect-square relative rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-md"
+            className={`aspect-square relative rounded-lg overflow-hidden ${
+              video.node.status !== GenAiStatusEnum.Pending
+                ? "cursor-pointer"
+                : "cursor-default"
+            } transition-all duration-300 hover:shadow-md`}
             onClick={() => handleVideoClick(video.node, index)}
           >
             {video.node.status === GenAiStatusEnum.Pending ? (
@@ -179,27 +182,54 @@ export function VideoGallery({
                 </div>
               </div>
             ) : (
-              <video
-                src={video.node.videoUrl || ""}
-                poster={
-                  video.node.videoUrl ? undefined : "/video-placeholder.jpg"
-                }
-                className="w-full h-full object-cover"
-              />
+              <div className="relative w-full h-full">
+                <video
+                  src={video.node.videoUrl || ""}
+                  poster={
+                    video.node.videoUrl ? undefined : "/video-placeholder.jpg"
+                  }
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="bg-black/50 rounded-full p-3 backdrop-blur-sm shadow-lg flex items-center justify-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="white"
+                      stroke="white"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="opacity-90"
+                      style={{
+                        marginLeft: "2px",
+                      }} /* Slight adjustment to visually center the triangle */
+                    >
+                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                  </div>
+                </div>
+              </div>
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
-            <button
-              onClick={(e) => handleDownloadVideo(video.node.videoUrl, e)}
-              className="absolute top-2 right-2 p-1.5 rounded-full bg-purple-500 text-white hover:bg-purple-600 transition-colors transform scale-110 shadow-md opacity-70 hover:opacity-100"
-              aria-label="Download video"
-              title="Download video"
-            >
-              <Download size={16} />
-              <span className="sr-only">Download video</span>
-            </button>
-            <div className="absolute bottom-0 left-0 right-0 p-3 text-white text-base font-semibold">
-              {video.node.prompt || `Generated video ${index + 1}`}
-            </div>
+            {video.node.status !== GenAiStatusEnum.Pending && (
+              <button
+                onClick={(e) => handleDownloadVideo(video.node, e)}
+                className="absolute top-2 right-2 p-1.5 rounded-full bg-purple-500 text-white hover:bg-purple-600 transition-colors transform scale-110 shadow-md opacity-70 hover:opacity-100"
+                aria-label="Download video"
+                title="Download video"
+              >
+                <Download size={16} />
+                <span className="sr-only">Download video</span>
+              </button>
+            )}
+            {showPrompt && (
+              <div className="absolute bottom-0 left-0 right-0 p-3 text-white text-base font-semibold">
+                {video.node.prompt || `Generated video ${index + 1}`}
+              </div>
+            )}
           </div>
         ))}
       </InfiniteScroll>
@@ -219,27 +249,38 @@ export function VideoGallery({
               autoPlay
               className="w-full h-auto max-h-[90vh] object-contain"
             />
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
-              aria-label="Close modal"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            <div className="absolute top-4 right-4 flex flex-col gap-2">
+              <button
+                onClick={closeModal}
+                className="p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+                aria-label="Close modal"
               >
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </button>
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-black/50 text-white">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+              <button
+                onClick={(e) => handleDownloadVideo(selectedVideo, e)}
+                className="p-2 rounded-full bg-purple-500 text-white hover:bg-purple-600 transition-colors shadow-md opacity-90 hover:opacity-100"
+                aria-label="Download video"
+                title="Download video"
+              >
+                <Download size={18} />
+                <span className="sr-only">Download video</span>
+              </button>
+            </div>
+            <div className="p-2 bg-black/50 text-white">
               {selectedVideo.prompt ||
                 `Generated video ${selectedVideo.index + 1}`}
             </div>

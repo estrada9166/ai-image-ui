@@ -22,6 +22,19 @@ export type Scalars = {
   JSON: { input: any; output: any; }
 };
 
+/** Aspect ratio of the image */
+export enum AspectRatioOptionsEnum {
+  Landscape = 'LANDSCAPE',
+  Portrait = 'PORTRAIT',
+  Square = 'SQUARE'
+}
+
+/** Camera type of the image */
+export enum CameraOptionsEnum {
+  NoSelfie = 'NO_SELFIE',
+  Selfie = 'SELFIE'
+}
+
 export type ConfirmUserEmailInput = {
   hash: Scalars['String']['input'];
 };
@@ -55,6 +68,8 @@ export type ImageConnection = {
 };
 
 export type ImageCreationInput = {
+  aspectRatio?: InputMaybe<AspectRatioOptionsEnum>;
+  camera?: InputMaybe<CameraOptionsEnum>;
   prompt: Scalars['String']['input'];
   type: ImageTypeOptionsEnum;
 };
@@ -211,12 +226,6 @@ export type SignUpUserInput = {
   fullName: Scalars['String']['input'];
   password: Scalars['String']['input'];
 };
-
-/** Camera type of the UGC image */
-export enum UgcCameraOptionsEnum {
-  NoSelfie = 'NO_SELFIE',
-  Selfie = 'SELFIE'
-}
 
 export type UpdateUserPasswordInput = {
   currentPassword: Scalars['String']['input'];
