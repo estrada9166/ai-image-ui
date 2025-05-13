@@ -7,6 +7,7 @@ import { GenAiStatusEnum, ImageTypeOptionsEnum } from "@/gql/graphql";
 import { Skeleton } from "../ui/skeleton";
 import { graphql } from "../../gql";
 import { useQuery } from "urql";
+import { useRouter } from "next/navigation";
 
 type Image = {
   id: string;
@@ -42,11 +43,14 @@ export function ImageGallery({
   type,
   shouldRefetch,
   showPrompt = true,
+  redirectToVideoCreationOnClick = false,
 }: {
   type?: ImageTypeOptionsEnum;
   shouldRefetch?: boolean;
   showPrompt?: boolean;
+  redirectToVideoCreationOnClick?: boolean;
 }) {
+  const router = useRouter();
   const [after, setAfter] = useState<string | null | undefined>();
 
   const [{ data }, reExecuteQuery] = useQuery({
@@ -91,7 +95,12 @@ export function ImageGallery({
 
   const handleImageClick = (image: Image, index: number) => {
     if (image.status === GenAiStatusEnum.Pending) return;
-    setSelectedImage({ ...image, index });
+
+    if (redirectToVideoCreationOnClick) {
+      router.push(`/dashboard/video-creation?image=${image.id}`);
+    } else {
+      setSelectedImage({ ...image, index });
+    }
   };
 
   const closeModal = () => {
@@ -180,18 +189,55 @@ export function ImageGallery({
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute top-2 right-2 flex flex-col gap-2">
-              {image.node.status !== GenAiStatusEnum.Pending && (
-                <>
-                  <Link
-                    href={`/dashboard/video-creation?image=${image.node.id}`}
-                  >
+              {image.node.status !== GenAiStatusEnum.Pending &&
+                !redirectToVideoCreationOnClick && (
+                  <>
+                    <Link
+                      href={`/dashboard/video-creation?image=${image.node.id}`}
+                    >
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                        className="p-1.5 rounded-full bg-purple-500 text-white hover:bg-purple-600 transition-colors transform scale-110 shadow-md opacity-70 hover:opacity-100"
+                        aria-label="Edit video"
+                        title="Animate this image"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                          <rect
+                            x="1"
+                            y="5"
+                            width="15"
+                            height="14"
+                            rx="2"
+                            ry="2"
+                          ></rect>
+                        </svg>
+                        <span className="sr-only">Animate image</span>
+                      </button>
+                    </Link>
                     <button
                       onClick={(e) => {
-                        e.stopPropagation();
+                        handleDownloadImage(
+                          image.node.imageUrl,
+                          e,
+                          image.node.status
+                        );
                       }}
-                      className="p-1.5 rounded-full bg-purple-500 text-white hover:bg-purple-600 transition-colors transform scale-110 shadow-md opacity-70 hover:opacity-100"
-                      aria-label="Edit video"
-                      title="Animate this image"
+                      className="p-1.5 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors transform scale-110 shadow-md opacity-70 hover:opacity-100"
+                      aria-label="Download image"
+                      title="Download image"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -204,50 +250,14 @@ export function ImageGallery({
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       >
-                        <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                        <rect
-                          x="1"
-                          y="5"
-                          width="15"
-                          height="14"
-                          rx="2"
-                          ry="2"
-                        ></rect>
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
                       </svg>
-                      <span className="sr-only">Animate image</span>
+                      <span className="sr-only">Download image</span>
                     </button>
-                  </Link>
-                  <button
-                    onClick={(e) => {
-                      handleDownloadImage(
-                        image.node.imageUrl,
-                        e,
-                        image.node.status
-                      );
-                    }}
-                    className="p-1.5 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors transform scale-110 shadow-md opacity-70 hover:opacity-100"
-                    aria-label="Download image"
-                    title="Download image"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                      <polyline points="7 10 12 15 17 10"></polyline>
-                      <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    <span className="sr-only">Download image</span>
-                  </button>
-                </>
-              )}
+                  </>
+                )}
             </div>
             {showPrompt && (
               <div className="absolute bottom-0 left-0 right-0 p-3 text-white text-base font-semibold">

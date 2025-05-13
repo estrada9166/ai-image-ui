@@ -82,9 +82,6 @@ export default function ImageCreation() {
   const [, generateImage] = useMutation(ImageCreationMutation);
 
   const handleGenerateImage = async () => {
-    console.log("avatarType", avatarType);
-    console.log("imagePrompt", imagePrompt);
-    console.log("aspectRatio", aspectRatio);
     if (!imagePrompt.trim()) return;
 
     setIsGeneratingImage(true);

@@ -238,7 +238,7 @@ export default function VideoCreation() {
               Select an image from your gallery
             </h2>
             <div className="max-w-4xl mx-auto">
-              <ImageGallery showPrompt={false} />
+              <ImageGallery showPrompt={false} redirectToVideoCreationOnClick />
             </div>
           </motion.div>
         </div>
