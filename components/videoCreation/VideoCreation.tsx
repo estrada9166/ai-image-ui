@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/tooltip";
 import { VideoGallery } from "../gallery/VideoGallery";
 import Link from "next/link";
+import axios from "axios";
 
 export const ImageByIdQuery = graphql(/* GraphQL */ `
   query ImageById($id: ID!) {
@@ -92,15 +93,34 @@ export default function VideoCreation() {
     try {
       setShouldRefetch(true);
 
-      const result = await generateVideo({
-        input: {
-          prompt: videoPrompt,
-          imageId: image || "",
-          negativePrompt,
-        },
-      });
+      if (uploadedImage) {
+        const formData = new FormData();
 
-      setCreatedVideoId(result?.data?.videoCreation?.id || null);
+        formData.append("file", uploadedImage);
+        formData.append("prompt", videoPrompt);
+        formData.append("negativePrompt", negativePrompt);
+
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/upload/video`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            withCredentials: true,
+          }
+        );
+      } else if (imageData) {
+        const result = await generateVideo({
+          input: {
+            prompt: videoPrompt,
+            imageId: image || "",
+            negativePrompt,
+          },
+        });
+
+        setCreatedVideoId(result?.data?.videoCreation?.id || null);
+      }
     } catch (error) {
       console.error("Error generating video:", error);
     } finally {

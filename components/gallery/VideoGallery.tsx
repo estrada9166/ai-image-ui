@@ -93,7 +93,7 @@ export function VideoGallery({
     if (hasPendingVideo) {
       intervalId = setInterval(() => {
         reExecuteQuery({ requestPolicy: "network-only" });
-      }, 60000); // Check every minute (60,000 ms)
+      }, 6000); // Check every 6 seconds
     }
 
     // Clean up the interval on unmount

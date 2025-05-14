@@ -78,12 +78,11 @@ export function ImageGallery({
     }
   }, [shouldRefetch, reExecuteQuery]);
 
-  useEffect(() => {
-    return;
-    const hasPendingImage = data?.images.edges.some(
-      (image) => image.node.status === GenAiStatusEnum.Pending
-    );
+  const hasPendingImage = data?.images.edges.some(
+    (image) => image.node.status === GenAiStatusEnum.Pending
+  );
 
+  useEffect(() => {
     let intervalId: NodeJS.Timeout | null = null;
 
     if (hasPendingImage) {
@@ -102,7 +101,7 @@ export function ImageGallery({
         clearInterval(intervalId);
       }
     };
-  }, [data?.images.edges, reExecuteQuery]);
+  }, [hasPendingImage, reExecuteQuery]);
 
   const handleImageClick = (image: Image, index: number) => {
     if (image.status === GenAiStatusEnum.Pending) return;

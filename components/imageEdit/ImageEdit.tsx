@@ -92,13 +92,20 @@ export default function ImageEdit() {
   const [imageData, setImageData] = useState<Image | null>(null);
   const [isEditingImage, setIsEditingImage] = useState(false);
   const [shouldRefetch, setShouldRefetch] = useState(false);
+  const [imageId, setImageId] = useState<string | null>(null);
 
   const [, editImage] = useMutation(ImageEditMutation);
 
-  const [{ data, fetching, error }] = useQuery({
+  const [{ data, error }] = useQuery({
     query: ImageByIdQuery,
     variables: { id: image || "" },
     pause: !image,
+  });
+
+  const [{ data: editedImageData }, reExecuteQuery] = useQuery({
+    query: ImageByIdQuery,
+    variables: { id: imageId || "" },
+    pause: !imageId,
   });
 
   useEffect(() => {
@@ -108,6 +115,43 @@ export default function ImageEdit() {
       setImageData(data.node as Image);
     }
   }, [data, searchParams]);
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout | null = null;
+
+    if (imageId && editedImageData?.node) {
+      // Check if the node is an Image type with imageUrl property
+      const nodeAsImage = editedImageData.node as {
+        __typename?: string;
+        imageUrl?: string | null;
+      };
+
+      if (!nodeAsImage.imageUrl && nodeAsImage.__typename === "Image") {
+        // Immediately execute once
+        reExecuteQuery({
+          requestPolicy: "network-only",
+          variables: { id: imageId },
+        });
+
+        // Set up interval to check every 5 seconds
+        intervalId = setInterval(() => {
+          reExecuteQuery({
+            requestPolicy: "network-only",
+            variables: { id: imageId },
+          });
+        }, 5000);
+      } else if (nodeAsImage.imageUrl) {
+        setIsEditingImage(false);
+      }
+    }
+
+    // Clean up the interval on unmount
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [editedImageData, imageId, reExecuteQuery]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -144,18 +188,14 @@ export default function ImageEdit() {
     try {
       setShouldRefetch(true);
 
+      let imageId = null;
       if (uploadedImage) {
         const formData = new FormData();
 
-        if (uploadedImage) {
-          formData.append("file", uploadedImage);
-        } else if (imageData) {
-          formData.append("imageId", imageData.id);
-        }
-
+        formData.append("file", uploadedImage);
         formData.append("prompt", imagePrompt);
 
-        await axios.post(
+        const response = await axios.post(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/api/upload/image`,
           formData,
           {
@@ -165,21 +205,23 @@ export default function ImageEdit() {
             withCredentials: true,
           }
         );
+
+        imageId = response.data.id;
       } else if (imageData) {
-        await editImage({
+        const result = await editImage({
           input: { imageId: imageData.id, prompt: imagePrompt },
         });
+
+        imageId = result.data?.imageEdit.id;
       }
 
-      setImagePrompt("");
-      handleRemoveImage();
-      if (imageData) {
-        handleRemoveSelectedImage();
+      if (imageId) {
+        setImageId(imageId);
       }
     } catch (error) {
       console.error("Error editing image:", error);
     } finally {
-      setIsEditingImage(false);
+      setIsEditingImage(true);
       setShouldRefetch(false);
     }
   };
@@ -489,6 +531,41 @@ export default function ImageEdit() {
                       />
                     </div>
                   </div>
+                ) : editedImageData?.node?.imageUrl ? (
+                  <div className="w-full h-full">
+                    <img
+                      src={editedImageData.node?.imageUrl || ""}
+                      alt="Edited image"
+                      className="w-full h-full object-contain"
+                    />
+                    <div className="absolute bottom-4 right-4">
+                      <button
+                        onClick={() =>
+                          window.open(editedImageData.node.imageUrl, "_blank")
+                        }
+                        className="p-1.5 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors transform scale-110 shadow-md opacity-70 hover:opacity-100"
+                        aria-label="Download image"
+                        title="View full size"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                          <polyline points="7 10 12 15 17 10"></polyline>
+                          <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        <span className="sr-only">View full size</span>
+                      </button>
+                    </div>
+                  </div>
                 ) : (
                   <div className="text-center p-8 h-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
                     <ImageIcon className="h-16 w-16 text-purple-400 mx-auto mb-4 opacity-75" />
@@ -525,10 +602,7 @@ export default function ImageEdit() {
             </h3>
 
             <ImageGallery
-              type={[
-                ImageTypeOptionsEnum.Edited,
-                ImageTypeOptionsEnum.UserUploaded,
-              ]}
+              type={[ImageTypeOptionsEnum.Edited]}
               shouldRefetch={shouldRefetch}
               showPrompt={false}
               loadPartialGallery
