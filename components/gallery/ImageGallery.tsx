@@ -8,6 +8,7 @@ import { Skeleton } from "../ui/skeleton";
 import { graphql } from "../../gql";
 import { useQuery } from "urql";
 import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
 
 type Image = {
   id: string;
@@ -21,7 +22,11 @@ type ImageWithIndex = Image & {
 };
 
 const ImageGalleryQuery = graphql(/* GraphQL */ `
-  query ImageGallery($first: Int, $after: String, $type: ImageTypeOptionsEnum) {
+  query ImageGallery(
+    $first: Int
+    $after: String
+    $type: [ImageTypeOptionsEnum!]!
+  ) {
     images(first: $first, after: $after, type: $type) {
       edges {
         node {
@@ -44,18 +49,22 @@ export function ImageGallery({
   shouldRefetch,
   showPrompt = true,
   redirectToVideoCreationOnClick = false,
+  loadPartialGallery = false,
+  tab = "images",
 }: {
-  type?: ImageTypeOptionsEnum;
+  type?: ImageTypeOptionsEnum[];
   shouldRefetch?: boolean;
   showPrompt?: boolean;
   redirectToVideoCreationOnClick?: boolean;
+  loadPartialGallery?: boolean;
+  tab?: "images" | "edited-images";
 }) {
   const router = useRouter();
   const [after, setAfter] = useState<string | null | undefined>();
 
   const [{ data }, reExecuteQuery] = useQuery({
     query: ImageGalleryQuery,
-    variables: { first: 30, after, type },
+    variables: { first: loadPartialGallery ? 5 : 20, after, type: type || [] },
   });
 
   const [selectedImage, setSelectedImage] = useState<ImageWithIndex | null>(
@@ -140,9 +149,21 @@ export function ImageGallery({
       <InfiniteScroll
         className="grid grid-cols-1 md:grid-cols-5 gap-4"
         dataLength={data?.images.edges.length ?? 0}
-        next={() => setAfter(data?.images.pageInfo.endCursor)}
-        hasMore={data?.images.pageInfo.hasNextPage ?? false}
-        loader={<Skeleton className="w-full h-full" />}
+        next={() => {
+          if (data?.images.pageInfo.endCursor) {
+            setAfter(data.images.pageInfo.endCursor);
+          }
+        }}
+        hasMore={
+          loadPartialGallery
+            ? false
+            : data?.images.pageInfo.hasNextPage ?? false
+        }
+        loader={
+          <div className="col-span-full py-4 flex justify-center">
+            <Skeleton className="w-32 h-32" />
+          </div>
+        }
       >
         {data?.images.edges.map((image, index) => (
           <div
@@ -194,6 +215,32 @@ export function ImageGallery({
               {image.node.status !== GenAiStatusEnum.Pending &&
                 !redirectToVideoCreationOnClick && (
                   <>
+                    <Link href={`/dashboard/image-edit?image=${image.node.id}`}>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                        className="p-1.5 rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors transform scale-110 shadow-md opacity-70 hover:opacity-100"
+                        aria-label="Edit image"
+                        title="Edit this image"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                        <span className="sr-only">Edit image</span>
+                      </button>
+                    </Link>
                     <Link
                       href={`/dashboard/video-creation?image=${image.node.id}`}
                     >
@@ -263,12 +310,36 @@ export function ImageGallery({
             </div>
             {showPrompt && (
               <div className="absolute bottom-0 left-0 right-0 p-3 text-white text-base font-semibold">
-                {image.node.prompt || `Generated image ${index + 1}`}
+                {image.node.prompt}
               </div>
             )}
           </div>
         ))}
       </InfiniteScroll>
+
+      {loadPartialGallery && data?.images.pageInfo.hasNextPage && (
+        <Link href={`/dashboard/gallery?tab=${tab}`}>
+          <div className="col-span-full py-6 flex justify-center">
+            <Button className="bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-medium px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2">
+              <span>View more in gallery</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </Button>
+          </div>
+        </Link>
+      )}
 
       {selectedImage && (
         <div
@@ -309,6 +380,32 @@ export function ImageGallery({
                   <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
               </button>
+              <Link href={`/dashboard/image-edit?image=${selectedImage.id}`}>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                  className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors shadow-md opacity-70 hover:opacity-100"
+                  aria-label="Edit image"
+                  title="Edit this image"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                  </svg>
+                  <span className="sr-only">Edit image</span>
+                </button>
+              </Link>
               <Link
                 href={`/dashboard/video-creation?image=${selectedImage.id}`}
               >
@@ -376,8 +473,7 @@ export function ImageGallery({
               </button>
             </div>
             <div className="absolute bottom-0 left-0 right-0 p-4 bg-black/50 text-white">
-              {selectedImage.prompt ||
-                `Generated image ${selectedImage.index + 1}`}
+              {selectedImage.prompt}
             </div>
           </div>
         </div>

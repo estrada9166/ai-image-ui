@@ -284,9 +284,11 @@ export default function ImageCreation() {
             </h3>
 
             <ImageGallery
-              type={ImageTypeOptionsEnum.Created}
+              type={[ImageTypeOptionsEnum.Created]}
               shouldRefetch={shouldRefetch}
               showPrompt={false}
+              tab="images"
+              loadPartialGallery
             />
           </motion.div>
         </AnimatePresence>

@@ -8,14 +8,16 @@ import {
   RefreshCw,
   Sparkles,
   Download,
+  Upload,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { graphql } from "../../gql";
 import { useMutation, useQuery } from "urql";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Image } from "../../gql/graphql";
 import { Badge } from "@/components/ui/badge";
@@ -25,10 +27,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ImageGallery } from "../gallery/ImageGallery";
 import { VideoGallery } from "../gallery/VideoGallery";
+import Link from "next/link";
 
-const ImageByIdQuery = graphql(/* GraphQL */ `
+export const ImageByIdQuery = graphql(/* GraphQL */ `
   query ImageById($id: ID!) {
     node(id: $id) {
       ... on Image {
@@ -51,6 +53,7 @@ const VideoCreationMutation = graphql(/* GraphQL */ `
 
 export default function VideoCreation() {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const [videoPrompt, setVideoPrompt] = useState("");
   const [negativePrompt, setNegativePrompt] = useState("");
@@ -58,22 +61,30 @@ export default function VideoCreation() {
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const [createdVideoId, setCreatedVideoId] = useState<string | null>(null);
-
+  const [imageData, setImageData] = useState<Image | null>(null);
+  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const image = searchParams?.get("image");
 
   const [, generateVideo] = useMutation(VideoCreationMutation);
 
-  const [result] = useQuery({
+  const [{ data, fetching, error }] = useQuery({
     query: ImageByIdQuery,
     variables: { id: image || "" },
     pause: !image,
   });
 
-  const { data, fetching, error } = result;
-  const imageData = data?.node as Image | null;
+  useEffect(() => {
+    if (!searchParams?.get("image") || !data?.node) {
+      setImageData(null);
+    } else if (data?.node) {
+      setImageData(data.node as Image);
+    }
+  }, [data, searchParams]);
 
   const handleGenerateVideo = async () => {
-    if (!videoPrompt.trim() || !imageData) return;
+    if (!videoPrompt.trim() || (!imageData && !previewUrl)) return;
 
     setIsGeneratingVideo(true);
     setVideoUrl(null);
@@ -122,6 +133,43 @@ export default function VideoCreation() {
       console.error("Error downloading video:", error);
     }
   };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setUploadedImage(file);
+
+      // Create preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setUploadedImage(null);
+    setPreviewUrl(null);
+    setImageData(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+
+    const newUrl = new URL(window.location.href);
+    newUrl.searchParams.delete("image");
+    router.push(newUrl.pathname);
+  };
+
+  // Reset shouldRefetch after VideoGallery has been rendered
+  useEffect(() => {
+    if (shouldRefetch) {
+      const timer = setTimeout(() => {
+        setShouldRefetch(false);
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [shouldRefetch]);
 
   if (fetching && !imageData) {
     return (
@@ -204,48 +252,6 @@ export default function VideoCreation() {
     );
   }
 
-  if (!imageData && !fetching) {
-    return (
-      <>
-        <div className="container mx-auto max-w-7xl px-4 py-8 min-h-screen flex flex-col">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="max-w-md w-full mx-auto bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800/30 rounded-lg p-4 shadow-md"
-          >
-            <div className="flex items-center gap-3">
-              <div className="bg-amber-100 dark:bg-amber-700/20 p-2 rounded-full w-10 h-10 flex items-center justify-center">
-                <ImageIcon className="h-5 w-5 text-amber-500 dark:text-amber-300" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-base font-medium text-amber-800 dark:text-amber-300 mb-1">
-                  No Image Selected
-                </h3>
-                <p className="text-sm text-amber-700 dark:text-amber-200">
-                  Please select an image from the gallery below.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="mt-8 flex-grow"
-          >
-            <h2 className="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4 text-center">
-              Select an image from your gallery
-            </h2>
-            <div className="max-w-4xl mx-auto">
-              <ImageGallery showPrompt={false} redirectToVideoCreationOnClick />
-            </div>
-          </motion.div>
-        </div>
-      </>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50 dark:from-gray-900 dark:to-purple-950/30">
       <div className="container mx-auto max-w-7xl px-6 py-12">
@@ -271,14 +277,23 @@ export default function VideoCreation() {
                 </Badge>
               </div>
               <div className="aspect-square relative overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50 shadow-inner group">
-                {imageData?.imageUrl ? (
+                {imageData?.imageUrl || previewUrl ? (
                   <>
-                    <img
-                      src={imageData.imageUrl}
-                      alt="Selected image"
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    {imageData.prompt && (
+                    <div className="relative group h-full">
+                      <img
+                        src={imageData?.imageUrl || previewUrl || ""}
+                        alt="Selected image"
+                        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <button
+                        onClick={handleRemoveImage}
+                        className="absolute top-2 right-2 bg-black/60 text-white p-1.5 rounded-full opacity-100 transition-opacity duration-200 hover:bg-black/80"
+                        title="Remove image"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                    {imageData?.prompt && (
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -294,10 +309,49 @@ export default function VideoCreation() {
                     )}
                   </>
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-700">
-                    <p className="text-gray-500 dark:text-gray-400 text-base">
-                      No image selected
-                    </p>
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-purple-50 dark:from-gray-800 dark:to-purple-900/20 backdrop-blur-sm">
+                    <div className="text-center p-8 max-w-md">
+                      <div className="relative w-20 h-20 mx-auto mb-4">
+                        <div className="absolute inset-0 bg-purple-200 dark:bg-purple-700/30 rounded-full animate-ping opacity-30"></div>
+                        <div className="relative flex items-center justify-center w-full h-full bg-gradient-to-r from-purple-400 to-indigo-400 dark:from-purple-600 dark:to-indigo-600 rounded-full shadow-lg">
+                          <ImageIcon className="h-10 w-10 text-white" />
+                        </div>
+                      </div>
+                      <h3 className="text-lg font-medium text-gray-700 dark:text-gray-200 mb-3">
+                        Add an Image to Begin
+                      </h3>
+                      <p className="text-gray-500 dark:text-gray-400 mb-6">
+                        Select or upload an image to transform it into a
+                        stunning video with AI
+                      </p>
+                      <div className="flex flex-col sm:flex-row justify-center gap-4 mb-4">
+                        <Button
+                          variant="outline"
+                          className="w-full sm:w-auto border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-all duration-300 rounded-full cursor-pointer shadow-sm hover:shadow-md"
+                          onClick={() => fileInputRef.current?.click()}
+                        >
+                          <>
+                            <Upload className="mr-2 h-4 w-4" />
+                            Upload Image
+                          </>
+                        </Button>
+                        <input
+                          id="image-upload"
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleFileChange}
+                          ref={fileInputRef}
+                        />
+
+                        <Link href="/dashboard/gallery">
+                          <Button className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full">
+                            <ImageIcon className="mr-2 h-4 w-4" />
+                            Select from Gallery
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
@@ -362,7 +416,7 @@ export default function VideoCreation() {
                     disabled={
                       isGeneratingVideo ||
                       !videoPrompt.trim() ||
-                      !imageData?.imageUrl
+                      (!imageData?.imageUrl && !previewUrl)
                     }
                     className="text-sm bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full"
                   >
@@ -538,6 +592,7 @@ export default function VideoCreation() {
               setVideoUrl={setVideoUrl}
               createdVideoId={createdVideoId}
               showPrompt={false}
+              loadPartialGallery
             />
           </motion.div>
         </AnimatePresence>

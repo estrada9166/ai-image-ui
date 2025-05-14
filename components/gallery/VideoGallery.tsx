@@ -7,6 +7,8 @@ import { Skeleton } from "../ui/skeleton";
 import { graphql } from "../../gql";
 import { useQuery } from "urql";
 import { Download } from "lucide-react";
+import Link from "next/link";
+import { Button } from "../ui/button";
 
 type Video = {
   id: string;
@@ -45,17 +47,19 @@ export function VideoGallery({
   shouldRefetch,
   setVideoUrl,
   createdVideoId,
+  loadPartialGallery = false,
 }: {
   showPrompt?: boolean;
   shouldRefetch?: boolean;
   setVideoUrl?: (videoUrl: string) => void;
   createdVideoId?: string | null;
+  loadPartialGallery?: boolean;
 }) {
   const [after, setAfter] = useState<string | null | undefined>();
 
   const [{ data }, reExecuteQuery] = useQuery({
     query: VideoGalleryQuery,
-    variables: { first: 30, after },
+    variables: { first: loadPartialGallery ? 5 : 20, after },
   });
 
   const [selectedVideo, setSelectedVideo] = useState<VideoWithIndex | null>(
@@ -140,7 +144,11 @@ export function VideoGallery({
         className="grid grid-cols-1 md:grid-cols-5 gap-4"
         dataLength={data?.videos.edges.length ?? 0}
         next={() => setAfter(data?.videos.pageInfo.endCursor)}
-        hasMore={data?.videos.pageInfo.hasNextPage ?? false}
+        hasMore={
+          loadPartialGallery
+            ? false
+            : data?.videos.pageInfo.hasNextPage ?? false
+        }
         loader={<Skeleton className="w-full h-full" />}
       >
         {data?.videos.edges.map((video: { node: Video }, index: number) => (
@@ -233,6 +241,30 @@ export function VideoGallery({
           </div>
         ))}
       </InfiniteScroll>
+
+      {loadPartialGallery && data?.videos.pageInfo.hasNextPage && (
+        <Link href="/dashboard/gallery?tab=videos">
+          <div className="col-span-full py-6 flex justify-center">
+            <Button className="bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-medium px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2">
+              <span>View more in gallery</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </Button>
+          </div>
+        </Link>
+      )}
 
       {selectedVideo && (
         <div
