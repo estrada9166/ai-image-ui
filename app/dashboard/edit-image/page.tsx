@@ -1,5 +1,5 @@
 import ImageEdit from "@/components/imageEdit/ImageEdit";
 
-export default function ImageEditPage() {
+export default function EditImagePage() {
   return <ImageEdit />;
 }

@@ -24,6 +24,7 @@ import { graphql } from "../../gql";
 import { useQuery } from "urql";
 import { NavSecondary } from "./nav-secondary";
 import Link from "next/link";
+import { NavRemainingPlan } from "./nav-remainingPlan";
 
 // This is sample data.
 
@@ -41,7 +42,7 @@ const data = {
     },
     {
       title: "Image Edit",
-      url: "/dashboard/image-edit",
+      url: "/dashboard/edit-image",
       icon: CropIcon,
     },
     {
@@ -96,9 +97,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
+        <NavRemainingPlan />
+        <NavSecondary items={data.navSecondary} className="mt-auto" />
+
         <NavUser
           user={{
             name: userData?.me?.fullName ?? "",
