@@ -19,7 +19,7 @@ export default function Gallery({ defaultTab = "images" }: GalleryProps) {
   const [activeTab, setActiveTab] = useState<string>(tab);
 
   return (
-    <div className="container mx-auto p-4">
+    <div>
       <h1 className="text-2xl font-bold mb-4">Gallery</h1>
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full max-w-sm grid-cols-4 mb-4">

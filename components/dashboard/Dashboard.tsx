@@ -22,7 +22,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="container mx-auto py-6 px-4 max-w-6xl">
+    <div>
       <motion.div
         className="mb-6"
         initial={{ opacity: 0, y: -10 }}

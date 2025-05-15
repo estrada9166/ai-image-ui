@@ -14,12 +14,14 @@ import Link from "next/link";
 
 export function NavMain({
   items,
+  onClick,
 }: {
   items: {
     title: string;
     url: string;
     icon?: LucideIcon;
   }[];
+  onClick?: () => void;
 }) {
   return (
     <SidebarGroup>
@@ -50,7 +52,7 @@ export function NavMain({
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
               <Link href={item.url}>
-                <SidebarMenuButton tooltip={item.title}>
+                <SidebarMenuButton tooltip={item.title} onClick={onClick}>
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
                 </SidebarMenuButton>

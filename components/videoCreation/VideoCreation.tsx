@@ -8,7 +8,6 @@ import {
   RefreshCw,
   Sparkles,
   Download,
-  Upload,
   X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -28,8 +27,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { VideoGallery } from "../gallery/VideoGallery";
-import Link from "next/link";
 import axios from "axios";
+import { EmptyState } from "./EmptyState";
 
 export const ImageByIdQuery = graphql(/* GraphQL */ `
   query ImageById($id: ID!) {
@@ -274,236 +273,138 @@ export default function VideoCreation() {
 
   return (
     <div>
-      <div className="container mx-auto max-w-7xl px-6 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="grid grid-cols-1 md:grid-cols-5 gap-8 w-full"
-        >
-          {/* Source Image */}
-          <Card className="border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden hover:shadow-xl transition-all duration-300 md:col-span-2 rounded-xl">
-            <CardContent className="p-8">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                  <ImageIcon className="h-5 w-5 text-purple-500" />
-                  Source Image
-                </h3>
-                <Badge
-                  variant="outline"
-                  className="text-sm py-1 px-2 bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/20 dark:text-purple-400 dark:border-purple-800/30"
-                >
-                  Original
-                </Badge>
-              </div>
-              <div className="aspect-square relative overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50 shadow-inner group">
-                {imageData?.imageUrl || previewUrl ? (
-                  <>
-                    <div className="relative group h-full">
-                      <img
-                        src={imageData?.imageUrl || previewUrl || ""}
-                        alt="Selected image"
-                        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <button
-                        onClick={handleRemoveImage}
-                        className="absolute top-2 right-2 bg-black/60 text-white p-1.5 rounded-full opacity-100 transition-opacity duration-200 hover:bg-black/80"
-                        title="Remove image"
-                      >
-                        <X className="h-4 w-4" />
-                      </button>
-                    </div>
-                    {imageData?.prompt && (
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 text-white text-sm truncate cursor-help">
-                              {imageData.prompt}
-                            </div>
-                          </TooltipTrigger>
-                          <TooltipContent className="max-w-xs bg-gray-900/95 text-white border-purple-500/20 backdrop-blur-md">
-                            <p>{imageData.prompt}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    )}
-                  </>
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-purple-50 dark:from-gray-800 dark:to-purple-900/20 backdrop-blur-sm">
-                    <div className="text-center p-8 max-w-md">
-                      <div className="relative w-20 h-20 mx-auto mb-4">
-                        <div className="absolute inset-0 bg-purple-200 dark:bg-purple-700/30 rounded-full animate-ping opacity-30"></div>
-                        <div className="relative flex items-center justify-center w-full h-full bg-gradient-to-r from-purple-400 to-indigo-400 dark:from-purple-600 dark:to-indigo-600 rounded-full shadow-lg">
-                          <ImageIcon className="h-10 w-10 text-white" />
-                        </div>
-                      </div>
-                      <h3 className="text-lg font-medium text-gray-700 dark:text-gray-200 mb-3">
-                        Add an Image to Begin
-                      </h3>
-                      <p className="text-gray-500 dark:text-gray-400 mb-6">
-                        Select or upload an image to transform it into a
-                        stunning video with AI
-                      </p>
-                      <div className="flex flex-col sm:flex-row justify-center gap-4 mb-4">
-                        <Button
-                          variant="outline"
-                          className="w-full sm:w-auto border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-all duration-300 rounded-full cursor-pointer shadow-sm hover:shadow-md"
-                          onClick={() => fileInputRef.current?.click()}
-                        >
-                          <>
-                            <Upload className="mr-2 h-4 w-4" />
-                            Upload Image
-                          </>
-                        </Button>
-                        <input
-                          id="image-upload"
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={handleFileChange}
-                          ref={fileInputRef}
-                        />
+      <h1 className="text-2xl font-bold mb-4">Video Creation</h1>
 
-                        <Link href="/dashboard/gallery">
-                          <Button className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full">
-                            <ImageIcon className="mr-2 h-4 w-4" />
-                            Select from Gallery
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="grid grid-cols-1 md:grid-cols-5 gap-8 w-full"
+      >
+        {/* Source Image */}
+        <Card className="border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden hover:shadow-xl transition-all duration-300 md:col-span-2 rounded-xl">
+          <CardContent className="p-8">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                <ImageIcon className="h-5 w-5 text-purple-500" />
+                Source Image
+              </h3>
+              <Badge
+                variant="outline"
+                className="text-sm py-1 px-2 bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/20 dark:text-purple-400 dark:border-purple-800/30"
+              >
+                Original
+              </Badge>
+            </div>
+            <div className="aspect-square relative overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50 shadow-inner group">
+              {imageData?.imageUrl || previewUrl ? (
+                <>
+                  <div className="relative group h-full">
+                    <img
+                      src={imageData?.imageUrl || previewUrl || ""}
+                      alt="Selected image"
+                      className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <button
+                      onClick={handleRemoveImage}
+                      className="absolute top-2 right-2 bg-black/60 text-white p-1.5 rounded-full opacity-100 transition-opacity duration-200 hover:bg-black/80"
+                      title="Remove image"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
                   </div>
-                )}
-              </div>
-
-              {/* Prompt Input Below Image */}
-              <div className="mt-6 space-y-5">
-                <div className="space-y-3">
-                  <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                    <Sparkles className="h-5 w-5 text-purple-500" />
-                    Animation Description
-                  </h3>
-                  <Textarea
-                    placeholder="Describe how you want your image to animate..."
-                    className="min-h-[100px] text-base resize-none border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 transition-colors duration-200 rounded-lg"
-                    value={videoPrompt}
-                    onChange={(e) => setVideoPrompt(e.target.value)}
-                    disabled={isGeneratingVideo}
-                  />
-                </div>
-
-                <div className="space-y-3">
-                  <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                    <Sparkles className="h-5 w-5 text-red-500" />
+                  {imageData?.prompt && (
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <span className="cursor-help border-b border-dotted border-gray-400">
-                            Negative Prompt
-                          </span>
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 text-white text-sm truncate cursor-help">
+                            {imageData.prompt}
+                          </div>
                         </TooltipTrigger>
-                        <TooltipContent className="max-w-xs bg-gray-900/95 text-white border-red-500/20 backdrop-blur-md">
-                          <p>
-                            Specify what you don&apos;t want to see in your
-                            animation. This helps the AI avoid unwanted
-                            elements.
-                          </p>
+                        <TooltipContent className="max-w-xs bg-gray-900/95 text-white border-purple-500/20 backdrop-blur-md">
+                          <p>{imageData.prompt}</p>
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
-                  </h3>
-                  <Textarea
-                    placeholder="Specify what you don't want in your animation..."
-                    className="min-h-[80px] text-base resize-none border-red-100 dark:border-red-900/50 focus:border-red-300 focus:ring-red-500 transition-colors duration-200 rounded-lg"
-                    value={negativePrompt}
-                    onChange={(e) => setNegativePrompt(e.target.value)}
-                    disabled={isGeneratingVideo}
-                  />
-                </div>
+                  )}
+                </>
+              ) : (
+                <EmptyState
+                  fileInputRef={
+                    fileInputRef as React.RefObject<HTMLInputElement>
+                  }
+                  handleFileChange={handleFileChange}
+                />
+              )}
+            </div>
 
-                <div className="flex justify-end gap-3 pt-2">
-                  <Button
-                    variant="outline"
-                    onClick={() => setVideoPrompt("")}
-                    disabled={!videoPrompt.trim() || isGeneratingVideo}
-                    className="text-sm border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-colors duration-200 rounded-full"
-                  >
-                    <RefreshCw className="mr-2 h-4 w-4" />
-                    Clear
-                  </Button>
-                  <Button
-                    onClick={handleGenerateVideo}
-                    disabled={
-                      isGeneratingVideo ||
-                      !videoPrompt.trim() ||
-                      (!imageData?.imageUrl && !previewUrl)
-                    }
-                    className="text-sm bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full"
-                  >
-                    {isGeneratingVideo ? (
-                      <>
-                        <svg
-                          className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
-                        </svg>
-                        Processing...
-                      </>
-                    ) : (
-                      <>
-                        <Wand2 className="mr-2 h-4 w-4" />
-                        Generate Video
-                      </>
-                    )}
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Video Output */}
-          <Card className="border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden md:col-span-3 hover:shadow-xl transition-all duration-300 rounded-xl">
-            <CardContent className="p-8">
-              <div className="flex items-center justify-between mb-4">
+            {/* Prompt Input Below Image */}
+            <div className="mt-6 space-y-5">
+              <div className="space-y-3">
                 <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                  <VideoIcon className="h-5 w-5 text-purple-500" />
-                  Generated Video
+                  <Sparkles className="h-5 w-5 text-purple-500" />
+                  Animation Description
                 </h3>
-                {videoUrl && (
-                  <Badge className="text-sm py-1 px-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white border-0 shadow-sm rounded-full">
-                    Ready
-                  </Badge>
-                )}
-                {isGeneratingVideo && (
-                  <Badge className="text-sm py-1 px-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0 animate-pulse shadow-sm rounded-full">
-                    Processing
-                  </Badge>
-                )}
+                <Textarea
+                  placeholder="Describe how you want your image to animate..."
+                  className="min-h-[100px] text-base resize-none border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 transition-colors duration-200 rounded-lg"
+                  value={videoPrompt}
+                  onChange={(e) => setVideoPrompt(e.target.value)}
+                  disabled={isGeneratingVideo}
+                />
               </div>
-              <div
-                className="relative overflow-hidden rounded-xl border border-purple-100 dark:border-purple-900/50 bg-gray-100 dark:bg-gray-700 shadow-inner w-full h-auto"
-                style={{ aspectRatio: "16/9" }}
-              >
-                {isGeneratingVideo ? (
-                  <div className="text-center p-8 h-full flex flex-col items-center justify-center">
-                    <div className="relative w-24 h-24 mb-6">
+
+              <div className="space-y-3">
+                <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-red-500" />
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span className="cursor-help border-b border-dotted border-gray-400">
+                          Negative Prompt
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs bg-gray-900/95 text-white border-red-500/20 backdrop-blur-md">
+                        <p>
+                          Specify what you don&apos;t want to see in your
+                          animation. This helps the AI avoid unwanted elements.
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </h3>
+                <Textarea
+                  placeholder="Specify what you don't want in your animation..."
+                  className="min-h-[80px] text-base resize-none border-red-100 dark:border-red-900/50 focus:border-red-300 focus:ring-red-500 transition-colors duration-200 rounded-lg"
+                  value={negativePrompt}
+                  onChange={(e) => setNegativePrompt(e.target.value)}
+                  disabled={isGeneratingVideo}
+                />
+              </div>
+
+              <div className="flex justify-end gap-3 pt-2">
+                <Button
+                  variant="outline"
+                  onClick={() => setVideoPrompt("")}
+                  disabled={!videoPrompt.trim() || isGeneratingVideo}
+                  className="text-sm border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-colors duration-200 rounded-full"
+                >
+                  <RefreshCw className="mr-2 h-4 w-4" />
+                  Clear
+                </Button>
+                <Button
+                  onClick={handleGenerateVideo}
+                  disabled={
+                    isGeneratingVideo ||
+                    !videoPrompt.trim() ||
+                    (!imageData?.imageUrl && !previewUrl)
+                  }
+                  className="text-sm bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full"
+                >
+                  {isGeneratingVideo ? (
+                    <>
                       <svg
-                        className="animate-spin h-24 w-24 text-purple-600"
+                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -522,77 +423,136 @@ export default function VideoCreation() {
                           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                         ></path>
                       </svg>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Sparkles className="h-10 w-10 text-white animate-pulse" />
-                      </div>
-                    </div>
-                    <p className="text-gray-600 dark:text-gray-300 font-medium text-lg mb-3">
-                      Creating your video...
-                    </p>
-                    <div className="max-w-md">
-                      <p className="text-base text-gray-500 dark:text-gray-400">
-                        We&apos;re bringing your image to life with AI magic!
-                        This typically takes 1-2 minutes.
-                      </p>
-                    </div>
-                    <div className="w-full max-w-sm bg-gray-200 dark:bg-gray-600 rounded-full h-3 mt-6 overflow-hidden">
-                      <motion.div
-                        className="bg-gradient-to-r from-purple-600 to-indigo-600 h-3 rounded-full"
-                        initial={{ width: "0%" }}
-                        animate={{ width: "100%" }}
-                        transition={{ duration: 60, ease: "linear" }}
-                      />
-                    </div>
-                  </div>
-                ) : videoUrl ? (
-                  <div className="relative w-full h-full group">
-                    <video
-                      src={videoUrl}
-                      controls
-                      autoPlay
-                      loop
-                      className="w-full h-full object-contain"
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-6 pointer-events-none">
-                      <p className="text-white text-base font-medium">
-                        Hover to see controls
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="text-center p-8 h-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
-                    <VideoIcon className="h-16 w-16 text-purple-400 mx-auto mb-4 opacity-75" />
-                    <p className="text-gray-600 dark:text-gray-300 font-medium text-lg mb-3">
-                      {videoPrompt
-                        ? "Your video will appear here once generated"
-                        : "Enter a prompt to generate a video"}
-                    </p>
-                    <p className="text-base text-gray-500 dark:text-gray-400 max-w-md">
-                      Click the &quot;Generate Video&quot; button to transform
-                      your static image into a dynamic video
-                    </p>
-                  </div>
-                )}
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      <Wand2 className="mr-2 h-4 w-4" />
+                      Generate Video
+                    </>
+                  )}
+                </Button>
               </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Video Output */}
+        <Card className="border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden md:col-span-3 hover:shadow-xl transition-all duration-300 rounded-xl">
+          <CardContent className="p-8">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                <VideoIcon className="h-5 w-5 text-purple-500" />
+                Generated Video
+              </h3>
               {videoUrl && (
-                <div className="flex justify-end mt-6">
-                  <Button
-                    className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full"
-                    onClick={handleDownloadVideo}
+                <Badge className="text-sm py-1 px-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white border-0 shadow-sm rounded-full">
+                  Ready
+                </Badge>
+              )}
+              {isGeneratingVideo && (
+                <Badge className="text-sm py-1 px-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0 animate-pulse shadow-sm rounded-full">
+                  Processing
+                </Badge>
+              )}
+            </div>
+            <div
+              className="relative overflow-hidden rounded-xl border border-purple-100 dark:border-purple-900/50 bg-gray-100 dark:bg-gray-700 shadow-inner w-full h-auto"
+              style={{ aspectRatio: "16/9" }}
+            >
+              {isGeneratingVideo ? (
+                <div className="text-center p-8 h-full flex flex-col items-center justify-center">
+                  <div className="relative w-24 h-24 mb-6">
+                    <svg
+                      className="animate-spin h-24 w-24 text-purple-600"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Sparkles className="h-10 w-10 text-white animate-pulse" />
+                    </div>
+                  </div>
+                  <p className="text-gray-600 dark:text-gray-300 font-medium text-lg mb-3">
+                    Creating your video...
+                  </p>
+                  <div className="max-w-md">
+                    <p className="text-base text-gray-500 dark:text-gray-400">
+                      We&apos;re bringing your image to life with AI magic! This
+                      typically takes 1-2 minutes.
+                    </p>
+                  </div>
+                  <div className="w-full max-w-sm bg-gray-200 dark:bg-gray-600 rounded-full h-3 mt-6 overflow-hidden">
+                    <motion.div
+                      className="bg-gradient-to-r from-purple-600 to-indigo-600 h-3 rounded-full"
+                      initial={{ width: "0%" }}
+                      animate={{ width: "100%" }}
+                      transition={{ duration: 60, ease: "linear" }}
+                    />
+                  </div>
+                </div>
+              ) : videoUrl ? (
+                <div className="relative w-full h-full group">
+                  <video
+                    src={videoUrl}
+                    controls
+                    autoPlay
+                    loop
+                    className="w-full h-full object-contain"
                   >
-                    <Download className="mr-2 h-5 w-5" />
-                    Download Video
-                  </Button>
+                    Your browser does not support the video tag.
+                  </video>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-6 pointer-events-none">
+                    <p className="text-white text-base font-medium">
+                      Hover to see controls
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center p-4 sm:p-6 md:p-8 h-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-lg">
+                  <VideoIcon className="h-12 w-12 sm:h-16 sm:w-16 text-purple-400 mx-auto mb-2 sm:mb-4 opacity-75" />
+                  <p className="text-gray-600 dark:text-gray-300 font-medium text-base sm:text-lg mb-2 sm:mb-3 px-2">
+                    {videoPrompt
+                      ? "Your video will appear here once generated"
+                      : "Enter a prompt to generate a video"}
+                  </p>
+                  <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 max-w-xs sm:max-w-sm md:max-w-md px-2">
+                    Click the &quot;Generate Video&quot; button to transform
+                    your static image into a dynamic video
+                  </p>
                 </div>
               )}
-            </CardContent>
-          </Card>
-        </motion.div>
-      </div>
+            </div>
+            {videoUrl && (
+              <div className="flex justify-end mt-6">
+                <Button
+                  className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full"
+                  onClick={handleDownloadVideo}
+                >
+                  <Download className="mr-2 h-5 w-5" />
+                  Download Video
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </motion.div>
 
-      <div className="container mx-auto max-w-7xl px-6 pb-8">
+      <div className="container mx-auto max-w-7xl px-6 py-4">
         <AnimatePresence>
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -115,7 +115,7 @@ export default function ImageCreation() {
   };
 
   return (
-    <main className="container py-8">
+    <main className="container md:py-6 px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

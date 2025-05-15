@@ -77,11 +77,17 @@ const SidebarQueryDocument = graphql(/* GraphQL */ `
 `);
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { state } = useSidebar();
+  const { state, isMobile, toggleSidebar } = useSidebar();
 
   const [{ data: userData }] = useQuery({
     query: SidebarQueryDocument,
   });
+
+  const handleToggleSidebar = () => {
+    if (isMobile) {
+      toggleSidebar();
+    }
+  };
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
@@ -96,7 +102,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </Link>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={data.navMain} onClick={handleToggleSidebar} />
       </SidebarContent>
       <SidebarFooter>
         <NavRemainingPlan />
