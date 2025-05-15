@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { ImageGallery } from "../gallery/ImageGallery";
-import { ImageTypeOptionsEnum } from "../../gql/graphql";
+import { AiModelOptionsEnum, ImageTypeOptionsEnum } from "../../gql/graphql";
 import axios from "axios";
 import { useSearchParams, useRouter } from "next/navigation";
 import { ImageByIdQuery } from "../videoCreation/VideoCreation";
@@ -37,6 +37,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { promptIdeas } from "./promptIdeas";
 
 type ImageEdit = {
   id: string;
@@ -44,30 +45,6 @@ type ImageEdit = {
   status: string;
   imageUrl?: string | null;
 };
-
-// Predefined prompt ideas
-const promptIdeas = [
-  {
-    id: "1",
-    text: "Change the background to a sunny beach",
-  },
-  {
-    id: "2",
-    text: "Remove the background and replace with a gradient",
-  },
-  {
-    id: "3",
-    text: "Add a soft bokeh effect to the background",
-  },
-  {
-    id: "4",
-    text: "Make the image look like a professional studio portrait",
-  },
-  {
-    id: "5",
-    text: "Convert the image to a watercolor painting style",
-  },
-];
 
 const ImageEditMutation = graphql(/* GraphQL */ `
   mutation ImageEdit($input: ImageEditInput!) {
@@ -138,6 +115,31 @@ const PromptIdeasSelector = ({
             </div>
           </SelectItem>
         ))}
+      </SelectContent>
+    </Select>
+  </div>
+);
+
+// Component for prompt ideas selection
+const AiModelSelector = ({
+  model,
+  setModel,
+}: {
+  model: AiModelOptionsEnum;
+  setModel: (model: AiModelOptionsEnum) => void;
+}) => (
+  <div className="space-y-3">
+    <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+      <Wand2 className="h-5 w-5 text-purple-500" />
+      AI Model:
+    </h3>
+    <Select value={model} onValueChange={setModel as (value: string) => void}>
+      <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
+        <SelectValue placeholder="Select model" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value={AiModelOptionsEnum.Model_1}>AI Model 1</SelectItem>
+        <SelectItem value={AiModelOptionsEnum.Model_2}>AI Model 2</SelectItem>
       </SelectContent>
     </Select>
   </div>
@@ -328,6 +330,8 @@ interface SourceImageCardProps {
   handleEditImage: () => void;
   handlePromptIdeaClick: (idea: string) => void;
   uploadedImage: File | null;
+  model: AiModelOptionsEnum;
+  setModel: React.Dispatch<React.SetStateAction<AiModelOptionsEnum>>;
 }
 
 const SourceImageCard = ({
@@ -343,6 +347,8 @@ const SourceImageCard = ({
   handleEditImage,
   handlePromptIdeaClick,
   uploadedImage,
+  model,
+  setModel,
 }: SourceImageCardProps) => {
   const handleUploadClick = () => {
     if (fileInputRef?.current) {
@@ -391,6 +397,7 @@ const SourceImageCard = ({
         {/* Prompt Input Below Image */}
         <div className="mt-6 space-y-5">
           <PromptIdeasSelector onSelectPrompt={handlePromptIdeaClick} />
+          <AiModelSelector model={model} setModel={setModel} />
 
           <PromptInput
             value={imagePrompt}
@@ -574,6 +581,7 @@ export default function ImageEdit() {
   const [isEditingImage, setIsEditingImage] = useState(false);
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const [imageId, setImageId] = useState<string | null>(null);
+  const [model, setModel] = useState(AiModelOptionsEnum.Model_1);
 
   const [, editImage] = useMutation(ImageEditMutation);
 
@@ -675,6 +683,7 @@ export default function ImageEdit() {
 
         formData.append("file", uploadedImage);
         formData.append("prompt", imagePrompt);
+        formData.append("model", model);
 
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/api/upload/image`,
@@ -690,7 +699,7 @@ export default function ImageEdit() {
         imageId = response.data.id;
       } else if (imageData) {
         const result = await editImage({
-          input: { imageId: imageData.id, prompt: imagePrompt },
+          input: { imageId: imageData.id, prompt: imagePrompt, model },
         });
 
         imageId = result.data?.imageEdit.id;
@@ -739,6 +748,8 @@ export default function ImageEdit() {
           handleEditImage={handleEditImage}
           handlePromptIdeaClick={handlePromptIdeaClick}
           uploadedImage={uploadedImage}
+          model={model}
+          setModel={setModel}
         />
 
         {/* Edited Image Output */}

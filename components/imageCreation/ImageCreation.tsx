@@ -17,7 +17,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CameraOptionsEnum, AspectRatioOptionsEnum } from "@/gql/graphql";
+import {
+  CameraOptionsEnum,
+  AspectRatioOptionsEnum,
+  AiModelOptionsEnum,
+} from "@/gql/graphql";
+import { promptIdeas } from "./promptIdeas";
 
 const ImageCreationMutation = graphql(/* GraphQL */ `
   mutation ImageCreation($input: ImageCreationInput!) {
@@ -37,30 +42,6 @@ type ImageCreation = {
   imageUrl?: string | null;
 };
 
-// Predefined prompt ideas
-const promptIdeas = [
-  {
-    id: "1",
-    text: "A professional with short brown hair wearing a business suit in an office setting",
-  },
-  {
-    id: "2",
-    text: "A creative artist with colorful clothes in a bright studio with paint splashes",
-  },
-  {
-    id: "3",
-    text: "A tech enthusiast with glasses in a modern workspace surrounded by gadgets",
-  },
-  {
-    id: "4",
-    text: "A nature lover with casual attire hiking in a lush green forest",
-  },
-  {
-    id: "5",
-    text: "A fitness enthusiast in workout clothes at a gym with exercise equipment",
-  },
-];
-
 // Available aspect ratios
 const aspectRatios = [
   { value: AspectRatioOptionsEnum.Square, label: "Square (1:1)" },
@@ -71,6 +52,7 @@ const aspectRatios = [
 export default function ImageCreation() {
   const [imagePrompt, setImagePrompt] = useState("");
   const [avatarType, setAvatarType] = useState(CameraOptionsEnum.NoSelfie);
+  const [model, setModel] = useState(AiModelOptionsEnum.Model_1);
   const [selectedPromptIdea, setSelectedPromptIdea] = useState("");
   const [aspectRatio, setAspectRatio] = useState(
     AspectRatioOptionsEnum.Portrait
@@ -96,6 +78,7 @@ export default function ImageCreation() {
           type: ImageTypeOptionsEnum.Created,
           camera: avatarType,
           aspectRatio: aspectRatio,
+          model,
         },
       });
     } catch (error) {
@@ -115,43 +98,36 @@ export default function ImageCreation() {
   };
 
   return (
-    <main className="container md:py-6 px-4">
+    <div className="max-w-5xl mx-auto space-y-8">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-5xl mx-auto text-center mb-8"
       >
-        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4">
-          AI Visual Studio
-        </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          Transform your ideas into stunning visuals with our AI-powered tools.
-          Create images and videos with just a few words.
-        </p>
-      </motion.div>
-
-      <div className="max-w-5xl mx-auto space-y-6">
-        <Card className="border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/90 backdrop-blur-sm dark:bg-gray-800/90 overflow-hidden">
-          <CardContent className="p-6">
-            <div className="space-y-4">
+        <Card className="border border-purple-100 dark:border-purple-900/30 shadow-xl bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden rounded-xl">
+          <CardContent className="p-8">
+            <div className="space-y-6">
               <div>
-                <h2 className="text-xl font-semibold mb-2 flex items-center gap-2 text-purple-700 dark:text-purple-400">
-                  <Sparkles className="h-5 w-5" />
-                  Create your image
+                <h2 className="text-2xl font-bold mb-3 flex items-center gap-2 text-purple-700 dark:text-purple-400 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                  <Sparkles className="h-6 w-6 text-purple-500" />
+                  Create Your Masterpiece
                 </h2>
-                <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-6 max-w-3xl">
                   Describe yourself or the person you want to create an avatar
-                  for. Be specific about features, style, and appearance.
+                  for. Be specific about features, style, and appearance for the
+                  best results.
                 </p>
 
-                <div className="flex flex-col md:flex-row gap-3 mb-3">
-                  <div className="w-full md:w-1/4">
+                <div className="flex flex-col md:flex-row gap-4 mb-5">
+                  <div className="w-full md:w-1/5">
+                    <label className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-1 block">
+                      Camera Type
+                    </label>
                     <Select
                       value={avatarType}
                       onValueChange={setAvatarType as (value: string) => void}
                     >
-                      <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm">
+                      <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
                         <SelectValue placeholder="Avatar type" />
                       </SelectTrigger>
                       <SelectContent>
@@ -164,12 +140,15 @@ export default function ImageCreation() {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="w-full md:w-1/4">
+                  <div className="w-full md:w-1/5">
+                    <label className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-1 block">
+                      Aspect Ratio
+                    </label>
                     <Select
                       value={aspectRatio}
                       onValueChange={setAspectRatio as (value: string) => void}
                     >
-                      <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm">
+                      <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
                         <SelectValue placeholder="Aspect ratio" />
                       </SelectTrigger>
                       <SelectContent>
@@ -181,19 +160,43 @@ export default function ImageCreation() {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="w-full md:w-2/4">
+                  <div className="w-full md:w-1/5">
+                    <label className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-1 block">
+                      AI Model
+                    </label>
+                    <Select
+                      value={model}
+                      onValueChange={setModel as (value: string) => void}
+                    >
+                      <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
+                        <SelectValue placeholder="Select model" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value={AiModelOptionsEnum.Model_1}>
+                          AI Model 1
+                        </SelectItem>
+                        <SelectItem value={AiModelOptionsEnum.Model_2}>
+                          AI Model 2
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="w-full md:w-2/5">
+                    <label className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-1 block">
+                      Prompt Ideas
+                    </label>
                     <Select
                       value={selectedPromptIdea}
                       onValueChange={handlePromptIdeaChange}
                     >
-                      <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm">
+                      <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
                         <SelectValue placeholder="Choose a prompt idea or write your own" />
                       </SelectTrigger>
                       <SelectContent>
                         {promptIdeas.map((idea) => (
                           <SelectItem key={idea.id} value={idea.id}>
                             <div className="flex items-center gap-2">
-                              <BookOpen className="h-4 w-4" />
+                              <BookOpen className="h-4 w-4 text-purple-500" />
                               <span className="truncate">
                                 {idea.text.substring(0, 50)}...
                               </span>
@@ -207,14 +210,14 @@ export default function ImageCreation() {
 
                 <Textarea
                   placeholder="A professional-looking person with short brown hair, blue eyes, wearing a business suit..."
-                  className="min-h-[120px] resize-none border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500"
+                  className="min-h-[150px] resize-none border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 rounded-lg shadow-sm text-base"
                   value={imagePrompt}
                   onChange={(e) => setImagePrompt(e.target.value)}
                   disabled={isGeneratingImage}
                 />
               </div>
 
-              <div className="flex justify-end gap-2 mt-4">
+              <div className="flex justify-end gap-3 mt-6">
                 <Button
                   variant="outline"
                   onClick={() => {
@@ -222,7 +225,7 @@ export default function ImageCreation() {
                     setSelectedPromptIdea("");
                   }}
                   disabled={!imagePrompt.trim() || isGeneratingImage}
-                  className="border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20"
+                  className="border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 rounded-lg px-5 py-2 transition-all duration-300"
                 >
                   <RefreshCw className="mr-2 h-4 w-4" />
                   Clear
@@ -230,12 +233,12 @@ export default function ImageCreation() {
                 <Button
                   onClick={handleGenerateImage}
                   disabled={isGeneratingImage || !imagePrompt.trim()}
-                  className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all"
+                  className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all duration-300 rounded-lg px-5 py-2"
                 >
                   {isGeneratingImage ? (
                     <>
                       <svg
-                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        className="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -258,7 +261,7 @@ export default function ImageCreation() {
                     </>
                   ) : (
                     <>
-                      <Wand2 className="mr-2 h-4 w-4" />
+                      <Wand2 className="mr-2 h-5 w-5" />
                       Generate Image
                     </>
                   )}
@@ -267,32 +270,32 @@ export default function ImageCreation() {
             </div>
           </CardContent>
         </Card>
+      </motion.div>
 
-        {/* Generated Images Gallery */}
-        <AnimatePresence>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="space-y-4"
-          >
-            <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-              <ImageIcon className="h-5 w-5 text-purple-500" />
-              Your Creations
-              <span className="text-sm text-gray-500 dark:text-gray-400 font-normal"></span>
-            </h3>
+      {/* Generated Images Gallery */}
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="space-y-6"
+        >
+          <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-3 border-b border-purple-100 dark:border-purple-900/30 pb-3">
+            <ImageIcon className="h-5 w-5 text-purple-500" />
+            Your Creations
+            <span className="text-sm text-gray-500 dark:text-gray-400 font-normal"></span>
+          </h3>
 
-            <ImageGallery
-              type={[ImageTypeOptionsEnum.Created]}
-              shouldRefetch={shouldRefetch}
-              showPrompt={false}
-              tab="images"
-              loadPartialGallery
-            />
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    </main>
+          <ImageGallery
+            type={[ImageTypeOptionsEnum.Created]}
+            shouldRefetch={shouldRefetch}
+            showPrompt={false}
+            tab="images"
+            loadPartialGallery
+          />
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 }

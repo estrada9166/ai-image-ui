@@ -22,6 +22,12 @@ export type Scalars = {
   JSON: { input: any; output: any; }
 };
 
+/** Model of the image */
+export enum AiModelOptionsEnum {
+  Model_1 = 'MODEL_1',
+  Model_2 = 'MODEL_2'
+}
+
 /** Aspect ratio of the image */
 export enum AspectRatioOptionsEnum {
   Landscape = 'LANDSCAPE',
@@ -71,6 +77,7 @@ export type ImageConnection = {
 export type ImageCreationInput = {
   aspectRatio?: InputMaybe<AspectRatioOptionsEnum>;
   camera?: InputMaybe<CameraOptionsEnum>;
+  model?: InputMaybe<AiModelOptionsEnum>;
   prompt: Scalars['String']['input'];
   type: ImageTypeOptionsEnum;
 };
@@ -85,6 +92,7 @@ export type ImageEdge = {
 
 export type ImageEditInput = {
   imageId: Scalars['String']['input'];
+  model?: InputMaybe<AiModelOptionsEnum>;
   prompt: Scalars['String']['input'];
 };
 

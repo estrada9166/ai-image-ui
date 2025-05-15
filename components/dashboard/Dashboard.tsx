@@ -49,18 +49,21 @@ export default function Dashboard() {
             icon: <ImageIcon className="h-6 w-6 text-primary" />,
             title: "Create Image",
             description: "Generate AI images from text",
+            completed: true,
           },
           {
             href: "/dashboard/edit/image",
             icon: <Edit className="h-6 w-6 text-primary" />,
             title: "Edit Image",
             description: "Modify existing images",
+            completed: false,
           },
           {
             href: "/dashboard/create/video",
             icon: <VideoIcon className="h-6 w-6 text-primary" />,
             title: "Create Video",
             description: "Transform images into videos",
+            completed: false,
           },
         ].map((item, index) => (
           <motion.div
@@ -82,7 +85,31 @@ export default function Dashboard() {
                       {item.description}
                     </CardDescription>
                   </div>
+                  {item.completed ? (
+                    <span className="text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-3 py-1 rounded-full shadow-sm flex items-center gap-1.5 hover:shadow-md transition-all duration-200 font-medium">
+                      <span className="inline-block h-2 w-2 rounded-full bg-white animate-pulse"></span>
+                      <span>Completed</span>
+                    </span>
+                  ) : (
+                    <span className="text-xs bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1 rounded-full shadow-sm flex items-center gap-1.5 hover:shadow-md transition-all duration-200">
+                      <svg
+                        className="h-3.5 w-3.5 animate-bounce"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <path
+                          d="M12 4V20M12 4L8 8M12 4L16 8"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      <span className="font-medium">Try me!</span>
+                    </span>
+                  )}
                 </CardContent>
+                <div className="h-1 w-full bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </Card>
             </Link>
           </motion.div>

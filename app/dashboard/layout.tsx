@@ -12,7 +12,7 @@ export default function Page({ children }: { children: React.ReactNode }) {
         <SidebarInset>
           <Header />
           <div className="min-h-screen bg-gradient-to-b from-white to-purple-50 dark:from-gray-900 dark:to-purple-950/30">
-            <div className="container mx-auto px-4 md:py-6 max-w-6xl">
+            <div className="container mx-auto px-4 md:py-6 max-w-7xl">
               {children}
             </div>
           </div>
