@@ -107,7 +107,7 @@ export default function UserConfirmationPage() {
         </CardContent>
         <CardFooter className="flex justify-center">
           <Button asChild>
-            <Link href="/project">Go to Projects</Link>
+            <Link href="/dashboard">Go to Dashboard</Link>
           </Button>
         </CardFooter>
       </Card>

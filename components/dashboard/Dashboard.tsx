@@ -45,19 +45,19 @@ export default function Dashboard() {
       >
         {[
           {
-            href: "/dashboard/create-image",
+            href: "/dashboard/create/image",
             icon: <ImageIcon className="h-6 w-6 text-primary" />,
             title: "Create Image",
             description: "Generate AI images from text",
           },
           {
-            href: "/dashboard/edit-image",
+            href: "/dashboard/edit/image",
             icon: <Edit className="h-6 w-6 text-primary" />,
             title: "Edit Image",
             description: "Modify existing images",
           },
           {
-            href: "/dashboard/video-creation",
+            href: "/dashboard/create/video",
             icon: <VideoIcon className="h-6 w-6 text-primary" />,
             title: "Create Video",
             description: "Transform images into videos",
@@ -94,7 +94,7 @@ export default function Dashboard() {
           {
             icon: <ImageIcon className="h-5 w-5 text-primary" />,
             title: "Your Images",
-            href: "/dashboard/create-image",
+            href: "/dashboard/create/image",
             linkText: "Create new",
             gallery: (
               <ImageGallery
@@ -108,13 +108,13 @@ export default function Dashboard() {
           {
             icon: <Edit className="h-5 w-5 text-primary" />,
             title: "Edited Images",
-            href: "/dashboard/edit-image",
+            href: "/dashboard/edit/image",
             linkText: "Edit an image",
             gallery: (
               <ImageGallery
                 type={[ImageTypeOptionsEnum.Edited]}
                 showPrompt={false}
-                tab="images"
+                tab="edited-images"
                 loadPartialGallery
               />
             ),
@@ -122,7 +122,7 @@ export default function Dashboard() {
           {
             icon: <VideoIcon className="h-5 w-5 text-primary" />,
             title: "Your Videos",
-            href: "/dashboard/video-creation",
+            href: "/dashboard/create/video",
             linkText: "Create new",
             gallery: <VideoGallery showPrompt={false} loadPartialGallery />,
           },

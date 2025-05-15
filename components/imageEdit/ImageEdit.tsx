@@ -320,7 +320,7 @@ const EmptySourceImage = ({ onUploadClick }: EmptySourceImageProps) => (
 interface SourceImageCardProps {
   imageData: Image | null;
   previewUrl: string | null;
-  fileInputRef: React.RefObject<HTMLInputElement>;
+  fileInputRef: React.RefObject<HTMLInputElement> | null;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleRemoveImage: () => void;
   handleRemoveSelectedImage: () => void;
@@ -347,7 +347,7 @@ const SourceImageCard = ({
   uploadedImage,
 }: SourceImageCardProps) => {
   const handleUploadClick = () => {
-    if (fileInputRef.current) {
+    if (fileInputRef?.current) {
       fileInputRef.current.click();
     }
   };
@@ -717,7 +717,7 @@ export default function ImageEdit() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-purple-50 dark:from-gray-900 dark:to-purple-950/30">
+    <div>
       <div className="container mx-auto max-w-7xl px-6 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

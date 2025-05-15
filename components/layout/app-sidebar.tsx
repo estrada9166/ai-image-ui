@@ -42,12 +42,12 @@ const data = {
     },
     {
       title: "Image Edit",
-      url: "/dashboard/edit-image",
+      url: "/dashboard/edit/image",
       icon: CropIcon,
     },
     {
       title: "Videos creation",
-      url: "/dashboard/video-creation",
+      url: "/dashboard/create/video",
       icon: VideoIcon,
     },
   ],
@@ -86,7 +86,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
-        <Link href="/project">
+        <Link href="/dashboard">
           <div className="text-2xl font-bold gradient-text">
             <div className="flex items-center gap-2 ml-1">
               <Sparkles className="w-6 h-6 text-indigo-500" />

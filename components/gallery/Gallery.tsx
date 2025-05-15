@@ -34,6 +34,7 @@ export default function Gallery({ defaultTab = "images" }: GalleryProps) {
               <ImageGallery
                 type={[ImageTypeOptionsEnum.Created]}
                 showPrompt={false}
+                tab="images"
               />
             </CardContent>
           </Card>
@@ -51,6 +52,7 @@ export default function Gallery({ defaultTab = "images" }: GalleryProps) {
               <ImageGallery
                 type={[ImageTypeOptionsEnum.Edited]}
                 showPrompt={false}
+                tab="edited-images"
               />
             </CardContent>
           </Card>

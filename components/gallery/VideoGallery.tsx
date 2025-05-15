@@ -9,6 +9,7 @@ import { useQuery } from "urql";
 import { Download } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { EmptyGalleryState } from "./EmptyGalleryState";
 
 type Video = {
   id: string;
@@ -121,7 +122,10 @@ export function VideoGallery({
     if (video.status === GenAiStatusEnum.Pending || !video.videoUrl) return;
 
     try {
-      const response = await fetch(video.videoUrl);
+      const response = await fetch(video.videoUrl, {
+        method: "GET",
+        mode: "cors",
+      });
       if (!response.ok) throw new Error("Network response was not ok");
 
       const blob = await response.blob();
@@ -137,6 +141,10 @@ export function VideoGallery({
       console.error("Error downloading video:", error);
     }
   };
+
+  if (data?.videos.edges.length === 0) {
+    return <EmptyGalleryState tab="video" />;
+  }
 
   return (
     <>

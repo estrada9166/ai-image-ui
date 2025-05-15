@@ -8,7 +8,7 @@ export function LogoLink({
 }) {
   return (
     <Link
-      href={redirectToDashboard ? "/project" : "/"}
+      href={redirectToDashboard ? "/dashboard" : "/"}
       className="flex items-center gap-2 text-xl font-semibold hover:opacity-80 transition-opacity"
     >
       <div className="text-2xl font-bold gradient-text">

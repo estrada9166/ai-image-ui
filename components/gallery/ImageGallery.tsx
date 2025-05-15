@@ -9,6 +9,7 @@ import { graphql } from "../../gql";
 import { useQuery } from "urql";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
+import { EmptyGalleryState } from "./EmptyGalleryState";
 
 type Image = {
   id: string;
@@ -107,7 +108,7 @@ export function ImageGallery({
     if (image.status === GenAiStatusEnum.Pending) return;
 
     if (redirectToVideoCreationOnClick) {
-      router.push(`/dashboard/video-creation?image=${image.id}`);
+      router.push(`/dashboard/create/video?image=${image.id}`);
     } else {
       setSelectedImage({ ...image, index });
     }
@@ -126,7 +127,11 @@ export function ImageGallery({
     if (!imageUrl || status === GenAiStatusEnum.Pending) return;
 
     try {
-      const response = await fetch(imageUrl);
+      console.log("Downloading image:", imageUrl);
+      const response = await fetch(imageUrl, {
+        method: "GET",
+        mode: "cors",
+      });
       if (!response.ok) throw new Error("Network response was not ok");
 
       const blob = await response.blob();
@@ -142,6 +147,10 @@ export function ImageGallery({
       console.error("Error downloading image:", error);
     }
   };
+
+  if (data?.images.edges.length === 0) {
+    return <EmptyGalleryState tab={tab} />;
+  }
 
   return (
     <>
@@ -214,7 +223,7 @@ export function ImageGallery({
               {image.node.status !== GenAiStatusEnum.Pending &&
                 !redirectToVideoCreationOnClick && (
                   <>
-                    <Link href={`/dashboard/image-edit?image=${image.node.id}`}>
+                    <Link href={`/dashboard/edit/image?image=${image.node.id}`}>
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -241,7 +250,7 @@ export function ImageGallery({
                       </button>
                     </Link>
                     <Link
-                      href={`/dashboard/video-creation?image=${image.node.id}`}
+                      href={`/dashboard/create/video?image=${image.node.id}`}
                     >
                       <button
                         onClick={(e) => {
@@ -379,7 +388,7 @@ export function ImageGallery({
                   <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
               </button>
-              <Link href={`/dashboard/image-edit?image=${selectedImage.id}`}>
+              <Link href={`/dashboard/edit/image?image=${selectedImage.id}`}>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -405,9 +414,7 @@ export function ImageGallery({
                   <span className="sr-only">Edit image</span>
                 </button>
               </Link>
-              <Link
-                href={`/dashboard/video-creation?image=${selectedImage.id}`}
-              >
+              <Link href={`/dashboard/create/video?image=${selectedImage.id}`}>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
