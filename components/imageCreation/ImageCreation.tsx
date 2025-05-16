@@ -281,19 +281,21 @@ export default function ImageCreation() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="space-y-6"
         >
-          <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-3 border-b border-purple-100 dark:border-purple-900/30 pb-3">
+          <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
             <ImageIcon className="h-5 w-5 text-purple-500" />
             Your Creations
             <span className="text-sm text-gray-500 dark:text-gray-400 font-normal"></span>
           </h3>
 
-          <ImageGallery
-            type={[ImageTypeOptionsEnum.Created]}
-            shouldRefetch={shouldRefetch}
-            showPrompt={false}
-            tab="images"
-            loadPartialGallery
-          />
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-violet-100 dark:border-violet-900/30">
+            <ImageGallery
+              type={[ImageTypeOptionsEnum.Created]}
+              shouldRefetch={shouldRefetch}
+              showPrompt={false}
+              tab="images"
+              loadPartialGallery
+            />
+          </div>
         </motion.div>
       </AnimatePresence>
     </div>

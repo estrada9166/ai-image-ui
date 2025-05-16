@@ -556,13 +556,15 @@ export default function VideoCreation() {
               <span className="text-sm text-gray-500 dark:text-gray-400 font-normal"></span>
             </h3>
 
-            <VideoGallery
-              shouldRefetch={shouldRefetch}
-              setVideoUrl={setVideoUrl}
-              createdVideoId={createdVideoId}
-              showPrompt={false}
-              loadPartialGallery
-            />
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-violet-100 dark:border-violet-900/30">
+              <VideoGallery
+                shouldRefetch={shouldRefetch}
+                setVideoUrl={setVideoUrl}
+                createdVideoId={createdVideoId}
+                showPrompt={false}
+                loadPartialGallery
+              />
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>
