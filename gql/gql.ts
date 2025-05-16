@@ -14,7 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        imageUrl\n      }\n    }\n  }\n": typeof types.ImageByIdDocument,
+    "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n      }\n    }\n  }\n": typeof types.ImageByIdDocument,
     "\n  mutation ConfirmUserEmail($input: ConfirmUserEmailInput!) {\n    confirmUserEmail(input: $input) {\n      id\n    }\n  }\n": typeof types.ConfirmUserEmailDocument,
     "\n  mutation AddFeedback($input: AddFeedbackInput!) {\n    addFeedback(input: $input)\n  }\n": typeof types.AddFeedbackDocument,
     "\n  mutation forgotPassword($input: ForgotPasswordInput!) {\n    forgotPassword(input: $input)\n  }\n": typeof types.ForgotPasswordDocument,
@@ -34,7 +34,7 @@ type Documents = {
     "\n  mutation VideoCreation($input: VideoCreationInput!) {\n    videoCreation(input: $input) {\n      id\n      status\n    }\n  }\n": typeof types.VideoCreationDocument,
 };
 const documents: Documents = {
-    "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        imageUrl\n      }\n    }\n  }\n": types.ImageByIdDocument,
+    "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n      }\n    }\n  }\n": types.ImageByIdDocument,
     "\n  mutation ConfirmUserEmail($input: ConfirmUserEmailInput!) {\n    confirmUserEmail(input: $input) {\n      id\n    }\n  }\n": types.ConfirmUserEmailDocument,
     "\n  mutation AddFeedback($input: AddFeedbackInput!) {\n    addFeedback(input: $input)\n  }\n": types.AddFeedbackDocument,
     "\n  mutation forgotPassword($input: ForgotPasswordInput!) {\n    forgotPassword(input: $input)\n  }\n": types.ForgotPasswordDocument,
@@ -71,7 +71,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        imageUrl\n      }\n    }\n  }\n"): (typeof documents)["\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        imageUrl\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n      }\n    }\n  }\n"): (typeof documents)["\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

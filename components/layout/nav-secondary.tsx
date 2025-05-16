@@ -9,6 +9,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 export function NavSecondary({
@@ -19,19 +20,32 @@ export function NavSecondary({
     title: string;
     url: string;
     icon: LucideIcon;
+    component?: () => React.ReactElement | null;
   }[];
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+  const { isMobile, toggleSidebar } = useSidebar();
+
+  const handleToggleSidebar = () => {
+    if (isMobile) {
+      toggleSidebar();
+    }
+  };
+
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild>
-                <a href={item.url}>
-                  <item.icon />
-                  <span>{item.title}</span>
-                </a>
+              <SidebarMenuButton asChild onClick={handleToggleSidebar}>
+                {item.component ? (
+                  item.component()
+                ) : (
+                  <a href={item.url}>
+                    <item.icon />
+                    <span>{item.title}</span>
+                  </a>
+                )}
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

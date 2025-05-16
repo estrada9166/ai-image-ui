@@ -11,7 +11,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Send } from "lucide-react";
 import { SidebarMenuButton } from "@/components/ui/sidebar";
 import { Textarea } from "@/components/ui/textarea";
@@ -22,16 +21,11 @@ const addFeedbackDocument = graphql(/* GraphQL */ `
   }
 `);
 
-type FeedbackProps = React.PropsWithChildren & {
-  userIsLoggedIn: boolean;
-  hasActiveSubscription: boolean;
-};
-
-export default function Feedback(props: FeedbackProps) {
+export default function Feedback() {
   const { t } = useTranslation();
 
   const [feedback, setFeedback] = useState<string | null>(null);
-  const [email, setUserEmail] = useState<string | null>(null);
+
   const [isFeedbackSubmitted, setIsFeedbackSubmitted] = useState(false);
 
   const [, addFeedback] = useMutation(addFeedbackDocument);
@@ -44,7 +38,6 @@ export default function Feedback(props: FeedbackProps) {
     addFeedback({
       input: {
         feedback,
-        email,
       },
     }).then((res) => {
       if (res.data?.addFeedback) {
@@ -74,26 +67,14 @@ export default function Feedback(props: FeedbackProps) {
               <span>{t("feedback.thanksMessage")}</span>
             </div>
           ) : (
-            <>
-              {!props.userIsLoggedIn && (
-                <div>
-                  <Input
-                    id="email"
-                    defaultValue=""
-                    placeholder="you@example.com"
-                    onChange={(e) => setUserEmail(e.target.value)}
-                  />
-                </div>
-              )}
-              <div>
-                <Textarea
-                  id="feedback"
-                  placeholder={t("feedback.inputPlaceholder")}
-                  defaultValue=""
-                  onChange={(e) => setFeedback(e.target.value)}
-                />
-              </div>
-            </>
+            <div>
+              <Textarea
+                id="feedback"
+                placeholder={t("feedback.inputPlaceholder")}
+                defaultValue=""
+                onChange={(e) => setFeedback(e.target.value)}
+              />
+            </div>
           )}
         </div>
         <DialogFooter>

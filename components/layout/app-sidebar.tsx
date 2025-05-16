@@ -26,6 +26,7 @@ import { useQuery } from "urql";
 import { NavSecondary } from "./nav-secondary";
 import Link from "next/link";
 import { NavRemainingPlan } from "./nav-remainingPlan";
+import Feedback from "../feedback/Feedback";
 
 // This is sample data.
 
@@ -68,6 +69,7 @@ const data = {
       title: "Get Help",
       url: "#",
       icon: HelpCircleIcon,
+      component: () => <Feedback />,
     },
   ],
 };
