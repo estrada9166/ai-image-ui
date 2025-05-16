@@ -1,15 +1,26 @@
 "use client";
 
+import type React from "react";
+
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { GenAiStatusEnum, ImageTypeOptionsEnum } from "@/gql/graphql";
-import { Skeleton } from "../ui/skeleton";
 import { graphql } from "../../gql";
 import { useQuery } from "urql";
 import { useRouter } from "next/navigation";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { EmptyGalleryState } from "./EmptyGalleryState";
+import {
+  Download,
+  Edit,
+  RotateCcw,
+  Video,
+  X,
+  ChevronRight,
+  Loader2,
+} from "lucide-react";
+import { motion } from "framer-motion";
 
 type Image = {
   id: string;
@@ -73,7 +84,6 @@ export function ImageGallery({
   );
 
   useEffect(() => {
-    return;
     if (shouldRefetch) {
       reExecuteQuery({ requestPolicy: "network-only" });
     }
@@ -155,7 +165,7 @@ export function ImageGallery({
   return (
     <>
       <InfiniteScroll
-        className="grid grid-cols-1 md:grid-cols-5 gap-4"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5"
         dataLength={data?.images.edges.length ?? 0}
         next={() => {
           if (data?.images.pageInfo.endCursor) {
@@ -168,226 +178,172 @@ export function ImageGallery({
             : data?.images.pageInfo.hasNextPage ?? false
         }
         loader={
-          <div className="col-span-full py-4 flex justify-center">
-            <Skeleton className="w-32 h-32" />
+          <div className="col-span-full py-6 flex justify-center">
+            <div className="flex items-center gap-2">
+              <Loader2 className="h-5 w-5 animate-spin text-purple-500" />
+              <span className="text-sm text-muted-foreground">
+                Loading more images...
+              </span>
+            </div>
           </div>
         }
       >
         {data?.images.edges.map((image, index) => (
-          <div
+          <motion.div
             key={`${image.node.id}-${index}`}
-            className={`aspect-square relative rounded-lg overflow-hidden ${
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.05 }}
+            className={`group aspect-square relative rounded-xl overflow-hidden ${
               image.node.status !== GenAiStatusEnum.Pending
                 ? "cursor-pointer"
                 : "cursor-default"
-            } transition-all duration-300 hover:shadow-md`}
+            } transition-all duration-300 hover:shadow-xl hover:scale-[1.02] bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800`}
             onClick={() => handleImageClick(image.node, index)}
           >
             {image.node.status === GenAiStatusEnum.Pending ? (
-              <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+              <div className="w-full h-full flex items-center justify-center">
                 <div className="flex flex-col items-center">
-                  <svg
-                    className="animate-spin h-10 w-10 text-purple-500 mb-2"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <div className="relative w-16 h-16">
+                    <div className="absolute inset-0 rounded-full border-t-2 border-purple-500 animate-spin"></div>
+                    <div className="absolute inset-2 rounded-full border-t-2 border-purple-300 animate-spin animation-delay-150"></div>
+                    <div className="absolute inset-4 rounded-full border-t-2 border-purple-200 animate-spin animation-delay-300"></div>
+                  </div>
+                  <p className="mt-4 text-sm font-medium text-gray-600 dark:text-gray-300">
                     Generating image...
                   </p>
                 </div>
               </div>
             ) : (
-              <img
-                src={image.node.imageUrl || ""}
-                alt={`Generated image ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
+              <>
+                <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors duration-300"></div>
+                <img
+                  src={image.node.imageUrl || ""}
+                  alt={`Generated image ${index + 1}`}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </>
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute top-2 right-2 flex flex-col gap-2">
-              {image.node.status !== GenAiStatusEnum.Pending &&
-                !redirectToVideoCreationOnClick && (
-                  <>
-                    <Link href={`/dashboard/edit/image?image=${image.node.id}`}>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                        }}
-                        className="p-1.5 rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors transform scale-110 shadow-md opacity-70 hover:opacity-100"
-                        aria-label="Edit image"
-                        title="Edit this image"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                        </svg>
-                        <span className="sr-only">Edit image</span>
-                      </button>
-                    </Link>
-                    {type?.includes(ImageTypeOptionsEnum.UserUploaded) && (
-                      <Link
-                        href={`/dashboard/edit/restore?image=${image.node.id}`}
-                      >
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                          }}
-                          className="p-1.5 rounded-full bg-amber-500 text-white hover:bg-amber-600 transition-colors transform scale-110 shadow-md opacity-70 hover:opacity-100"
-                          aria-label="Restore image"
-                          title="Restore this image"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-                            <path d="M3 3v5h5"></path>
-                            <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
-                            <path d="M16 21h5v-5"></path>
-                          </svg>
-                          <span className="sr-only">Restore image</span>
-                        </button>
-                      </Link>
-                    )}
+
+            {/* Overlay gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+            {/* Action buttons */}
+            {image.node.status !== GenAiStatusEnum.Pending &&
+              !redirectToVideoCreationOnClick && (
+                <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-2 group-hover:translate-x-0">
+                  <Link href={`/dashboard/edit/image?image=${image.node.id}`}>
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={(e) => e.stopPropagation()}
+                      className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors shadow-lg backdrop-blur-sm"
+                      aria-label="Edit image"
+                      title="Edit this image"
+                    >
+                      <Edit className="w-4 h-4" />
+                    </motion.button>
+                  </Link>
+
+                  {type?.includes(ImageTypeOptionsEnum.UserUploaded) && (
                     <Link
-                      href={`/dashboard/create/video?image=${image.node.id}`}
+                      href={`/dashboard/edit/restore?image=${image.node.id}`}
                     >
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                        }}
-                        className="p-1.5 rounded-full bg-purple-500 text-white hover:bg-purple-600 transition-colors transform scale-110 shadow-md opacity-70 hover:opacity-100"
-                        aria-label="Edit video"
-                        title="Animate this image"
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="p-2 rounded-full bg-amber-500 text-white hover:bg-amber-600 transition-colors shadow-lg backdrop-blur-sm"
+                        aria-label="Restore image"
+                        title="Restore this image"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                          <rect
-                            x="1"
-                            y="5"
-                            width="15"
-                            height="14"
-                            rx="2"
-                            ry="2"
-                          ></rect>
-                        </svg>
-                        <span className="sr-only">Animate image</span>
-                      </button>
+                        <RotateCcw className="w-4 h-4" />
+                      </motion.button>
                     </Link>
-                    <button
-                      onClick={(e) => {
-                        handleDownloadImage(
-                          image.node.imageUrl,
-                          e,
-                          image.node.status
-                        );
-                      }}
-                      className="p-1.5 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors transform scale-110 shadow-md opacity-70 hover:opacity-100"
-                      aria-label="Download image"
-                      title="Download image"
+                  )}
+
+                  <Link href={`/dashboard/create/video?image=${image.node.id}`}>
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={(e) => e.stopPropagation()}
+                      className="p-2 rounded-full bg-purple-500 text-white hover:bg-purple-600 transition-colors shadow-lg backdrop-blur-sm"
+                      aria-label="Animate image"
+                      title="Animate this image"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                      </svg>
-                      <span className="sr-only">Download image</span>
-                    </button>
-                  </>
-                )}
-            </div>
-            {showPrompt && (
-              <div className="absolute bottom-0 left-0 right-0 p-3 text-white text-base font-semibold">
-                {image.node.prompt}
-              </div>
+                      <Video className="w-4 h-4" />
+                    </motion.button>
+                  </Link>
+
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={(e) =>
+                      handleDownloadImage(
+                        image.node.imageUrl,
+                        e,
+                        image.node.status
+                      )
+                    }
+                    className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow-lg backdrop-blur-sm"
+                    aria-label="Download image"
+                    title="Download image"
+                  >
+                    <Download className="w-4 h-4" />
+                  </motion.button>
+                </div>
+              )}
+
+            {/* Prompt text - more subtle */}
+            {showPrompt && image.node.prompt && (
+              <>
+                {/* Always visible subtle indicator */}
+                <div className="absolute bottom-2 left-2 right-2 p-1.5 bg-black/10 backdrop-blur-sm rounded-md opacity-40 transition-opacity duration-300 group-hover:opacity-0">
+                  <p className="text-xs text-white/90 line-clamp-1 truncate">
+                    {image.node.prompt}
+                  </p>
+                </div>
+
+                {/* Full prompt on hover */}
+                <div className="absolute bottom-2 left-2 right-2 p-2 bg-black/40 backdrop-blur-sm rounded-md opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-1 group-hover:translate-y-0">
+                  <p className="text-xs text-white line-clamp-2">
+                    {image.node.prompt}
+                  </p>
+                </div>
+              </>
             )}
-          </div>
+          </motion.div>
         ))}
       </InfiniteScroll>
 
+      {/* View more button */}
       {loadPartialGallery && data?.images.pageInfo.hasNextPage && (
         <Link href={`/dashboard/gallery?tab=${tab}`}>
-          <div className="col-span-full py-6 flex justify-center">
-            <Button className="bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-medium px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2">
-              <span>View more in gallery</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M5 12h14"></path>
-                <path d="m12 5 7 7-7 7"></path>
-              </svg>
-            </Button>
+          <div className="col-span-full py-8 flex justify-center">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+              <Button className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white font-medium px-8 py-6 rounded-full shadow-lg hover:shadow-purple-500/20 transition-all duration-300 flex items-center gap-2 h-auto">
+                <span>View full gallery</span>
+                <ChevronRight className="w-5 h-5" />
+              </Button>
+            </motion.div>
           </div>
         </Link>
       )}
 
+      {/* Image modal */}
       {selectedImage && (
-        <div
-          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 p-4"
           onClick={closeModal}
         >
-          <div
-            className="relative max-w-4xl max-h-[90vh] w-full"
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", damping: 25 }}
+            className="relative max-w-5xl w-full rounded-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <img
@@ -396,90 +352,49 @@ export function ImageGallery({
                 selectedImage.prompt ||
                 `Generated image ${selectedImage.index + 1}`
               }
-              className="w-full h-auto max-h-[90vh] object-contain"
+              className="w-full h-auto max-h-[85vh] object-contain bg-black/50"
             />
 
             <div className="absolute top-4 right-4 flex flex-col gap-3">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={closeModal}
-                className="p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+                className="p-2.5 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors backdrop-blur-sm"
                 aria-label="Close modal"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              </button>
+                <X className="w-5 h-5" />
+              </motion.button>
+
               <Link href={`/dashboard/edit/image?image=${selectedImage.id}`}>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                  className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors shadow-md opacity-70 hover:opacity-100"
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="p-2.5 rounded-full bg-green-500/90 text-white hover:bg-green-600 transition-colors backdrop-blur-sm"
                   aria-label="Edit image"
                   title="Edit this image"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                  </svg>
-                  <span className="sr-only">Edit image</span>
-                </button>
+                  <Edit className="w-5 h-5" />
+                </motion.button>
               </Link>
+
               <Link href={`/dashboard/create/video?image=${selectedImage.id}`}>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                  className="p-2 rounded-full bg-purple-500 text-white hover:bg-purple-600 transition-colors shadow-md opacity-70 hover:opacity-100"
-                  aria-label="Edit video"
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="p-2.5 rounded-full bg-purple-500/90 text-white hover:bg-purple-600 transition-colors backdrop-blur-sm"
+                  aria-label="Animate image"
                   title="Animate this image"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                    <rect
-                      x="1"
-                      y="5"
-                      width="15"
-                      height="14"
-                      rx="2"
-                      ry="2"
-                    ></rect>
-                  </svg>
-                  <span className="sr-only">Animate image</span>
-                </button>
+                  <Video className="w-5 h-5" />
+                </motion.button>
               </Link>
-              <button
+
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={(e) => {
                   e.stopPropagation();
                   handleDownloadImage(
@@ -488,33 +403,23 @@ export function ImageGallery({
                     selectedImage.status
                   );
                 }}
-                className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow-md opacity-70 hover:opacity-100"
+                className="p-2.5 rounded-full bg-blue-500/90 text-white hover:bg-blue-600 transition-colors backdrop-blur-sm"
                 aria-label="Download image"
                 title="Download image"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="7 10 12 15 17 10"></polyline>
-                  <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                <span className="sr-only">Download image</span>
-              </button>
+                <Download className="w-5 h-5" />
+              </motion.button>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-black/50 text-white">
-              {selectedImage.prompt}
-            </div>
-          </div>
-        </div>
+
+            {selectedImage.prompt && (
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+                <p className="text-white/90 text-xs md:text-sm font-medium max-w-[90%] mx-auto">
+                  {selectedImage.prompt}
+                </p>
+              </div>
+            )}
+          </motion.div>
+        </motion.div>
       )}
     </>
   );

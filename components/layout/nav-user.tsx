@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronsUpDown, CreditCard, LogOut } from "lucide-react";
+import { ChevronsUpDown, CreditCard, LogOut, SettingsIcon } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -52,6 +52,7 @@ export function NavUser({
 
   const { isMobile } = useSidebar();
   const [, signOut] = useMutation(signOutMutationDocument);
+
   const [{ data, fetching }] = useQuery({
     query: CustomerPortalUrlQueryDocument,
     pause: !isDropdownOpen, // Only run the query when dropdown is open
@@ -118,10 +119,10 @@ export function NavUser({
             </DropdownMenuGroup> */}
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              {/* <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem> */}
+              <DropdownMenuItem>
+                <SettingsIcon />
+                Settings
+              </DropdownMenuItem>
               {/* {fetching ? (
                 <DropdownMenuItem>
                   <CreditCard />
