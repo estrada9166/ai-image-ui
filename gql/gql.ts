@@ -14,7 +14,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
+    "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        imageUrl\n      }\n    }\n  }\n": typeof types.ImageByIdDocument,
     "\n  mutation ConfirmUserEmail($input: ConfirmUserEmailInput!) {\n    confirmUserEmail(input: $input) {\n      id\n    }\n  }\n": typeof types.ConfirmUserEmailDocument,
+    "\n  mutation AddFeedback($input: AddFeedbackInput!) {\n    addFeedback(input: $input)\n  }\n": typeof types.AddFeedbackDocument,
     "\n  mutation forgotPassword($input: ForgotPasswordInput!) {\n    forgotPassword(input: $input)\n  }\n": typeof types.ForgotPasswordDocument,
     "\n  query ImageGallery(\n    $first: Int\n    $after: String\n    $type: [ImageTypeOptionsEnum!]!\n  ) {\n    images(first: $first, after: $after, type: $type) {\n      edges {\n        node {\n          id\n          prompt\n          status\n          imageUrl\n        }\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n": typeof types.ImageGalleryDocument,
     "\n  query VideoGallery($first: Int, $after: String) {\n    videos(first: $first, after: $after) {\n      edges {\n        node {\n          id\n          prompt\n          negativePrompt\n          status\n          videoUrl\n        }\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n": typeof types.VideoGalleryDocument,
@@ -27,12 +29,14 @@ type Documents = {
     "\n  query redirectIfUser {\n    me {\n      id\n    }\n  }\n": typeof types.RedirectIfUserDocument,
     "\n  query requireSignIn {\n    me {\n      id\n    }\n  }\n": typeof types.RequireSignInDocument,
     "\n  mutation resetPassword($input: ResetPasswordInput!) {\n    resetPassword(input: $input)\n  }\n": typeof types.ResetPasswordDocument,
+    "\n  mutation ImageRestore($input: ImageRestoreInput!) {\n    imageRestore(input: $input) {\n      id\n      prompt\n      status\n      imageUrl\n    }\n  }\n": typeof types.ImageRestoreDocument,
     "\n  mutation signUp($input: SignUpUserInput!) {\n    signUp(input: $input)\n  }\n": typeof types.SignUpDocument,
-    "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        imageUrl\n      }\n    }\n  }\n": typeof types.ImageByIdDocument,
     "\n  mutation VideoCreation($input: VideoCreationInput!) {\n    videoCreation(input: $input) {\n      id\n      status\n    }\n  }\n": typeof types.VideoCreationDocument,
 };
 const documents: Documents = {
+    "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        imageUrl\n      }\n    }\n  }\n": types.ImageByIdDocument,
     "\n  mutation ConfirmUserEmail($input: ConfirmUserEmailInput!) {\n    confirmUserEmail(input: $input) {\n      id\n    }\n  }\n": types.ConfirmUserEmailDocument,
+    "\n  mutation AddFeedback($input: AddFeedbackInput!) {\n    addFeedback(input: $input)\n  }\n": types.AddFeedbackDocument,
     "\n  mutation forgotPassword($input: ForgotPasswordInput!) {\n    forgotPassword(input: $input)\n  }\n": types.ForgotPasswordDocument,
     "\n  query ImageGallery(\n    $first: Int\n    $after: String\n    $type: [ImageTypeOptionsEnum!]!\n  ) {\n    images(first: $first, after: $after, type: $type) {\n      edges {\n        node {\n          id\n          prompt\n          status\n          imageUrl\n        }\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n": types.ImageGalleryDocument,
     "\n  query VideoGallery($first: Int, $after: String) {\n    videos(first: $first, after: $after) {\n      edges {\n        node {\n          id\n          prompt\n          negativePrompt\n          status\n          videoUrl\n        }\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n": types.VideoGalleryDocument,
@@ -45,8 +49,8 @@ const documents: Documents = {
     "\n  query redirectIfUser {\n    me {\n      id\n    }\n  }\n": types.RedirectIfUserDocument,
     "\n  query requireSignIn {\n    me {\n      id\n    }\n  }\n": types.RequireSignInDocument,
     "\n  mutation resetPassword($input: ResetPasswordInput!) {\n    resetPassword(input: $input)\n  }\n": types.ResetPasswordDocument,
+    "\n  mutation ImageRestore($input: ImageRestoreInput!) {\n    imageRestore(input: $input) {\n      id\n      prompt\n      status\n      imageUrl\n    }\n  }\n": types.ImageRestoreDocument,
     "\n  mutation signUp($input: SignUpUserInput!) {\n    signUp(input: $input)\n  }\n": types.SignUpDocument,
-    "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        imageUrl\n      }\n    }\n  }\n": types.ImageByIdDocument,
     "\n  mutation VideoCreation($input: VideoCreationInput!) {\n    videoCreation(input: $input) {\n      id\n      status\n    }\n  }\n": types.VideoCreationDocument,
 };
 
@@ -67,7 +71,15 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        imageUrl\n      }\n    }\n  }\n"): (typeof documents)["\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        imageUrl\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "\n  mutation ConfirmUserEmail($input: ConfirmUserEmailInput!) {\n    confirmUserEmail(input: $input) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation ConfirmUserEmail($input: ConfirmUserEmailInput!) {\n    confirmUserEmail(input: $input) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation AddFeedback($input: AddFeedbackInput!) {\n    addFeedback(input: $input)\n  }\n"): (typeof documents)["\n  mutation AddFeedback($input: AddFeedbackInput!) {\n    addFeedback(input: $input)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -119,11 +131,11 @@ export function graphql(source: "\n  mutation resetPassword($input: ResetPasswor
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation signUp($input: SignUpUserInput!) {\n    signUp(input: $input)\n  }\n"): (typeof documents)["\n  mutation signUp($input: SignUpUserInput!) {\n    signUp(input: $input)\n  }\n"];
+export function graphql(source: "\n  mutation ImageRestore($input: ImageRestoreInput!) {\n    imageRestore(input: $input) {\n      id\n      prompt\n      status\n      imageUrl\n    }\n  }\n"): (typeof documents)["\n  mutation ImageRestore($input: ImageRestoreInput!) {\n    imageRestore(input: $input) {\n      id\n      prompt\n      status\n      imageUrl\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        imageUrl\n      }\n    }\n  }\n"): (typeof documents)["\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        imageUrl\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  mutation signUp($input: SignUpUserInput!) {\n    signUp(input: $input)\n  }\n"): (typeof documents)["\n  mutation signUp($input: SignUpUserInput!) {\n    signUp(input: $input)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

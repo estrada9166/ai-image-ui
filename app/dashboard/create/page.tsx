@@ -13,7 +13,7 @@ import {
 
 export default function CreateImagePage() {
   return (
-    <div className="container mx-auto py-12 px-4 max-w-6xl">
+    <div className="container mx-auto py-12 px-4">
       <motion.div
         className="mb-8"
         initial={{ opacity: 0, y: -10 }}

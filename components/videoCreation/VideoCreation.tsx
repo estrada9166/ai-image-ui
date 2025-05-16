@@ -29,18 +29,7 @@ import {
 import { VideoGallery } from "../gallery/VideoGallery";
 import axios from "axios";
 import { EmptyState } from "./EmptyState";
-
-export const ImageByIdQuery = graphql(/* GraphQL */ `
-  query ImageById($id: ID!) {
-    node(id: $id) {
-      ... on Image {
-        id
-        prompt
-        imageUrl
-      }
-    }
-  }
-`);
+import { ImageByIdQuery } from "../common/ImageByIdQuery";
 
 const VideoCreationMutation = graphql(/* GraphQL */ `
   mutation VideoCreation($input: VideoCreationInput!) {
@@ -552,7 +541,7 @@ export default function VideoCreation() {
         </Card>
       </motion.div>
 
-      <div className="container mx-auto max-w-7xl px-6 py-4">
+      <div className="container mx-auto px-4 py-6">
         <AnimatePresence>
           <motion.div
             initial={{ opacity: 0, y: 20 }}

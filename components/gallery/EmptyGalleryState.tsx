@@ -1,45 +1,54 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
 
-import { EditIcon, ImageIcon, VideoIcon } from "lucide-react";
+import { EditIcon, ImageIcon, VideoIcon, RefreshCwIcon } from "lucide-react";
 
 // Empty state component for when there are no images
 export const EmptyGalleryState = ({
   tab,
 }: {
-  tab: "images" | "edited-images" | "video";
+  tab: "images" | "edited-images" | "restored-images" | "video";
 }) => {
-  const title =
-    tab === "images"
-      ? "Images"
-      : tab === "edited-images"
-      ? "Edited Images"
-      : "Videos";
-  const description =
-    tab === "images"
-      ? "Create your first AI-generated image to see it appear in your gallery"
-      : tab === "edited-images"
-      ? "Create your first edited image to see it appear in your gallery"
-      : "Create your first video to see it appear in your gallery";
-  const buttonText =
-    tab === "images"
-      ? "Create an Image"
-      : tab === "edited-images"
-      ? "Edit an Image"
-      : "Create a Video";
+  // Import RestoreIcon which was missing
 
-  const link =
-    tab === "images"
-      ? "/dashboard/create/image"
-      : tab === "edited-images"
-      ? "/dashboard/edit/image"
-      : "/dashboard/create/video";
-  const Icon =
-    tab === "images"
-      ? ImageIcon
-      : tab === "edited-images"
-      ? EditIcon
-      : VideoIcon;
+  // Define configuration for each tab type
+  const tabConfig = {
+    images: {
+      title: "Images",
+      description:
+        "Create your first AI-generated image to see it appear in your gallery",
+      buttonText: "Create an Image",
+      link: "/dashboard/create/image",
+      Icon: ImageIcon,
+    },
+    "edited-images": {
+      title: "Edited Images",
+      description:
+        "Create your first edited image to see it appear in your gallery",
+      buttonText: "Edit an Image",
+      link: "/dashboard/edit/image",
+      Icon: EditIcon,
+    },
+    "restored-images": {
+      title: "Restored Images",
+      description:
+        "Create your first restored image to see it appear in your gallery",
+      buttonText: "Restore an Image",
+      link: "/dashboard/edit/restore",
+      Icon: RefreshCwIcon,
+    },
+    video: {
+      title: "Videos",
+      description: "Create your first video to see it appear in your gallery",
+      buttonText: "Create a Video",
+      link: "/dashboard/create/video",
+      Icon: VideoIcon,
+    },
+  };
+
+  // Get configuration for current tab or default to video
+  const config = tabConfig[tab] || tabConfig["video"];
+  const { title, description, buttonText, link, Icon } = config;
 
   return (
     <div className="col-span-full py-8 flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-purple-50 dark:from-gray-800 dark:to-purple-900/20 rounded-lg min-h-[300px]">

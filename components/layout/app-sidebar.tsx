@@ -9,6 +9,7 @@ import {
   VideoIcon,
   BookImageIcon,
   CropIcon,
+  ImageIcon,
 } from "lucide-react";
 
 import { NavMain } from "./nav-main";
@@ -44,6 +45,11 @@ const data = {
       title: "Image Edit",
       url: "/dashboard/edit/image",
       icon: CropIcon,
+    },
+    {
+      title: "Restore Image",
+      url: "/dashboard/edit/restore",
+      icon: ImageIcon,
     },
     {
       title: "Videos creation",

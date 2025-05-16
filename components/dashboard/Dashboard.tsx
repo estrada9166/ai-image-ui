@@ -147,6 +147,20 @@ export default function Dashboard() {
             ),
           },
           {
+            icon: <Edit className="h-5 w-5 text-primary" />,
+            title: "Restored Images",
+            href: "/dashboard/edit/restore",
+            linkText: "Restore an image",
+            gallery: (
+              <ImageGallery
+                type={[ImageTypeOptionsEnum.Restored]}
+                showPrompt={false}
+                tab="restored-images"
+                loadPartialGallery
+              />
+            ),
+          },
+          {
             icon: <VideoIcon className="h-5 w-5 text-primary" />,
             title: "Your Videos",
             href: "/dashboard/create/video",

@@ -22,9 +22,10 @@ export default function Gallery({ defaultTab = "images" }: GalleryProps) {
     <div>
       <h1 className="text-2xl font-bold mb-4">Gallery</h1>
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full max-w-sm grid-cols-4 mb-4">
+        <TabsList className="grid w-full max-w-sm grid-cols-5 mb-4">
           <TabsTrigger value="images">Created</TabsTrigger>
           <TabsTrigger value="edited-images">Edited</TabsTrigger>
+          <TabsTrigger value="restored-images">Restored</TabsTrigger>
           <TabsTrigger value="videos">Videos</TabsTrigger>
           <TabsTrigger value="uploaded-images">Uploaded</TabsTrigger>
         </TabsList>
@@ -53,6 +54,17 @@ export default function Gallery({ defaultTab = "images" }: GalleryProps) {
                 type={[ImageTypeOptionsEnum.Edited]}
                 showPrompt={false}
                 tab="edited-images"
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="restored-images">
+          <Card>
+            <CardContent className="pt-4">
+              <ImageGallery
+                type={[ImageTypeOptionsEnum.Restored]}
+                showPrompt={false}
+                tab="restored-images"
               />
             </CardContent>
           </Card>
