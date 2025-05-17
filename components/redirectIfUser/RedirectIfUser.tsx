@@ -1,17 +1,9 @@
 "use client";
 
 import { useQuery } from "urql";
-import { graphql } from "@/gql/gql";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
-
-const redirectIfUserQueryDocument = graphql(/* GraphQL */ `
-  query redirectIfUser {
-    me {
-      id
-    }
-  }
-`);
+import { MeQueryDocument } from "../common/MeQuery";
 
 interface RedirectIfUserProps {
   children: ReactNode;
@@ -21,7 +13,7 @@ export default function RedirectIfUser({ children }: RedirectIfUserProps) {
   const router = useRouter();
 
   const [{ data }] = useQuery({
-    query: redirectIfUserQueryDocument,
+    query: MeQueryDocument,
     requestPolicy: "network-only",
   });
 

@@ -1,17 +1,9 @@
 "use client";
 
 import { useQuery } from "urql";
-import { graphql } from "@/gql/gql";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
-
-const RequireSignInQueryDocument = graphql(/* GraphQL */ `
-  query requireSignIn {
-    me {
-      id
-    }
-  }
-`);
+import { MeQueryDocument } from "../common/MeQuery";
 
 interface RequireSignInProps {
   children: ReactNode;
@@ -21,7 +13,7 @@ export default function RequireSignIn({ children }: RequireSignInProps) {
   const router = useRouter();
 
   const [{ data, error, fetching }] = useQuery({
-    query: RequireSignInQueryDocument,
+    query: MeQueryDocument,
     requestPolicy: "network-only",
   });
 

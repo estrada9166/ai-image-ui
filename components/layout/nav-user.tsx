@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronsUpDown, CreditCard, LogOut, SettingsIcon } from "lucide-react";
+import { ChevronsUpDown, LogOut, SettingsIcon } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -19,22 +19,13 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { graphql } from "@/gql";
-import { useMutation, useQuery } from "urql";
+import { useMutation } from "urql";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
 
 export const signOutMutationDocument = graphql(/* GraphQL */ `
   mutation SignOut {
     signOut
-  }
-`);
-
-const CustomerPortalUrlQueryDocument = graphql(/* GraphQL */ `
-  query CustomerPortalUrlQuery {
-    me {
-      id
-    }
   }
 `);
 
@@ -45,18 +36,13 @@ export function NavUser({
     name: string;
     email: string;
     avatar: string;
+    isSocialLogin: boolean;
   };
 }) {
   const router = useRouter();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const { isMobile } = useSidebar();
   const [, signOut] = useMutation(signOutMutationDocument);
-
-  const [{ data, fetching }] = useQuery({
-    query: CustomerPortalUrlQueryDocument,
-    pause: !isDropdownOpen, // Only run the query when dropdown is open
-  });
 
   const handleSignOut = () => {
     signOut({}).then(() => {
@@ -69,7 +55,7 @@ export function NavUser({
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu onOpenChange={setIsDropdownOpen}>
+        <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
@@ -119,10 +105,14 @@ export function NavUser({
             </DropdownMenuGroup> */}
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <SettingsIcon />
-                Settings
-              </DropdownMenuItem>
+              {!user.isSocialLogin && (
+                <Link href="/dashboard/settings">
+                  <DropdownMenuItem>
+                    <SettingsIcon />
+                    Settings
+                  </DropdownMenuItem>
+                </Link>
+              )}
               {/* {fetching ? (
                 <DropdownMenuItem>
                   <CreditCard />

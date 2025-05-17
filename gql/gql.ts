@@ -15,6 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 type Documents = {
     "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n      }\n    }\n  }\n": typeof types.ImageByIdDocument,
+    "\n  query Me {\n    me {\n      id\n      fullName\n      email\n      isSocialLogin\n    }\n  }\n": typeof types.MeDocument,
     "\n  mutation ConfirmUserEmail($input: ConfirmUserEmailInput!) {\n    confirmUserEmail(input: $input) {\n      id\n    }\n  }\n": typeof types.ConfirmUserEmailDocument,
     "\n  mutation AddFeedback($input: AddFeedbackInput!) {\n    addFeedback(input: $input)\n  }\n": typeof types.AddFeedbackDocument,
     "\n  mutation forgotPassword($input: ForgotPasswordInput!) {\n    forgotPassword(input: $input)\n  }\n": typeof types.ForgotPasswordDocument,
@@ -22,19 +23,17 @@ type Documents = {
     "\n  query VideoGallery($first: Int, $after: String) {\n    videos(first: $first, after: $after) {\n      edges {\n        node {\n          id\n          prompt\n          negativePrompt\n          status\n          videoUrl\n        }\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n": typeof types.VideoGalleryDocument,
     "\n  mutation ImageCreation($input: ImageCreationInput!) {\n    imageCreation(input: $input) {\n      id\n      prompt\n      status\n      imageUrl\n    }\n  }\n": typeof types.ImageCreationDocument,
     "\n  mutation ImageEdit($input: ImageEditInput!) {\n    imageEdit(input: $input) {\n      id\n      prompt\n      status\n      imageUrl\n    }\n  }\n": typeof types.ImageEditDocument,
-    "\n  query SidebarQuery {\n    me {\n      id\n      fullName\n      email\n    }\n  }\n": typeof types.SidebarQueryDocument,
     "\n  mutation SignOut {\n    signOut\n  }\n": typeof types.SignOutDocument,
-    "\n  query CustomerPortalUrlQuery {\n    me {\n      id\n    }\n  }\n": typeof types.CustomerPortalUrlQueryDocument,
     "\n  mutation signIn($input: SignInUserInput!) {\n    signIn(input: $input) {\n      id\n      email\n      fullName\n    }\n  }\n": typeof types.SignInDocument,
-    "\n  query redirectIfUser {\n    me {\n      id\n    }\n  }\n": typeof types.RedirectIfUserDocument,
-    "\n  query requireSignIn {\n    me {\n      id\n    }\n  }\n": typeof types.RequireSignInDocument,
     "\n  mutation resetPassword($input: ResetPasswordInput!) {\n    resetPassword(input: $input)\n  }\n": typeof types.ResetPasswordDocument,
     "\n  mutation ImageRestore($input: ImageRestoreInput!) {\n    imageRestore(input: $input) {\n      id\n      prompt\n      status\n      imageUrl\n    }\n  }\n": typeof types.ImageRestoreDocument,
+    "\n  mutation UpdateUserPassword($input: UpdateUserPasswordInput!) {\n    updateUserPassword(input: $input) {\n      id\n      email\n    }\n  }\n": typeof types.UpdateUserPasswordDocument,
     "\n  mutation signUp($input: SignUpUserInput!) {\n    signUp(input: $input)\n  }\n": typeof types.SignUpDocument,
     "\n  mutation VideoCreation($input: VideoCreationInput!) {\n    videoCreation(input: $input) {\n      id\n      status\n    }\n  }\n": typeof types.VideoCreationDocument,
 };
 const documents: Documents = {
     "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n      }\n    }\n  }\n": types.ImageByIdDocument,
+    "\n  query Me {\n    me {\n      id\n      fullName\n      email\n      isSocialLogin\n    }\n  }\n": types.MeDocument,
     "\n  mutation ConfirmUserEmail($input: ConfirmUserEmailInput!) {\n    confirmUserEmail(input: $input) {\n      id\n    }\n  }\n": types.ConfirmUserEmailDocument,
     "\n  mutation AddFeedback($input: AddFeedbackInput!) {\n    addFeedback(input: $input)\n  }\n": types.AddFeedbackDocument,
     "\n  mutation forgotPassword($input: ForgotPasswordInput!) {\n    forgotPassword(input: $input)\n  }\n": types.ForgotPasswordDocument,
@@ -42,14 +41,11 @@ const documents: Documents = {
     "\n  query VideoGallery($first: Int, $after: String) {\n    videos(first: $first, after: $after) {\n      edges {\n        node {\n          id\n          prompt\n          negativePrompt\n          status\n          videoUrl\n        }\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n": types.VideoGalleryDocument,
     "\n  mutation ImageCreation($input: ImageCreationInput!) {\n    imageCreation(input: $input) {\n      id\n      prompt\n      status\n      imageUrl\n    }\n  }\n": types.ImageCreationDocument,
     "\n  mutation ImageEdit($input: ImageEditInput!) {\n    imageEdit(input: $input) {\n      id\n      prompt\n      status\n      imageUrl\n    }\n  }\n": types.ImageEditDocument,
-    "\n  query SidebarQuery {\n    me {\n      id\n      fullName\n      email\n    }\n  }\n": types.SidebarQueryDocument,
     "\n  mutation SignOut {\n    signOut\n  }\n": types.SignOutDocument,
-    "\n  query CustomerPortalUrlQuery {\n    me {\n      id\n    }\n  }\n": types.CustomerPortalUrlQueryDocument,
     "\n  mutation signIn($input: SignInUserInput!) {\n    signIn(input: $input) {\n      id\n      email\n      fullName\n    }\n  }\n": types.SignInDocument,
-    "\n  query redirectIfUser {\n    me {\n      id\n    }\n  }\n": types.RedirectIfUserDocument,
-    "\n  query requireSignIn {\n    me {\n      id\n    }\n  }\n": types.RequireSignInDocument,
     "\n  mutation resetPassword($input: ResetPasswordInput!) {\n    resetPassword(input: $input)\n  }\n": types.ResetPasswordDocument,
     "\n  mutation ImageRestore($input: ImageRestoreInput!) {\n    imageRestore(input: $input) {\n      id\n      prompt\n      status\n      imageUrl\n    }\n  }\n": types.ImageRestoreDocument,
+    "\n  mutation UpdateUserPassword($input: UpdateUserPasswordInput!) {\n    updateUserPassword(input: $input) {\n      id\n      email\n    }\n  }\n": types.UpdateUserPasswordDocument,
     "\n  mutation signUp($input: SignUpUserInput!) {\n    signUp(input: $input)\n  }\n": types.SignUpDocument,
     "\n  mutation VideoCreation($input: VideoCreationInput!) {\n    videoCreation(input: $input) {\n      id\n      status\n    }\n  }\n": types.VideoCreationDocument,
 };
@@ -72,6 +68,10 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n      }\n    }\n  }\n"): (typeof documents)["\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query Me {\n    me {\n      id\n      fullName\n      email\n      isSocialLogin\n    }\n  }\n"): (typeof documents)["\n  query Me {\n    me {\n      id\n      fullName\n      email\n      isSocialLogin\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -103,27 +103,11 @@ export function graphql(source: "\n  mutation ImageEdit($input: ImageEditInput!)
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query SidebarQuery {\n    me {\n      id\n      fullName\n      email\n    }\n  }\n"): (typeof documents)["\n  query SidebarQuery {\n    me {\n      id\n      fullName\n      email\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
 export function graphql(source: "\n  mutation SignOut {\n    signOut\n  }\n"): (typeof documents)["\n  mutation SignOut {\n    signOut\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query CustomerPortalUrlQuery {\n    me {\n      id\n    }\n  }\n"): (typeof documents)["\n  query CustomerPortalUrlQuery {\n    me {\n      id\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
 export function graphql(source: "\n  mutation signIn($input: SignInUserInput!) {\n    signIn(input: $input) {\n      id\n      email\n      fullName\n    }\n  }\n"): (typeof documents)["\n  mutation signIn($input: SignInUserInput!) {\n    signIn(input: $input) {\n      id\n      email\n      fullName\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "\n  query redirectIfUser {\n    me {\n      id\n    }\n  }\n"): (typeof documents)["\n  query redirectIfUser {\n    me {\n      id\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "\n  query requireSignIn {\n    me {\n      id\n    }\n  }\n"): (typeof documents)["\n  query requireSignIn {\n    me {\n      id\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -132,6 +116,10 @@ export function graphql(source: "\n  mutation resetPassword($input: ResetPasswor
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation ImageRestore($input: ImageRestoreInput!) {\n    imageRestore(input: $input) {\n      id\n      prompt\n      status\n      imageUrl\n    }\n  }\n"): (typeof documents)["\n  mutation ImageRestore($input: ImageRestoreInput!) {\n    imageRestore(input: $input) {\n      id\n      prompt\n      status\n      imageUrl\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation UpdateUserPassword($input: UpdateUserPasswordInput!) {\n    updateUserPassword(input: $input) {\n      id\n      email\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateUserPassword($input: UpdateUserPasswordInput!) {\n    updateUserPassword(input: $input) {\n      id\n      email\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

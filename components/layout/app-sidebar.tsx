@@ -3,7 +3,6 @@
 import * as React from "react";
 import {
   LayoutDashboardIcon,
-  SettingsIcon,
   HelpCircleIcon,
   Sparkles,
   VideoIcon,
@@ -21,13 +20,12 @@ import {
   SidebarHeader,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { graphql } from "../../gql";
 import { useQuery } from "urql";
 import { NavSecondary } from "./nav-secondary";
 import Link from "next/link";
 import { NavRemainingPlan } from "./nav-remainingPlan";
 import Feedback from "../feedback/Feedback";
-
+import { MeQueryDocument } from "../common/MeQuery";
 // This is sample data.
 
 const data = {
@@ -69,21 +67,11 @@ const data = {
   ],
 };
 
-const SidebarQueryDocument = graphql(/* GraphQL */ `
-  query SidebarQuery {
-    me {
-      id
-      fullName
-      email
-    }
-  }
-`);
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state, isMobile, toggleSidebar } = useSidebar();
 
   const [{ data: userData }] = useQuery({
-    query: SidebarQueryDocument,
+    query: MeQueryDocument,
   });
 
   const handleToggleSidebar = () => {
@@ -116,6 +104,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             name: userData?.me?.fullName ?? "",
             email: userData?.me?.email ?? "",
             avatar: userData?.me?.email ?? "",
+            isSocialLogin: userData?.me?.isSocialLogin ?? false,
           }}
         />
       </SidebarFooter>
