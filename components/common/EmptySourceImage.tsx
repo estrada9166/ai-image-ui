@@ -7,9 +7,13 @@ import { useTranslation } from "react-i18next";
 
 interface EmptySourceImageProps {
   onUploadClick: () => void;
+  tab?: "images" | "videos" | "edited-images" | "uploaded-images";
 }
 
-export const EmptySourceImage = ({ onUploadClick }: EmptySourceImageProps) => {
+export const EmptySourceImage = ({
+  onUploadClick,
+  tab,
+}: EmptySourceImageProps) => {
   const { t } = useTranslation();
 
   return (
@@ -39,7 +43,10 @@ export const EmptySourceImage = ({ onUploadClick }: EmptySourceImageProps) => {
             {t("emptySourceImage.uploadImage")}
           </Button>
 
-          <Link href="/dashboard/gallery" className="w-full sm:w-auto">
+          <Link
+            href={`/dashboard/gallery${tab ? `?tab=${tab}` : ""}`}
+            className="w-full sm:w-auto"
+          >
             <Button className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full">
               <ImageIcon className="mr-2 h-4 w-4" />
               {t("emptySourceImage.selectFromGallery")}

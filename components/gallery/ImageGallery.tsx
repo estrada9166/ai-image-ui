@@ -23,12 +23,14 @@ import {
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { createPortal } from "react-dom";
+import ReactCompareImage from "react-compare-image";
 
 type Image = {
   id: string;
   imageUrl?: string | null;
   prompt?: string | null;
   status: string;
+  originalImage: Image | null;
 };
 
 type ImageWithIndex = Image & {
@@ -48,6 +50,11 @@ const ImageGalleryQuery = graphql(/* GraphQL */ `
           prompt
           status
           imageUrl
+          thumbnailUrl
+          originalImage {
+            id
+            imageUrl
+          }
         }
       }
       pageInfo {
@@ -133,11 +140,10 @@ export function ImageGallery({
 
   const handleDownloadImage = async (
     imageUrl: string | null | undefined,
-    e: React.MouseEvent,
-    status: string
+    e: React.MouseEvent
   ) => {
     e.stopPropagation();
-    if (!imageUrl || status === GenAiStatusEnum.Pending) return;
+    if (!imageUrl) return;
 
     try {
       const response = await fetch(imageUrl, {
@@ -220,7 +226,7 @@ export function ImageGallery({
               <>
                 <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors duration-300"></div>
                 <img
-                  src={image.node.imageUrl || ""}
+                  src={image.node.thumbnailUrl || image.node.imageUrl || ""}
                   alt={`Generated image ${index + 1}`}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
@@ -280,13 +286,7 @@ export function ImageGallery({
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={(e) =>
-                      handleDownloadImage(
-                        image.node.imageUrl,
-                        e,
-                        image.node.status
-                      )
-                    }
+                    onClick={(e) => handleDownloadImage(image.node.imageUrl, e)}
                     className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors shadow-lg backdrop-blur-sm"
                     aria-label="Download image"
                     title="Download image"
@@ -349,14 +349,34 @@ export function ImageGallery({
               className="relative max-w-5xl w-full rounded-2xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <img
-                src={selectedImage.imageUrl || ""}
-                alt={
-                  selectedImage.prompt ||
-                  `Generated image ${selectedImage.index + 1}`
-                }
-                className="w-full h-auto max-h-[85vh] object-contain bg-black/50"
-              />
+              {tab === "restored-images" &&
+              selectedImage.originalImage?.imageUrl &&
+              selectedImage.imageUrl ? (
+                <div className="bg-black w-full h-auto max-h-[85vh]">
+                  <ReactCompareImage
+                    leftImage={selectedImage.originalImage.imageUrl}
+                    rightImage={selectedImage.imageUrl}
+                    sliderLineWidth={2}
+                    sliderLineColor="#ffffff"
+                    leftImageAlt="Original image"
+                    rightImageAlt="Restored image"
+                    leftImageLabel="Original"
+                    rightImageLabel="Restored"
+                    sliderPositionPercentage={0.5}
+                    leftImageCss={{ objectFit: "contain", maxHeight: "85vh" }}
+                    rightImageCss={{ objectFit: "contain", maxHeight: "85vh" }}
+                  />
+                </div>
+              ) : (
+                <img
+                  src={selectedImage.imageUrl || ""}
+                  alt={
+                    selectedImage.prompt ||
+                    `Generated image ${selectedImage.index + 1}`
+                  }
+                  className="w-full h-auto max-h-[85vh] object-contain bg-black/50"
+                />
+              )}
 
               <div className="absolute top-4 right-4 flex flex-col gap-3">
                 <motion.button
@@ -402,11 +422,7 @@ export function ImageGallery({
                   whileTap={{ scale: 0.9 }}
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleDownloadImage(
-                      selectedImage.imageUrl,
-                      e,
-                      selectedImage.status
-                    );
+                    handleDownloadImage(selectedImage.imageUrl, e);
                   }}
                   className="p-2.5 rounded-full bg-blue-500/90 text-white hover:bg-blue-600 transition-colors backdrop-blur-sm"
                   aria-label="Download image"

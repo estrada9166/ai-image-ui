@@ -194,7 +194,7 @@ export default function RestoreImage() {
 
   const [, restoreImage] = useMutation(RestoreImageMutation);
 
-  const [{ data, error }] = useQuery({
+  const [{ data }] = useQuery({
     query: ImageByIdQuery,
     variables: { id: image || "" },
     pause: !image,
@@ -373,7 +373,10 @@ export default function RestoreImage() {
                   onRemove={handleRemoveImage}
                 />
               ) : (
-                <EmptySourceImage onUploadClick={handleUploadClick} />
+                <EmptySourceImage
+                  onUploadClick={handleUploadClick}
+                  tab="uploaded-images"
+                />
               )}
             </div>
 

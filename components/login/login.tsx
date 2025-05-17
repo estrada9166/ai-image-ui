@@ -70,7 +70,7 @@ export function Login() {
           ← {t("login.goBack")}
         </Link>
       </div>
-      <Card className="w-full max-w-lg shadow-xl border-opacity-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl rounded-2xl">
+      <Card className="w-full max-w-md shadow-xl border-opacity-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl rounded-2xl">
         <CardContent className="p-0">
           <LoginForm
             formData={formData}
