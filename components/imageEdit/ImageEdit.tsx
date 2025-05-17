@@ -568,7 +568,6 @@ export default function ImageEdit() {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const image = searchParams?.get("image");
 
   const [imagePrompt, setImagePrompt] = useState("");
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
@@ -579,13 +578,14 @@ export default function ImageEdit() {
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const [imageId, setImageId] = useState<string | null>(null);
   const [model, setModel] = useState(AiModelOptionsEnum.Model_1);
+  const [originalImageId, setOriginalImageId] = useState<string | null>(null);
 
   const [, editImage] = useMutation(ImageEditMutation);
 
   const [{ data, error }] = useQuery({
     query: ImageByIdQuery,
-    variables: { id: image || "" },
-    pause: !image,
+    variables: { id: originalImageId || "" },
+    pause: !originalImageId,
   });
 
   const [{ data: editedImageData }, reExecuteQuery] = useQuery({
@@ -593,6 +593,14 @@ export default function ImageEdit() {
     variables: { id: imageId || "" },
     pause: !imageId,
   });
+
+  useEffect(() => {
+    const image = searchParams?.get("image");
+
+    if (image) {
+      setOriginalImageId(image);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (!searchParams?.get("image") || !data?.node) {
@@ -694,6 +702,7 @@ export default function ImageEdit() {
         );
 
         imageId = response.data.id;
+        setOriginalImageId(response.data.originalImage.id);
       } else if (imageData) {
         const result = await editImage({
           input: { imageId: imageData.id, prompt: imagePrompt, model },
