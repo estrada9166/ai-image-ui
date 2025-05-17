@@ -33,7 +33,7 @@ export default function RootLayout({
             {/* {process.env.NEXT_PUBLIC_ENV !== "development" && (
               <script
                 defer
-                data-domain="revenowl.com"
+                data-domain="newpix.ai"
                 src="https://plausible.io/js/script.js"
               ></script>
             )} */}

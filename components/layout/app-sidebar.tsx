@@ -89,7 +89,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <div className="text-2xl font-bold gradient-text">
             <div className="flex items-center gap-2 ml-1">
               <Sparkles className="w-6 h-6 text-indigo-500" />
-              {state === "expanded" ? "Revenowl" : ""}
+              {state === "expanded" ? "Newpix" : ""}
             </div>
           </div>
         </Link>

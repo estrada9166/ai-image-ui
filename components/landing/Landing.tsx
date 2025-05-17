@@ -33,7 +33,7 @@ function Navbar() {
           <div className="text-2xl font-bold gradient-text group-hover:scale-105 transition-transform duration-300 ease-out">
             <div className="flex items-center gap-2">
               <Sparkles className="w-6 h-6 text-indigo-500 animate-pulse" />
-              Revenowl
+              Newpix
             </div>
           </div>
         </Link>

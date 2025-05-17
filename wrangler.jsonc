@@ -1,5 +1,5 @@
 {
-  "name": "revenowl",
+  "name": "newpix",
   "compatibility_date": "2024-09-23",
   "compatibility_flags": ["nodejs_compat"],
   "pages_build_output_dir": ".vercel/output/static",
@@ -15,7 +15,7 @@
     "NEXT_PUBLIC_GROWTH_MONTHLY_URL": "https://buy.stripe.com/dR6eYA7el75ja9q003",
     "NEXT_PUBLIC_STARTER_ANNUAL_URL": "https://buy.stripe.com/4gw8AcaqxexLa9q148",
     "NEXT_PUBLIC_STARTER_MONTHLY_URL": "https://buy.stripe.com/4gw2bOeGN4Xb95m6ot",
-    "NEXT_PUBLIC_CLIENT_URL": "https://revenowl.com",
-    "NEXT_PUBLIC_SERVER_URL": "https://api.revenowl.com"
+    "NEXT_PUBLIC_CLIENT_URL": "https://newpix.ai",
+    "NEXT_PUBLIC_SERVER_URL": "https://api.newpix.ai"
   }
 }

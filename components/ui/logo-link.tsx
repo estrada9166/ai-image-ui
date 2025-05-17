@@ -14,7 +14,7 @@ export function LogoLink({
       <div className="text-2xl font-bold gradient-text">
         <div className="flex items-center gap-2">
           <Sparkles className="w-6 h-6 text-indigo-500" />
-          Revenowl
+          Newpix
         </div>
       </div>
     </Link>
