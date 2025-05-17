@@ -7,14 +7,24 @@ import { Provider } from "urql";
 import { createUrqlClient } from "@/gql/urqlClient";
 import { Toaster } from "@/components/ui/toaster";
 import { CSPostHogProvider } from "./providers";
+import { useEffect, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
+
+import "./i18next";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Use client-side only rendering for i18n content
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
     <Provider value={createUrqlClient()}>
       <html lang="en" className="h-full notranslate" translate="no">
@@ -31,7 +41,7 @@ export default function RootLayout({
           <body
             className={`${inter.className} antialiased min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white`}
           >
-            {children}
+            {isMounted ? children : null}
             <Toaster />
           </body>
         </CSPostHogProvider>

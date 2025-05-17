@@ -11,6 +11,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 export function NavMain({
   items,
@@ -23,6 +24,7 @@ export function NavMain({
   }[];
   onClick?: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
@@ -34,7 +36,7 @@ export function NavMain({
                 className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
               >
                 <PlusCircleIcon />
-                <span>Quick Create</span>
+                <span>{t("navMain.quickCreate")}</span>
               </SidebarMenuButton>
             </Link>
             <Link href="/dashboard/create/video">

@@ -38,6 +38,7 @@ import {
 import { promptIdeas } from "./promptIdeas";
 import { EmptySourceImage } from "../common/EmptySourceImage";
 import { ImageByIdQuery } from "../common/ImageByIdQuery";
+import { useTranslation } from "react-i18next";
 
 type ImageEdit = {
   id: string;
@@ -58,67 +59,75 @@ const ImageEditMutation = graphql(/* GraphQL */ `
 `);
 
 // Error component for displaying error messages
-const ErrorDisplay = ({ errorMessage }: { errorMessage: string }) => (
-  <div className="min-h-screen flex items-center justify-center">
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3 }}
-      className="max-w-md w-full bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/30 rounded-lg p-8 shadow-md"
-    >
-      <ImageIcon className="h-16 w-16 text-red-400 mx-auto mb-6" />
-      <h3 className="text-2xl font-medium text-red-700 dark:text-red-400 mb-3 text-center">
-        Error Loading Image
-      </h3>
-      <p className="text-red-600 dark:text-red-300 text-center mb-6">
-        {errorMessage}
-      </p>
-      <div className="flex justify-center">
-        <Button
-          variant="outline"
-          className="border-red-200 text-red-700 hover:bg-red-50 dark:border-red-800/30 dark:text-red-400 dark:hover:bg-red-900/20"
-          onClick={() => window.history.back()}
-        >
-          Go Back
-        </Button>
-      </div>
-    </motion.div>
-  </div>
-);
+const ErrorDisplay = ({ errorMessage }: { errorMessage: string }) => {
+  const { t } = useTranslation();
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3 }}
+        className="max-w-md w-full bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/30 rounded-lg p-8 shadow-md"
+      >
+        <ImageIcon className="h-16 w-16 text-red-400 mx-auto mb-6" />
+        <h3 className="text-2xl font-medium text-red-700 dark:text-red-400 mb-3 text-center">
+          {t("imageEdit.errorLoadingImage")}
+        </h3>
+        <p className="text-red-600 dark:text-red-300 text-center mb-6">
+          {errorMessage}
+        </p>
+        <div className="flex justify-center">
+          <Button
+            variant="outline"
+            className="border-red-200 text-red-700 hover:bg-red-50 dark:border-red-800/30 dark:text-red-400 dark:hover:bg-red-900/20"
+            onClick={() => window.history.back()}
+          >
+            {t("imageEdit.goBack")}
+          </Button>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
 
 // Component for prompt ideas selection
 const PromptIdeasSelector = ({
   onSelectPrompt,
 }: {
   onSelectPrompt: (prompt: string) => void;
-}) => (
-  <div className="space-y-3">
-    <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-      <Sparkles className="h-5 w-5 text-purple-500" />
-      Prompt Ideas:
-    </h3>
-    <Select
-      value=""
-      onValueChange={(value) => {
-        if (value) onSelectPrompt(value);
-      }}
-    >
-      <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm">
-        <SelectValue placeholder="Choose a prompt idea or write your own" />
-      </SelectTrigger>
-      <SelectContent>
-        {promptIdeas.map((idea) => (
-          <SelectItem key={idea.id} value={idea.text}>
-            <div className="flex items-center gap-2">
-              <BookOpen className="h-4 w-4" />
-              <span className="truncate">{idea.text.substring(0, 50)}...</span>
-            </div>
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  </div>
-);
+}) => {
+  const { t } = useTranslation();
+  return (
+    <div className="space-y-3">
+      <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+        <Sparkles className="h-5 w-5 text-purple-500" />
+        {t("imageEdit.promptIdeas")}
+      </h3>
+      <Select
+        value=""
+        onValueChange={(value) => {
+          if (value) onSelectPrompt(value);
+        }}
+      >
+        <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm">
+          <SelectValue placeholder={t("imageEdit.promptIdeaPlaceholder")} />
+        </SelectTrigger>
+        <SelectContent>
+          {promptIdeas(t).map((idea) => (
+            <SelectItem key={idea.id} value={idea.text}>
+              <div className="flex items-center gap-2">
+                <BookOpen className="h-4 w-4" />
+                <span className="truncate">
+                  {idea.text.substring(0, 50)}...
+                </span>
+              </div>
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  );
+};
 
 // Component for prompt ideas selection
 const AiModelSelector = ({
@@ -127,23 +136,30 @@ const AiModelSelector = ({
 }: {
   model: AiModelOptionsEnum;
   setModel: (model: AiModelOptionsEnum) => void;
-}) => (
-  <div className="space-y-3">
-    <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-      <Wand2 className="h-5 w-5 text-purple-500" />
-      AI Model:
-    </h3>
-    <Select value={model} onValueChange={setModel as (value: string) => void}>
-      <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
-        <SelectValue placeholder="Select model" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value={AiModelOptionsEnum.Model_1}>AI Model 1</SelectItem>
-        <SelectItem value={AiModelOptionsEnum.Model_2}>AI Model 2</SelectItem>
-      </SelectContent>
-    </Select>
-  </div>
-);
+}) => {
+  const { t } = useTranslation();
+  return (
+    <div className="space-y-3">
+      <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+        <Wand2 className="h-5 w-5 text-purple-500" />
+        {t("imageEdit.aiModel")}
+      </h3>
+      <Select value={model} onValueChange={setModel as (value: string) => void}>
+        <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
+          <SelectValue placeholder="Select model" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value={AiModelOptionsEnum.Model_1}>
+            {t("imageEdit.model1")}
+          </SelectItem>
+          <SelectItem value={AiModelOptionsEnum.Model_2}>
+            {t("imageEdit.model2")}
+          </SelectItem>
+        </SelectContent>
+      </Select>
+    </div>
+  );
+};
 
 // Component for prompt input
 interface PromptInputProps {
@@ -152,21 +168,24 @@ interface PromptInputProps {
   isDisabled: boolean;
 }
 
-const PromptInput = ({ value, onChange, isDisabled }: PromptInputProps) => (
-  <div className="space-y-3">
-    <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-      <Sparkles className="h-5 w-5 text-purple-500" />
-      Edit Instructions
-    </h3>
-    <Textarea
-      placeholder="Describe how you want to edit your image..."
-      className="min-h-[100px] text-base resize-none border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 transition-colors duration-200 rounded-lg"
-      value={value}
-      onChange={onChange}
-      disabled={isDisabled}
-    />
-  </div>
-);
+const PromptInput = ({ value, onChange, isDisabled }: PromptInputProps) => {
+  const { t } = useTranslation();
+  return (
+    <div className="space-y-3">
+      <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+        <Sparkles className="h-5 w-5 text-purple-500" />
+        {t("imageEdit.editInstructions")}
+      </h3>
+      <Textarea
+        placeholder={t("imageEdit.editInstructionsPlaceholder")}
+        className="min-h-[100px] text-base resize-none border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 transition-colors duration-200 rounded-lg"
+        value={value}
+        onChange={onChange}
+        disabled={isDisabled}
+      />
+    </div>
+  );
+};
 
 // Component for prompt action buttons
 interface PromptActionsProps {
@@ -183,55 +202,58 @@ const PromptActions = ({
   isEditing,
   hasPrompt,
   hasImage,
-}: PromptActionsProps) => (
-  <div className="flex justify-end gap-3 pt-2">
-    <Button
-      variant="outline"
-      onClick={onClear}
-      disabled={!hasPrompt || isEditing}
-      className="text-sm border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-colors duration-200 rounded-full"
-    >
-      <RefreshCw className="mr-2 h-4 w-4" />
-      Clear
-    </Button>
-    <Button
-      onClick={onEdit}
-      disabled={isEditing || !hasPrompt || !hasImage}
-      className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all duration-300 rounded-full"
-    >
-      {isEditing ? (
-        <>
-          <svg
-            className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            ></path>
-          </svg>
-          Editing...
-        </>
-      ) : (
-        <>
-          <Wand2 className="mr-2 h-4 w-4" />
-          Edit Image
-        </>
-      )}
-    </Button>
-  </div>
-);
+}: PromptActionsProps) => {
+  const { t } = useTranslation();
+  return (
+    <div className="flex justify-end gap-3 pt-2">
+      <Button
+        variant="outline"
+        onClick={onClear}
+        disabled={!hasPrompt || isEditing}
+        className="text-sm border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-colors duration-200 rounded-full"
+      >
+        <RefreshCw className="mr-2 h-4 w-4" />
+        {t("imageEdit.clear")}
+      </Button>
+      <Button
+        onClick={onEdit}
+        disabled={isEditing || !hasPrompt || !hasImage}
+        className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all duration-300 rounded-full"
+      >
+        {isEditing ? (
+          <>
+            <svg
+              className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+            {t("imageEdit.editing")}
+          </>
+        ) : (
+          <>
+            <Wand2 className="mr-2 h-4 w-4" />
+            {t("imageEdit.editImage")}
+          </>
+        )}
+      </Button>
+    </div>
+  );
+};
 
 // Component for source image display
 interface SourceImageDisplayProps {
@@ -309,6 +331,7 @@ const SourceImageCard = ({
   model,
   setModel,
 }: SourceImageCardProps) => {
+  const { t } = useTranslation();
   const handleUploadClick = () => {
     if (fileInputRef?.current) {
       fileInputRef.current.click();
@@ -316,18 +339,18 @@ const SourceImageCard = ({
   };
 
   return (
-    <Card className="border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden hover:shadow-xl transition-all duration-300 md:col-span-2 rounded-xl">
+    <Card className="border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden hover:shadow-xl transition-all duration-300 rounded-xl">
       <CardContent className="p-8">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
             <ImageIcon className="h-5 w-5 text-purple-500" />
-            Source Image
+            {t("imageEdit.sourceImage")}
           </h3>
           <Badge
             variant="outline"
             className="text-sm py-1 px-2 bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/20 dark:text-purple-400 dark:border-purple-800/30"
           >
-            Original
+            {t("imageEdit.original")}
           </Badge>
         </div>
         <div className="aspect-square relative overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50 shadow-inner group">
@@ -355,8 +378,14 @@ const SourceImageCard = ({
 
         {/* Prompt Input Below Image */}
         <div className="mt-6 space-y-5">
-          <PromptIdeasSelector onSelectPrompt={handlePromptIdeaClick} />
-          <AiModelSelector model={model} setModel={setModel} />
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <AiModelSelector model={model} setModel={setModel} />
+            </div>
+            <div className="flex-1">
+              <PromptIdeasSelector onSelectPrompt={handlePromptIdeaClick} />
+            </div>
+          </div>
 
           <PromptInput
             value={imagePrompt}
@@ -378,52 +407,54 @@ const SourceImageCard = ({
 };
 
 // Component for processing state in edited image
-const ProcessingEditedImage = () => (
-  <div className="text-center p-8 h-full flex flex-col items-center justify-center">
-    <div className="relative w-24 h-24 mb-6">
-      <svg
-        className="animate-spin h-24 w-24 text-purple-600"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <circle
-          className="opacity-25"
-          cx="12"
-          cy="12"
-          r="10"
-          stroke="currentColor"
-          strokeWidth="4"
-        ></circle>
-        <path
-          className="opacity-75"
-          fill="currentColor"
-          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-        ></path>
-      </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <Sparkles className="h-10 w-10 text-white animate-pulse" />
+const ProcessingEditedImage = () => {
+  const { t } = useTranslation();
+  return (
+    <div className="text-center p-8 h-full flex flex-col items-center justify-center">
+      <div className="relative w-24 h-24 mb-6">
+        <svg
+          className="animate-spin h-24 w-24 text-purple-600"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          ></circle>
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Sparkles className="h-10 w-10 text-white animate-pulse" />
+        </div>
+      </div>
+      <p className="text-gray-600 dark:text-gray-300 font-medium text-lg mb-3">
+        {t("imageEdit.editingImage")}
+      </p>
+      <div className="max-w-md">
+        <p className="text-base text-gray-500 dark:text-gray-400">
+          {t("imageEdit.transformingImage")}
+        </p>
+      </div>
+      <div className="w-full max-w-sm bg-gray-200 dark:bg-gray-600 rounded-full h-3 mt-6 overflow-hidden">
+        <motion.div
+          className="bg-gradient-to-r from-purple-600 to-indigo-600 h-3 rounded-full"
+          initial={{ width: "0%" }}
+          animate={{ width: "100%" }}
+          transition={{ duration: 30, ease: "linear" }}
+        />
       </div>
     </div>
-    <p className="text-gray-600 dark:text-gray-300 font-medium text-lg mb-3">
-      Editing your image...
-    </p>
-    <div className="max-w-md">
-      <p className="text-base text-gray-500 dark:text-gray-400">
-        We&apos;re transforming your image with AI magic! This typically takes
-        15-30 seconds.
-      </p>
-    </div>
-    <div className="w-full max-w-sm bg-gray-200 dark:bg-gray-600 rounded-full h-3 mt-6 overflow-hidden">
-      <motion.div
-        className="bg-gradient-to-r from-purple-600 to-indigo-600 h-3 rounded-full"
-        initial={{ width: "0%" }}
-        animate={{ width: "100%" }}
-        transition={{ duration: 30, ease: "linear" }}
-      />
-    </div>
-  </div>
-);
+  );
+};
 
 // Component for displaying edited image
 interface EditedImageDisplayProps {
@@ -470,19 +501,22 @@ interface EmptyEditedImageProps {
   hasPrompt: boolean;
 }
 
-const EmptyEditedImage = ({ hasPrompt }: EmptyEditedImageProps) => (
-  <div className="text-center p-8 h-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
-    <ImageIcon className="h-16 w-16 text-purple-400 mx-auto mb-4 opacity-75" />
-    <p className="text-gray-600 dark:text-gray-300 font-medium text-lg mb-3">
-      {hasPrompt
-        ? "Your edited image will appear here"
-        : "Enter a prompt to edit your image"}
-    </p>
-    <p className="text-base text-gray-500 dark:text-gray-400 max-w-md">
-      Click the &quot;Edit Image&quot; button to transform your image with AI
-    </p>
-  </div>
-);
+const EmptyEditedImage = ({ hasPrompt }: EmptyEditedImageProps) => {
+  const { t } = useTranslation();
+  return (
+    <div className="text-center p-8 h-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
+      <ImageIcon className="h-16 w-16 text-purple-400 mx-auto mb-4 opacity-75" />
+      <p className="text-gray-600 dark:text-gray-300 font-medium text-lg mb-3">
+        {hasPrompt
+          ? t("imageEdit.yourEditedImageWillAppearHere")
+          : t("imageEdit.enterAPromptToEditYourImage")}
+      </p>
+      <p className="text-base text-gray-500 dark:text-gray-400 max-w-md">
+        {t("imageEdit.clickEditedImage")}
+      </p>
+    </div>
+  );
+};
 
 // Component for edited image card
 interface EditedImageCardProps {
@@ -495,39 +529,43 @@ const EditedImageCard = ({
   isEditingImage,
   editedImageData,
   imagePrompt,
-}: EditedImageCardProps) => (
-  <Card className="border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden md:col-span-3 hover:shadow-xl transition-all duration-300 rounded-xl">
-    <CardContent className="p-8">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-          <ImageIcon className="h-5 w-5 text-purple-500" />
-          Edited Image
-        </h3>
-        {isEditingImage && (
-          <Badge className="text-sm py-1 px-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0 animate-pulse shadow-sm rounded-full">
-            Processing
-          </Badge>
-        )}
-      </div>
-      <div
-        className="relative overflow-hidden rounded-xl border border-purple-100 dark:border-purple-900/50 bg-gray-100 dark:bg-gray-700 shadow-inner w-full h-auto"
-        style={{ aspectRatio: "1/1" }}
-      >
-        {isEditingImage ? (
-          <ProcessingEditedImage />
-        ) : editedImageData?.node?.__typename === "Image" &&
-          editedImageData?.node?.imageUrl ? (
-          <EditedImageDisplay imageUrl={editedImageData.node?.imageUrl} />
-        ) : (
-          <EmptyEditedImage hasPrompt={!!imagePrompt.trim()} />
-        )}
-      </div>
-    </CardContent>
-  </Card>
-);
+}: EditedImageCardProps) => {
+  const { t } = useTranslation();
+  return (
+    <Card className="border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden hover:shadow-xl transition-all duration-300 rounded-xl">
+      <CardContent className="p-8">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+            <ImageIcon className="h-5 w-5 text-purple-500" />
+            {t("imageEdit.editedImage")}
+          </h3>
+          {isEditingImage && (
+            <Badge className="text-sm py-1 px-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0 animate-pulse shadow-sm rounded-full">
+              {t("imageEdit.processing")}
+            </Badge>
+          )}
+        </div>
+        <div
+          className="relative overflow-hidden rounded-xl border border-purple-100 dark:border-purple-900/50 bg-gray-100 dark:bg-gray-700 shadow-inner w-full h-auto"
+          style={{ aspectRatio: "1/1" }}
+        >
+          {isEditingImage ? (
+            <ProcessingEditedImage />
+          ) : editedImageData?.node?.__typename === "Image" &&
+            editedImageData?.node?.imageUrl ? (
+            <EditedImageDisplay imageUrl={editedImageData.node?.imageUrl} />
+          ) : (
+            <EmptyEditedImage hasPrompt={!!imagePrompt.trim()} />
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
 
 // Main component
 export default function ImageEdit() {
+  const { t } = useTranslation();
   const searchParams = useSearchParams();
   const router = useRouter();
   const image = searchParams?.get("image");
@@ -685,13 +723,15 @@ export default function ImageEdit() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Image Edit</h1>
+      <h1 className="text-2xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+        {t("imageEdit.imageEdit")}
+      </h1>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="grid grid-cols-1 md:grid-cols-5 gap-8 w-full"
+        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
       >
         {/* Source Image */}
         <SourceImageCard
@@ -730,7 +770,7 @@ export default function ImageEdit() {
           >
             <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
               <ImageIcon className="h-5 w-5 text-purple-500" />
-              Your Edited Images
+              {t("imageEdit.yourEditedImages")}
               <span className="text-sm text-gray-500 dark:text-gray-400 font-normal"></span>
             </h3>
 

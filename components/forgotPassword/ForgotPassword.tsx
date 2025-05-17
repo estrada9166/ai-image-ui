@@ -16,6 +16,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Mail, CheckCircle2 } from "lucide-react";
 import { graphql } from "@/gql";
 import { useMutation } from "urql";
+import { useTranslation } from "react-i18next";
 
 const schema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -28,6 +29,8 @@ export const forgotPasswordMutationDocument = graphql(/* GraphQL */ `
 `);
 
 export default function ForgotPasswordPage() {
+  const { t } = useTranslation();
+
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -48,7 +51,7 @@ export default function ForgotPasswordPage() {
       });
 
       if (result.error) {
-        setError("An unexpected error occurred. Please try again.");
+        setError(t("forgotPassword.unexpectedError"));
       } else {
         setSuccess(true);
       }
@@ -56,7 +59,7 @@ export default function ForgotPasswordPage() {
       if (err instanceof z.ZodError) {
         setError(err.errors[0].message);
       } else {
-        setError("An unexpected error occurred. Please try again.");
+        setError(t("forgotPassword.unexpectedError"));
       }
     }
   };
@@ -70,23 +73,23 @@ export default function ForgotPasswordPage() {
               <CheckCircle2 className="h-6 w-6 text-green-600" />
             </div>
             <CardTitle className="text-2xl text-center mt-4">
-              Check your email
+              {t("forgotPassword.checkYourEmail")}
             </CardTitle>
             <CardDescription className="text-center">
-              If an account exists for that email, we&apos;ve sent you a
-              password reset link. Please check your inbox and follow the
-              instructions.
+              {t("forgotPassword.passwordResetLinkSentMessage")}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Alert className="mt-4 bg-violet-50 border-violet-200">
-              <AlertTitle className="text-violet-800">Next steps</AlertTitle>
+              <AlertTitle className="text-violet-800">
+                {t("forgotPassword.nextSteps")}
+              </AlertTitle>
               <AlertDescription className="text-violet-700">
-                1. Check your email inbox (and spam folder)
+                {t("forgotPassword.checkInboxOrSpam")}
                 <br />
-                2. Click the password reset link in the email
+                {t("forgotPassword.clickThePasswordResetLinkInTheEmail")}
                 <br />
-                3. Create your new password
+                {t("forgotPassword.createYourNewPassword")}
               </AlertDescription>
             </Alert>
           </CardContent>
@@ -100,18 +103,17 @@ export default function ForgotPasswordPage() {
       <Card className="w-full max-w-md shadow-lg border-opacity-40">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            Reset your password
+            {t("forgotPassword.resetYourPassword")}
           </CardTitle>
           <CardDescription className="text-center">
-            Enter your email address and we&apos;ll send you instructions to
-            reset your password
+            {t("forgotPassword.resetYourPasswordDescription")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium">
-                Email address
+                {t("forgotPassword.emailAddress")}
               </Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
@@ -132,7 +134,9 @@ export default function ForgotPasswordPage() {
               )}
             </div>
             <Button type="submit" className="w-full" disabled={fetching}>
-              {fetching ? "Sending link..." : "Send reset link"}
+              {fetching
+                ? t("forgotPassword.sendingLink")
+                : t("forgotPassword.sendResetLink")}
             </Button>
           </form>
         </CardContent>

@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/tooltip";
 import { EmptySourceImage } from "../common/EmptySourceImage";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { Image, ImageTypeOptionsEnum } from "@/gql/graphql";
 import { graphql } from "../../gql";
@@ -22,6 +21,7 @@ import { ImageByIdQuery } from "../common/ImageByIdQuery";
 import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
 import { ImageGallery } from "../gallery/ImageGallery";
+import { useTranslation } from "react-i18next";
 
 // Component for source image display
 interface SourceImageDisplayProps {
@@ -87,89 +87,97 @@ const PromptActions = ({
   onRestore,
   isRestoring,
   hasImage,
-}: PromptActionsProps) => (
-  <div className="flex justify-end gap-3 pt-2">
-    <Button
-      onClick={onRestore}
-      disabled={isRestoring || !hasImage}
-      className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all duration-300 rounded-full"
-    >
-      {isRestoring ? (
-        <>
-          <svg
-            className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            ></path>
-          </svg>
-          Restoring...
-        </>
-      ) : (
-        <>
-          <Sparkles className="mr-2 h-4 w-4" />
-          Restore Image
-        </>
-      )}
-    </Button>
-  </div>
-);
+}: PromptActionsProps) => {
+  const { t } = useTranslation();
+
+  return (
+    <div className="flex justify-end gap-3 pt-2">
+      <Button
+        onClick={onRestore}
+        disabled={isRestoring || !hasImage}
+        className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all duration-300 rounded-full"
+      >
+        {isRestoring ? (
+          <>
+            <svg
+              className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+            {t("restoreImage.restoringImage")}
+          </>
+        ) : (
+          <>
+            <Sparkles className="mr-2 h-4 w-4" />
+            {t("restoreImage.restoreImage")}
+          </>
+        )}
+      </Button>
+    </div>
+  );
+};
 
 // Component for processing state in restored image
-const ProcessingRestoredImage = () => (
-  <div className="text-center p-8 h-full flex flex-col items-center justify-center">
-    <div className="relative w-24 h-24 mb-6">
-      <svg
-        className="animate-spin h-24 w-24 text-purple-600"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <circle
-          className="opacity-25"
-          cx="12"
-          cy="12"
-          r="10"
-          stroke="currentColor"
-          strokeWidth="4"
-        ></circle>
-        <path
-          className="opacity-75"
-          fill="currentColor"
-          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-        ></path>
-      </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <Sparkles className="h-10 w-10 text-white animate-pulse" />
+const ProcessingRestoredImage = () => {
+  const { t } = useTranslation();
+
+  return (
+    <div className="text-center p-8 h-full flex flex-col items-center justify-center">
+      <div className="relative w-24 h-24 mb-6">
+        <svg
+          className="animate-spin h-24 w-24 text-purple-600"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          ></circle>
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Sparkles className="h-10 w-10 text-white animate-pulse" />
+        </div>
+      </div>
+      <p className="text-gray-600 dark:text-gray-300 font-medium text-lg mb-3">
+        {t("restoreImage.restoringImage")}
+      </p>
+      <div className="max-w-md">
+        <p className="text-base text-gray-500 dark:text-gray-400">
+          {t("restoreImage.restoringImageDescription")}
+        </p>
       </div>
     </div>
-    <p className="text-gray-600 dark:text-gray-300 font-medium text-lg mb-3">
-      Restoring your image...
-    </p>
-    <div className="max-w-md">
-      <p className="text-base text-gray-500 dark:text-gray-400">
-        We&apos;re enhancing your image with AI restoration! This typically
-        takes 15-30 seconds.
-      </p>
-    </div>
-  </div>
-);
+  );
+};
 
 // Main component
 export default function RestoreImage() {
+  const { t } = useTranslation();
   const searchParams = useSearchParams();
 
   const image = searchParams?.get("image");
@@ -333,195 +341,198 @@ export default function RestoreImage() {
 
   return (
     <div>
-      <div className="container mx-auto py-8 px-4">
-        <h1 className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-          Image Restoration
-        </h1>
+      <h1 className="text-2xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+        {t("restoreImage.imageRestoration")}
+      </h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Source Image Card */}
-          <Card className="border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden hover:shadow-xl transition-all duration-300 rounded-xl">
-            <CardContent className="p-8">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                  <ImageIcon className="h-5 w-5 text-purple-500" />
-                  Original Image
-                </h3>
-                <Badge
-                  variant="outline"
-                  className="text-sm py-1 px-2 bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/20 dark:text-purple-400 dark:border-purple-800/30"
-                >
-                  Before
-                </Badge>
-              </div>
-              <div className="aspect-square relative overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50 shadow-inner group">
-                {imageData?.imageUrl || previewUrl ? (
-                  <SourceImageDisplay
-                    imageUrl={imageData?.imageUrl || previewUrl || ""}
-                    onRemove={handleRemoveImage}
-                  />
-                ) : (
-                  <EmptySourceImage onUploadClick={handleUploadClick} />
-                )}
-              </div>
-
-              <input
-                id="image-upload"
-                type="file"
-                accept="image/*"
-                className="hidden"
-                ref={fileInputRef}
-                onChange={handleFileChange}
-              />
-
-              {/* Prompt Input Below Image */}
-              <div className="mt-6 space-y-5">
-                <PromptActions
-                  onRestore={handleRestoreImage}
-                  isRestoring={isRestoring}
-                  hasImage={!!uploadedImage || !!imageData}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+      >
+        {/* Source Image Card */}
+        <Card className="border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden hover:shadow-xl transition-all duration-300 rounded-xl">
+          <CardContent className="p-8">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                <ImageIcon className="h-5 w-5 text-purple-500" />
+                {t("restoreImage.originalImage")}
+              </h3>
+              <Badge
+                variant="outline"
+                className="text-sm py-1 px-2 bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/20 dark:text-purple-400 dark:border-purple-800/30"
+              >
+                {t("restoreImage.before")}
+              </Badge>
+            </div>
+            <div className="aspect-square relative overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50 shadow-inner group">
+              {imageData?.imageUrl || previewUrl ? (
+                <SourceImageDisplay
+                  imageUrl={imageData?.imageUrl || previewUrl || ""}
+                  onRemove={handleRemoveImage}
                 />
-              </div>
-            </CardContent>
-          </Card>
+              ) : (
+                <EmptySourceImage onUploadClick={handleUploadClick} />
+              )}
+            </div>
 
-          {/* Restored Image Card */}
-          <Card className="border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden hover:shadow-xl transition-all duration-300 rounded-xl">
-            <CardContent className="p-8">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-purple-500" />
-                  Restored Image
-                </h3>
-                <Badge
-                  variant="outline"
-                  className="text-sm py-1 px-2 bg-green-50 text-green-700 border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800/30"
-                >
-                  After
-                </Badge>
-              </div>
-              <div className="aspect-square relative overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50 shadow-inner">
-                {isRestoring ? (
-                  <ProcessingRestoredImage />
-                ) : restoredImageUrl ? (
-                  <img
-                    src={restoredImageUrl}
-                    alt="Restored image"
-                    className="w-full h-full object-contain"
-                  />
-                ) : (
-                  <div className="flex flex-col items-center justify-center h-full bg-gray-50 dark:bg-gray-900/30">
-                    <div className="p-4 rounded-full bg-purple-100 dark:bg-purple-900/20 mb-4">
-                      <Sparkles className="h-8 w-8 text-purple-500" />
-                    </div>
-                    <p className="text-gray-500 dark:text-gray-400 text-center px-4">
-                      Your restored image will appear here
-                    </p>
+            <input
+              id="image-upload"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+            />
+
+            {/* Prompt Input Below Image */}
+            <div className="mt-6 space-y-5">
+              <PromptActions
+                onRestore={handleRestoreImage}
+                isRestoring={isRestoring}
+                hasImage={!!uploadedImage || !!imageData}
+              />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Restored Image Card */}
+        <Card className="border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden hover:shadow-xl transition-all duration-300 rounded-xl">
+          <CardContent className="p-8">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-purple-500" />
+                {t("restoreImage.restoredImage")}
+              </h3>
+              <Badge
+                variant="outline"
+                className="text-sm py-1 px-2 bg-green-50 text-green-700 border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800/30"
+              >
+                {t("restoreImage.after")}
+              </Badge>
+            </div>
+            <div className="aspect-square relative overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50 shadow-inner">
+              {isRestoring ? (
+                <ProcessingRestoredImage />
+              ) : restoredImageUrl ? (
+                <img
+                  src={restoredImageUrl}
+                  alt="Restored image"
+                  className="w-full h-full object-contain"
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center h-full bg-gray-50 dark:bg-gray-900/30">
+                  <div className="p-4 rounded-full bg-purple-100 dark:bg-purple-900/20 mb-4">
+                    <Sparkles className="h-8 w-8 text-purple-500" />
                   </div>
-                )}
-              </div>
-
-              {/* Download button for restored image */}
-              {restoredImageUrl && (
-                <div className="mt-6 flex justify-center">
-                  <Button
-                    className="bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 shadow-md hover:shadow-lg transition-all duration-300 rounded-full"
-                    onClick={() => {
-                      // Create a temporary link to download the image
-                      const link = document.createElement("a");
-                      link.href = restoredImageUrl;
-                      link.download = "restored-image.jpg";
-                      document.body.appendChild(link);
-                      link.click();
-                      document.body.removeChild(link);
-                    }}
-                  >
-                    Download Restored Image
-                  </Button>
+                  <p className="text-gray-500 dark:text-gray-400 text-center px-4">
+                    {t("restoreImage.yourRestoredImageWillAppearHere")}
+                  </p>
                 </div>
               )}
-            </CardContent>
-          </Card>
-        </div>
+            </div>
 
-        {/* Before/After Comparison */}
-        {restoredImageUrl && (
-          <Card className="mt-8 border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden hover:shadow-xl transition-all duration-300 rounded-xl">
-            <CardContent className="p-8">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                  <ArrowLeftRight className="h-5 w-5 text-purple-500" />
-                  Before & After Comparison
-                </h3>
+            {/* Download button for restored image */}
+            {restoredImageUrl && (
+              <div className="mt-6 flex justify-center">
                 <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={toggleBeforeAfterView}
-                  className="text-sm border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-colors duration-200 rounded-full"
+                  className="bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 shadow-md hover:shadow-lg transition-all duration-300 rounded-full"
+                  onClick={() => {
+                    // Create a temporary link to download the image
+                    const link = document.createElement("a");
+                    link.href = restoredImageUrl;
+                    link.download = "restored-image.jpg";
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                  }}
                 >
-                  {showBeforeAfter ? "Side by Side" : "Slide View"}
+                  {t("restoreImage.downloadRestoredImage")}
                 </Button>
               </div>
+            )}
+          </CardContent>
+        </Card>
+      </motion.div>
 
-              {showBeforeAfter ? (
-                <div className="relative h-[500px] overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50">
-                  <div className="absolute inset-0 overflow-hidden">
-                    <img
-                      src={imageData?.imageUrl || previewUrl || ""}
-                      alt="Before"
-                      className="absolute top-0 left-0 w-full h-full object-contain"
-                      style={{
-                        clipPath: "polygon(0 0, 50% 0, 50% 100%, 0 100%)",
-                      }}
-                    />
-                    <img
-                      src={restoredImageUrl || ""}
-                      alt="After"
-                      className="absolute top-0 left-0 w-full h-full object-contain"
-                      style={{
-                        clipPath: "polygon(50% 0, 100% 0, 100% 100%, 50% 100%)",
-                      }}
-                    />
-                  </div>
-                  <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-white -ml-0.5 z-10"></div>
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2 z-20 shadow-lg">
-                    <ArrowLeftRight className="h-5 w-5 text-purple-600" />
-                  </div>
+      {/* Before/After Comparison */}
+      {restoredImageUrl && (
+        <Card className="mt-8 border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden hover:shadow-xl transition-all duration-300 rounded-xl">
+          <CardContent className="p-8">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                <ArrowLeftRight className="h-5 w-5 text-purple-500" />
+                {t("restoreImage.beforeAndAfterComparison")}
+              </h3>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={toggleBeforeAfterView}
+                className="text-sm border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-colors duration-200 rounded-full"
+              >
+                {showBeforeAfter ? "Side by Side" : "Slide View"}
+              </Button>
+            </div>
+
+            {showBeforeAfter ? (
+              <div className="relative h-[500px] overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50">
+                <div className="absolute inset-0 overflow-hidden">
+                  <img
+                    src={imageData?.imageUrl || previewUrl || ""}
+                    alt="Before"
+                    className="absolute top-0 left-0 w-full h-full object-contain"
+                    style={{
+                      clipPath: "polygon(0 0, 50% 0, 50% 100%, 0 100%)",
+                    }}
+                  />
+                  <img
+                    src={restoredImageUrl || ""}
+                    alt="After"
+                    className="absolute top-0 left-0 w-full h-full object-contain"
+                    style={{
+                      clipPath: "polygon(50% 0, 100% 0, 100% 100%, 50% 100%)",
+                    }}
+                  />
+                </div>
+                <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-white -ml-0.5 z-10"></div>
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2 z-20 shadow-lg">
+                  <ArrowLeftRight className="h-5 w-5 text-purple-600" />
+                </div>
+                <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                  {t("restoreImage.before")}
+                </div>
+                <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                  {t("restoreImage.after")}
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="relative aspect-square overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50">
+                  <img
+                    src={imageData?.imageUrl || previewUrl || ""}
+                    alt="Before"
+                    className="w-full h-full object-contain"
+                  />
                   <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
-                    Before
-                  </div>
-                  <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
-                    After
+                    {t("restoreImage.before")}
                   </div>
                 </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="relative aspect-square overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50">
-                    <img
-                      src={imageData?.imageUrl || previewUrl || ""}
-                      alt="Before"
-                      className="w-full h-full object-contain"
-                    />
-                    <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
-                      Before
-                    </div>
-                  </div>
-                  <div className="relative aspect-square overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50">
-                    <img
-                      src={restoredImageUrl || ""}
-                      alt="After"
-                      className="w-full h-full object-contain"
-                    />
-                    <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
-                      After
-                    </div>
+                <div className="relative aspect-square overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50">
+                  <img
+                    src={restoredImageUrl || ""}
+                    alt="After"
+                    className="w-full h-full object-contain"
+                  />
+                  <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                    {t("restoreImage.after")}
                   </div>
                 </div>
-              )}
-            </CardContent>
-          </Card>
-        )}
-      </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       <div className="container mx-auto md:py-6 px-4">
         <AnimatePresence>
@@ -534,7 +545,7 @@ export default function RestoreImage() {
           >
             <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
               <ImageIcon className="h-5 w-5 text-purple-500" />
-              Your Restored Images
+              {t("restoreImage.yourRestoredImages")}
               <span className="text-sm text-gray-500 dark:text-gray-400 font-normal"></span>
             </h3>
 

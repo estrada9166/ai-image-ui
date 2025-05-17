@@ -7,12 +7,13 @@ import { ImageGallery } from "./ImageGallery";
 import { VideoGallery } from "./VideoGallery";
 import { ImageTypeOptionsEnum } from "../../gql/graphql";
 import { useSearchParams } from "next/navigation";
-
+import { useTranslation } from "react-i18next";
 interface GalleryProps {
   defaultTab?: "images" | "videos" | "edited-images" | "uploaded-images";
 }
 
 export default function Gallery({ defaultTab = "images" }: GalleryProps) {
+  const { t } = useTranslation();
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab") || defaultTab;
 
@@ -20,14 +21,20 @@ export default function Gallery({ defaultTab = "images" }: GalleryProps) {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Gallery</h1>
+      <h1 className="text-2xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+        {t("gallery.gallery")}
+      </h1>
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full max-w-sm grid-cols-5 mb-4">
-          <TabsTrigger value="images">Created</TabsTrigger>
-          <TabsTrigger value="edited-images">Edited</TabsTrigger>
-          <TabsTrigger value="restored-images">Restored</TabsTrigger>
-          <TabsTrigger value="videos">Videos</TabsTrigger>
-          <TabsTrigger value="uploaded-images">Uploaded</TabsTrigger>
+          <TabsTrigger value="images">{t("gallery.created")}</TabsTrigger>
+          <TabsTrigger value="edited-images">{t("gallery.edited")}</TabsTrigger>
+          <TabsTrigger value="restored-images">
+            {t("gallery.restored")}
+          </TabsTrigger>
+          <TabsTrigger value="videos">{t("gallery.videos")}</TabsTrigger>
+          <TabsTrigger value="uploaded-images">
+            {t("gallery.uploaded")}
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="images">
           <Card>

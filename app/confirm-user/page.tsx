@@ -1,3 +1,5 @@
+"use client";
+
 import ConfirmUser from "@/components/confirmUser/ConfirmUser";
 import RedirectIfUser from "@/components/redirectIfUser/RedirectIfUser";
 import { Suspense } from "react";

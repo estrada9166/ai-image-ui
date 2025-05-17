@@ -18,20 +18,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Lock, AlertCircle, CheckCircle2 } from "lucide-react";
 import { graphql } from "@/gql";
 import { useMutation } from "urql";
-
-const schema = z.object({
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters long")
-    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-    .regex(/[0-9]/, "Password must contain at least one number")
-    .regex(
-      /[^A-Za-z0-9]/,
-      "Password must contain at least one special character"
-    ),
-  hash: z.string(),
-});
+import { useTranslation } from "react-i18next";
 
 export const resetPasswordMutationDocument = graphql(/* GraphQL */ `
   mutation resetPassword($input: ResetPasswordInput!) {
@@ -40,6 +27,7 @@ export const resetPasswordMutationDocument = graphql(/* GraphQL */ `
 `);
 
 export default function ResetPasswordPage() {
+  const { t } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -51,6 +39,17 @@ export default function ResetPasswordPage() {
   const [{ fetching }, executeMutation] = useMutation(
     resetPasswordMutationDocument
   );
+
+  const schema = z.object({
+    password: z
+      .string()
+      .min(8, t("resetPassword.passwordMinLength"))
+      .regex(/[A-Z]/, t("resetPassword.passwordUppercase"))
+      .regex(/[a-z]/, t("resetPassword.passwordLowercase"))
+      .regex(/[0-9]/, t("resetPassword.passwordNumber"))
+      .regex(/[^A-Za-z0-9]/, t("resetPassword.passwordSpecialCharacter")),
+    hash: z.string(),
+  });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,26 +71,24 @@ export default function ResetPasswordPage() {
       });
 
       if (result.error) {
-        setError(
-          "An unexpected error occurred. The link may be invalid or expired."
-        );
+        setError(t("resetPassword.unexpectedError"));
       } else if (result.data?.resetPassword) {
         setSuccess(true);
         setTimeout(() => {
           router.push("/login");
         }, 3000);
       } else {
-        setError("An unexpected error occurred. Please try again.");
+        setError(t("resetPassword.unexpectedError"));
       }
     } catch (err) {
       if (err instanceof z.ZodError) {
         if (!searchParams.get("hash")) {
-          setError("The password reset link is invalid or has expired.");
+          setError(t("resetPassword.invalidOrExpiredLink"));
         } else {
           setError(err.errors[0].message);
         }
       } else {
-        setError("An unexpected error occurred. Please try again.");
+        setError(t("resetPassword.unexpectedError"));
       }
     } finally {
       setIsSubmitting(false);
@@ -103,17 +100,17 @@ export default function ResetPasswordPage() {
       <Card className="w-full max-w-md shadow-lg border-opacity-40">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            Reset Your Password
+            {t("resetPassword.resetYourPassword")}
           </CardTitle>
           <CardDescription className="text-center">
-            Please choose a strong password for your account
+            {t("resetPassword.peaseChooseStrongPassword")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="password" className="text-sm font-medium">
-                New Password
+                {t("resetPassword.newPassword")}
               </Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
@@ -121,7 +118,7 @@ export default function ResetPasswordPage() {
                   id="password"
                   name="password"
                   type="password"
-                  placeholder="Enter your new password"
+                  placeholder={t("resetPassword.enterYourNewPassword")}
                   required
                   className="pl-10"
                   value={password}
@@ -130,13 +127,13 @@ export default function ResetPasswordPage() {
                 />
               </div>
               <div className="text-sm text-muted-foreground space-y-1 mt-2">
-                <p>Password must contain:</p>
+                <p>{t("resetPassword.passwordMustContain")}</p>
                 <ul className="list-disc list-inside pl-2 space-y-1">
-                  <li>At least 8 characters</li>
-                  <li>One uppercase letter</li>
-                  <li>One lowercase letter</li>
-                  <li>One number</li>
-                  <li>One special character</li>
+                  <li>{t("resetPassword.atLeast8Characters")}</li>
+                  <li>{t("resetPassword.oneUppercaseLetter")}</li>
+                  <li>{t("resetPassword.oneLowercaseLetter")}</li>
+                  <li>{t("resetPassword.oneNumber")}</li>
+                  <li>{t("resetPassword.oneSpecialCharacter")}</li>
                 </ul>
               </div>
             </div>
@@ -151,8 +148,8 @@ export default function ResetPasswordPage() {
               disabled={isSubmitting || success}
             >
               {isSubmitting || fetching
-                ? "Resetting Password..."
-                : "Reset Password"}
+                ? t("resetPassword.resettingPassword")
+                : t("resetPassword.resetPassword")}
             </Button>
           </form>
         </CardContent>
@@ -161,17 +158,16 @@ export default function ResetPasswordPage() {
             {error && (
               <Alert variant="destructive" className="w-full">
                 <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Error</AlertTitle>
+                <AlertTitle>{t("resetPassword.error")}</AlertTitle>
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
             {success && (
               <Alert className="w-full bg-green-50 border-green-200 text-green-800">
                 <CheckCircle2 className="h-4 w-4" />
-                <AlertTitle>Success!</AlertTitle>
+                <AlertTitle>{t("resetPassword.success")}</AlertTitle>
                 <AlertDescription>
-                  Your password has been reset successfully. You will be
-                  redirected to the login page in a few seconds.
+                  {t("resetPassword.yourPasswordHasBeenReset")}
                 </AlertDescription>
               </Alert>
             )}

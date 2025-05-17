@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { LoginForm } from "./LoginForm";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 const schema = z.object({
   email: z.string().email("Invalid email address"),
@@ -25,6 +26,7 @@ const signInMutationDocument = graphql(/* GraphQL */ `
 `);
 
 export function Login() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -53,7 +55,7 @@ export function Login() {
       if (err instanceof z.ZodError) {
         setError(err.errors[0].message);
       } else {
-        setError("An unexpected error occurred. Please try again.");
+        setError(t("login.unexpectedError"));
       }
     }
   };
@@ -65,7 +67,7 @@ export function Login() {
           href="/"
           className="text-sm text-muted-foreground hover:text-foreground"
         >
-          ← Go back
+          ← {t("login.goBack")}
         </Link>
       </div>
       <Card className="w-full max-w-lg shadow-xl border-opacity-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl rounded-2xl">

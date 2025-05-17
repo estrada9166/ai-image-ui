@@ -1,0 +1,329 @@
+{
+  "feedback": {
+    "title": "Share your feedback!",
+    "thanksMessage": "Thanks for sharing your feedback!",
+    "inputPlaceholder": "What do you want us to know?",
+    "sendFeedback": "Send Feedback"
+  },
+  "emptySourceImage": {
+    "addAnImageToBegin": "Add an Image to Begin",
+    "selectOrUploadAnImageToTransformItWithAIEditing": "Select or upload an image to transform it with AI editing",
+    "uploadImage": "Upload Image",
+    "selectFromGallery": "Select from Gallery"
+  },
+  "confirmUser": {
+    "confirmingYourAccount": "Confirming your account...",
+    "accountConfirmed": "Account Confirmed!",
+    "accountNotConfirmed": "Account Not Confirmed",
+    "accountNotConfirmedMessage": "We were unable to confirm your account. The confirmation link may have expired or is invalid. Please try signing up again or contact support.",
+    "goToDashboard": "Go to Dashboard",
+    "accountConfirmedMessage": "Thank you for confirming your account. Your email has been successfully verified."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "createImage": "Create Image",
+    "editImage": "Edit Image",
+    "modifyExistingImages": "Modify existing images",
+    "createVideo": "Create Video",
+    "transformImagesIntoVideos": "Transform images into videos",
+    "completed": "Completed",
+    "tryMe": "Try me!",
+    "createNew": "Create new",
+    "yourImages": "Your Images",
+    "editedImages": "Edited Images",
+    "restoredImages": "Restored Images",
+    "yourVideos": "Your Videos",
+    "gallery": "Gallery",
+    "generateAIimagesFromText": "Generate AI images from text",
+    "editAnImage": "Edit an image",
+    "restoreAnImage": "Restore an image"
+  },
+  "forgotPassword": {
+    "checkYourEmail": "Check your email",
+    "description": "If an account exists for that email, we've sent you a password reset link. Please check your inbox and follow the instructions to reset your password.",
+    "unexpectedError": "An unexpected error occurred. Please try again later.",
+    "nextSteps": "Next Steps",
+    "checkInboxOrSpam": "Check your inbox or spam folder",
+    "clickThePasswordResetLinkInTheEmail": "Click the password reset link in the email",
+    "createYourNewPassword": "Create your new password",
+    "resetYourPassword": "Reset your password",
+    "resetYourPasswordDescription": "Enter your email address and we'll send you instructions to reset your password",
+    "emailAddress": "Email address",
+    "sendingLink": "Sending link...",
+    "sendResetLink": "Send reset link"
+  },
+  "emptyGalleryState": {
+    "images": {
+      "title": "Images",
+      "description": "Create your first AI-generated image to see it appear in your gallery",
+      "buttonText": "Create an Image"
+    },
+    "editedImages": {
+      "title": "Edited Images",
+      "description": "Create your first edited image to see it appear in your gallery",
+      "buttonText": "Edit an Image"
+    },
+    "restoredImages": {
+      "title": "Restored Images",
+      "description": "Create your first restored image to see it appear in your gallery",
+      "buttonText": "Restore an Image"
+    },
+    "video": {
+      "title": "Videos",
+      "description": "Create your first video to see it appear in your gallery",
+      "buttonText": "Create a Video"
+    }
+  },
+  "gallery": {
+    "gallery": "Gallery",
+    "created": "Created",
+    "edited": "Edited",
+    "restored": "Restored",
+    "videos": "Videos",
+    "uploaded": "Uploaded"
+  },
+  "imageGallery": {
+    "loadingMoreImages": "Loading more images...",
+    "generatingImage": "Generating image...",
+    "viewFullGallery": "View full gallery"
+  },
+  "videoGallery": {
+    "loadingMoreVideos": "Loading more videos...",
+    "generatingVideo": "Generating video...",
+    "viewFullGallery": "View full gallery"
+  },
+  "googleLogin": {
+    "loginWithGoogle": "Login with Google"
+  },
+  "imageCreation": {
+    "placeholder": "A professional-looking person with short brown hair, blue eyes, wearing a business suit...",
+    "promptIdeaPlaceholder": "Choose a prompt idea or write your own",
+    "title": "Create Your Masterpiece",
+    "description": "Describe yourself or the person you want to create an avatar for. Be specific about features, style, and appearance for the best results.",
+    "cameraType": "Camera Type",
+    "generateImage": "Generate Image",
+    "generateImageDescription": "Generate an image from a text prompt",
+    "generateImageButton": "Generate Image",
+    "aspectRatio": "Aspect Ratio",
+    "aspectRatios": {
+      "square": "Square (1:1)",
+      "portrait": "Portrait (9:16)",
+      "landscape": "Landscape (16:9)"
+    },
+    "cameraTypes": {
+      "selfie": "Selfie",
+      "noSelfie": "No Selfie"
+    },
+    "aiModel": "AI Model",
+    "aiModels": {
+      "model1": "Model 1",
+      "model2": "Model 2"
+    },
+    "promptIdeas": "Prompt Ideas",
+    "clear": "Clear",
+    "generatingMagic": "Generating Magic...",
+    "yourCreations": "Your Creations"
+  },
+  "imageCreationPromptIdeas": {
+    "idea1": "A professional executive with neatly styled short brown hair wearing a tailored navy business suit and light blue shirt, standing confidently in a modern high-rise office with floor-to-ceiling windows overlooking a city skyline, soft natural lighting highlighting their determined expression, ultra-realistic 4K detail",
+    "idea2": "A creative artist with vibrant teal and purple hair, wearing paint-splattered overalls and a colorful patterned shirt, working in a sunlit studio loft with exposed brick walls, surrounded by canvases, paint tubes, and art supplies, with golden hour sunlight streaming through large industrial windows, creating a warm atmospheric glow, cinematic lighting, high detail",
+    "idea3": "A tech innovator with modern round glasses and a smart casual outfit, sitting at an ergonomic workstation in a minimalist home office, surrounded by multiple monitors, mechanical keyboard, smart home devices, and the latest gadgets, with ambient blue lighting from LED strips, shallow depth of field focusing on their concentrated expression, photorealistic style",
+    "idea4": "A nature photographer wearing a weathered hiking vest, moisture-wicking layers, and sturdy boots, exploring a misty ancient forest at dawn, surrounded by towering redwoods, ferns, and moss-covered rocks, with golden sunbeams filtering through the canopy creating ethereal light rays, capturing the scene with a professional camera, detailed nature photography style",
+    "idea5": "A fitness coach with athletic build wearing moisture-wicking compression gear in deep teal, demonstrating perfect form during a workout in a high-end gym with polished concrete floors, state-of-the-art equipment, and motivational wall murals, dramatic side lighting emphasizing muscle definition, professional sports photography style with crisp details",
+    "idea6": "A chef in a white chef's coat and hat, preparing a gourmet meal in a modern kitchen with stainless steel appliances, marble countertops, and a large window overlooking a bustling city street, with soft natural lighting and a focus on the chef's detailed hand movements, high-quality food photography style with vibrant colors and sharp details",
+    "idea7": "A cyberpunk character with neon blue undercut hairstyle, wearing a high-tech leather jacket with illuminated circuit patterns and augmented reality glasses, standing in a rain-soaked alley in a futuristic megacity with towering holographic advertisements reflecting in puddles, atmospheric neon lighting in purple and blue tones, cinematic composition",
+    "idea8": "A majestic mountain landscape at sunset with snow-capped peaks, alpine meadows filled with wildflowers, and a crystal-clear lake reflecting the golden sky, wispy clouds catching the last light of day, ultra-high-definition nature photography with vibrant colors and sharp details",
+    "idea9": "An abandoned ancient temple in a dense jungle, stone walls covered in moss and vines, intricate carvings partially visible beneath the vegetation, shafts of sunlight breaking through the canopy illuminating the crumbling architecture, with mist hanging in the air creating a mystical atmosphere, archaeological photography style",
+    "idea10": "A futuristic cityscape at night with soaring skyscrapers featuring organic architecture, flying vehicles moving between buildings, holographic billboards, and multiple levels of suspended gardens and walkways, illuminated by thousands of lights in blue and purple hues reflecting off glass surfaces, sci-fi concept art style",
+    "idea11": "A detailed close-up of a mechanical watch movement with intricate gears, springs, and jewels, polished metal surfaces catching the light, showing the precise engineering and craftsmanship, macro photography with shallow depth of field on a dark background, product photography style",
+    "idea12": "A serene beach scene with clear blue skies, palm trees swaying in the breeze, and a gentle sea breeze carrying the scent of saltwater, with a clear blue sky and a soft breeze, beach photography style with natural lighting and a focus on the details of the scene",
+    "idea13": "A luxurious leather handbag with gold hardware placed on a marble surface, soft studio lighting creating gentle shadows that emphasize the bag's texture and craftsmanship, high-end fashion product photography with shallow depth of field and neutral elegant background",
+    "idea14": "A pair of premium wireless headphones with matte black finish and subtle metallic accents floating in mid-air against a dark background with dramatic lighting highlighting the contours and design elements, commercial product photography with perfect symmetry and ultra-sharp details",
+    "idea15": "A handcrafted ceramic coffee mug with an organic, textured glaze in deep blue tones, steam rising from the fresh coffee inside, placed on a rustic wooden table with scattered coffee beans around it, natural window lighting creating a cozy morning atmosphere, lifestyle product photography",
+    "idea16": "A modern smart watch with an illuminated display showing fitness metrics, worn on a wrist, captured during an outdoor workout at golden hour with soft backlighting highlighting the sleek design and comfortable band, lifestyle product photography emphasizing an active healthy lifestyle"
+  },
+  "imageEdit": {
+    "imageEdit": "Image Edit",
+    "promptIdeaPlaceholder": "Choose a prompt idea or write your own",
+    "errorLoadingImage": "Error loading image",
+    "goBack": "Go Back",
+    "promptIdeas": "Prompt Ideas",
+    "aiModel": "AI Model",
+    "model1": "Model 1",
+    "model2": "Model 2",
+    "editInstructions": "Edit Instructions",
+    "editInstructionsPlaceholder": "Describe how you want to edit your image...",
+    "clear": "Clear",
+    "editing": "Editing...",
+    "editImage": "Edit Image",
+    "sourceImage": "Source Image",
+    "original": "Original",
+    "editingImage": "Editing your image...",
+    "transformingImage": "We're transforming your image with AI magic! This typically takes 15-30 seconds.",
+    "clickEditedImage": "Click the \"Edit Image\" button to transform your image with AI",
+    "yourEditedImageWillAppearHere": "Your edited image will appear here",
+    "enterAPromptToEditYourImage": "Enter a prompt to edit your image",
+    "editedImage": "Edited Image",
+    "processingEditedImage": "Processing edited image...",
+    "yourEditedImages": "Your Edited Images"
+  },
+  "imageEditPromptIdeas": {
+    "idea1": "Transform the background to a pristine tropical beach with crystal-clear turquoise water, golden sand, and swaying palm trees. Add a warm sunset glow that casts soft orange highlights on the subject.",
+    "idea2": "Remove the existing background completely and replace with a smooth gradient transitioning from deep indigo at the top to soft lavender at the bottom. Add subtle light particles floating in the air for a magical atmosphere.",
+    "idea3": "Apply a professional depth-of-field effect with circular bokeh lights in gold and teal tones. Maintain sharp focus on the subject while creating a dreamy, cinematic background with natural light leaks.",
+    "idea4": "Enhance this into a high-end studio portrait with perfect three-point lighting setup: soft key light from the front-left, fill light reducing shadows on the right, and a subtle rim light creating a professional highlight around the subject's outline. Add a neutral gray backdrop with subtle vignetting.",
+    "idea5": "Convert the image into an artistic watercolor painting with visible brush strokes, soft color bleeding at the edges, and delicate paper texture. Enhance the most prominent features while allowing colors to blend naturally in less detailed areas. Add subtle splatter effects for artistic flair.",
+    "idea6": "Transform the scene into a cyberpunk night cityscape with neon signs, holographic projections, and rain-slicked streets reflecting colorful lights. Add subtle digital glitch effects and futuristic UI elements surrounding the subject.",
+    "idea7": "Create a professional product photography look with a minimalist white background, subtle drop shadow beneath the subject, perfect highlight reflections, and ultra-sharp details that emphasize texture and form.",
+    "idea8": "Enhance this product with premium packaging design featuring embossed gold foil logo, matte finish, and elegant typography. Add subtle studio lighting to highlight texture and quality, with a soft reflection on a glossy surface below.",
+    "idea9": "Transform this product into a lifestyle advertisement by placing it in a modern, minimalist home setting with natural light streaming through large windows. Add depth of field to create a cozy, aspirational atmosphere that showcases the product in real-world use.",
+    "idea10": "Create a professional e-commerce style image with the product perfectly isolated on a pure white background, crisp edges, accurate color representation, and multiple angles shown in a grid layout for complete product visualization.",
+    "idea11": "Enhance this product with a technical exploded view showing internal components floating in space around the main item. Add subtle connecting lines, part labels, and a blueprint-style grid in the background for a sophisticated engineering aesthetic.",
+    "idea12": "Transform this into a luxury product advertisement with dramatic side lighting, deep shadows, and rich contrast on a black background. Add a subtle spotlight effect and reflective surface to create an elegant, high-end presentation."
+  },
+  "layout": {
+    "getHelp": "Get Help",
+    "dashboard": "Dashboard",
+    "gallery": "Gallery",
+    "editImage": "Edit Image",
+    "restoreImage": "Restore Image",
+    "videosCreation": "Videos creation",
+    "settings": "Settings"
+  },
+  "navMain": {
+    "quickCreate": "Quick Create"
+  },
+  "navRemainingPlan": {
+    "yourPlanUsage": "Your Plan Usage",
+    "images": "Images",
+    "videos": "Videos",
+    "left": "Left",
+    "resetsIn": "Resets in {{days}}d",
+    "upgrade": "Upgrade Plan"
+  },
+  "login": {
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "forgotPassword": "Forgot Password?",
+    "goBack": "Go Back",
+    "unexpectedError": "An unexpected error occurred. Please try again.",
+    "welcomeBack": "Welcome back",
+    "enterYourCredentials": "Enter your credentials to login",
+    "dontHaveAnAccount": "Don't have an account?",
+    "signUp": "Sign Up"
+  },
+  "resetPassword": {
+    "unexpectedError": "An unexpected error occurred. The link may be invalid or expired.",
+    "passwordMinLength": "Password must be at least 8 characters long",
+    "passwordUppercase": "Password must contain at least one uppercase letter",
+    "passwordLowercase": "Password must contain at least one lowercase letter",
+    "passwordNumber": "Password must contain at least one number",
+    "passwordSpecialCharacter": "Password must contain at least one special character",
+    "invalidOrExpiredLink": "The password reset link is invalid or has expired.",
+    "resetYourPassword": "Reset your password",
+    "pleaseChooseStrongPassword": "Please choose a strong password for your account",
+    "newPassword": "New Password",
+    "enterYourNewPassword": "Enter your new password",
+    "passwordMustContain": "Password must contain:",
+    "atLeast8Characters": "At least 8 characters",
+    "atLeastOneUppercaseLetter": "At least one uppercase letter",
+    "atLeastOneLowercaseLetter": "At least one lowercase letter",
+    "atLeastOneNumber": "At least one number",
+    "atLeastOneSpecialCharacter": "At least one special character",
+    "resettingPassword": "Resetting password...",
+    "resetPassword": "Reset Password",
+    "error": "Error",
+    "success": "Success",
+    "yourPasswordHasBeenReset": " Your password has been reset successfully. You will be redirected to the login page in a few seconds."
+  },
+  "restoreImage": {
+    "restoringImage": "Restoring image...",
+    "restoreImage": "Restore Image",
+    "restoringImageDescription": "We're enhancing your image with AI restoration! This typically takes 15-30 seconds.",
+    "imageRestoration": "Image Restoration",
+    "originalImage": "Original Image",
+    "before": "Before",
+    "restoredImage": "Restored Image",
+    "after": "After",
+    "yourRestoredImageWillAppearHere": "Your restored image will appear here",
+    "downloadRestoredImage": "Download Restored Image",
+    "beforeAndAfterComparison": "Before and After Comparison",
+    "yourRestoredImages": "Your Restored Images"
+  },
+  "settings": {
+    "currentPasswordRequired": "Current password is required",
+    "passwordMustBeAtLeast8Characters": "Password must be at least 8 characters",
+    "passwordMustContainAtLeastOneUppercaseLetter": "Password must contain at least one uppercase letter",
+    "passwordMustContainAtLeastOneLowercaseLetter": "Password must contain at least one lowercase letter",
+    "passwordMustContainAtLeastOneNumber": "Password must contain at least one number",
+    "pleaseConfirmYourPassword": "Please confirm your password",
+    "passwordsDoNotMatch": "Passwords don't match",
+    "passwordUpdated": "Password updated",
+    "passwordUpdatedDescription": "Your password has been updated successfully. You will be redirected to the login page in a few seconds.",
+    "error": "Error",
+    "passwordUpdateError": "There was a problem updating your password.",
+    "security": "Security",
+    "accountSettings": "Account Settings",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "passwordRequirementsDescription": "Password must be at least 8 characters, contain at least one uppercase letter, one lowercase letter, and one number",
+    "confirmPassword": "Confirm New Password",
+    "updatingPassword": "Updating Password...",
+    "updatePassword": "Update Password"
+  },
+  "signup": {
+    "goBack": "Go Back",
+    "unexpectedError": "An unexpected error occurred. Please try again.",
+    "fullNameIsRequired": "Full name is required",
+    "invalidEmailAddress": "Invalid email address",
+    "passwordMustBeAtLeast6Characters": "Password must be at least 6 characters long",
+    "createAnAccount": "Create an Account",
+    "enterYourDetailsBelowToCreateAnAccount": "Enter your details below to create an account",
+    "fullName": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "creatingAccount": "Creating account...",
+    "createAccount": "Create Account",
+    "orContinueWith": "Or continue with",
+    "alreadyHaveAnAccount": "Already have an account?",
+    "signIn": "Sign In",
+    "checkYourEmail": "Check your email",
+    "weveSentYouAnEmailWithAConfirmationLink": "We've sent you an email with a confirmation link. Please check your inbox and click the link to activate your account.",
+    "nextSteps": "Next Steps",
+    "checkInboxOrSpam": "Check your inbox or spam folder",
+    "clickTheConfirmationLinkInTheEmail": "Click the confirmation link in the email",
+    "onceYouClickTheLink": "Once confirmed, you can log in to your account"
+  },
+  "videoCreation": {
+    "emptyState": {
+      "title": "Add an Image to Begin",
+      "description": "Select or upload an image to transform it with AI editing",
+      "uploadImage": "Upload Image",
+      "selectFromGallery": "Select from Gallery"
+    },
+    "errorGeneratingVideo": "Error generating video",
+    "errorLoadingImage": "Error loading image",
+    "goBack": "Go Back",
+    "title": "Video Creation",
+    "yourCreations": "Your Creations",
+    "sourceImage": "Source Image",
+    "original": "Original",
+    "animationDescription": "Animation Description",
+    "placeholder": "Describe how you want your image to animate...",
+    "negativePrompt": "Negative Prompt",
+    "negativePromptPlaceholder": "Specify what you don't want in your animation... This helps the AI avoid unwanted elements.",
+    "processing": "Processing...",
+    "generateVideo": "Generate Video",
+    "generatedVideo": "Generated Video",
+    "ready": "Ready",
+    "creatingVideo": "Creating your video...",
+    "creatingVideoDescription": "We're bringing your image to life with AI magic! This typically takes 3-5 minutes.",
+    "browserDoesNotSupportVideo": "Your browser does not support the video tag.",
+    "hoverToSeeControls": "Hover to see controls",
+    "videoWillAppearHere": "Your video will appear here once generated",
+    "enterPromptToGenerateVideo": "Enter a prompt to generate a video",
+    "clickGenerateVideo": "Click the \"Generate Video\" button to transform your static image into a dynamic video",
+    "downloadVideo": "Download Video"
+  }
+}

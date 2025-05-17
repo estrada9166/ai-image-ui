@@ -1,0 +1,329 @@
+{
+  "feedback": {
+    "title": "¡Comparte tu opinión!",
+    "thanksMessage": "¡Gracias por compartir tu opinión!",
+    "inputPlaceholder": "¿Qué quieres que sepamos?",
+    "sendFeedback": "Enviar Comentarios"
+  },
+  "emptySourceImage": {
+    "addAnImageToBegin": "Añade una imagen para comenzar",
+    "selectOrUploadAnImageToTransformItWithAIEditing": "Selecciona o sube una imagen para transformarla con edición de IA",
+    "uploadImage": "Subir Imagen",
+    "selectFromGallery": "Seleccionar de la Galería"
+  },
+  "confirmUser": {
+    "confirmingYourAccount": "Confirmando tu cuenta...",
+    "accountConfirmed": "¡Cuenta Confirmada!",
+    "accountNotConfirmed": "Cuenta No Confirmada",
+    "accountNotConfirmedMessage": "No pudimos confirmar tu cuenta. El enlace de confirmación puede haber caducado o no es válido. Por favor, intenta registrarte de nuevo o contacta con soporte.",
+    "goToDashboard": "Ir al Panel",
+    "accountConfirmedMessage": "Gracias por confirmar tu cuenta. Tu correo electrónico ha sido verificado correctamente."
+  },
+  "dashboard": {
+    "title": "Panel",
+    "createImage": "Crear Imagen",
+    "editImage": "Editar Imagen",
+    "modifyExistingImages": "Modificar imágenes existentes",
+    "createVideo": "Crear Video",
+    "transformImagesIntoVideos": "Transformar imágenes en videos",
+    "completed": "Completado",
+    "tryMe": "¡Pruébame!",
+    "createNew": "Crear nuevo",
+    "yourImages": "Tus Imágenes",
+    "editedImages": "Imágenes Editadas",
+    "restoredImages": "Imágenes Restauradas",
+    "yourVideos": "Tus Videos",
+    "gallery": "Galería",
+    "generateAIimagesFromText": "Generar imágenes de IA a partir de texto",
+    "editAnImage": "Editar una imagen",
+    "restoreAnImage": "Restaurar una imagen"
+  },
+  "forgotPassword": {
+    "checkYourEmail": "Revisa tu correo electrónico",
+    "description": "Si existe una cuenta con ese correo electrónico, te hemos enviado un enlace para restablecer la contraseña. Por favor, revisa tu bandeja de entrada y sigue las instrucciones para restablecer tu contraseña.",
+    "unexpectedError": "Ocurrió un error inesperado. Por favor, inténtalo de nuevo más tarde.",
+    "nextSteps": "Próximos Pasos",
+    "checkInboxOrSpam": "Revisa tu bandeja de entrada o carpeta de spam",
+    "clickThePasswordResetLinkInTheEmail": "Haz clic en el enlace de restablecimiento de contraseña en el correo electrónico",
+    "createYourNewPassword": "Crea tu nueva contraseña",
+    "resetYourPassword": "Restablece tu contraseña",
+    "resetYourPasswordDescription": "Ingresa tu dirección de correo electrónico y te enviaremos instrucciones para restablecer tu contraseña",
+    "emailAddress": "Dirección de correo electrónico",
+    "sendingLink": "Enviando enlace...",
+    "sendResetLink": "Enviar enlace de restablecimiento"
+  },
+  "emptyGalleryState": {
+    "images": {
+      "title": "Imágenes",
+      "description": "Crea tu primera imagen generada por IA para verla aparecer en tu galería",
+      "buttonText": "Crear una Imagen"
+    },
+    "editedImages": {
+      "title": "Imágenes Editadas",
+      "description": "Crea tu primera imagen editada para verla aparecer en tu galería",
+      "buttonText": "Editar una Imagen"
+    },
+    "restoredImages": {
+      "title": "Imágenes Restauradas",
+      "description": "Crea tu primera imagen restaurada para verla aparecer en tu galería",
+      "buttonText": "Restaurar una Imagen"
+    },
+    "video": {
+      "title": "Videos",
+      "description": "Crea tu primer video para verlo aparecer en tu galería",
+      "buttonText": "Crear un Video"
+    }
+  },
+  "gallery": {
+    "gallery": "Galería",
+    "created": "Creado",
+    "edited": "Editado",
+    "restored": "Restaurado",
+    "videos": "Videos",
+    "uploaded": "Subido"
+  },
+  "imageGallery": {
+    "loadingMoreImages": "Cargando más imágenes...",
+    "generatingImage": "Generando imagen...",
+    "viewFullGallery": "Ver galería completa"
+  },
+  "videoGallery": {
+    "loadingMoreVideos": "Cargando más videos...",
+    "generatingVideo": "Generando video...",
+    "viewFullGallery": "Ver galería completa"
+  },
+  "googleLogin": {
+    "loginWithGoogle": "Iniciar sesión con Google"
+  },
+  "imageCreation": {
+    "placeholder": "Un personaje profesional con cabello corto castaño, ojos azules, vistiendo un traje de negocios...",
+    "promptIdeaPlaceholder": "Elige una idea de prompt o escribe la tuya",
+    "title": "Crea Tu Obra Maestra",
+    "description": "Describe a ti mismo o a la persona para la que quieres crear un avatar. Sé específico sobre características, estilo y apariencia para obtener los mejores resultados.",
+    "cameraType": "Tipo de Cámara",
+    "generateImage": "Generar Imagen",
+    "generateImageDescription": "Generar una imagen a partir de un texto",
+    "generateImageButton": "Generar Imagen",
+    "aspectRatio": "Relación de Aspecto",
+    "aspectRatios": {
+      "square": "Cuadrado (1:1)",
+      "portrait": "Retrato (9:16)",
+      "landscape": "Paisaje (16:9)"
+    },
+    "cameraTypes": {
+      "selfie": "Selfie",
+      "noSelfie": "No Selfie"
+    },
+    "aiModel": "Modelo de IA",
+    "aiModels": {
+      "model1": "Modelo 1",
+      "model2": "Modelo 2"
+    },
+    "promptIdeas": "Ideas de Prompt",
+    "clear": "Limpiar",
+    "generatingMagic": "Generando Magia...",
+    "yourCreations": "Tus Creaciones"
+  },
+  "imageCreationPromptIdeas": {
+    "idea1": "Un ejecutivo profesional con cabello corto castaño bien peinado, vistiendo un traje de negocios azul marino a medida y camisa azul claro, de pie con confianza en una oficina moderna de gran altura con ventanas del suelo al techo con vista al horizonte de la ciudad, iluminación natural suave resaltando su expresión determinada, detalle ultra-realista en 4K",
+    "idea2": "Un artista creativo con cabello vibrante en tonos turquesa y púrpura, vistiendo un overol salpicado de pintura y una camisa colorida estampada, trabajando en un loft de estudio iluminado por el sol con paredes de ladrillo expuesto, rodeado de lienzos, tubos de pintura y materiales de arte, con la luz dorada del atardecer entrando por grandes ventanas industriales, creando un cálido resplandor atmosférico, iluminación cinematográfica, alto detalle",
+    "idea3": "Un innovador tecnológico con gafas redondas modernas y un atuendo casual elegante, sentado en una estación de trabajo ergonómica en una oficina minimalista en casa, rodeado de múltiples monitores, teclado mecánico, dispositivos domésticos inteligentes y los últimos gadgets, con iluminación ambiental azul de tiras LED, poca profundidad de campo enfocando su expresión concentrada, estilo fotorrealista",
+    "idea4": "Un fotógrafo de naturaleza con chaleco de senderismo desgastado, capas que absorben la humedad y botas resistentes, explorando un bosque antiguo brumoso al amanecer, rodeado de secuoyas imponentes, helechos y rocas cubiertas de musgo, con rayos dorados de sol filtrándose a través del dosel creando rayos de luz etéreos, capturando la escena con una cámara profesional, estilo detallado de fotografía de naturaleza",
+    "idea5": "Un entrenador de fitness con cuerpo atlético vistiendo ropa de compresión que absorbe la humedad en color turquesa profundo, demostrando forma perfecta durante un entrenamiento en un gimnasio de alta gama con pisos de concreto pulido, equipamiento de última generación y murales motivacionales en las paredes, iluminación lateral dramática que enfatiza la definición muscular, estilo de fotografía deportiva profesional con detalles nítidos",
+    "idea6": "Un chef con chaqueta y gorro de cocinero blancos, preparando una comida gourmet en una cocina moderna con electrodomésticos de acero inoxidable, encimeras de mármol y una gran ventana con vista a una concurrida calle de la ciudad, con iluminación natural suave y enfoque en los movimientos detallados de las manos del chef, estilo de fotografía culinaria de alta calidad con colores vibrantes y detalles nítidos",
+    "idea7": "Un personaje cyberpunk con peinado undercut azul neón, vistiendo una chaqueta de cuero de alta tecnología con patrones de circuitos iluminados y gafas de realidad aumentada, de pie en un callejón empapado por la lluvia en una megaciudad futurista con enormes anuncios holográficos reflejándose en los charcos, iluminación atmosférica de neón en tonos púrpura y azul, composición cinematográfica",
+    "idea8": "Un majestuoso paisaje montañoso al atardecer con picos nevados, praderas alpinas llenas de flores silvestres y un lago cristalino reflejando el cielo dorado, nubes difusas captando la última luz del día, fotografía de naturaleza de ultra alta definición con colores vibrantes y detalles nítidos",
+    "idea9": "Un templo antiguo abandonado en una densa jungla, paredes de piedra cubiertas de musgo y enredaderas, tallas intrincadas parcialmente visibles bajo la vegetación, rayos de sol atravesando el dosel iluminando la arquitectura en ruinas, con niebla suspendida en el aire creando una atmósfera mística, estilo de fotografía arqueológica",
+    "idea10": "Un paisaje urbano futurista de noche con rascacielos que se elevan con arquitectura orgánica, vehículos voladores moviéndose entre edificios, vallas publicitarias holográficas y múltiples niveles de jardines suspendidos y pasarelas, iluminado por miles de luces en tonos azules y púrpuras reflejándose en superficies de vidrio, estilo de arte conceptual de ciencia ficción",
+    "idea11": "Un primer plano detallado de un mecanismo de reloj con engranajes intrincados, resortes y joyas, superficies metálicas pulidas captando la luz, mostrando la ingeniería precisa y la artesanía, fotografía macro con poca profundidad de campo sobre un fondo oscuro, estilo de fotografía de producto",
+    "idea12": "Una serena escena de playa con cielos azules claros, palmeras meciéndose con la brisa y una suave brisa marina llevando el aroma del agua salada, con un cielo azul claro y una suave brisa, estilo de fotografía de playa con iluminación natural y enfoque en los detalles de la escena",
+    "idea13": "Un lujoso bolso de cuero con herrajes dorados colocado sobre una superficie de mármol, iluminación suave de estudio creando sombras suaves que enfatizan la textura y la artesanía del bolso, fotografía de producto de moda de alta gama con poca profundidad de campo y fondo elegante neutral",
+    "idea14": "Unos auriculares inalámbricos premium con acabado negro mate y sutiles acentos metálicos flotando en el aire contra un fondo oscuro con iluminación dramática resaltando los contornos y elementos de diseño, fotografía comercial de producto con simetría perfecta y detalles ultra nítidos",
+    "idea15": "Una taza de café de cerámica hecha a mano con un esmalte texturizado orgánico en tonos azul profundo, vapor elevándose del café fresco en su interior, colocada sobre una mesa rústica de madera con granos de café esparcidos alrededor, iluminación natural de ventana creando una acogedora atmósfera matutina, fotografía de producto de estilo de vida",
+    "idea16": "Un reloj inteligente moderno con una pantalla iluminada mostrando métricas de fitness, usado en una muñeca, capturado durante un entrenamiento al aire libre en la hora dorada con suave contraluz resaltando el diseño elegante y la cómoda correa, fotografía de producto de estilo de vida enfatizando un estilo de vida activo y saludable"
+  },
+  "imageEdit": {
+    "imageEdit": "Edición de Imagen",
+    "promptIdeaPlaceholder": "Elige una idea de prompt o escribe la tuya",
+    "errorLoadingImage": "Error al cargar la imagen",
+    "goBack": "Volver",
+    "promptIdeas": "Ideas de Prompt",
+    "aiModel": "Modelo de IA",
+    "model1": "Modelo 1",
+    "model2": "Modelo 2",
+    "editInstructions": "Instrucciones de Edición",
+    "editInstructionsPlaceholder": "Describe cómo quieres editar tu imagen...",
+    "clear": "Limpiar",
+    "editing": "Editando...",
+    "editImage": "Editar Imagen",
+    "sourceImage": "Imagen Original",
+    "original": "Original",
+    "editingImage": "Editando tu imagen...",
+    "transformingImage": "¡Estamos transformando tu imagen con magia de IA! Esto normalmente tarda entre 15-30 segundos.",
+    "clickEditedImage": "Haz clic en el botón \"Editar Imagen\" para transformar tu imagen con IA",
+    "yourEditedImageWillAppearHere": "Tu imagen editada aparecerá aquí",
+    "enterAPromptToEditYourImage": "Ingresa un prompt para editar tu imagen",
+    "editedImage": "Imagen Editada",
+    "processingEditedImage": "Procesando imagen editada...",
+    "yourEditedImages": "Tus Imágenes Editadas"
+  },
+  "imageEditPromptIdeas": {
+    "idea1": "Transforma el fondo a una playa tropical prístina con agua turquesa cristalina, arena dorada y palmeras meciéndose. Añade un cálido resplandor de atardecer que proyecte suaves reflejos naranjas sobre el sujeto.",
+    "idea2": "Elimina completamente el fondo existente y reemplázalo con un suave degradado que transicione desde índigo profundo en la parte superior hasta lavanda suave en la parte inferior. Añade sutiles partículas de luz flotando en el aire para una atmósfera mágica.",
+    "idea3": "Aplica un efecto profesional de profundidad de campo con luces bokeh circulares en tonos dorados y turquesa. Mantén un enfoque nítido en el sujeto mientras creas un fondo soñador y cinematográfico con filtraciones naturales de luz.",
+    "idea4": "Mejora esto en un retrato de estudio de alta gama con una configuración perfecta de iluminación de tres puntos: luz principal suave desde el frente-izquierda, luz de relleno reduciendo sombras a la derecha, y una sutil luz de contorno creando un resalte profesional alrededor del contorno del sujeto. Añade un fondo gris neutro con sutil viñeteado.",
+    "idea5": "Convierte la imagen en una pintura artística de acuarela con trazos de pincel visibles, suave sangrado de color en los bordes y delicada textura de papel. Realza las características más prominentes mientras permites que los colores se mezclen naturalmente en áreas menos detalladas. Añade sutiles efectos de salpicaduras para un toque artístico.",
+    "idea6": "Transforma la escena en un paisaje urbano cyberpunk nocturno con letreros de neón, proyecciones holográficas y calles mojadas por la lluvia reflejando luces coloridas. Añade sutiles efectos de falla digital y elementos de interfaz de usuario futuristas rodeando al sujeto.",
+    "idea7": "Crea un aspecto de fotografía de producto profesional con un fondo blanco minimalista, sutil sombra debajo del sujeto, reflejos perfectos de luz y detalles ultra nítidos que enfatizan la textura y la forma.",
+    "idea8": "Mejora este producto con un diseño de empaque premium con logo en relieve de lámina dorada, acabado mate y tipografía elegante. Añade iluminación sutil de estudio para resaltar la textura y calidad, con un suave reflejo en una superficie brillante debajo.",
+    "idea9": "Transforma este producto en un anuncio de estilo de vida colocándolo en un entorno hogareño moderno y minimalista con luz natural entrando por grandes ventanas. Añade profundidad de campo para crear una atmósfera acogedora y aspiracional que muestre el producto en uso en el mundo real.",
+    "idea10": "Crea una imagen de estilo e-commerce profesional con el producto perfectamente aislado sobre un fondo blanco puro, bordes nítidos, representación precisa del color y múltiples ángulos mostrados en un diseño de cuadrícula para una visualización completa del producto.",
+    "idea11": "Mejora este producto con una vista técnica explosionada mostrando componentes internos flotando en el espacio alrededor del artículo principal. Añade líneas sutiles de conexión, etiquetas de partes y una cuadrícula de estilo plano en el fondo para una estética de ingeniería sofisticada.",
+    "idea12": "Transforma esto en un anuncio de producto de lujo con iluminación lateral dramática, sombras profundas y rico contraste sobre un fondo negro. Añade un sutil efecto de foco y superficie reflectante para crear una presentación elegante y de alta gama."
+  },
+  "layout": {
+    "getHelp": "Obtener Ayuda",
+    "dashboard": "Panel",
+    "gallery": "Galería",
+    "editImage": "Editar Imagen",
+    "restoreImage": "Restaurar Imagen",
+    "videosCreation": "Creación de Videos",
+    "settings": "Ajustes"
+  },
+  "navMain": {
+    "quickCreate": "Creación Rápida"
+  },
+  "navRemainingPlan": {
+    "yourPlanUsage": "Uso de Tu Plan",
+    "images": "Imágenes",
+    "videos": "Videos",
+    "left": "Restantes",
+    "resetsIn": "Se restablece en {{days}}d",
+    "upgrade": "Mejorar Plan"
+  },
+  "login": {
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "login": "Iniciar sesión",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "goBack": "Volver",
+    "unexpectedError": "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.",
+    "welcomeBack": "Bienvenido de nuevo",
+    "enterYourCredentials": "Ingresa tus credenciales para iniciar sesión",
+    "dontHaveAnAccount": "¿No tienes una cuenta?",
+    "signUp": "Registrarse"
+  },
+  "resetPassword": {
+    "unexpectedError": "Ocurrió un error inesperado. El enlace puede ser inválido o haber expirado.",
+    "passwordMinLength": "La contraseña debe tener al menos 8 caracteres",
+    "passwordUppercase": "La contraseña debe contener al menos una letra mayúscula",
+    "passwordLowercase": "La contraseña debe contener al menos una letra minúscula",
+    "passwordNumber": "La contraseña debe contener al menos un número",
+    "passwordSpecialCharacter": "La contraseña debe contener al menos un carácter especial",
+    "invalidOrExpiredLink": "El enlace de restablecimiento de contraseña es inválido o ha expirado.",
+    "resetYourPassword": "Restablece tu contraseña",
+    "pleaseChooseStrongPassword": "Por favor, elige una contraseña fuerte para tu cuenta",
+    "newPassword": "Nueva Contraseña",
+    "enterYourNewPassword": "Ingresa tu nueva contraseña",
+    "passwordMustContain": "La contraseña debe contener:",
+    "atLeast8Characters": "Al menos 8 caracteres",
+    "atLeastOneUppercaseLetter": "Al menos una letra mayúscula",
+    "atLeastOneLowercaseLetter": "Al menos una letra minúscula",
+    "atLeastOneNumber": "Al menos un número",
+    "atLeastOneSpecialCharacter": "Al menos un carácter especial",
+    "resettingPassword": "Restableciendo contraseña...",
+    "resetPassword": "Restablecer Contraseña",
+    "error": "Error",
+    "success": "Éxito",
+    "yourPasswordHasBeenReset": "Tu contraseña ha sido restablecida con éxito. Serás redirigido a la página de inicio de sesión en unos segundos."
+  },
+  "restoreImage": {
+    "restoringImage": "Restaurando imagen...",
+    "restoreImage": "Restaurar Imagen",
+    "restoringImageDescription": "¡Estamos mejorando tu imagen con restauración de IA! Esto normalmente tarda entre 15-30 segundos.",
+    "imageRestoration": "Restauración de Imagen",
+    "originalImage": "Imagen Original",
+    "before": "Antes",
+    "restoredImage": "Imagen Restaurada",
+    "after": "Después",
+    "yourRestoredImageWillAppearHere": "Tu imagen restaurada aparecerá aquí",
+    "downloadRestoredImage": "Descargar Imagen Restaurada",
+    "beforeAndAfterComparison": "Comparación de Antes y Después",
+    "yourRestoredImages": "Tus Imágenes Restauradas"
+  },
+  "settings": {
+    "currentPasswordRequired": "Se requiere la contraseña actual",
+    "passwordMustBeAtLeast8Characters": "La contraseña debe tener al menos 8 caracteres",
+    "passwordMustContainAtLeastOneUppercaseLetter": "La contraseña debe contener al menos una letra mayúscula",
+    "passwordMustContainAtLeastOneLowercaseLetter": "La contraseña debe contener al menos una letra minúscula",
+    "passwordMustContainAtLeastOneNumber": "La contraseña debe contener al menos un número",
+    "pleaseConfirmYourPassword": "Por favor, confirma tu contraseña",
+    "passwordsDoNotMatch": "Las contraseñas no coinciden",
+    "passwordUpdated": "Contraseña actualizada",
+    "passwordUpdatedDescription": "Tu contraseña ha sido actualizada con éxito. Serás redirigido a la página de inicio de sesión en unos segundos.",
+    "error": "Error",
+    "passwordUpdateError": "Hubo un problema al actualizar tu contraseña.",
+    "security": "Seguridad",
+    "accountSettings": "Configuración de la Cuenta",
+    "currentPassword": "Contraseña Actual",
+    "newPassword": "Nueva Contraseña",
+    "passwordRequirementsDescription": "La contraseña debe tener al menos 8 caracteres, contener al menos una letra mayúscula, una letra minúscula y un número",
+    "confirmPassword": "Confirmar Nueva Contraseña",
+    "updatingPassword": "Actualizando Contraseña...",
+    "updatePassword": "Actualizar Contraseña"
+  },
+  "signup": {
+    "goBack": "Volver",
+    "unexpectedError": "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.",
+    "fullNameIsRequired": "Se requiere el nombre completo",
+    "invalidEmailAddress": "Dirección de correo electrónico inválida",
+    "passwordMustBeAtLeast6Characters": "La contraseña debe tener al menos 6 caracteres",
+    "createAnAccount": "Crear una Cuenta",
+    "enterYourDetailsBelowToCreateAnAccount": "Ingresa tus datos a continuación para crear una cuenta",
+    "fullName": "Nombre Completo",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "creatingAccount": "Creando cuenta...",
+    "createAccount": "Crear Cuenta",
+    "orContinueWith": "O continuar con",
+    "alreadyHaveAnAccount": "¿Ya tienes una cuenta?",
+    "signIn": "Iniciar Sesión",
+    "checkYourEmail": "Revisa tu correo electrónico",
+    "weveSentYouAnEmailWithAConfirmationLink": "Te hemos enviado un correo electrónico con un enlace de confirmación. Por favor, revisa tu bandeja de entrada y haz clic en el enlace para activar tu cuenta.",
+    "nextSteps": "Próximos Pasos",
+    "checkInboxOrSpam": "Revisa tu bandeja de entrada o carpeta de spam",
+    "clickTheConfirmationLinkInTheEmail": "Haz clic en el enlace de confirmación en el correo electrónico",
+    "onceYouClickTheLink": "Una vez confirmado, podrás iniciar sesión en tu cuenta"
+  },
+  "videoCreation": {
+    "emptyState": {
+      "title": "Añade una Imagen para Comenzar",
+      "description": "Selecciona o sube una imagen para transformarla con edición de IA",
+      "uploadImage": "Subir Imagen",
+      "selectFromGallery": "Seleccionar de la Galería"
+    },
+    "errorGeneratingVideo": "Error al generar el video",
+    "errorLoadingImage": "Error al cargar la imagen",
+    "goBack": "Volver",
+    "title": "Creación de Video",
+    "yourCreations": "Tus Creaciones",
+    "sourceImage": "Imagen Original",
+    "original": "Original",
+    "animationDescription": "Descripción de la Animación",
+    "placeholder": "Describe cómo quieres que tu imagen se anime...",
+    "negativePrompt": "Prompt Negativo",
+    "negativePromptPlaceholder": "Especifica lo que no quieres en tu animación... Esto ayuda a la IA a evitar elementos no deseados.",
+    "processing": "Procesando...",
+    "generateVideo": "Generar Video",
+    "generatedVideo": "Video Generado",
+    "ready": "Listo",
+    "creatingVideo": "Creando tu video...",
+    "creatingVideoDescription": "¡Estamos llevando tu imagen a la vida con magia de IA! Esto normalmente tarda entre 3-5 minutos.",
+    "browserDoesNotSupportVideo": "Tu navegador no soporta el tag de video.",
+    "hoverToSeeControls": "Pasa el cursor sobre el video para ver los controles",
+    "videoWillAppearHere": "Tu video aparecerá aquí una vez generado",
+    "enterPromptToGenerateVideo": "Ingresa un prompt para generar un video",
+    "clickGenerateVideo": "Haz clic en el botón \"Generar Video\" para transformar tu imagen estática en un video dinámico",
+    "downloadVideo": "Descargar Video"
+  }
+}

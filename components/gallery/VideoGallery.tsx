@@ -12,6 +12,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { EmptyGalleryState } from "./EmptyGalleryState";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 type Video = {
   id: string;
@@ -58,6 +59,7 @@ export function VideoGallery({
   createdVideoId?: string | null;
   loadPartialGallery?: boolean;
 }) {
+  const { t } = useTranslation();
   const [after, setAfter] = useState<string | null | undefined>();
 
   const [{ data }, reExecuteQuery] = useQuery({
@@ -164,7 +166,7 @@ export function VideoGallery({
             <div className="flex items-center gap-2">
               <Loader2 className="h-5 w-5 animate-spin text-purple-500" />
               <span className="text-sm text-muted-foreground">
-                Loading more videos...
+                {t("videoGallery.loadingMoreVideos")}
               </span>
             </div>
           </div>
@@ -192,7 +194,7 @@ export function VideoGallery({
                     <div className="absolute inset-4 rounded-full border-t-2 border-purple-200 animate-spin animation-delay-300"></div>
                   </div>
                   <p className="mt-4 text-sm font-medium text-gray-600 dark:text-gray-300">
-                    Generating video...
+                    {t("videoGallery.generatingVideo")}
                   </p>
                 </div>
               </div>
@@ -279,7 +281,7 @@ export function VideoGallery({
           <div className="col-span-full py-8 flex justify-center">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
               <Button className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white font-medium px-8 py-3 rounded-full shadow-lg hover:shadow-purple-500/20 transition-all duration-300 flex items-center gap-2 h-auto">
-                <span>View full gallery</span>
+                <span>{t("videoGallery.viewFullGallery")}</span>
                 <ChevronRight className="w-5 h-5" />
               </Button>
             </motion.div>

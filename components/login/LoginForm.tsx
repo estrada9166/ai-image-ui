@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import GoogleLogin from "../googleLogin/GoogleLogin";
 import { LogoLink } from "@/components/ui/logo-link";
+import { useTranslation } from "react-i18next";
 
 interface LoginFormProps {
   formData: {
@@ -29,6 +30,8 @@ export function LoginForm({
   fetching,
   onSubmit,
 }: LoginFormProps) {
+  const { t } = useTranslation();
+
   return (
     <form onSubmit={onSubmit} className="p-6 md:p-8">
       <div className="flex flex-col gap-6">
@@ -36,16 +39,16 @@ export function LoginForm({
           <LogoLink />
           <div>
             <h1 className="text-2xl font-bold tracking-tight gradient-text">
-              Welcome back
+              {t("login.welcomeBack")}
             </h1>
             <p className="text-balance text-muted-foreground mt-2">
-              Enter your credentials to access your account
+              {t("login.enterYourCredentials")}
             </p>
           </div>
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t("login.email")}</Label>
           <Input
             id="email"
             type="email"
@@ -60,12 +63,12 @@ export function LoginForm({
 
         <div className="grid gap-2">
           <div className="flex items-center">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t("login.password")}</Label>
             <Link
               href="/forgot-password"
               className="ml-auto text-sm underline-offset-2 hover:underline"
             >
-              Forgot password?
+              {t("login.forgotPassword")}
             </Link>
           </div>
           <Input
@@ -116,9 +119,9 @@ export function LoginForm({
         <GoogleLogin />
 
         <div className="text-center text-sm">
-          Don&apos;t have an account?{" "}
+          {t("login.dontHaveAnAccount")}{" "}
           <Link href="/signup" className="underline underline-offset-4">
-            Sign up
+            {t("login.signUp")}
           </Link>
         </div>
       </div>

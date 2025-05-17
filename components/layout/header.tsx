@@ -1,3 +1,5 @@
+"use client";
+
 import { SidebarTrigger, useSidebar } from "../ui/sidebar";
 
 export function Header() {

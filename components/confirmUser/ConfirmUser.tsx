@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { graphql } from "@/gql";
 import { useMutation } from "urql";
 import { useSearchParams } from "next/navigation";
-
+import { useTranslation } from "react-i18next";
 export const ConfirmUserEmailMutation = graphql(/* GraphQL */ `
   mutation ConfirmUserEmail($input: ConfirmUserEmailInput!) {
     confirmUserEmail(input: $input) {
@@ -24,6 +24,8 @@ export const ConfirmUserEmailMutation = graphql(/* GraphQL */ `
 `);
 
 export default function UserConfirmationPage() {
+  const { t } = useTranslation();
+
   const searchParams = useSearchParams();
   const hash = searchParams.get("hash");
 
@@ -59,7 +61,7 @@ export default function UserConfirmationPage() {
   if (isConfirmed === null) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        <p>Confirming your account...</p>
+        <p>{t("confirmUser.confirmingYourAccount")}</p>
       </div>
     );
   }
@@ -83,31 +85,19 @@ export default function UserConfirmationPage() {
           <div className="text-center text-sm text-gray-600">
             {isConfirmed ? (
               <>
-                <p>
-                  Thank you for confirming your account. Your email has been
-                  successfully verified.
-                </p>
+                <p>{t("confirmUser.accountConfirmed")}</p>
                 <p className="mt-2">
-                  You now have full access to all features of our platform. Here
-                  are some next steps you might want to take:
+                  {t("confirmUser.accountConfirmedMessage")}
                 </p>
-                <ul className="mt-4 space-y-2 text-left list-disc list-inside">
-                  <li>Create your first project</li>
-                  <li>Create your first demo</li>
-                </ul>
               </>
             ) : (
-              <p>
-                We were unable to confirm your account. The confirmation link
-                may have expired or is invalid. Please try signing up again or
-                contact support.
-              </p>
+              <p>{t("confirmUser.accountNotConfirmedMessage")}</p>
             )}
           </div>
         </CardContent>
         <CardFooter className="flex justify-center">
           <Button asChild>
-            <Link href="/dashboard">Go to Dashboard</Link>
+            <Link href="/dashboard">{t("confirmUser.goToDashboard")}</Link>
           </Button>
         </CardFooter>
       </Card>

@@ -4,6 +4,7 @@ import { AppSidebar } from "@/components/layout/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import RequireSignIn from "@/components/requireSignIn/RequireSignIn";
 import { Header } from "@/components/layout/header";
+
 export default function Page({ children }: { children: React.ReactNode }) {
   return (
     <RequireSignIn>

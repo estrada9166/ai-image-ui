@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Send } from "lucide-react";
+import { HelpCircle, MessageSquare, Send } from "lucide-react";
 import { SidebarMenuButton } from "@/components/ui/sidebar";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -23,17 +23,13 @@ const addFeedbackDocument = graphql(/* GraphQL */ `
 
 export default function Feedback() {
   const { t } = useTranslation();
-
-  const [feedback, setFeedback] = useState<string | null>(null);
-
+  const [feedback, setFeedback] = useState<string>("");
   const [isFeedbackSubmitted, setIsFeedbackSubmitted] = useState(false);
-
+  const [isOpen, setIsOpen] = useState(false);
   const [, addFeedback] = useMutation(addFeedbackDocument);
 
   const handleSubmit = () => {
-    if (!feedback) {
-      return;
-    }
+    if (!feedback.trim()) return;
 
     addFeedback({
       input: {
@@ -46,41 +42,71 @@ export default function Feedback() {
     });
   };
 
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (!open) {
+      // Reset state when dialog closes
+      setTimeout(() => {
+        setIsFeedbackSubmitted(false);
+        setFeedback("");
+      }, 300);
+    }
+  };
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <SidebarMenuButton
-          size="sm"
-          className="hover:bg-indigo-100 cursor-pointer"
-        >
-          <Send />
+        <SidebarMenuButton>
+          <HelpCircle className="size-4" />
           <span>{t("feedback.title")}</span>
         </SidebarMenuButton>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] rounded-lg">
         <DialogHeader>
-          <DialogTitle>{t("feedback.title")}</DialogTitle>
+          <DialogTitle className="flex items-center gap-2">
+            <MessageSquare className="size-5" />
+            {t("feedback.title")}
+          </DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           {isFeedbackSubmitted ? (
-            <div className="text-center sm:text-xl sm:leading-6 py-1.5 text-gray-700">
-              <span>{t("feedback.thanksMessage")}</span>
+            <div className="flex flex-col items-center justify-center gap-4 py-6">
+              <div className="rounded-full bg-green-100 p-3">
+                <Send className="size-6 text-green-600" />
+              </div>
+              <p className="text-center text-lg font-medium">
+                {t("feedback.thanksMessage")}
+              </p>
+              <p className="text-center text-sm text-muted-foreground">
+                {t("feedback.thanksDescription") || "We appreciate your input"}
+              </p>
             </div>
           ) : (
             <div>
               <Textarea
                 id="feedback"
                 placeholder={t("feedback.inputPlaceholder")}
-                defaultValue=""
+                value={feedback}
                 onChange={(e) => setFeedback(e.target.value)}
+                className="min-h-[120px] resize-none"
               />
             </div>
           )}
         </div>
         <DialogFooter>
-          {!isFeedbackSubmitted && (
-            <Button type="submit" disabled={!feedback} onClick={handleSubmit}>
-              {t("common.sendFeedback")}
+          {!isFeedbackSubmitted ? (
+            <Button
+              type="submit"
+              disabled={!feedback.trim()}
+              onClick={handleSubmit}
+              className="gap-2"
+            >
+              <Send className="size-4" />
+              {t("feedback.sendFeedback")}
+            </Button>
+          ) : (
+            <Button onClick={() => handleOpenChange(false)}>
+              {t("common.close") || "Close"}
             </Button>
           )}
         </DialogFooter>

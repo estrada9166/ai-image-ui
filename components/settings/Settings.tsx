@@ -23,6 +23,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { graphql } from "@/gql";
 import { useMutation } from "urql";
+import { useTranslation } from "react-i18next";
 
 const UpdateUserPasswordMutation = graphql(/* GraphQL */ `
   mutation UpdateUserPassword($input: UpdateUserPasswordInput!) {
@@ -33,27 +34,36 @@ const UpdateUserPasswordMutation = graphql(/* GraphQL */ `
   }
 `);
 
-const passwordSchema = z
-  .object({
-    currentPassword: z.string().min(1, "Current password is required"),
-    newPassword: z
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-      .regex(/[0-9]/, "Password must contain at least one number"),
-    confirmPassword: z.string().min(1, "Please confirm your password"),
-  })
-  .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
-
 export default function Settings() {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   const [, updateUserPassword] = useMutation(UpdateUserPasswordMutation);
+
+  const passwordSchema = z
+    .object({
+      currentPassword: z.string().min(1, t("settings.currentPasswordRequired")),
+      newPassword: z
+        .string()
+        .min(8, t("settings.passwordMustBeAtLeast8Characters"))
+        .regex(
+          /[A-Z]/,
+          t("settings.passwordMustContainAtLeastOneUppercaseLetter")
+        )
+        .regex(
+          /[a-z]/,
+          t("settings.passwordMustContainAtLeastOneLowercaseLetter")
+        )
+        .regex(/[0-9]/, t("settings.passwordMustContainAtLeastOneNumber")),
+      confirmPassword: z
+        .string()
+        .min(1, t("settings.pleaseConfirmYourPassword")),
+    })
+    .refine((data) => data.newPassword === data.confirmPassword, {
+      message: "Passwords don't match",
+      path: ["confirmPassword"],
+    });
 
   const form = useForm<z.infer<typeof passwordSchema>>({
     resolver: zodResolver(passwordSchema),
@@ -77,15 +87,15 @@ export default function Settings() {
       });
 
       toast({
-        title: "Password updated",
-        description: "Your password has been updated successfully.",
+        title: t("settings.passwordUpdated"),
+        description: t("settings.passwordUpdatedDescription"),
       });
 
       form.reset();
     } catch {
       toast({
-        title: "Error",
-        description: "There was a problem updating your password.",
+        title: t("settings.error"),
+        description: t("settings.passwordUpdateError"),
         variant: "destructive",
       });
     } finally {
@@ -106,10 +116,10 @@ export default function Settings() {
                 variant="outline"
                 className="mb-1 bg-white/50 dark:bg-black/20 text-indigo-600 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800"
               >
-                Security
+                {t("settings.security")}
               </Badge>
               <CardTitle className="text-xl font-bold bg-gradient-to-r from-indigo-700 to-purple-700 dark:from-indigo-400 dark:to-purple-400 text-transparent bg-clip-text">
-                Account Settings
+                {t("settings.accountSettings")}
               </CardTitle>
             </div>
           </div>
@@ -124,7 +134,7 @@ export default function Settings() {
                   render={({ field }) => (
                     <FormItem className="transition-all duration-200 hover:shadow-sm rounded-lg p-2 -mx-2">
                       <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Current Password
+                        {t("settings.currentPassword")}
                       </FormLabel>
                       <FormControl>
                         <div className="relative">
@@ -150,7 +160,7 @@ export default function Settings() {
                   render={({ field }) => (
                     <FormItem className="transition-all duration-200 hover:shadow-sm rounded-lg p-2 -mx-2">
                       <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        New Password
+                        {t("settings.newPassword")}
                       </FormLabel>
                       <FormControl>
                         <div className="relative">
@@ -164,8 +174,7 @@ export default function Settings() {
                         </div>
                       </FormControl>
                       <FormDescription className="text-xs mt-2 text-gray-500 dark:text-gray-400">
-                        Password must be at least 8 characters and include
-                        uppercase, lowercase, and numbers.
+                        {t("settings.passwordRequirementsDescription")}
                       </FormDescription>
                       <FormMessage className="text-xs" />
                     </FormItem>
@@ -178,7 +187,7 @@ export default function Settings() {
                   render={({ field }) => (
                     <FormItem className="transition-all duration-200 hover:shadow-sm rounded-lg p-2 -mx-2">
                       <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Confirm New Password
+                        {t("settings.confirmPassword")}
                       </FormLabel>
                       <FormControl>
                         <div className="relative">
@@ -205,12 +214,12 @@ export default function Settings() {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Updating Password...
+                    {t("settings.updatingPassword")}
                   </>
                 ) : (
                   <>
                     <KeyRound className="mr-2 h-4 w-4" />
-                    Update Password
+                    {t("settings.updatePassword")}
                   </>
                 )}
               </Button>

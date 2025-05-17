@@ -22,6 +22,7 @@ import { graphql } from "@/gql";
 import { useMutation } from "urql";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 export const signOutMutationDocument = graphql(/* GraphQL */ `
   mutation SignOut {
@@ -39,6 +40,7 @@ export function NavUser({
     isSocialLogin: boolean;
   };
 }) {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const { isMobile } = useSidebar();
@@ -109,7 +111,7 @@ export function NavUser({
                 <Link href="/dashboard/settings">
                   <DropdownMenuItem>
                     <SettingsIcon />
-                    Settings
+                    {t("layout.settings")}
                   </DropdownMenuItem>
                 </Link>
               )}

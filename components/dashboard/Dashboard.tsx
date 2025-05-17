@@ -13,8 +13,11 @@ import { ImageGallery } from "@/components/gallery/ImageGallery";
 import { VideoGallery } from "@/components/gallery/VideoGallery";
 import { ImageTypeOptionsEnum } from "../../gql/graphql";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export default function Dashboard() {
+  const { t } = useTranslation();
+
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -29,12 +32,9 @@ export default function Dashboard() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <h1 className="text-2xl font-bold mb-1 bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-          Dashboard
+        <h1 className="text-2xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+          {t("dashboard.title")}
         </h1>
-        <p className="text-sm text-muted-foreground">
-          Create and manage your AI-generated content
-        </p>
       </motion.div>
 
       <motion.div
@@ -47,22 +47,22 @@ export default function Dashboard() {
           {
             href: "/dashboard/create/image",
             icon: <ImageIcon className="h-6 w-6 text-primary" />,
-            title: "Create Image",
-            description: "Generate AI images from text",
+            title: t("dashboard.createImage"),
+            description: t("dashboard.generateAIimagesFromText"),
             completed: true,
           },
           {
             href: "/dashboard/edit/image",
             icon: <Edit className="h-6 w-6 text-primary" />,
-            title: "Edit Image",
-            description: "Modify existing images",
+            title: t("dashboard.editImage"),
+            description: t("dashboard.modifyExistingImages"),
             completed: false,
           },
           {
             href: "/dashboard/create/video",
             icon: <VideoIcon className="h-6 w-6 text-primary" />,
-            title: "Create Video",
-            description: "Transform images into videos",
+            title: t("dashboard.createVideo"),
+            description: t("dashboard.transformImagesIntoVideos"),
             completed: false,
           },
         ].map((item, index) => (
@@ -72,42 +72,46 @@ export default function Dashboard() {
             transition={{ delay: 0.1 * index }}
           >
             <Link href={item.href}>
-              <Card className="hover:shadow-lg transition-all cursor-pointer border-muted/30 hover:border-primary/40 hover:scale-102 duration-300 overflow-hidden group">
-                <CardContent className="p-4 flex items-center space-x-4">
-                  <div className="bg-primary/10 p-3 rounded-full group-hover:bg-primary/20 transition-colors">
+              <Card className="h-full hover:shadow-lg transition-all cursor-pointer border-muted/30 hover:border-primary/40 hover:scale-102 duration-300 overflow-hidden group">
+                <CardContent className="p-4 h-full flex items-center space-x-4">
+                  <div className="bg-primary/10 p-3 rounded-full group-hover:bg-primary/20 transition-colors flex-shrink-0">
                     {item.icon}
                   </div>
-                  <div>
-                    <CardTitle className="text-base mb-1">
+                  <div className="flex-grow min-w-0">
+                    <CardTitle className="text-base mb-1 truncate">
                       {item.title}
                     </CardTitle>
-                    <CardDescription className="text-xs">
+                    <CardDescription className="text-xs line-clamp-2">
                       {item.description}
                     </CardDescription>
                   </div>
-                  {item.completed ? (
-                    <span className="text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-3 py-1 rounded-full shadow-sm flex items-center gap-1.5 hover:shadow-md transition-all duration-200 font-medium">
-                      <span className="inline-block h-2 w-2 rounded-full bg-white animate-pulse"></span>
-                      <span>Completed</span>
-                    </span>
-                  ) : (
-                    <span className="text-xs bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1 rounded-full shadow-sm flex items-center gap-1.5 hover:shadow-md transition-all duration-200">
-                      <svg
-                        className="h-3.5 w-3.5 animate-bounce"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                      >
-                        <path
-                          d="M12 4V20M12 4L8 8M12 4L16 8"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                      <span className="font-medium">Try me!</span>
-                    </span>
-                  )}
+                  <div className="flex-shrink-0">
+                    {item.completed ? (
+                      <span className="text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-3 py-1 rounded-full shadow-sm flex items-center gap-1.5 hover:shadow-md transition-all duration-200 font-medium whitespace-nowrap">
+                        <span className="inline-block h-2 w-2 rounded-full bg-white animate-pulse"></span>
+                        <span>{t("dashboard.completed")}</span>
+                      </span>
+                    ) : (
+                      <span className="text-xs bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1 rounded-full shadow-sm flex items-center gap-1.5 hover:shadow-md transition-all duration-200 whitespace-nowrap">
+                        <svg
+                          className="h-3.5 w-3.5 animate-bounce"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                        >
+                          <path
+                            d="M12 4V20M12 4L8 8M12 4L16 8"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        <span className="font-medium">
+                          {t("dashboard.tryMe")}
+                        </span>
+                      </span>
+                    )}
+                  </div>
                 </CardContent>
                 <div className="h-1 w-full bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </Card>
@@ -120,9 +124,9 @@ export default function Dashboard() {
         {[
           {
             icon: <ImageIcon className="h-5 w-5 text-primary" />,
-            title: "Your Images",
+            title: t("dashboard.yourImages"),
             href: "/dashboard/create/image",
-            linkText: "Create new",
+            linkText: t("dashboard.createNew"),
             gallery: (
               <ImageGallery
                 type={[ImageTypeOptionsEnum.Created]}
@@ -134,9 +138,9 @@ export default function Dashboard() {
           },
           {
             icon: <Edit className="h-5 w-5 text-primary" />,
-            title: "Edited Images",
+            title: t("dashboard.editedImages"),
             href: "/dashboard/edit/image",
-            linkText: "Edit an image",
+            linkText: t("dashboard.editAnImage"),
             gallery: (
               <ImageGallery
                 type={[ImageTypeOptionsEnum.Edited]}
@@ -148,9 +152,9 @@ export default function Dashboard() {
           },
           {
             icon: <Edit className="h-5 w-5 text-primary" />,
-            title: "Restored Images",
+            title: t("dashboard.restoredImages"),
             href: "/dashboard/edit/restore",
-            linkText: "Restore an image",
+            linkText: t("dashboard.restoreAnImage"),
             gallery: (
               <ImageGallery
                 type={[ImageTypeOptionsEnum.Restored]}
@@ -162,9 +166,9 @@ export default function Dashboard() {
           },
           {
             icon: <VideoIcon className="h-5 w-5 text-primary" />,
-            title: "Your Videos",
+            title: t("dashboard.yourVideos"),
             href: "/dashboard/create/video",
-            linkText: "Create new",
+            linkText: t("dashboard.createNew"),
             gallery: <VideoGallery showPrompt={false} loadPartialGallery />,
           },
         ].map((section, index) => (

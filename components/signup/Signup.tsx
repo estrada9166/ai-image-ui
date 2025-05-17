@@ -8,12 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { SignupSuccess } from "./SignupSuccess";
 import { SignupForm } from "./SignupForm";
 import Link from "next/link";
-
-const schema = z.object({
-  fullName: z.string().min(1, "Full name is required"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters long"),
-});
+import { useTranslation } from "react-i18next";
 
 const signUpMutationDocument = graphql(/* GraphQL */ `
   mutation signUp($input: SignUpUserInput!) {
@@ -22,6 +17,7 @@ const signUpMutationDocument = graphql(/* GraphQL */ `
 `);
 
 export function Signup() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -30,6 +26,12 @@ export function Signup() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [{ fetching }, executeMutation] = useMutation(signUpMutationDocument);
+
+  const schema = z.object({
+    fullName: z.string().min(1, t("signup.fullNameIsRequired")),
+    email: z.string().email(t("signup.invalidEmailAddress")),
+    password: z.string().min(6, t("signup.passwordMustBeAtLeast6Characters")),
+  });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,7 +53,7 @@ export function Signup() {
       if (err instanceof z.ZodError) {
         setError(err.errors[0].message);
       } else {
-        setError("An unexpected error occurred. Please try again.");
+        setError(t("signup.unexpectedError"));
       }
     }
   };
@@ -71,7 +73,7 @@ export function Signup() {
           href="/"
           className="text-sm text-muted-foreground hover:text-foreground"
         >
-          ← Go back
+          ← {t("signup.goBack")}
         </Link>
       </div>
       <Card className="w-full max-w-lg shadow-xl border-opacity-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl rounded-2xl">

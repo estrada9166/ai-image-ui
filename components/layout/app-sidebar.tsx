@@ -26,49 +26,12 @@ import Link from "next/link";
 import { NavRemainingPlan } from "./nav-remainingPlan";
 import Feedback from "../feedback/Feedback";
 import { MeQueryDocument } from "../common/MeQuery";
-// This is sample data.
-
-const data = {
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: LayoutDashboardIcon,
-    },
-    {
-      title: "Gallery",
-      url: "/dashboard/gallery",
-      icon: BookImageIcon,
-    },
-    {
-      title: "Image Edit",
-      url: "/dashboard/edit/image",
-      icon: CropIcon,
-    },
-    {
-      title: "Restore Image",
-      url: "/dashboard/edit/restore",
-      icon: ImageIcon,
-    },
-    {
-      title: "Videos creation",
-      url: "/dashboard/create/video",
-      icon: VideoIcon,
-    },
-  ],
-
-  navSecondary: [
-    {
-      title: "Get Help",
-      url: "#",
-      icon: HelpCircleIcon,
-      component: () => <Feedback />,
-    },
-  ],
-};
+import LanguageSelector from "./LanguageSelector";
+import { useTranslation } from "react-i18next";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state, isMobile, toggleSidebar } = useSidebar();
+  const { t } = useTranslation();
 
   const [{ data: userData }] = useQuery({
     query: MeQueryDocument,
@@ -78,6 +41,45 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     if (isMobile) {
       toggleSidebar();
     }
+  };
+
+  const data = {
+    navMain: [
+      {
+        title: t("layout.dashboard"),
+        url: "/dashboard",
+        icon: LayoutDashboardIcon,
+      },
+      {
+        title: t("layout.gallery"),
+        url: "/dashboard/gallery",
+        icon: BookImageIcon,
+      },
+      {
+        title: t("layout.editImage"),
+        url: "/dashboard/edit/image",
+        icon: CropIcon,
+      },
+      {
+        title: t("layout.restoreImage"),
+        url: "/dashboard/edit/restore",
+        icon: ImageIcon,
+      },
+      {
+        title: t("layout.videosCreation"),
+        url: "/dashboard/create/video",
+        icon: VideoIcon,
+      },
+    ],
+
+    navSecondary: [
+      {
+        title: t("layout.getHelp"),
+        url: "#",
+        icon: HelpCircleIcon,
+        component: () => <Feedback />,
+      },
+    ],
   };
 
   return (
@@ -98,6 +100,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarFooter>
         <NavRemainingPlan />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <LanguageSelector />
 
         <NavUser
           user={{

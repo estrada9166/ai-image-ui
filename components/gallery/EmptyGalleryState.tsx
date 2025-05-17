@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { useTranslation } from "react-i18next";
 
 import { EditIcon, ImageIcon, VideoIcon, RefreshCwIcon } from "lucide-react";
 
@@ -9,38 +10,35 @@ export const EmptyGalleryState = ({
 }: {
   tab: "images" | "edited-images" | "restored-images" | "video";
 }) => {
-  // Import RestoreIcon which was missing
+  const { t } = useTranslation();
 
   // Define configuration for each tab type
   const tabConfig = {
     images: {
-      title: "Images",
-      description:
-        "Create your first AI-generated image to see it appear in your gallery",
-      buttonText: "Create an Image",
+      title: t("emptyGalleryState.images.title"),
+      description: t("emptyGalleryState.images.description"),
+      buttonText: t("emptyGalleryState.images.buttonText"),
       link: "/dashboard/create/image",
       Icon: ImageIcon,
     },
     "edited-images": {
-      title: "Edited Images",
-      description:
-        "Create your first edited image to see it appear in your gallery",
-      buttonText: "Edit an Image",
+      title: t("emptyGalleryState.editedImages.title"),
+      description: t("emptyGalleryState.editedImages.description"),
+      buttonText: t("emptyGalleryState.editedImages.buttonText"),
       link: "/dashboard/edit/image",
       Icon: EditIcon,
     },
     "restored-images": {
-      title: "Restored Images",
-      description:
-        "Create your first restored image to see it appear in your gallery",
-      buttonText: "Restore an Image",
+      title: t("emptyGalleryState.restoredImages.title"),
+      description: t("emptyGalleryState.restoredImages.description"),
+      buttonText: t("emptyGalleryState.restoredImages.buttonText"),
       link: "/dashboard/edit/restore",
       Icon: RefreshCwIcon,
     },
     video: {
-      title: "Videos",
-      description: "Create your first video to see it appear in your gallery",
-      buttonText: "Create a Video",
+      title: t("emptyGalleryState.video.title"),
+      description: t("emptyGalleryState.video.description"),
+      buttonText: t("emptyGalleryState.video.buttonText"),
       link: "/dashboard/create/video",
       Icon: VideoIcon,
     },

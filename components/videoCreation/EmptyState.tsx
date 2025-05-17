@@ -1,6 +1,7 @@
 import { ImageIcon, Upload } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 export function EmptyState({
   fileInputRef,
@@ -9,6 +10,8 @@ export function EmptyState({
   fileInputRef: React.RefObject<HTMLInputElement>;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
+  const { t } = useTranslation();
+
   return (
     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-purple-50 dark:from-gray-800 dark:to-purple-900/20 backdrop-blur-sm">
       <div className="text-center p-4 sm:p-6 md:p-8 max-w-xs sm:max-w-sm md:max-w-md mx-auto">
@@ -19,11 +22,10 @@ export function EmptyState({
           </div>
         </div>
         <h3 className="text-base sm:text-lg font-medium text-gray-700 dark:text-gray-200 mb-2 sm:mb-3">
-          Add an Image to Begin
+          {t("videoCreation.emptyState.title")}
         </h3>
         <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mb-4 sm:mb-6 px-2">
-          Select or upload an image to transform it into a stunning video with
-          AI
+          {t("videoCreation.emptyState.description")}
         </p>
         <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:justify-center sm:gap-4">
           <Button
@@ -32,7 +34,7 @@ export function EmptyState({
             onClick={() => fileInputRef.current?.click()}
           >
             <Upload className="mr-2 h-4 w-4" />
-            Upload Image
+            {t("videoCreation.emptyState.uploadImage")}
           </Button>
           <input
             id="image-upload"
@@ -46,7 +48,7 @@ export function EmptyState({
           <Link href="/dashboard/gallery" className="w-full sm:w-auto">
             <Button className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full">
               <ImageIcon className="mr-2 h-4 w-4" />
-              Select from Gallery
+              {t("videoCreation.emptyState.selectFromGallery")}
             </Button>
           </Link>
         </div>
