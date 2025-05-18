@@ -20,14 +20,16 @@ import {
 import { useSearchParams } from "next/navigation";
 
 const languages = [
-  { id: 1, label: "🇬🇧 English", lang: "en" },
-  { id: 2, label: "🇪🇸 Español", lang: "es" },
+  { id: 1, label: "🇬🇧 English", lang: "en", flag: "🇬🇧" },
+  { id: 2, label: "🇪🇸 Español", lang: "es", flag: "🇪🇸" },
 ];
 
 export default function LanguageSelector({
   className,
+  displayOnlyFlag = false,
 }: {
   className?: string;
+  displayOnlyFlag?: boolean;
 }) {
   const searchParams = useSearchParams();
   const { i18n } = useTranslation();
@@ -82,11 +84,13 @@ export default function LanguageSelector({
     <Popover>
       <PopoverTrigger asChild className={cn("mb-4", className)}>
         <Button variant="outline" role="combobox" className="justify-between T">
-          {selected.label}
+          {displayOnlyFlag ? selected.flag : selected.label}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent
+        className={cn("p-0", displayOnlyFlag ? "w-auto" : "w-[200px]")}
+      >
         <Command className="bg-white">
           <CommandList>
             <CommandEmpty>No language found.</CommandEmpty>
@@ -107,7 +111,7 @@ export default function LanguageSelector({
                         : "opacity-0"
                     )}
                   />
-                  {language.label}
+                  {displayOnlyFlag ? language.flag : language.label}
                 </CommandItem>
               ))}
             </CommandGroup>

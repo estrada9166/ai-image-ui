@@ -325,5 +325,341 @@
     "enterPromptToGenerateVideo": "Enter a prompt to generate a video",
     "clickGenerateVideo": "Click the \"Generate Video\" button to transform your static image into a dynamic video",
     "downloadVideo": "Download Video"
+  },
+  "landing": {
+    "footer": {
+      "product": "Product",
+      "features": "Features",
+      "examples": "Examples",
+      "testimonials": "Testimonials",
+      "faq": "FAQ",
+      "pricing": "Pricing"
+    },
+    "navbar": {
+      "logo": "Newpix",
+      "features": "Features",
+      "ugcCreator": "UGC Creator",
+      "examples": "Examples",
+      "pricing": "Pricing",
+      "faq": "FAQ",
+      "signIn": "Sign In",
+      "getStarted": "Get Started"
+    },
+    "hero": {
+      "badge": "AI-Powered Image Magic",
+      "title": "Transform Your Images with AI Magic",
+      "description": "Enhance, restore, and reimagine your photos with cutting-edge AI technology. Turn ordinary images into extraordinary works of art or captivating videos.",
+      "tryFreeNow": "Try Free Now",
+      "viewExamples": "View Examples",
+      "stats": {
+        "imagesEnhanced": "500K+",
+        "imagesEnhancedLabel": "Images Enhanced",
+        "happyUsers": "25K+",
+        "happyUsersLabel": "Happy Users"
+      },
+      "showcase": {
+        "imageEnhancement": "Image Enhancement",
+        "imageEnhancementDescription": "Transform ordinary photos into stunning professional images",
+        "photoRestoration": "Photo Restoration",
+        "photoRestorationDescription": "Breathe new life into old or damaged photos",
+        "objectRemoval": "Object Removal",
+        "objectRemovalDescription": "Seamlessly remove unwanted elements from your photos",
+        "ugcCreation": "UGC Creation",
+        "ugcCreationDescription": "Create engaging user-generated content with AI",
+        "ugcVideoGeneration": "UGC Video Generation",
+        "ugcVideoGenerationDescription": "Transform your UGC content into engaging videos",
+        "original": "Original",
+        "aiEnhanced": "AI Enhanced",
+        "aiUGC": "AI UGC",
+        "aiGeneratedVideo": "AI Generated Video",
+        "slideToCompare": "← Slide to compare →"
+      },
+      "featureShowcase": {
+        "aiImageEnhancement": "AI Image Enhancement",
+        "aiImageEnhancementDescription": "Enhance image quality with a single click. Fix lighting, colors, and more.",
+        "creativeEditing": "Creative Editing",
+        "creativeEditingDescription": "Transform images with prompts. Add or remove elements with natural language.",
+        "photoRestoration": "Photo Restoration",
+        "photoRestorationDescription": "Restore old, damaged photos to their former glory with advanced AI restoration."
+      }
+    },
+    "features": {
+      "header": "Powerful Features",
+      "title": "Everything You Need for Perfect Images",
+      "description": "Our AI-powered tools make professional-quality image editing accessible to everyone, no design skills required.",
+      "poweredBy": "Powered by advanced AI image processing models",
+      "items": {
+        "imageCreation": "Image Creation",
+        "imageCreationDescription": "Create stunning images with AI. No photoshoot required.",
+        "aiImageEnhancement": "AI Image Enhancement",
+        "aiImageEnhancementDescription": "Automatically enhance your photos with our AI model that improves colors, contrast, and sharpness.",
+        "textGuidedEditing": "Text-Guided Editing",
+        "textGuidedEditingDescription": "Use natural language to describe the changes you want. Our AI will transform your image accordingly.",
+        "photoRestoration": "Photo Restoration",
+        "photoRestorationDescription": "Breathe new life into old, damaged photos. Fix scratches, tears, and faded colors with one click.",
+        "styleTransfer": "Style Transfer",
+        "styleTransferDescription": "Apply artistic styles to your photos, transforming them into works of art inspired by famous painters.",
+        "backgroundReplacement": "Background Replacement",
+        "backgroundReplacementDescription": "Swap backgrounds with ease. Place your subjects in any environment with seamless integration.",
+        "smartRetouching": "Smart Retouching",
+        "smartRetouchingDescription": "Auto-retouch portraits with natural-looking skin smoothing, lighting adjustments, and more."
+      }
+    },
+    "cta": {
+      "title": "Ready to Transform Your Images with AI?",
+      "description": "Join thousands of photographers, designers, and content creators who are elevating their work with our powerful AI image tools.",
+      "startFreeTrial": "Start Free Trial",
+      "seeMoreExamples": "See More Examples"
+    },
+    "faq": {
+      "badge": "FAQ",
+      "title": "Frequently Asked Questions",
+      "description": "Everything you need to know about our image enhancement tools.",
+      "stillHaveQuestions": "Still have questions?",
+      "contactSupport": "Contact our support team",
+      "questions": {
+        "whatKindOfImages": {
+          "question": "What kind of images can I enhance with your tool?",
+          "answer": "Our AI tools work with most common image formats, including JPG, PNG, WebP, and more. You can enhance portraits, landscapes, product photos, art, and virtually any type of image you'd like to improve."
+        },
+        "howDoesImageEnhancement": {
+          "question": "How does the image enhancement technology work?",
+          "answer": "Our technology uses advanced AI models trained on millions of images to understand what makes a high-quality photo. The AI can identify elements that need improvement — like lighting, color balance, sharpness, and detail — and enhances them automatically while preserving the natural look of your image."
+        },
+        "whatIsTextGuidedEditing": {
+          "question": "What is 'text-guided editing' and how does it work?",
+          "answer": "Text-guided editing allows you to describe changes you want to make to your image in plain language. For example, you might type 'make the sky more blue' or 'add flowers to the foreground,' and our AI will interpret your request and apply those changes to your image. It's like having a professional editor who understands exactly what you want."
+        },
+        "howAccurateIsImageCreation": {
+          "question": "How realistic are the AI-generated images?",
+          "answer": "Our image creation technology produces highly realistic images based on your text descriptions. The AI has been trained on millions of high-quality images to understand visual concepts and composition. While results vary based on the complexity of your request, most users are amazed by the photorealistic quality and creative interpretations our system generates."
+        },
+        "canIUseCommercially": {
+          "question": "Can I use the enhanced images commercially?",
+          "answer": "Yes, all enhanced images remain your property and can be used for commercial purposes according to your rights to the original image. Our service does not claim any rights to your content."
+        },
+
+        "doINeedPowerfulComputer": {
+          "question": "Do I need a powerful computer to use your tools?",
+          "answer": "No, all processing is done on our cloud servers, so you can use our tools on any device with a web browser — including smartphones, tablets, and older computers. The results are the same regardless of your device's capabilities."
+        },
+        "canICancelSubscription": {
+          "question": "Can I cancel my subscription at any time?",
+          "answer": "Yes, you can cancel your subscription at any time from your account settings. After cancellation, your plan will remain active until the end of your current billing period."
+        },
+        "doYouOfferRefunds": {
+          "question": "Do you offer refunds if I'm not satisfied?",
+          "answer": "We do not offer refunds as our service utilizes AI models and computing resources that are consumed immediately upon use. Once you've accessed our AI tools, these resources have been allocated and cannot be returned. We encourage users to try our free plan first to ensure our service meets their needs before subscribing."
+        }
+      }
+    },
+    "ugcGenerator": {
+      "badge": "AI Content Creation",
+      "title": "Generate Professional UGC in Seconds",
+      "description": "Create stunning professional images and videos for your marketing campaigns without a photoshoot",
+      "tabs": {
+        "images": "Professional Images",
+        "videos": "AI Videos"
+      },
+      "prompt": {
+        "title": "Your Prompt",
+        "imagePrompt": "Professional headshot of a confident female tech CEO, mid-30s, with a warm smile, wearing a modern business outfit against a soft gradient background, well-lit studio lighting, professional photography, high detail",
+        "videoPrompt": "Professional product promo video of a sleek smartphone being used by diverse people in different settings - coffee shop, office, and outdoors. Show phone features with smooth transitions, bright lighting, and modern aesthetic",
+        "imageFeature1": "Multiple variations with a single prompt",
+        "videoFeature1": "Fully customizable scenes and transitions",
+        "imageFeature2": "No model required, just describe what you need",
+        "videoFeature2": "No video equipment or editing skills needed",
+        "tryImageGeneration": "Try Image Generation",
+        "tryVideoGeneration": "Try Video Generation"
+      },
+      "results": {
+        "imageTitle": "Generated Results",
+        "imageDescription": "Select the best variation for your needs",
+        "selected": "Selected",
+        "videoTitle": "Generated Video",
+        "videoDescription": "High-quality AI-generated video for your marketing",
+        "videoCaption": "AI-generated product video",
+        "videoDetails": "5 seconds • HD quality"
+      },
+      "footer": "Generate as many variations as you need to find the perfect fit for your brand"
+    },
+    "pricing": {
+      "title": "Simple, Transparent Pricing",
+      "description": "Choose the perfect plan for your needs. Save with annual billing.",
+      "billing": {
+        "monthly": "Monthly",
+        "annual": "Annual",
+        "saveLabel": "Save 17%"
+      },
+      "mostPopular": "Most Popular",
+      "plans": {
+        "starter": {
+          "name": "Starter",
+          "description": "Perfect for individuals with basic image editing needs",
+          "monthlyPrice": "$15",
+          "annualPrice": "$150",
+          "period": {
+            "monthly": "/month",
+            "annual": "/year"
+          },
+          "features": [
+            "10 AI image creations per month",
+            "10 AI image edits per month",
+            "5 photo restorations per month",
+            "2 video generations per month"
+          ],
+          "cta": "Get Started",
+          "disclaimer": "Cancel anytime"
+        },
+        "pro": {
+          "name": "Pro",
+          "description": "For professionals who need regular image editing",
+          "monthlyPrice": "$40",
+          "annualPrice": "$400",
+          "period": {
+            "monthly": "/month",
+            "annual": "/year"
+          },
+          "features": [
+            "70 AI image creations per month",
+            "70 AI image edits per month",
+            "50 photo restorations per month",
+            "25 video generations per month",
+            "Create multiple images from a single prompt",
+            "Priority support"
+          ],
+          "cta": "Subscribe Now",
+          "disclaimer": "Cancel anytime"
+        },
+        "advanced": {
+          "name": "Advanced",
+          "description": "For teams and organizations with high volume needs",
+          "monthlyPrice": "$75",
+          "annualPrice": "$750",
+          "period": {
+            "monthly": "/month",
+            "annual": "/year"
+          },
+          "features": [
+            "140 AI image creations per month",
+            "140 AI image edits per month",
+            "100 photo restorations per month",
+            "50 video generations per month",
+            "Create multiple images from a single prompt",
+            "Priority support"
+          ],
+          "cta": "Subscribe Now",
+          "disclaimer": "Cancel anytime",
+          "savePercent": "Save {{percent}}% with annual billing! 🎉"
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "Testimonials",
+      "title": "What Our Users Are Saying",
+      "description": "Join thousands of satisfied users who have transformed their images with our AI tools.",
+      "testimonials": [
+        {
+          "name": "Alex Johnson",
+          "role": "Professional Photographer",
+          "content": "This AI tool has completely transformed my workflow. I can deliver enhanced photos to clients in a fraction of the time it used to take me with manual editing."
+        },
+        {
+          "name": "Sarah Chen",
+          "role": "Digital Marketing Specialist",
+          "content": "The object removal feature is like magic! I've been able to clean up our product photos without hiring a professional editor. This saves us so much time and money."
+        },
+        {
+          "name": "Michael Torres",
+          "role": "Graphic Designer",
+          "content": "I was skeptical about AI editing at first, but the results are incredible. The style transfer feature helps me create unique visuals for my clients' campaigns."
+        },
+        {
+          "name": "Emily Wilson",
+          "role": "Family Historian",
+          "content": "I've been restoring my grandparents' old photos with this tool. The results are bringing tears to my family's eyes. It's preserving our memories in ways I never thought possible."
+        },
+        {
+          "name": "David Park",
+          "role": "E-commerce Store Owner",
+          "content": "The background replacement feature has been a game-changer for our product listings. We can create consistent, professional-looking photos with just a few clicks."
+        },
+        {
+          "name": "Lisa Nguyen",
+          "role": "Social Media Manager",
+          "content": "Creating scroll-stopping content just got easier. I can generate unique image variations that keep our feed fresh and engaging without spending hours in Photoshop."
+        }
+      ]
+    },
+    "examples": {
+      "title": "See What's Possible",
+      "description": "Explore how our AI transforms images in different ways",
+      "items": {
+        "enhancement": {
+          "title": "AI Image Enhancement",
+          "description": "Our AI automatically improves the quality, lighting, and details of your images."
+        },
+        "editing": {
+          "title": "Text-Guided Editing",
+          "description": "Transform your images using simple text prompts to add, modify, or remove elements."
+        },
+        "restoration": {
+          "title": "Photo Restoration",
+          "description": "Bring old or damaged photos back to life with our advanced restoration technology."
+        },
+        "removal": {
+          "title": "Object Removal",
+          "description": "Seamlessly remove unwanted objects or people from your photos with intelligent background filling."
+        },
+        "upscaling": {
+          "title": "High-Resolution Upscaling",
+          "description": "Transform low-resolution images into crystal-clear, high-definition photos."
+        },
+        "style": {
+          "title": "Style Transfer",
+          "description": "Apply artistic styles to your photos, transforming them into works of art."
+        }
+      },
+      "original": "Original",
+      "enhanced": "Enhanced",
+      "viewMore": "View More Examples",
+      "tryFree": "Try It Free",
+      "seeItInAction": "See It In Action",
+      "stunningTransformations": "Stunning Transformations",
+      "sliderDescription": "Drag the slider to see the before and after results of our AI image processing.",
+      "before": "Before",
+      "after": "After",
+      "aiEnhanced": "AI Enhanced",
+      "howItWorks": "How it works:",
+      "steps": {
+        "upload": "Upload your image or create a new one",
+        "select": "Select",
+        "mode": "mode",
+        "adjust": "Adjust settings if needed",
+        "download": "Download your transformed image or video"
+      },
+      "tabs": {
+        "imageCreation": "Image Creation",
+        "textEditing": "Text Editing",
+        "restoration": "Restoration",
+        "videoGeneration": "Video Generation"
+      },
+      "creation": {
+        "title": "AI Image Creation",
+        "description": "Our AI automatically creates stunning images based on your text prompts."
+      },
+      "editing": {
+        "title": "Text-Guided Editing",
+        "description": "Transform your images using simple text prompts to add, modify, or remove elements."
+      },
+      "restoration": {
+        "title": "Photo Restoration",
+        "description": "Bring old or damaged photos back to life with our advanced restoration technology."
+      },
+      "video": {
+        "title": "Video Generation",
+        "description": "Generate stunning videos based on your text prompts."
+      }
+    }
   }
 }

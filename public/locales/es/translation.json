@@ -325,5 +325,374 @@
     "enterPromptToGenerateVideo": "Ingresa un prompt para generar un video",
     "clickGenerateVideo": "Haz clic en el botón \"Generar Video\" para transformar tu imagen estática en un video dinámico",
     "downloadVideo": "Descargar Video"
+  },
+  "landing": {
+    "footer": {
+      "product": "Producto",
+      "features": "Características",
+      "examples": "Ejemplos",
+      "testimonials": "Testimonios",
+      "faq": "Preguntas Frecuentes",
+      "pricing": "Precios"
+    },
+    "navbar": {
+      "logo": "Newpix",
+      "features": "Características",
+      "ugcCreator": "Creador UGC",
+      "examples": "Ejemplos",
+      "pricing": "Precios",
+      "faq": "Preguntas Frecuentes",
+      "signIn": "Iniciar Sesión",
+      "getStarted": "Comenzar"
+    },
+    "hero": {
+      "badge": "Magia de Imágenes con IA",
+      "title": "Transforma tus Imágenes con Magia de IA",
+      "description": "Mejora, restaura y reimagina tus fotos con tecnología de IA de vanguardia. Convierte imágenes ordinarias en extraordinarias obras de arte en segundos.",
+      "tryFreeNow": "Prueba Gratis Ahora",
+      "viewExamples": "Ver Ejemplos",
+      "stats": {
+        "imagesEnhanced": "500K+",
+        "imagesEnhancedLabel": "Imágenes Mejoradas",
+        "happyUsers": "25K+",
+        "happyUsersLabel": "Usuarios Satisfechos"
+      },
+      "showcase": {
+        "imageEnhancement": "Mejora de Imágenes",
+        "imageEnhancementDescription": "Transforma fotos ordinarias en impresionantes imágenes profesionales",
+        "photoRestoration": "Restauración de Fotos",
+        "photoRestorationDescription": "Da nueva vida a fotos antiguas o dañadas",
+        "objectRemoval": "Eliminación de Objetos",
+        "objectRemovalDescription": "Elimina elementos no deseados de tus fotos sin dejar rastro",
+        "ugcCreation": "Creación de UGC",
+        "ugcCreationDescription": "Crea contenido generado por usuarios atractivo con IA",
+        "ugcVideoGeneration": "Generación de Video UGC",
+        "ugcVideoGenerationDescription": "Transforma tu contenido UGC en videos atractivos",
+        "original": "Original",
+        "aiEnhanced": "Mejorado con IA",
+        "aiUGC": "UGC con IA",
+        "aiGeneratedVideo": "Video Generado por IA",
+        "slideToCompare": "← Desliza para comparar →"
+      },
+      "featureShowcase": {
+        "aiImageEnhancement": "Mejora de Imágenes con IA",
+        "aiImageEnhancementDescription": "Mejora la calidad de imagen con un solo clic. Corrige iluminación, colores y más.",
+        "creativeEditing": "Edición Creativa",
+        "creativeEditingDescription": "Transforma imágenes con instrucciones. Añade o elimina elementos con lenguaje natural.",
+        "photoRestoration": "Restauración de Fotos",
+        "photoRestorationDescription": "Restaura fotos antiguas o dañadas a su antigua gloria con restauración avanzada de IA."
+      }
+    },
+    "features": {
+      "header": "Características Potentes",
+      "title": "Todo lo que Necesitas para Imágenes Perfectas",
+      "description": "Nuestras herramientas impulsadas por IA hacen que la edición de imágenes de calidad profesional sea accesible para todos, sin necesidad de habilidades de diseño.",
+      "poweredBy": "Potenciado por modelos avanzados de procesamiento de imágenes de IA",
+      "items": {
+        "aiImageEnhancement": "Mejora de Imágenes con IA",
+        "aiImageEnhancementDescription": "Mejora automáticamente tus fotos con nuestro modelo de IA que perfecciona colores, contraste y nitidez.",
+        "textGuidedEditing": "Edición Guiada por Texto",
+        "textGuidedEditingDescription": "Usa lenguaje natural para describir los cambios que deseas. Nuestra IA transformará tu imagen en consecuencia.",
+        "photoRestoration": "Restauración de Fotos",
+        "photoRestorationDescription": "Da nueva vida a fotos antiguas o dañadas. Repara arañazos, rasgaduras y colores desvanecidos con un clic.",
+        "objectRemoval": "Eliminación de Objetos",
+        "objectRemovalDescription": "Elimina sin esfuerzo objetos o personas no deseadas de tus fotos con IA que completa el fondo.",
+        "highResolutionUpscaling": "Ampliación de Alta Resolución",
+        "highResolutionUpscalingDescription": "Convierte imágenes de baja resolución en fotos nítidas de alta definición sin perder calidad.",
+        "styleTransfer": "Transferencia de Estilo",
+        "styleTransferDescription": "Aplica estilos artísticos a tus fotos, transformándolas en obras de arte inspiradas en famosos pintores.",
+        "backgroundReplacement": "Reemplazo de Fondo",
+        "backgroundReplacementDescription": "Cambia fondos con facilidad. Coloca tus sujetos en cualquier entorno con integración perfecta.",
+        "smartRetouching": "Retoque Inteligente",
+        "smartRetouchingDescription": "Auto-retoca retratos con suavizado de piel de aspecto natural, ajustes de iluminación y más."
+      }
+    },
+    "cta": {
+      "title": "¿Listo para Transformar tus Imágenes con IA?",
+      "description": "Únete a miles de fotógrafos, diseñadores y creadores de contenido que están elevando su trabajo con nuestras potentes herramientas de imágenes de IA.",
+      "startFreeTrial": "Comenzar Prueba Gratuita",
+      "seeMoreExamples": "Ver Más Ejemplos"
+    },
+    "faq": {
+      "badge": "FAQ",
+      "title": "Preguntas Frecuentes",
+      "description": "Todo lo que necesitas saber sobre nuestras herramientas de mejora de imágenes.",
+      "stillHaveQuestions": "¿Todavía tienes preguntas?",
+      "contactSupport": "Contacta a nuestro equipo de soporte",
+      "questions": {
+        "whatKindOfImages": {
+          "question": "¿Qué tipo de imágenes puedo mejorar con vuestra herramienta?",
+          "answer": "Nuestras herramientas de IA funcionan con la mayoría de formatos comunes de imagen, incluyendo JPG, PNG, WebP y más. Puedes mejorar retratos, paisajes, fotos de productos, arte y prácticamente cualquier tipo de imagen que desees mejorar."
+        },
+        "howDoesImageEnhancement": {
+          "question": "¿Cómo funciona la tecnología de mejora de imágenes?",
+          "answer": "Nuestra tecnología utiliza modelos avanzados de IA entrenados con millones de imágenes para entender lo que hace que una foto sea de alta calidad. La IA puede identificar elementos que necesitan mejora — como iluminación, balance de color, nitidez y detalle — y los mejora automáticamente manteniendo el aspecto natural de tu imagen."
+        },
+        "isThereALimit": {
+          "question": "¿Hay un límite de cuántas imágenes puedo mejorar?",
+          "answer": "Los usuarios gratuitos pueden mejorar hasta 5 imágenes por mes. Nuestro plan Pro te ofrece 100 procesos de imagen mensuales, y nuestro plan Business ofrece procesamiento ilimitado de imágenes. Consulta nuestra página de precios para más detalles de cada plan."
+        },
+        "whatIsTextGuidedEditing": {
+          "question": "¿Qué es la 'edición guiada por texto' y cómo funciona?",
+          "answer": "La edición guiada por texto te permite describir en lenguaje sencillo los cambios que quieres hacer a tu imagen. Por ejemplo, podrías escribir 'haz el cielo más azul' o 'añade flores en primer plano', y nuestra IA interpretará tu solicitud y aplicará esos cambios a tu imagen. Es como tener un editor profesional que entiende exactamente lo que quieres."
+        },
+        "howAccurateIsObjectRemoval": {
+          "question": "¿Qué tan precisa es la función de eliminación de objetos?",
+          "answer": "Nuestra tecnología de eliminación de objetos es altamente avanzada y puede eliminar sin problemas la mayoría de objetos o personas de las fotos. La IA analiza el contexto circundante para rellenar el área eliminada de forma natural. Los resultados son mejores cuando el fondo es relativamente consistente o tiene patrones naturales que la IA puede extender."
+        },
+        "canIUseCommercially": {
+          "question": "¿Puedo usar las imágenes mejoradas comercialmente?",
+          "answer": "Sí, todas las imágenes mejoradas siguen siendo de tu propiedad y pueden ser utilizadas con fines comerciales de acuerdo con tus derechos sobre la imagen original. Nuestro servicio no reclama ningún derecho sobre tu contenido."
+        },
+        "isMyDataSafe": {
+          "question": "¿Están mis datos seguros y privados?",
+          "answer": "Nos tomamos la privacidad muy en serio. Tus imágenes se procesan de forma segura y no se utilizan para entrenar nuestros modelos a menos que optes explícitamente por ello. No compartimos tus imágenes con terceros, y todas las cargas están encriptadas. Puedes eliminar tus imágenes de nuestros servidores en cualquier momento."
+        },
+        "doINeedPowerfulComputer": {
+          "question": "¿Necesito un ordenador potente para usar vuestras herramientas?",
+          "answer": "No, todo el procesamiento se realiza en nuestros servidores en la nube, por lo que puedes usar nuestras herramientas en cualquier dispositivo con un navegador web — incluyendo teléfonos inteligentes, tabletas y ordenadores más antiguos. Los resultados son los mismos independientemente de las capacidades de tu dispositivo."
+        },
+        "canICancelSubscription": {
+          "question": "¿Puedo cancelar mi suscripción en cualquier momento?",
+          "answer": "Sí, puedes cancelar tu suscripción en cualquier momento desde la configuración de tu cuenta. Tras la cancelación, tu plan seguirá activo hasta el final de tu período de facturación actual."
+        },
+        "doYouOfferRefunds": {
+          "question": "¿Ofrecéis reembolsos si no estoy satisfecho?",
+          "answer": "Ofrecemos una garantía de devolución de dinero de 7 días para suscriptores por primera vez. Si no estás completamente satisfecho con nuestro servicio dentro de la primera semana, contacta con nuestro equipo de soporte y procesaremos tu reembolso."
+        }
+      }
+    },
+    "ugcGenerator": {
+      "badge": "Creación de Contenido con IA",
+      "title": "Genera Contenido UGC Profesional en Segundos",
+      "description": "Crea impresionantes imágenes y videos profesionales para tus campañas de marketing sin necesidad de sesiones fotográficas",
+      "tabs": {
+        "images": "Imágenes Profesionales",
+        "videos": "Videos con IA"
+      },
+      "prompt": {
+        "title": "Tu Prompt",
+        "imagePrompt": "Retrato profesional de una CEO tecnológica segura de sí misma, treinta y tantos años, con una sonrisa cálida, vistiendo un atuendo de negocios moderno contra un fondo de degradado suave, iluminación de estudio, fotografía profesional, alto detalle",
+        "videoPrompt": "Video promocional profesional de un elegante teléfono inteligente siendo utilizado por personas diversas en diferentes entornos - cafetería, oficina y al aire libre. Muestra las características del teléfono con transiciones suaves, iluminación brillante y estética moderna",
+        "imageGenTime": "Tiempo de generación: ~4 segundos",
+        "videoGenTime": "Tiempo de generación: ~20 segundos",
+        "imageFeature1": "Múltiples variaciones con un solo prompt",
+        "videoFeature1": "Escenas y transiciones completamente personalizables",
+        "imageFeature2": "No se requiere modelo, solo describe lo que necesitas",
+        "videoFeature2": "No se necesita equipo de video ni habilidades de edición",
+        "tryImageGeneration": "Probar Generación de Imágenes",
+        "tryVideoGeneration": "Probar Generación de Videos"
+      },
+      "results": {
+        "imageTitle": "Resultados Generados",
+        "imageDescription": "Selecciona la mejor variación para tus necesidades",
+        "selected": "Seleccionada",
+        "tryAnotherPrompt": "Probar Otro Prompt",
+        "downloadImage": "Descargar Imagen",
+        "videoTitle": "Video Generado",
+        "videoDescription": "Video de alta calidad generado por IA para tu marketing",
+        "videoCaption": "Video generado por IA",
+        "videoDetails": "15 segundos • Calidad HD",
+        "readyToDownload": "Listo para descargar",
+        "downloadVideo": "Descargar Video"
+      },
+      "footer": "Genera tantas variaciones como necesites para encontrar el ajuste perfecto para tu marca"
+    },
+    "pricing": {
+      "title": "Precios Simples y Transparentes",
+      "description": "Elige el plan perfecto para tus necesidades. Ahorra con facturación anual.",
+      "billing": {
+        "monthly": "Mensual",
+        "annual": "Anual",
+        "saveLabel": "Ahorra 17%"
+      },
+      "mostPopular": "Más Popular",
+      "plans": {
+        "starter": {
+          "name": "Starter",
+          "description": "Perfecto para individuos con necesidades básicas de edición de imágenes",
+          "monthlyPrice": "$15",
+          "annualPrice": "$150",
+          "period": {
+            "monthly": "/mes",
+            "annual": "/año"
+          },
+          "features": [
+            "10 creaciones de imágenes AI por mes",
+            "10 ediciones de imágenes AI por mes",
+            "5 restauraciones de fotos por mes",
+            "2 generaciones de video por mes"
+          ],
+          "cta": "Comenzar",
+          "disclaimer": "Cancela cuando quieras"
+        },
+        "pro": {
+          "name": "Pro",
+          "description": "Para profesionales que necesitan edición regular de imágenes",
+          "monthlyPrice": "$40",
+          "annualPrice": "$400",
+          "period": {
+            "monthly": "/mes",
+            "annual": "/año"
+          },
+          "features": [
+            "70 creaciones de imágenes AI por mes",
+            "70 ediciones de imágenes AI por mes",
+            "50 restauraciones de fotos por mes",
+            "25 generaciones de video por mes",
+            "Crea múltiples imágenes de un solo prompt",
+            "Soporte prioritario"
+          ],
+          "cta": "Suscribirse Ahora",
+          "disclaimer": "Cancela cuando quieras"
+        },
+        "advanced": {
+          "name": "Avanzado",
+          "description": "Para equipos y organizaciones con necesidades de alto volumen",
+          "monthlyPrice": "$75",
+          "annualPrice": "$750",
+          "period": {
+            "monthly": "/mes",
+            "annual": "/año"
+          },
+          "features": [
+            "140 creaciones de imágenes AI por mes",
+            "140 ediciones de imágenes AI por mes",
+            "100 restauraciones de fotos por mes",
+            "50 generaciones de video por mes",
+            "Crea múltiples imágenes de un solo prompt",
+            "Soporte prioritario"
+          ],
+          "cta": "Suscribirse Ahora",
+          "disclaimer": "Cancela cuando quieras",
+          "savePercent": "¡Ahorra {{percent}}% con facturación anual! 🎉"
+        }
+      }
+    },
+    "testimonials": {
+      "badge": "Testimonios",
+      "title": "Lo Que Dicen Nuestros Usuarios",
+      "description": "Únete a miles de usuarios satisfechos que han transformado sus imágenes con nuestras herramientas de IA.",
+      "stats": {
+        "activeUsers": {
+          "label": "Usuarios Activos",
+          "value": "20.000+"
+        },
+        "imagesEnhanced": {
+          "label": "Imágenes Mejoradas",
+          "value": "1,2M+"
+        },
+        "averageRating": {
+          "label": "Valoración Media",
+          "value": "4,8/5"
+        },
+        "timeSaved": {
+          "label": "Tiempo Ahorrado",
+          "value": "3.000+ horas"
+        }
+      },
+      "testimonials": [
+        {
+          "name": "Alex Johnson",
+          "role": "Fotógrafo Profesional",
+          "content": "Esta herramienta de IA ha transformado completamente mi flujo de trabajo. Puedo entregar fotos mejoradas a clientes en una fracción del tiempo que solía tomarme con la edición manual."
+        },
+        {
+          "name": "Sarah Chen",
+          "role": "Especialista en Marketing Digital",
+          "content": "¡La función de eliminación de objetos es como magia! He podido limpiar nuestras fotos de productos sin contratar a un editor profesional. Esto nos ahorra mucho tiempo y dinero."
+        },
+        {
+          "name": "Michael Torres",
+          "role": "Diseñador Gráfico",
+          "content": "Al principio era escéptico sobre la edición con IA, pero los resultados son increíbles. La función de transferencia de estilo me ayuda a crear visuales únicos para las campañas de mis clientes."
+        },
+        {
+          "name": "Emily Wilson",
+          "role": "Historiadora Familiar",
+          "content": "He estado restaurando las fotos antiguas de mis abuelos con esta herramienta. Los resultados están haciendo llorar a mi familia. Está preservando nuestros recuerdos de maneras que nunca pensé posibles."
+        },
+        {
+          "name": "David Park",
+          "role": "Propietario de Tienda de Comercio Electrónico",
+          "content": "La función de reemplazo de fondos ha sido revolucionaria para nuestros listados de productos. Podemos crear fotos de aspecto consistente y profesional con solo unos pocos clics."
+        },
+        {
+          "name": "Lisa Nguyen",
+          "role": "Gerente de Redes Sociales",
+          "content": "Crear contenido que atrape la atención acaba de volverse más fácil. Puedo generar variaciones de imágenes únicas que mantienen nuestro feed fresco y atractivo sin pasar horas en Photoshop."
+        }
+      ]
+    },
+    "examples": {
+      "title": "Descubre Lo Que Es Posible",
+      "description": "Explora cómo nuestra IA transforma imágenes de diferentes maneras",
+      "items": {
+        "enhancement": {
+          "title": "Mejora de Imágenes con IA",
+          "description": "Nuestra IA mejora automáticamente la calidad, iluminación y detalles de tus imágenes."
+        },
+        "editing": {
+          "title": "Edición Guiada por Texto",
+          "description": "Transforma tus imágenes usando simples instrucciones de texto para añadir, modificar o eliminar elementos."
+        },
+        "restoration": {
+          "title": "Restauración de Fotos",
+          "description": "Devuelve la vida a fotos antiguas o dañadas con nuestra avanzada tecnología de restauración."
+        },
+        "removal": {
+          "title": "Eliminación de Objetos",
+          "description": "Elimina objetos o personas no deseadas de tus fotos sin problemas con relleno inteligente de fondo."
+        },
+        "upscaling": {
+          "title": "Ampliación de Alta Resolución",
+          "description": "Transforma imágenes de baja resolución en fotos nítidas y de alta definición."
+        },
+        "style": {
+          "title": "Transferencia de Estilo",
+          "description": "Aplica estilos artísticos a tus fotos, transformándolas en obras de arte."
+        }
+      },
+      "original": "Original",
+      "enhanced": "Mejorada",
+      "viewMore": "Ver Más Ejemplos",
+      "tryFree": "Pruébalo Gratis",
+      "seeItInAction": "Véalo en acción",
+      "stunningTransformations": "Transformaciones Impresionantes",
+      "sliderDescription": "Arrastra el deslizador para ver los resultados antes y después de nuestro procesamiento de imágenes con IA.",
+      "before": "Antes",
+      "after": "Después",
+      "aiEnhanced": "Mejorado con IA",
+      "howItWorks": "Cómo funciona:",
+      "steps": {
+        "upload": "Sube tu imagen o crea una nueva",
+        "select": "Selecciona",
+        "mode": "modo",
+        "adjust": "Ajusta la configuración si es necesario",
+        "download": "Descarga tu imagen o video transformado"
+      },
+      "tabs": {
+        "imageCreation": "Creación de Imágenes",
+        "textEditing": "Edición con Texto",
+        "restoration": "Restauración",
+        "videoGeneration": "Generación de Video"
+      },
+      "creation": {
+        "title": "Creación de Imágenes IA",
+        "description": "Nuestra IA crea automáticamente imágenes impresionantes basadas en tus descripciones textuales."
+      },
+      "editing": {
+        "title": "Edición Guiada por Texto",
+        "description": "Transforma tus imágenes usando simples instrucciones textuales para añadir, modificar o eliminar elementos."
+      },
+      "restoration": {
+        "title": "Restauración de Fotos",
+        "description": "Devuelve la vida a fotos antiguas o dañadas con nuestra avanzada tecnología de restauración."
+      },
+      "video": {
+        "title": "Generación de Video",
+        "description": "Genera videos impresionantes basados en tus descripciones textuales."
+      }
+    }
   }
 }
