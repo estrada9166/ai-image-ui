@@ -25,49 +25,39 @@ export default function Hero() {
   // Showcase examples data
   const showcaseExamples = [
     {
-      id: "enhancement",
-      title: t("landing.hero.showcase.imageEnhancement"),
-      description: t("landing.hero.showcase.imageEnhancementDescription"),
-      before:
-        "https://images.unsplash.com/photo-1621961458348-f013d219b50c?q=80&w=2069&auto=format&fit=crop",
-      after:
-        "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=2070&auto=format&fit=crop",
+      id: "image-creation",
+      title: t("landing.hero.showcase.imageCreation"),
+      description: t("landing.hero.showcase.imageCreationDescription"),
+      image: "/examples/hero/image-creation.png",
+      prompt: t("landing.hero.showcase.imageCreationPrompt"),
+    },
+    {
+      id: "editing",
+      title: t("landing.hero.showcase.creativeEditing"),
+      description: t("landing.hero.showcase.creativeEditingDescription"),
+      image: "/examples/hero/editing.png",
+      prompt: t("landing.hero.showcase.creativeEditingPrompt"),
     },
     {
       id: "restoration",
       title: t("landing.hero.showcase.photoRestoration"),
       description: t("landing.hero.showcase.photoRestorationDescription"),
-      before:
-        "https://images.unsplash.com/photo-1610126996694-69e2f0b5931f?q=80&w=1974&auto=format&fit=crop",
-      after:
-        "https://images.unsplash.com/photo-1627037558426-c2d07beda3af?q=80&w=1975&auto=format&fit=crop",
+      before: "/examples/hero/restoration-before.png",
+      after: "/examples/hero/restoration-after.png",
     },
-    {
-      id: "removal",
-      title: t("landing.hero.showcase.objectRemoval"),
-      description: t("landing.hero.showcase.objectRemovalDescription"),
-      before:
-        "https://images.unsplash.com/photo-1566438480900-0609be27a4be?q=80&w=2094&auto=format&fit=crop",
-      after:
-        "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=2070&auto=format&fit=crop",
-    },
+
     {
       id: "ugc-creation",
       title: t("landing.hero.showcase.ugcCreation"),
       description: t("landing.hero.showcase.ugcCreationDescription"),
-      before:
-        "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=2074&auto=format&fit=crop",
-      after:
-        "https://images.unsplash.com/photo-1611162616305-c69b3396004b?q=80&w=2074&auto=format&fit=crop",
+      image: "/examples/hero/ugc.png",
+      prompt: t("landing.hero.showcase.ugcCreationPrompt"),
       isUGC: true,
     },
     {
       id: "ugc-video",
       title: t("landing.hero.showcase.ugcVideoGeneration"),
-      description: t("landing.hero.showcase.ugcVideoGenerationDescription"),
-      before:
-        "https://images.unsplash.com/photo-1611162616305-c69b3396004b?q=80&w=2074&auto=format&fit=crop",
-      after: "/ugc-video-example.mp4",
+      video: "/examples/hero/ugc-video-example.mp4",
       isVideo: true,
     },
   ];
@@ -126,7 +116,7 @@ export default function Hero() {
                   size="lg"
                   className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white px-8 py-6 rounded-lg text-lg shadow-lg hover:shadow-indigo-500/25 transition-all group"
                 >
-                  {t("landing.hero.tryFreeNow")}
+                  {t("landing.hero.startNow")}
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
@@ -206,7 +196,7 @@ export default function Hero() {
                   {currentExample.isVideo ? (
                     <div className="w-full h-full">
                       <video
-                        src={currentExample.after}
+                        src={currentExample.video}
                         className="w-full h-full object-cover"
                         autoPlay
                         loop
@@ -218,11 +208,41 @@ export default function Hero() {
                         {t("landing.hero.showcase.aiGeneratedVideo")}
                       </div>
                     </div>
+                  ) : currentExample.image ? (
+                    <div className="w-full h-full">
+                      <img
+                        src={currentExample.image}
+                        alt={currentExample.title}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute top-3 right-3 bg-indigo-600/90 text-white px-2 py-0.5 text-xs font-medium rounded-full backdrop-blur-sm flex items-center">
+                        <Wand2 className="w-3 h-3 mr-1" />
+                        {t("landing.hero.showcase.aiGenerated")}
+                      </div>
+                      {currentExample.prompt && (
+                        <div className="absolute bottom-3 left-3 right-3 bg-black/60 text-white px-3 py-1.5 text-xs rounded-lg backdrop-blur-sm group">
+                          <span className="inline-block">
+                            {currentExample.prompt.length > 65 ? (
+                              <span className="group-hover:hidden">
+                                {currentExample.prompt.substring(0, 65)}...
+                              </span>
+                            ) : (
+                              currentExample.prompt
+                            )}
+                            {currentExample.prompt.length > 65 && (
+                              <span className="hidden group-hover:inline">
+                                {currentExample.prompt}
+                              </span>
+                            )}
+                          </span>
+                        </div>
+                      )}
+                    </div>
                   ) : (
                     <>
                       <ReactCompareImage
-                        leftImage={currentExample.before}
-                        rightImage={currentExample.after}
+                        leftImage={currentExample.before || ""}
+                        rightImage={currentExample.after || ""}
                         sliderLineWidth={2}
                         sliderLineColor="#6366F1"
                         handleSize={40}

@@ -72,6 +72,11 @@
       "title": "Videos",
       "description": "Create your first video to see it appear in your gallery",
       "buttonText": "Create a Video"
+    },
+    "uploadedImages": {
+      "title": "Uploaded Images",
+      "description": "Upload your first image to see it appear in your gallery",
+      "buttonText": "Upload an Image"
     }
   },
   "gallery": {
@@ -349,23 +354,29 @@
       "badge": "AI-Powered Image Magic",
       "title": "Transform Your Images with AI Magic",
       "description": "Enhance, restore, and reimagine your photos with cutting-edge AI technology. Turn ordinary images into extraordinary works of art or captivating videos.",
-      "tryFreeNow": "Try Free Now",
+      "startNow": "Start Now",
       "viewExamples": "View Examples",
       "stats": {
-        "imagesEnhanced": "500K+",
+        "imagesEnhanced": "10k+",
         "imagesEnhancedLabel": "Images Enhanced",
-        "happyUsers": "25K+",
+        "happyUsers": "1K+",
         "happyUsersLabel": "Happy Users"
       },
       "showcase": {
+        "aiGenerated": "AI Generated",
+        "imageCreation": "Image Creation",
+        "imageCreationDescription": "Create stunning images with AI. No photoshoot required.",
+        "imageCreationPrompt": "A majestic mountain landscape at sunset with snow-capped peaks, alpine meadows filled with wildflowers, and a crystal-clear lake reflecting the golden sky, wispy clouds catching the last light of day, ultra-high-definition nature photography with vibrant colors and sharp details",
         "imageEnhancement": "Image Enhancement",
         "imageEnhancementDescription": "Transform ordinary photos into stunning professional images",
         "photoRestoration": "Photo Restoration",
         "photoRestorationDescription": "Breathe new life into old or damaged photos",
-        "objectRemoval": "Object Removal",
-        "objectRemovalDescription": "Seamlessly remove unwanted elements from your photos",
+        "creativeEditing": "Creative Editing",
+        "creativeEditingDescription": "Transform images with prompts. Add or remove elements with natural language.",
+        "creativeEditingPrompt": "Convert the image into an artistic watercolor painting with visible brush strokes, soft color bleeding at the edges, and delicate paper texture. Enhance the most prominent features while allowing colors to blend naturally in less detailed areas. Add subtle splatter effects for artistic flair.",
         "ugcCreation": "UGC Creation",
         "ugcCreationDescription": "Create engaging user-generated content with AI",
+        "ugcCreationPrompt": "A professional executive with neatly styled short brown hair wearing a tailored navy business suit and light blue shirt, standing confidently in a modern high-rise office with floor-to-ceiling windows overlooking a city skyline, soft natural lighting highlighting their determined expression, ultra-realistic 4K detail",
         "ugcVideoGeneration": "UGC Video Generation",
         "ugcVideoGenerationDescription": "Transform your UGC content into engaging videos",
         "original": "Original",
@@ -463,9 +474,8 @@
       },
       "prompt": {
         "title": "Your Prompt",
-        "imagePrompt": "Professional headshot of a confident female tech CEO, mid-30s, with a warm smile, wearing a modern business outfit against a soft gradient background, well-lit studio lighting, professional photography, high detail",
-        "videoPrompt": "Professional product promo video of a sleek smartphone being used by diverse people in different settings - coffee shop, office, and outdoors. Show phone features with smooth transitions, bright lighting, and modern aesthetic",
-        "imageFeature1": "Multiple variations with a single prompt",
+        "imagePrompt": "Girl, mid 30's. She's traveling the world and currently she is in madrid",
+        "videoPrompt": "move the camera around. Use realistic movement. Make her smile as having fun in her trip",
         "videoFeature1": "Fully customizable scenes and transitions",
         "imageFeature2": "No model required, just describe what you need",
         "videoFeature2": "No video equipment or editing skills needed",
@@ -525,7 +535,7 @@
             "70 AI image edits per month",
             "50 photo restorations per month",
             "25 video generations per month",
-            "Create multiple images from a single prompt",
+            "High-resolution image output",
             "Priority support"
           ],
           "cta": "Subscribe Now",
@@ -545,7 +555,7 @@
             "140 AI image edits per month",
             "100 photo restorations per month",
             "50 video generations per month",
-            "Create multiple images from a single prompt",
+            "High-resolution image output",
             "Priority support"
           ],
           "cta": "Subscribe Now",
@@ -560,34 +570,28 @@
       "description": "Join thousands of satisfied users who have transformed their images with our AI tools.",
       "testimonials": [
         {
-          "name": "Alex Johnson",
-          "role": "Professional Photographer",
-          "content": "This AI tool has completely transformed my workflow. I can deliver enhanced photos to clients in a fraction of the time it used to take me with manual editing."
+          "name": "Alex J.",
+          "content": "I can now enhance and edit photos for clients in minutes instead of hours. The UGC generation has been perfect for creating portfolio samples when I need inspiration."
         },
         {
-          "name": "Sarah Chen",
-          "role": "Digital Marketing Specialist",
-          "content": "The object removal feature is like magic! I've been able to clean up our product photos without hiring a professional editor. This saves us so much time and money."
+          "name": "Sarah C.",
+          "content": "The AI image editing is like magic! I've created stunning marketing materials and removed unwanted elements from our product photos effortlessly. The video generation feature has doubled our social engagement."
         },
         {
-          "name": "Michael Torres",
-          "role": "Graphic Designer",
-          "content": "I was skeptical about AI editing at first, but the results are incredible. The style transfer feature helps me create unique visuals for my clients' campaigns."
+          "name": "Mike T.",
+          "content": "I was skeptical at first, but the results are incredible. The style transfer creates unique visuals, and the image generation gives me a head start when creating concept art for clients."
         },
         {
-          "name": "Emily Wilson",
-          "role": "Family Historian",
-          "content": "I've been restoring my grandparents' old photos with this tool. The results are bringing tears to my family's eyes. It's preserving our memories in ways I never thought possible."
+          "name": "Em Wilson",
+          "content": "I restored my grandparents' old photos and the results brought tears to my family's eyes. It's preserving our memories in ways I never thought possible."
         },
         {
-          "name": "David Park",
-          "role": "E-commerce Store Owner",
-          "content": "The background replacement feature has been a game-changer for our product listings. We can create consistent, professional-looking photos with just a few clicks."
+          "name": "Dave P.",
+          "content": "The background replacement and image enhancement transformed our product listings. We create consistent, professional-looking photos in minutes, and the UGC creator helps us make compelling ads."
         },
         {
-          "name": "Lisa Nguyen",
-          "role": "Social Media Manager",
-          "content": "Creating scroll-stopping content just got easier. I can generate unique image variations that keep our feed fresh and engaging without spending hours in Photoshop."
+          "name": "Liz N.",
+          "content": "I can now generate unique images and transform them into short videos that keep our feed fresh and engaging. Our followers can't believe the quality of content we produce daily."
         }
       ]
     },
@@ -623,7 +627,7 @@
       "original": "Original",
       "enhanced": "Enhanced",
       "viewMore": "View More Examples",
-      "tryFree": "Try It Free",
+      "startNow": "Start Now",
       "seeItInAction": "See It In Action",
       "stunningTransformations": "Stunning Transformations",
       "sliderDescription": "Drag the slider to see the before and after results of our AI image processing.",
@@ -646,11 +650,13 @@
       },
       "creation": {
         "title": "AI Image Creation",
-        "description": "Our AI automatically creates stunning images based on your text prompts."
+        "description": "Our AI automatically creates stunning images based on your text prompts.",
+        "prompt": "A handcrafted ceramic coffee mug with an organic, textured glaze in deep blue tones, steam rising from the fresh coffee inside, placed on a rustic wooden table with scattered coffee beans around it, natural window lighting creating a cozy morning atmosphere, lifestyle product photography"
       },
       "editing": {
         "title": "Text-Guided Editing",
-        "description": "Transform your images using simple text prompts to add, modify, or remove elements."
+        "description": "Transform your images using simple text prompts to add, modify, or remove elements.",
+        "prompt": "Create a professional product photography look with a minimalist white background, subtle drop shadow beneath the subject, perfect highlight reflections, and ultra-sharp details that emphasize texture and form."
       },
       "restoration": {
         "title": "Photo Restoration",
@@ -658,7 +664,8 @@
       },
       "video": {
         "title": "Video Generation",
-        "description": "Generate stunning videos based on your text prompts."
+        "description": "Generate stunning videos based on your text prompts.",
+        "prompt": "Create a cinematic scene where someone slowly pours freshly brewed coffee from a French press into the cup. Emphasize the rich textures of the coffee, rising steam, warm natural lighting, and shallow depth of field for an atmospheric and intimate feel."
       }
     }
   }

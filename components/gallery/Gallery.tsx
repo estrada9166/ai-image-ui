@@ -82,6 +82,7 @@ export default function Gallery({ defaultTab = "images" }: GalleryProps) {
               <ImageGallery
                 type={[ImageTypeOptionsEnum.UserUploaded]}
                 showPrompt={false}
+                tab="uploaded-images"
               />
             </CardContent>
           </Card>

@@ -9,12 +9,12 @@
   "vars": {
     "NEXT_PUBLIC_POSTHOG_HOST": "https://us.i.posthog.com",
     "NEXT_PUBLIC_POSTHOG_KEY": "phc_M4sl4Sv6Ydzhry1DGJeUGor7I78CApQp8B2U7vAiVy5",
-    "NEXT_PUBLIC_STARTUP_ANNUAL_URL": "https://buy.stripe.com/fZe8Ac1U189ndlC288",
-    "NEXT_PUBLIC_STARTUP_MONTHLY_URL": "https://buy.stripe.com/4gw4jW2Y53T71CU9AB",
-    "NEXT_PUBLIC_GROWTH_ANNUAL_URL": "https://buy.stripe.com/dR66s48ip2P33L27su",
-    "NEXT_PUBLIC_GROWTH_MONTHLY_URL": "https://buy.stripe.com/dR6eYA7el75ja9q003",
-    "NEXT_PUBLIC_STARTER_ANNUAL_URL": "https://buy.stripe.com/4gw8AcaqxexLa9q148",
-    "NEXT_PUBLIC_STARTER_MONTHLY_URL": "https://buy.stripe.com/4gw2bOeGN4Xb95m6ot",
+    "NEXT_PUBLIC_STARTER_ANNUAL_URL": "https://buy.stripe.com/test_cNicN71pz03v48K3la04805",
+    "NEXT_PUBLIC_STARTER_MONTHLY_URL": "https://buy.stripe.com/test_8x26oJ5FP8A15cO4pe04804",
+    "NEXT_PUBLIC_PRO_ANNUAL_URL": "https://buy.stripe.com/test_9B6aEZ9W55nPdJk3la04803",
+    "NEXT_PUBLIC_PRO_MONTHLY_URL": "https://buy.stripe.com/test_aFa8wR6JT03vbBcbRG04802",
+    "NEXT_PUBLIC_ADVANCED_ANNUAL_URL": "https://buy.stripe.com/test_8x27sNecl9E548K3la04801",
+    "NEXT_PUBLIC_ADVANCED_MONTHLY_URL": "https://buy.stripe.com/test_28E00l2tD6rT0WybRG04800",
     "NEXT_PUBLIC_CLIENT_URL": "https://newpix.ai",
     "NEXT_PUBLIC_SERVER_URL": "https://api.newpix.ai"
   }

@@ -72,6 +72,11 @@
       "title": "Videos",
       "description": "Crea tu primer video para verlo aparecer en tu galería",
       "buttonText": "Crear un Video"
+    },
+    "uploadedImages": {
+      "title": "Imágenes Subidas",
+      "description": "Sube tu primera imagen para verla aparecer en tu galería",
+      "buttonText": "Subir una Imagen"
     }
   },
   "gallery": {
@@ -349,12 +354,12 @@
       "badge": "Magia de Imágenes con IA",
       "title": "Transforma tus Imágenes con Magia de IA",
       "description": "Mejora, restaura y reimagina tus fotos con tecnología de IA de vanguardia. Convierte imágenes ordinarias en extraordinarias obras de arte en segundos.",
-      "tryFreeNow": "Prueba Gratis Ahora",
+      "startNow": "Comenzar Ahora",
       "viewExamples": "Ver Ejemplos",
       "stats": {
-        "imagesEnhanced": "500K+",
+        "imagesEnhanced": "10K+",
         "imagesEnhancedLabel": "Imágenes Mejoradas",
-        "happyUsers": "25K+",
+        "happyUsers": "1K+",
         "happyUsersLabel": "Usuarios Satisfechos"
       },
       "showcase": {
@@ -372,7 +377,14 @@
         "aiEnhanced": "Mejorado con IA",
         "aiUGC": "UGC con IA",
         "aiGeneratedVideo": "Video Generado por IA",
-        "slideToCompare": "← Desliza para comparar →"
+        "slideToCompare": "← Desliza para comparar →",
+        "aiGenerated": "Generado por IA",
+        "imageCreation": "Creación de Imágenes",
+        "imageCreationDescription": "Crea imágenes impresionantes con IA. No se requiere sesión fotográfica.",
+        "imageCreationPrompt": "Un majestuoso paisaje montañoso al atardecer con picos nevados, praderas alpinas llenas de flores silvestres y un lago cristalino reflejando el cielo dorado, nubes difusas captando la última luz del día, fotografía de naturaleza de ultra alta definición con colores vibrantes y detalles nítidos",
+        "creativeEditing": "Edición Creativa",
+        "creativeEditingDescription": "Transforma imágenes con instrucciones. Añade o elimina elementos con lenguaje natural.",
+        "creativeEditingPrompt": "Convierte la imagen en una pintura artística de acuarela con trazos de pincel visibles, suave sangrado de color en los bordes y delicada textura de papel. Realza las características más prominentes mientras permites que los colores se mezclen naturalmente en áreas menos detalladas. Añade sutiles efectos de salpicaduras para un toque artístico."
       },
       "featureShowcase": {
         "aiImageEnhancement": "Mejora de Imágenes con IA",
@@ -404,7 +416,9 @@
         "backgroundReplacement": "Reemplazo de Fondo",
         "backgroundReplacementDescription": "Cambia fondos con facilidad. Coloca tus sujetos en cualquier entorno con integración perfecta.",
         "smartRetouching": "Retoque Inteligente",
-        "smartRetouchingDescription": "Auto-retoca retratos con suavizado de piel de aspecto natural, ajustes de iluminación y más."
+        "smartRetouchingDescription": "Auto-retoca retratos con suavizado de piel de aspecto natural, ajustes de iluminación y más.",
+        "imageCreation": "Creación de Imágenes",
+        "imageCreationDescription": "Crea imágenes impresionantes con IA. No se requiere sesión fotográfica."
       }
     },
     "cta": {
@@ -435,6 +449,10 @@
         "whatIsTextGuidedEditing": {
           "question": "¿Qué es la 'edición guiada por texto' y cómo funciona?",
           "answer": "La edición guiada por texto te permite describir en lenguaje sencillo los cambios que quieres hacer a tu imagen. Por ejemplo, podrías escribir 'haz el cielo más azul' o 'añade flores en primer plano', y nuestra IA interpretará tu solicitud y aplicará esos cambios a tu imagen. Es como tener un editor profesional que entiende exactamente lo que quieres."
+        },
+        "howAccurateIsImageCreation": {
+          "question": "¿Qué tan realistas son las imágenes generadas por IA?",
+          "answer": "Nuestra tecnología de creación de imágenes produce imágenes altamente realistas basadas en tus descripciones de texto. La IA ha sido entrenada con millones de imágenes de alta calidad para entender conceptos visuales y composición. Aunque los resultados varían según la complejidad de tu solicitud, la mayoría de los usuarios quedan asombrados por la calidad fotorrealista y las interpretaciones creativas que genera nuestro sistema."
         },
         "howAccurateIsObjectRemoval": {
           "question": "¿Qué tan precisa es la función de eliminación de objetos?",
@@ -476,7 +494,6 @@
         "videoPrompt": "Video promocional profesional de un elegante teléfono inteligente siendo utilizado por personas diversas en diferentes entornos - cafetería, oficina y al aire libre. Muestra las características del teléfono con transiciones suaves, iluminación brillante y estética moderna",
         "imageGenTime": "Tiempo de generación: ~4 segundos",
         "videoGenTime": "Tiempo de generación: ~20 segundos",
-        "imageFeature1": "Múltiples variaciones con un solo prompt",
         "videoFeature1": "Escenas y transiciones completamente personalizables",
         "imageFeature2": "No se requiere modelo, solo describe lo que necesitas",
         "videoFeature2": "No se necesita equipo de video ni habilidades de edición",
@@ -593,34 +610,28 @@
       },
       "testimonials": [
         {
-          "name": "Alex Johnson",
-          "role": "Fotógrafo Profesional",
-          "content": "Esta herramienta de IA ha transformado completamente mi flujo de trabajo. Puedo entregar fotos mejoradas a clientes en una fracción del tiempo que solía tomarme con la edición manual."
+          "name": "Alex J.",
+          "content": "Ahora puedo mejorar y editar fotos para clientes en minutos en lugar de horas. La generación de UGC ha sido perfecta para crear muestras de portafolio cuando necesito inspiración."
         },
         {
-          "name": "Sarah Chen",
-          "role": "Especialista en Marketing Digital",
-          "content": "¡La función de eliminación de objetos es como magia! He podido limpiar nuestras fotos de productos sin contratar a un editor profesional. Esto nos ahorra mucho tiempo y dinero."
+          "name": "Sarah C.",
+          "content": "¡La edición de imágenes con IA es como magia! He creado materiales de marketing impresionantes y eliminado elementos no deseados de nuestras fotos de productos sin esfuerzo. La función de generación de vídeos ha duplicado nuestro engagement social."
         },
         {
-          "name": "Michael Torres",
-          "role": "Diseñador Gráfico",
-          "content": "Al principio era escéptico sobre la edición con IA, pero los resultados son increíbles. La función de transferencia de estilo me ayuda a crear visuales únicos para las campañas de mis clientes."
+          "name": "Mike T.",
+          "content": "Al principio era escéptico, pero los resultados son increíbles. La transferencia de estilo crea visuales únicos, y la generación de imágenes me da una ventaja inicial cuando creo arte conceptual para clientes."
         },
         {
-          "name": "Emily Wilson",
-          "role": "Historiadora Familiar",
-          "content": "He estado restaurando las fotos antiguas de mis abuelos con esta herramienta. Los resultados están haciendo llorar a mi familia. Está preservando nuestros recuerdos de maneras que nunca pensé posibles."
+          "name": "Em Wilson",
+          "content": "Restauré las fotos antiguas de mis abuelos y los resultados hicieron llorar a mi familia. Está preservando nuestros recuerdos de maneras que nunca creí posibles."
         },
         {
-          "name": "David Park",
-          "role": "Propietario de Tienda de Comercio Electrónico",
-          "content": "La función de reemplazo de fondos ha sido revolucionaria para nuestros listados de productos. Podemos crear fotos de aspecto consistente y profesional con solo unos pocos clics."
+          "name": "Dave P.",
+          "content": "El reemplazo de fondos y la mejora de imágenes transformaron nuestros listados de productos. Creamos fotos consistentes y profesionales en minutos, y el creador de UGC nos ayuda a hacer anuncios convincentes."
         },
         {
-          "name": "Lisa Nguyen",
-          "role": "Gerente de Redes Sociales",
-          "content": "Crear contenido que atrape la atención acaba de volverse más fácil. Puedo generar variaciones de imágenes únicas que mantienen nuestro feed fresco y atractivo sin pasar horas en Photoshop."
+          "name": "Liz N.",
+          "content": "Ahora puedo generar imágenes únicas y transformarlas en videos cortos que mantienen nuestro feed fresco y atractivo. Nuestros seguidores no pueden creer la calidad del contenido que producimos diariamente."
         }
       ]
     },
@@ -656,7 +667,7 @@
       "original": "Original",
       "enhanced": "Mejorada",
       "viewMore": "Ver Más Ejemplos",
-      "tryFree": "Pruébalo Gratis",
+      "startNow": "Comenzar Ahora",
       "seeItInAction": "Véalo en acción",
       "stunningTransformations": "Transformaciones Impresionantes",
       "sliderDescription": "Arrastra el deslizador para ver los resultados antes y después de nuestro procesamiento de imágenes con IA.",
@@ -679,11 +690,13 @@
       },
       "creation": {
         "title": "Creación de Imágenes IA",
-        "description": "Nuestra IA crea automáticamente imágenes impresionantes basadas en tus descripciones textuales."
+        "description": "Nuestra IA crea automáticamente imágenes impresionantes basadas en tus descripciones textuales.",
+        "prompt": "Una taza de café de cerámica hecha a mano con un esmalte texturizado orgánico en tonos azul profundo, vapor elevándose del café fresco en su interior, colocada sobre una mesa rústica de madera con granos de café esparcidos alrededor, iluminación natural de ventana creando una acogedora atmósfera matutina, fotografía de producto de estilo de vida"
       },
       "editing": {
         "title": "Edición Guiada por Texto",
-        "description": "Transforma tus imágenes usando simples instrucciones textuales para añadir, modificar o eliminar elementos."
+        "description": "Transforma tus imágenes usando simples instrucciones textuales para añadir, modificar o eliminar elementos.",
+        "prompt": "Crea un aspecto de fotografía de producto profesional con un fondo blanco minimalista, sutil sombra debajo del sujeto, reflejos perfectos de luz y detalles ultra nítidos que enfatizan la textura y la forma."
       },
       "restoration": {
         "title": "Restauración de Fotos",
@@ -691,7 +704,8 @@
       },
       "video": {
         "title": "Generación de Video",
-        "description": "Genera videos impresionantes basados en tus descripciones textuales."
+        "description": "Genera videos impresionantes basados en tus descripciones textuales.",
+        "prompt": "Crea una escena cinematográfica donde alguien vierte lentamente café recién preparado de una prensa francesa a la taza. Enfatiza las ricas texturas del café, el vapor que se eleva, la cálida iluminación natural y poca profundidad de campo para una sensación atmosférica e íntima."
       }
     }
   }

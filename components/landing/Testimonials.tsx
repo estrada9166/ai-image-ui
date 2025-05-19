@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 
 type Testimonial = {
   name: string;
-  role: string;
   content: string;
   image?: string;
   rating?: number;
@@ -88,9 +87,6 @@ export default function Testimonials() {
                   <div>
                     <div className="font-medium text-gray-900 dark:text-white">
                       {testimonial.name}
-                    </div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">
-                      {testimonial.role}
                     </div>
                   </div>
                 </div>

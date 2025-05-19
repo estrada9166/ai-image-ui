@@ -29,8 +29,12 @@ type Image = {
   id: string;
   imageUrl?: string | null;
   prompt?: string | null;
-  status: string;
-  originalImage: Image | null;
+  status: GenAiStatusEnum;
+  thumbnailUrl?: string | null;
+  originalImage?: {
+    id: string;
+    imageUrl?: string | null;
+  } | null;
 };
 
 type ImageWithIndex = Image & {
@@ -78,7 +82,7 @@ export function ImageGallery({
   showPrompt?: boolean;
   redirectToVideoCreationOnClick?: boolean;
   loadPartialGallery?: boolean;
-  tab?: "images" | "edited-images" | "restored-images";
+  tab?: "images" | "edited-images" | "restored-images" | "uploaded-images";
 }) {
   const { t } = useTranslation();
   const router = useRouter();
@@ -296,23 +300,13 @@ export function ImageGallery({
                 </div>
               )}
 
-            {/* Prompt text - more subtle */}
+            {/* Prompt text */}
             {showPrompt && image.node.prompt && (
-              <>
-                {/* Always visible subtle indicator */}
-                <div className="absolute bottom-2 left-2 right-2 p-1.5 bg-black/10 backdrop-blur-sm rounded-md opacity-40 transition-opacity duration-300 group-hover:opacity-0">
-                  <p className="text-xs text-white/90 line-clamp-1 truncate">
-                    {image.node.prompt}
-                  </p>
-                </div>
-
-                {/* Full prompt on hover */}
-                <div className="absolute bottom-2 left-2 right-2 p-2 bg-black/40 backdrop-blur-sm rounded-md opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-1 group-hover:translate-y-0">
-                  <p className="text-xs text-white line-clamp-2">
-                    {image.node.prompt}
-                  </p>
-                </div>
-              </>
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <p className="text-white/90 text-xs md:text-sm leading-relaxed">
+                  {image.node.prompt}
+                </p>
+              </div>
             )}
           </motion.div>
         ))}
@@ -339,20 +333,20 @@ export function ImageGallery({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+            className="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-50 p-4"
             onClick={closeModal}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: "spring", damping: 25 }}
-              className="relative max-w-5xl w-full rounded-2xl overflow-hidden"
+              className="relative max-w-6xl w-full rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
-              {tab === "restored-images" &&
-              selectedImage.originalImage?.imageUrl &&
-              selectedImage.imageUrl ? (
-                <div className="bg-black w-full h-auto max-h-[85vh]">
+              <div className="flex-1 bg-gradient-to-b from-gray-900/50 to-black">
+                {tab === "restored-images" &&
+                selectedImage.originalImage?.imageUrl &&
+                selectedImage.imageUrl ? (
                   <ReactCompareImage
                     leftImage={selectedImage.originalImage.imageUrl}
                     rightImage={selectedImage.imageUrl}
@@ -366,79 +360,111 @@ export function ImageGallery({
                     leftImageCss={{ objectFit: "contain", maxHeight: "85vh" }}
                     rightImageCss={{ objectFit: "contain", maxHeight: "85vh" }}
                   />
-                </div>
-              ) : (
-                <img
-                  src={selectedImage.imageUrl || ""}
-                  alt={
-                    selectedImage.prompt ||
-                    `Generated image ${selectedImage.index + 1}`
-                  }
-                  className="w-full h-auto max-h-[85vh] object-contain bg-black/50"
-                />
-              )}
-
-              <div className="absolute top-4 right-4 flex flex-col gap-3">
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={closeModal}
-                  className="p-2.5 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors backdrop-blur-sm"
-                  aria-label="Close modal"
-                >
-                  <X className="w-5 h-5" />
-                </motion.button>
-
-                <Link href={`/dashboard/edit/image?image=${selectedImage.id}`}>
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={(e) => e.stopPropagation()}
-                    className="p-2.5 rounded-full bg-green-500/90 text-white hover:bg-green-600 transition-colors backdrop-blur-sm"
-                    aria-label="Edit image"
-                    title="Edit this image"
-                  >
-                    <Edit className="w-5 h-5" />
-                  </motion.button>
-                </Link>
-
-                <Link
-                  href={`/dashboard/create/video?image=${selectedImage.id}`}
-                >
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={(e) => e.stopPropagation()}
-                    className="p-2.5 rounded-full bg-purple-500/90 text-white hover:bg-purple-600 transition-colors backdrop-blur-sm"
-                    aria-label="Animate image"
-                    title="Animate this image"
-                  >
-                    <Video className="w-5 h-5" />
-                  </motion.button>
-                </Link>
-
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDownloadImage(selectedImage.imageUrl, e);
-                  }}
-                  className="p-2.5 rounded-full bg-blue-500/90 text-white hover:bg-blue-600 transition-colors backdrop-blur-sm"
-                  aria-label="Download image"
-                  title="Download image"
-                >
-                  <Download className="w-5 h-5" />
-                </motion.button>
+                ) : (
+                  <img
+                    src={selectedImage.imageUrl || ""}
+                    alt={
+                      selectedImage.prompt ||
+                      `Generated image ${selectedImage.index + 1}`
+                    }
+                    className="w-full h-auto max-h-[85vh] object-contain"
+                  />
+                )}
               </div>
 
-              {selectedImage.prompt && (
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-                  <p className="text-white/90 text-xs md:text-sm font-medium max-w-[90%] mx-auto">
-                    {selectedImage.prompt}
-                  </p>
+              <div className="md:w-72 bg-gradient-to-r from-gray-900/90 to-gray-800/90 backdrop-blur-md p-6 flex flex-col">
+                <div className="flex justify-end mb-4">
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={closeModal}
+                    className="p-2 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors backdrop-blur-sm"
+                    aria-label="Close modal"
+                  >
+                    <X className="w-5 h-5" />
+                  </motion.button>
                 </div>
-              )}
+
+                <div className="flex flex-col gap-3 mt-2">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={(e) =>
+                      handleDownloadImage(selectedImage.imageUrl, e)
+                    }
+                    className="flex items-center justify-center gap-2 p-3 rounded-xl bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-purple-500/20"
+                    aria-label="Download image"
+                    title="Download image"
+                  >
+                    <Download className="w-5 h-5" />
+                    <span>Download</span>
+                  </motion.button>
+
+                  <Link
+                    href={`/dashboard/edit/image?image=${selectedImage.id}`}
+                  >
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex items-center justify-center gap-2 p-3 w-full rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-green-500/20"
+                      aria-label="Edit image"
+                      title="Edit this image"
+                    >
+                      <Edit className="w-5 h-5" />
+                      <span>Edit Image</span>
+                    </motion.button>
+                  </Link>
+
+                  {tab === "uploaded-images" && (
+                    <Link
+                      href={`/dashboard/edit/restore?image=${selectedImage.id}`}
+                    >
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="flex items-center justify-center gap-2 p-3 w-full rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-amber-500/20"
+                        aria-label="Restore image"
+                        title="Restore this image"
+                      >
+                        <RotateCcw className="w-5 h-5" />
+                        <span>Restore</span>
+                      </motion.button>
+                    </Link>
+                  )}
+
+                  <Link
+                    href={`/dashboard/create/video?image=${selectedImage.id}`}
+                  >
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex items-center justify-center gap-2 p-3 w-full rounded-xl bg-gradient-to-r from-purple-500 to-violet-500 hover:from-purple-600 hover:to-violet-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-purple-500/20"
+                      aria-label="Animate image"
+                      title="Animate this image"
+                    >
+                      <Video className="w-5 h-5" />
+                      <span>Animate</span>
+                    </motion.button>
+                  </Link>
+                </div>
+
+                {selectedImage.prompt && (
+                  <div className="mt-auto">
+                    <h3 className="text-white text-sm font-medium mb-3 flex items-center gap-2">
+                      <span className="h-1 w-5 bg-purple-500 rounded-full"></span>
+                      Prompt
+                    </h3>
+                    <div className="bg-black/30 rounded-xl p-4 border border-white/5 hover:border-purple-500/30 transition-colors duration-300">
+                      <p className="text-white/90 text-xs md:text-sm leading-relaxed">
+                        {selectedImage.prompt}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
             </motion.div>
           </motion.div>,
           document.body
