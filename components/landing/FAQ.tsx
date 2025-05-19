@@ -34,10 +34,6 @@ export default function FAQ() {
       answer: t("landing.faq.questions.canIUseCommercially.answer"),
     },
     {
-      question: t("landing.faq.questions.isMyDataSafe.question"),
-      answer: t("landing.faq.questions.isMyDataSafe.answer"),
-    },
-    {
       question: t("landing.faq.questions.doINeedPowerfulComputer.question"),
       answer: t("landing.faq.questions.doINeedPowerfulComputer.answer"),
     },

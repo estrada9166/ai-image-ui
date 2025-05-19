@@ -424,7 +424,7 @@
     "cta": {
       "title": "¿Listo para Transformar tus Imágenes con IA?",
       "description": "Únete a miles de fotógrafos, diseñadores y creadores de contenido que están elevando su trabajo con nuestras potentes herramientas de imágenes de IA.",
-      "startFreeTrial": "Comenzar Prueba Gratuita",
+      "startNow": "Comenzar Ahora",
       "seeMoreExamples": "Ver Más Ejemplos"
     },
     "faq": {
@@ -462,10 +462,6 @@
           "question": "¿Puedo usar las imágenes mejoradas comercialmente?",
           "answer": "Sí, todas las imágenes mejoradas siguen siendo de tu propiedad y pueden ser utilizadas con fines comerciales de acuerdo con tus derechos sobre la imagen original. Nuestro servicio no reclama ningún derecho sobre tu contenido."
         },
-        "isMyDataSafe": {
-          "question": "¿Están mis datos seguros y privados?",
-          "answer": "Nos tomamos la privacidad muy en serio. Tus imágenes se procesan de forma segura y no se utilizan para entrenar nuestros modelos a menos que optes explícitamente por ello. No compartimos tus imágenes con terceros, y todas las cargas están encriptadas. Puedes eliminar tus imágenes de nuestros servidores en cualquier momento."
-        },
         "doINeedPowerfulComputer": {
           "question": "¿Necesito un ordenador potente para usar vuestras herramientas?",
           "answer": "No, todo el procesamiento se realiza en nuestros servidores en la nube, por lo que puedes usar nuestras herramientas en cualquier dispositivo con un navegador web — incluyendo teléfonos inteligentes, tabletas y ordenadores más antiguos. Los resultados son los mismos independientemente de las capacidades de tu dispositivo."
@@ -476,7 +472,7 @@
         },
         "doYouOfferRefunds": {
           "question": "¿Ofrecéis reembolsos si no estoy satisfecho?",
-          "answer": "Ofrecemos una garantía de devolución de dinero de 7 días para suscriptores por primera vez. Si no estás completamente satisfecho con nuestro servicio dentro de la primera semana, contacta con nuestro equipo de soporte y procesaremos tu reembolso."
+          "answer": "No ofrecemos reembolsos ya que nuestro servicio utiliza modelos de IA y recursos informáticos que se consumen inmediatamente al usarlos. Una vez que has accedido a nuestras herramientas de IA, estos recursos han sido asignados y no pueden ser devueltos."
         }
       }
     },

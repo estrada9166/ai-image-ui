@@ -143,9 +143,7 @@ export default function TermsPage() {
               We do not offer refunds as our service utilizes AI models and
               computing resources that are consumed immediately upon use. Once
               you have accessed our AI tools, these resources have been
-              allocated and cannot be returned. We encourage users to try our
-              free plan first to ensure our service meets their needs before
-              subscribing.
+              allocated and cannot be returned.
             </p>
 
             <h2>11. Data Privacy</h2>
