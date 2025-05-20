@@ -29,7 +29,7 @@ export default function TermsPage() {
                 </div>
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
-                Newpix
+                Newpix.ai
               </span>
             </Link>
             <Link
