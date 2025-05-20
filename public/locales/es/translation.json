@@ -3,7 +3,8 @@
     "title": "¡Comparte tu opinión!",
     "thanksMessage": "¡Gracias por compartir tu opinión!",
     "inputPlaceholder": "¿Qué quieres que sepamos?",
-    "sendFeedback": "Enviar Comentarios"
+    "sendFeedback": "Enviar Comentarios",
+    "close": "Cerrar"
   },
   "emptySourceImage": {
     "addAnImageToBegin": "Añade una imagen para comenzar",

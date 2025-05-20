@@ -78,7 +78,7 @@ export default function Feedback() {
                 {t("feedback.thanksMessage")}
               </p>
               <p className="text-center text-sm text-muted-foreground">
-                {t("feedback.thanksDescription") || "We appreciate your input"}
+                {t("feedback.thanksMessage") || "We appreciate your input"}
               </p>
             </div>
           ) : (
@@ -106,7 +106,7 @@ export default function Feedback() {
             </Button>
           ) : (
             <Button onClick={() => handleOpenChange(false)}>
-              {t("common.close") || "Close"}
+              {t("feedback.close") || "Close"}
             </Button>
           )}
         </DialogFooter>

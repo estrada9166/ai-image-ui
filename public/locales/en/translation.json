@@ -3,7 +3,8 @@
     "title": "Share your feedback!",
     "thanksMessage": "Thanks for sharing your feedback!",
     "inputPlaceholder": "What do you want us to know?",
-    "sendFeedback": "Send Feedback"
+    "sendFeedback": "Send Feedback",
+    "close": "Close"
   },
   "emptySourceImage": {
     "addAnImageToBegin": "Add an Image to Begin",
