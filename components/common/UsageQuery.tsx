@@ -30,8 +30,8 @@ const UsageQueryDocument = graphql(/* GraphQL */ `
   }
 `);
 
-export function UsageQuery() {
-  const [{ data }] = useQuery({ query: UsageQueryDocument });
+export function UsageQuery(pause: boolean = false) {
+  const [{ data }] = useQuery({ query: UsageQueryDocument, pause });
 
   return data;
 }

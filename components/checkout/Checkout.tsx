@@ -38,7 +38,10 @@ export function Checkout({ trigger, onOpenChange }: CheckoutProps) {
         returnObjects: true,
       }) as string[],
       ctaText: t("landing.pricing.plans.starter.cta"),
-      ctaLink: "/signup",
+      ctaLink:
+        billingPeriod === "monthly"
+          ? process.env.NEXT_PUBLIC_STARTER_MONTHLY_URL
+          : process.env.NEXT_PUBLIC_STARTER_ANNUAL_URL,
       popular: false,
       disclaimer: t("landing.pricing.plans.starter.disclaimer"),
       color: "from-blue-400 to-cyan-500",
@@ -53,7 +56,10 @@ export function Checkout({ trigger, onOpenChange }: CheckoutProps) {
         returnObjects: true,
       }) as string[],
       ctaText: t("landing.pricing.plans.pro.cta"),
-      ctaLink: "/signup?plan=pro",
+      ctaLink:
+        billingPeriod === "monthly"
+          ? process.env.NEXT_PUBLIC_PRO_MONTHLY_URL
+          : process.env.NEXT_PUBLIC_PRO_ANNUAL_URL,
       popular: true,
       disclaimer: t("landing.pricing.plans.pro.disclaimer"),
       color: "from-purple-500 to-indigo-600",
@@ -68,7 +74,10 @@ export function Checkout({ trigger, onOpenChange }: CheckoutProps) {
         returnObjects: true,
       }) as string[],
       ctaText: t("landing.pricing.plans.advanced.cta"),
-      ctaLink: "/contact-sales",
+      ctaLink:
+        billingPeriod === "monthly"
+          ? process.env.NEXT_PUBLIC_ADVANCED_MONTHLY_URL
+          : process.env.NEXT_PUBLIC_ADVANCED_ANNUAL_URL,
       popular: false,
       disclaimer: t("landing.pricing.plans.advanced.disclaimer"),
       color: "from-amber-500 to-orange-600",
@@ -191,7 +200,7 @@ export function Checkout({ trigger, onOpenChange }: CheckoutProps) {
                   )}
                 </div>
 
-                <Link href={plan.ctaLink}>
+                <Link href={plan.ctaLink!}>
                   <Button
                     className={`w-full mb-5 py-5 text-sm font-medium transition-all duration-300 ${
                       plan.popular

@@ -1,9 +1,8 @@
 "use client";
 
-import { useQuery } from "urql";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
-import { MeQueryDocument } from "../common/MeQuery";
+import { useMeQuery } from "../common/MeQuery";
 
 interface RequireSignInProps {
   children: ReactNode;
@@ -12,10 +11,7 @@ interface RequireSignInProps {
 export default function RequireSignIn({ children }: RequireSignInProps) {
   const router = useRouter();
 
-  const [{ data, error, fetching }] = useQuery({
-    query: MeQueryDocument,
-    requestPolicy: "network-only",
-  });
+  const { data, fetching, error } = useMeQuery("network-only");
 
   useEffect(() => {
     if (!fetching) {

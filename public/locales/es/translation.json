@@ -90,12 +90,21 @@
   "imageGallery": {
     "loadingMoreImages": "Cargando más imágenes...",
     "generatingImage": "Generando imagen...",
-    "viewFullGallery": "Ver galería completa"
+    "viewFullGallery": "Ver galería completa",
+    "errorGeneratingImage": "Error al generar imagen",
+    "errorGeneratingImageDescription": "No pudimos generar esta imagen. Por favor, inténtalo de nuevo.",
+    "download": "Descargar",
+    "edit": "Editar",
+    "restore": "Restaurar",
+    "animate": "Animar"
   },
   "videoGallery": {
     "loadingMoreVideos": "Cargando más videos...",
     "generatingVideo": "Generando video...",
-    "viewFullGallery": "Ver galería completa"
+    "viewFullGallery": "Ver galería completa",
+    "download": "Descargar",
+    "generationFailed": "Error al generar video",
+    "tryAgain": "Intenta de nuevo"
   },
   "googleLogin": {
     "loginWithGoogle": "Iniciar sesión con Google"
@@ -148,6 +157,7 @@
     "idea16": "Un reloj inteligente moderno con una pantalla iluminada mostrando métricas de fitness, usado en una muñeca, capturado durante un entrenamiento al aire libre en la hora dorada con suave contraluz resaltando el diseño elegante y la cómoda correa, fotografía de producto de estilo de vida enfatizando un estilo de vida activo y saludable"
   },
   "imageEdit": {
+    "fileSizeExceeded": "El tamaño del archivo excede el límite de 10MB. Por favor, inténtalo de nuevo con un archivo más pequeño.",
     "imageEdit": "Edición de Imagen",
     "promptIdeaPlaceholder": "Elige una idea de prompt o escribe la tuya",
     "errorLoadingImage": "Error al cargar la imagen",

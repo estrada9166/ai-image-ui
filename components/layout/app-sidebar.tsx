@@ -20,12 +20,11 @@ import {
   SidebarHeader,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { useQuery } from "urql";
 import { NavSecondary } from "./nav-secondary";
 import Link from "next/link";
 import { NavRemainingPlan } from "./nav-remainingPlan";
 import Feedback from "../feedback/Feedback";
-import { MeQueryDocument } from "../common/MeQuery";
+import { useMeQuery } from "../common/MeQuery";
 import LanguageSelector from "./LanguageSelector";
 import { useTranslation } from "react-i18next";
 
@@ -33,9 +32,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state, isMobile, toggleSidebar } = useSidebar();
   const { t } = useTranslation();
 
-  const [{ data: userData }] = useQuery({
-    query: MeQueryDocument,
-  });
+  const { data: userData } = useMeQuery();
 
   const handleToggleSidebar = () => {
     if (isMobile) {
@@ -98,7 +95,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} onClick={handleToggleSidebar} />
       </SidebarContent>
       <SidebarFooter>
-        <NavRemainingPlan />
+        <NavRemainingPlan
+          hasActiveSubscription={userData?.me?.hasActiveSubscription ?? false}
+        />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
         <LanguageSelector />
 

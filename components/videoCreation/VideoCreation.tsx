@@ -31,6 +31,8 @@ import axios from "axios";
 import { EmptyState } from "./EmptyState";
 import { ImageByIdQuery } from "../common/ImageByIdQuery";
 import { useTranslation } from "react-i18next";
+import { Checkout } from "../checkout/Checkout";
+import { useMeQuery } from "../common/MeQuery";
 
 const VideoCreationMutation = graphql(/* GraphQL */ `
   mutation VideoCreation($input: VideoCreationInput!) {
@@ -59,6 +61,7 @@ export default function VideoCreation() {
   const image = searchParams?.get("image");
 
   const [, generateVideo] = useMutation(VideoCreationMutation);
+  const { data: userData } = useMeQuery();
 
   const [{ data, fetching, error }] = useQuery({
     query: ImageByIdQuery,
@@ -369,46 +372,64 @@ export default function VideoCreation() {
                   <RefreshCw className="mr-2 h-4 w-4" />
                   Clear
                 </Button>
-                <Button
-                  onClick={handleGenerateVideo}
-                  disabled={
-                    isGeneratingVideo ||
-                    !videoPrompt.trim() ||
-                    (!imageData?.imageUrl && !previewUrl)
-                  }
-                  className="text-sm bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full"
-                >
-                  {isGeneratingVideo ? (
-                    <>
-                      <svg
-                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
+                {userData?.me?.hasActiveSubscription ? (
+                  <Button
+                    onClick={handleGenerateVideo}
+                    disabled={
+                      isGeneratingVideo ||
+                      !videoPrompt.trim() ||
+                      (!imageData?.imageUrl && !previewUrl)
+                    }
+                    className="text-sm bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full"
+                  >
+                    {isGeneratingVideo ? (
+                      <>
+                        <svg
+                          className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                        {t("videoCreation.processing")}
+                      </>
+                    ) : (
+                      <>
+                        <Wand2 className="mr-2 h-4 w-4" />
+                        {t("videoCreation.generateVideo")}
+                      </>
+                    )}
+                  </Button>
+                ) : (
+                  <Checkout
+                    trigger={
+                      <Button
+                        disabled={
+                          isGeneratingVideo ||
+                          !videoPrompt.trim() ||
+                          (!imageData?.imageUrl && !previewUrl)
+                        }
+                        className="text-sm bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full"
                       >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      {t("videoCreation.processing")}
-                    </>
-                  ) : (
-                    <>
-                      <Wand2 className="mr-2 h-4 w-4" />
-                      {t("videoCreation.generateVideo")}
-                    </>
-                  )}
-                </Button>
+                        <Wand2 className="mr-2 h-4 w-4" />
+                        {t("videoCreation.generateVideo")}
+                      </Button>
+                    }
+                  />
+                )}
               </div>
             </div>
           </CardContent>

@@ -6,10 +6,16 @@ import { useTranslation } from "react-i18next";
 
 import { format } from "date-fns";
 import { UsageQuery } from "../common/UsageQuery";
+import { Checkout } from "../checkout/Checkout";
+import { Button } from "../ui/button";
 
-export function NavRemainingPlan() {
+export function NavRemainingPlan({
+  hasActiveSubscription,
+}: {
+  hasActiveSubscription: boolean;
+}) {
   const { t } = useTranslation();
-  const data = UsageQuery();
+  const data = UsageQuery(!hasActiveSubscription);
 
   const usage = data?.me?.planFeaturesUsage;
   const resetDate = usage?.endDate;
@@ -34,65 +40,69 @@ export function NavRemainingPlan() {
 
   return (
     <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/90 dark:to-slate-800/80 backdrop-blur-lg rounded-xl p-3 mb-3 shadow-md border border-slate-200/50 dark:border-slate-700/50 transition-all duration-300 hover:shadow-lg">
-      <div className="space-y-2 mb-3">
-        {[
-          {
-            icon: <ImageIcon className="w-3.5 h-3.5 text-purple-500" />,
-            label: "imageCreation",
-            data: usage?.imageCreation,
-          },
-          {
-            icon: <CropIcon className="w-3.5 h-3.5 text-purple-500" />,
-            label: "imageEdit",
-            data: usage?.editImage,
-          },
-          {
-            icon: <ImageIcon className="w-3.5 h-3.5 text-purple-500" />,
-            label: "imageRestore",
-            data: usage?.imageRestoration,
-          },
-          {
-            icon: <VideoIcon className="w-3.5 h-3.5 text-purple-500" />,
-            label: "videoCreation",
-            data: usage?.videoCreation,
-          },
-        ].map((item, index) => (
-          <UsageItem
-            key={index}
-            icon={item.icon}
-            label={t(`navRemainingPlan.${item.label}`)}
-            used={item.data?.used || 0}
-            limit={item.data?.limit || 0}
-            progressColor={getProgressColor(
-              item.data?.used || 0,
-              item.data?.limit || 0
-            )}
-            percentage={getUsagePercentage(
-              item.data?.used || 0,
-              item.data?.limit || 0
-            )}
-          />
-        ))}
-      </div>
+      {hasActiveSubscription ? (
+        <>
+          <div className="space-y-2 mb-3">
+            {[
+              {
+                icon: <ImageIcon className="w-3.5 h-3.5 text-purple-500" />,
+                label: "imageCreation",
+                data: usage?.imageCreation,
+              },
+              {
+                icon: <CropIcon className="w-3.5 h-3.5 text-purple-500" />,
+                label: "imageEdit",
+                data: usage?.editImage,
+              },
+              {
+                icon: <ImageIcon className="w-3.5 h-3.5 text-purple-500" />,
+                label: "imageRestore",
+                data: usage?.imageRestoration,
+              },
+              {
+                icon: <VideoIcon className="w-3.5 h-3.5 text-purple-500" />,
+                label: "videoCreation",
+                data: usage?.videoCreation,
+              },
+            ].map((item, index) => (
+              <UsageItem
+                key={index}
+                icon={item.icon}
+                label={t(`navRemainingPlan.${item.label}`)}
+                used={item.data?.used || 0}
+                limit={item.data?.limit || 0}
+                progressColor={getProgressColor(
+                  item.data?.used || 0,
+                  item.data?.limit || 0
+                )}
+                percentage={getUsagePercentage(
+                  item.data?.used || 0,
+                  item.data?.limit || 0
+                )}
+              />
+            ))}
+          </div>
 
-      <div className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400 py-2">
-        <CalendarIcon className="w-3 h-3" />
-        <span>
-          {t("navRemainingPlan.resetsIn", { date: formattedResetDate })}
-        </span>
-      </div>
-
-      {/* <Checkout
-        trigger={
-          <Button
-            variant="default"
-            size="sm"
-            className="w-full bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white border-none shadow-sm hover:shadow-md transition-all duration-300 text-xs font-medium py-1"
-          >
-            {t("navRemainingPlan.upgrade")}
-          </Button>
-        }
-      /> */}
+          <div className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400 py-2">
+            <CalendarIcon className="w-3 h-3" />
+            <span>
+              {t("navRemainingPlan.resetsIn", { date: formattedResetDate })}
+            </span>
+          </div>
+        </>
+      ) : (
+        <Checkout
+          trigger={
+            <Button
+              variant="default"
+              size="sm"
+              className="w-full bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white border-none shadow-sm hover:shadow-md transition-all duration-300 text-xs font-medium py-1"
+            >
+              {t("navRemainingPlan.upgrade")}
+            </Button>
+          }
+        />
+      )}
     </div>
   );
 }

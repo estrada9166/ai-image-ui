@@ -90,12 +90,21 @@
   "imageGallery": {
     "loadingMoreImages": "Loading more images...",
     "generatingImage": "Generating image...",
-    "viewFullGallery": "View full gallery"
+    "viewFullGallery": "View full gallery",
+    "errorGeneratingImage": "Error generating image",
+    "errorGeneratingImageDescription": "We couldn't generate this image. Please try again.",
+    "download": "Download",
+    "edit": "Edit",
+    "restore": "Restore",
+    "animate": "Animate"
   },
   "videoGallery": {
     "loadingMoreVideos": "Loading more videos...",
     "generatingVideo": "Generating video...",
-    "viewFullGallery": "View full gallery"
+    "viewFullGallery": "View full gallery",
+    "download": "Download",
+    "generationFailed": "Generation failed",
+    "tryAgain": "Try again"
   },
   "googleLogin": {
     "loginWithGoogle": "Login with Google"
@@ -148,6 +157,7 @@
     "idea16": "A modern smart watch with an illuminated display showing fitness metrics, worn on a wrist, captured during an outdoor workout at golden hour with soft backlighting highlighting the sleek design and comfortable band, lifestyle product photography emphasizing an active healthy lifestyle"
   },
   "imageEdit": {
+    "fileSizeExceeded": "The file size exceeds the limit of 10MB. Please try again with a smaller file.",
     "imageEdit": "Image Edit",
     "promptIdeaPlaceholder": "Choose a prompt idea or write your own",
     "errorLoadingImage": "Error loading image",

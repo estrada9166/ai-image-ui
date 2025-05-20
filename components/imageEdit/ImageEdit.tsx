@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import { ErrorDisplay } from "./ErrorDisplay";
 import { SourceImageCard } from "./SourceImageCard";
 import { EditedImageCard } from "./EditedImageCard";
+import { useToast } from "@/hooks/use-toast";
 
 const ImageEditMutation = graphql(/* GraphQL */ `
   mutation ImageEdit($input: ImageEditInput!) {
@@ -36,6 +37,7 @@ export default function ImageEdit() {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { toast } = useToast();
 
   const [imagePrompt, setImagePrompt] = useState("");
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
@@ -144,6 +146,16 @@ export default function ImageEdit() {
 
   const handleEditImage = async () => {
     if (!imagePrompt.trim() || (!uploadedImage && !imageData)) return;
+
+    // Check file size limit (10MB)
+    if (uploadedImage && uploadedImage.size > 10 * 1024 * 1024) {
+      toast({
+        title: "Error",
+        description: t("imageEdit.fileSizeExceeded"),
+        variant: "destructive",
+      });
+      return;
+    }
 
     setIsEditingImage(true);
 

@@ -1,9 +1,8 @@
 "use client";
 
-import { useQuery } from "urql";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
-import { MeQueryDocument } from "../common/MeQuery";
+import { useMeQuery } from "../common/MeQuery";
 
 interface RedirectIfUserProps {
   children: ReactNode;
@@ -12,10 +11,7 @@ interface RedirectIfUserProps {
 export default function RedirectIfUser({ children }: RedirectIfUserProps) {
   const router = useRouter();
 
-  const [{ data }] = useQuery({
-    query: MeQueryDocument,
-    requestPolicy: "network-only",
-  });
+  const { data } = useMeQuery("network-only");
 
   useEffect(() => {
     if (data?.me) {

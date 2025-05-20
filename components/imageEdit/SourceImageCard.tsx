@@ -27,6 +27,7 @@ export const SourceImageCard = ({
   setModel,
 }: SourceImageCardProps) => {
   const { t } = useTranslation();
+
   const handleUploadClick = () => {
     if (fileInputRef?.current) {
       fileInputRef.current.click();
