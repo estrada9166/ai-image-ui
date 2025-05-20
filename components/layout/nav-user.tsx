@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronsUpDown, LogOut, SettingsIcon } from "lucide-react";
+import { ChevronsUpDown, CreditCard, LogOut, SettingsIcon } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -19,7 +19,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { graphql } from "@/gql";
-import { useMutation } from "urql";
+import { useMutation, useQuery } from "urql";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
@@ -27,6 +27,15 @@ import { useTranslation } from "react-i18next";
 export const signOutMutationDocument = graphql(/* GraphQL */ `
   mutation SignOut {
     signOut
+  }
+`);
+
+const ManageSubscriptionQueryDocument = graphql(/* GraphQL */ `
+  query ManageSubscription {
+    me {
+      id
+      customerPortalUrl
+    }
   }
 `);
 
@@ -45,6 +54,10 @@ export function NavUser({
 
   const { isMobile } = useSidebar();
   const [, signOut] = useMutation(signOutMutationDocument);
+
+  const [{ data, fetching }] = useQuery({
+    query: ManageSubscriptionQueryDocument,
+  });
 
   const handleSignOut = () => {
     signOut({}).then(() => {
@@ -96,7 +109,7 @@ export function NavUser({
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
+
             {/* <DropdownMenuGroup>
               <Link href="/pricing">
                 <DropdownMenuItem>
@@ -115,21 +128,21 @@ export function NavUser({
                   </DropdownMenuItem>
                 </Link>
               )}
-              {/* {fetching ? (
+              {fetching ? (
                 <DropdownMenuItem>
                   <CreditCard />
                   Loading...
                 </DropdownMenuItem>
               ) : (
                 data?.me?.customerPortalUrl && (
-                  <Link href={data.me.customerPortalUrl}>
+                  <Link href={data.me.customerPortalUrl} target="_blank">
                     <DropdownMenuItem>
                       <CreditCard />
-                      Billing
+                      {t("checkout.billing")}
                     </DropdownMenuItem>
                   </Link>
                 )
-              )} */}
+              )}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleSignOut}>

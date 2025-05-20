@@ -41,7 +41,7 @@ export default function CTA() {
                   size="lg"
                   className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white px-8 py-6 text-lg shadow-lg hover:shadow-indigo-500/25 transition-all w-full sm:w-auto"
                 >
-                  {t("landing.cta.startFreeTrial")}
+                  {t("landing.cta.startNow")}
                 </Button>
               </Link>
               <Link href="#examples">

@@ -1,100 +1,140 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
-import { Progress } from "@/components/ui/progress";
-import { Button } from "@/components/ui/button";
-import { ImageIcon, VideoIcon, CalendarIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import type React from "react";
+import { ImageIcon, VideoIcon, CalendarIcon, CropIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
+
+import { format } from "date-fns";
+import { UsageQuery } from "../common/UsageQuery";
 
 export function NavRemainingPlan() {
   const { t } = useTranslation();
+  const data = UsageQuery();
 
-  const imagesRemaining = 10;
-  const videosRemaining = 10;
-  const resetDate = new Date();
+  const usage = data?.me?.planFeaturesUsage;
+  const resetDate = usage?.endDate;
 
-  // Calculate days remaining until reset
-  const daysRemaining = resetDate
-    ? Math.ceil(
-        (new Date(resetDate).getTime() - new Date().getTime()) /
-          (1000 * 60 * 60 * 24)
-      )
-    : 0;
+  // Format renewal date
+  const formattedResetDate = resetDate
+    ? format(new Date(resetDate), "MMM d")
+    : "";
 
-  // Calculate progress percentage (assuming 30-day cycle)
-  const progressPercentage = 100 - (daysRemaining / 30) * 100;
-
-  // Determine color based on remaining resources
-  const getLimitColor = (remaining: number) => {
-    if (remaining <= 3) return "text-red-500";
-    if (remaining <= 5) return "text-amber-500";
-    return "text-emerald-500";
+  // Utility functions
+  const getProgressColor = (used: number, limit: number) => {
+    const percentage = (used / limit) * 100;
+    return percentage >= 80
+      ? "bg-rose-500"
+      : percentage >= 50
+      ? "bg-amber-500"
+      : "bg-emerald-500";
   };
 
+  const getUsagePercentage = (used: number, limit: number) =>
+    (used / limit) * 100;
+
   return (
-    <div className="bg-gradient-to-br from-muted/70 to-muted/40 backdrop-blur-sm rounded-xl p-4 mb-3 shadow-sm border border-muted/20">
-      <h3 className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
-        {t("navRemainingPlan.yourPlanUsage")}
-      </h3>
-
+    <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/90 dark:to-slate-800/80 backdrop-blur-lg rounded-xl p-3 mb-3 shadow-md border border-slate-200/50 dark:border-slate-700/50 transition-all duration-300 hover:shadow-lg">
       <div className="space-y-2 mb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
-            <ImageIcon className="w-3.5 h-3.5 text-indigo-400" />
-            <span className="text-xs">{t("navRemainingPlan.images")}</span>
-          </div>
-          <span
-            className={cn(
-              "text-xs font-medium",
-              getLimitColor(imagesRemaining)
+        {[
+          {
+            icon: <ImageIcon className="w-3.5 h-3.5 text-purple-500" />,
+            label: "imageCreation",
+            data: usage?.imageCreation,
+          },
+          {
+            icon: <CropIcon className="w-3.5 h-3.5 text-purple-500" />,
+            label: "imageEdit",
+            data: usage?.editImage,
+          },
+          {
+            icon: <ImageIcon className="w-3.5 h-3.5 text-purple-500" />,
+            label: "imageRestore",
+            data: usage?.imageRestoration,
+          },
+          {
+            icon: <VideoIcon className="w-3.5 h-3.5 text-purple-500" />,
+            label: "videoCreation",
+            data: usage?.videoCreation,
+          },
+        ].map((item, index) => (
+          <UsageItem
+            key={index}
+            icon={item.icon}
+            label={t(`navRemainingPlan.${item.label}`)}
+            used={item.data?.used || 0}
+            limit={item.data?.limit || 0}
+            progressColor={getProgressColor(
+              item.data?.used || 0,
+              item.data?.limit || 0
             )}
-          >
-            {imagesRemaining} {t("navRemainingPlan.left")}
-          </span>
-        </div>
-
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
-            <VideoIcon className="w-3.5 h-3.5 text-indigo-400" />
-            <span className="text-xs">{t("navRemainingPlan.videos")}</span>
-          </div>
-          <span
-            className={cn(
-              "text-xs font-medium",
-              getLimitColor(videosRemaining)
+            percentage={getUsagePercentage(
+              item.data?.used || 0,
+              item.data?.limit || 0
             )}
-          >
-            {videosRemaining} {t("navRemainingPlan.left")}
-          </span>
-        </div>
+          />
+        ))}
       </div>
 
-      <div className="mb-3">
-        <div className="flex items-center justify-between mb-1">
-          <div className="flex items-center gap-1.5">
-            <CalendarIcon className="w-3.5 h-3.5 text-indigo-400" />
-            <span className="text-xs text-muted-foreground">
-              {t("navRemainingPlan.resetsIn", { days: daysRemaining })}
-            </span>
-          </div>
-          <span className="text-xs font-medium">
-            {Math.round(progressPercentage)}%
-          </span>
-        </div>
-        <Progress value={progressPercentage} className="h-1.5 bg-muted" />
+      <div className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400 py-2">
+        <CalendarIcon className="w-3 h-3" />
+        <span>
+          {t("navRemainingPlan.resetsIn", { date: formattedResetDate })}
+        </span>
       </div>
 
-      <Link href="/dashboard/settings/plan" className="w-full block">
-        <Button
-          variant="outline"
-          size="sm"
-          className="w-full bg-background/50 hover:bg-background/80 transition-all border-muted-foreground/20 hover:border-muted-foreground/40 text-xs"
-        >
-          {t("navRemainingPlan.upgrade")}
-        </Button>
-      </Link>
+      {/* <Checkout
+        trigger={
+          <Button
+            variant="default"
+            size="sm"
+            className="w-full bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white border-none shadow-sm hover:shadow-md transition-all duration-300 text-xs font-medium py-1"
+          >
+            {t("navRemainingPlan.upgrade")}
+          </Button>
+        }
+      /> */}
+    </div>
+  );
+}
+
+interface UsageItemProps {
+  icon: React.ReactNode;
+  label: string;
+  used: number;
+  limit: number;
+  progressColor: string;
+  percentage: number;
+}
+
+function UsageItem({
+  icon,
+  label,
+  used,
+  limit,
+  progressColor,
+  percentage,
+}: UsageItemProps) {
+  return (
+    <div className="group">
+      <div className="flex items-center justify-between mb-0.5">
+        <div className="flex items-center gap-1">
+          <div className="rounded-md group-hover:bg-purple-100 dark:group-hover:bg-purple-900/30 transition-colors duration-300">
+            {icon}
+          </div>
+          <span className="text-xs font-medium text-slate-700 dark:text-slate-200 group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors duration-300">
+            {label}
+          </span>
+        </div>
+        <span className="text-xs font-semibold text-slate-800 dark:text-slate-100">
+          {used}/{limit}
+        </span>
+      </div>
+      <div className="h-1 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+        <div
+          className={`h-full ${progressColor} transition-all duration-500 ease-out`}
+          style={{ width: `${percentage}%` }}
+        />
+      </div>
     </div>
   );
 }

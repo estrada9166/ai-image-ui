@@ -200,10 +200,12 @@
   },
   "navRemainingPlan": {
     "yourPlanUsage": "Your Plan Usage",
-    "images": "Images",
-    "videos": "Videos",
+    "imageCreation": "Image Creation",
+    "imageEdit": "Image Edit",
+    "imageRestore": "Image Restore",
+    "videoCreation": "Video Creation",
     "left": "Left",
-    "resetsIn": "Resets in {{days}}d",
+    "resetsIn": "Resets in {{date}}",
     "upgrade": "Upgrade Plan"
   },
   "login": {
@@ -668,5 +670,13 @@
         "prompt": "Create a cinematic scene where someone slowly pours freshly brewed coffee from a French press into the cup. Emphasize the rich textures of the coffee, rising steam, warm natural lighting, and shallow depth of field for an atmospheric and intimate feel."
       }
     }
+  },
+  "checkout": {
+    "title": "Checkout",
+    "description": "Choose your plan and checkout",
+    "currentPlanButton": "Current Plan",
+    "checkoutButton": "Checkout",
+    "cancelButton": "Cancel",
+    "billing": "Billing"
   }
 }

@@ -200,10 +200,12 @@
   },
   "navRemainingPlan": {
     "yourPlanUsage": "Uso de Tu Plan",
-    "images": "Imágenes",
-    "videos": "Videos",
+    "imageCreation": "Creación de Imágenes",
+    "imageEdit": "Edición de Imágenes",
+    "imageRestore": "Restauración de Imágenes",
+    "videoCreation": "Creación de Videos",
     "left": "Restantes",
-    "resetsIn": "Se restablece en {{days}}d",
+    "resetsIn": "Se restablece en {{date}}",
     "upgrade": "Mejorar Plan"
   },
   "login": {
@@ -704,5 +706,13 @@
         "prompt": "Crea una escena cinematográfica donde alguien vierte lentamente café recién preparado de una prensa francesa a la taza. Enfatiza las ricas texturas del café, el vapor que se eleva, la cálida iluminación natural y poca profundidad de campo para una sensación atmosférica e íntima."
       }
     }
+  },
+  "checkout": {
+    "title": "Checkout",
+    "description": "Elige tu plan y finaliza el pago",
+    "currentPlanButton": "Plan Actual",
+    "checkoutButton": "Finalizar Compra",
+    "cancelButton": "Cancelar",
+    "billing": "Facturación"
   }
 }

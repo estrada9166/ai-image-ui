@@ -14,9 +14,26 @@ import { VideoGallery } from "@/components/gallery/VideoGallery";
 import { ImageTypeOptionsEnum } from "../../gql/graphql";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { graphql } from "../../gql";
+import { useQuery } from "urql";
+
+export const OnboardingQueryDocument = graphql(/* GraphQL */ `
+  query Onboarding {
+    me {
+      id
+      onboarding {
+        hasCreatedFirstImage
+        hasCreatedFirstVideo
+        hasCreatedFirstImageEdit
+      }
+    }
+  }
+`);
 
 export default function Dashboard() {
   const { t } = useTranslation();
+
+  const [{ data }] = useQuery({ query: OnboardingQueryDocument });
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -49,21 +66,21 @@ export default function Dashboard() {
             icon: <ImageIcon className="h-6 w-6 text-primary" />,
             title: t("dashboard.createImage"),
             description: t("dashboard.generateAIimagesFromText"),
-            completed: true,
+            completed: data?.me?.onboarding.hasCreatedFirstImage,
           },
           {
             href: "/dashboard/edit/image",
             icon: <Edit className="h-6 w-6 text-primary" />,
             title: t("dashboard.editImage"),
             description: t("dashboard.modifyExistingImages"),
-            completed: false,
+            completed: data?.me?.onboarding.hasCreatedFirstImageEdit,
           },
           {
             href: "/dashboard/create/video",
             icon: <VideoIcon className="h-6 w-6 text-primary" />,
             title: t("dashboard.createVideo"),
             description: t("dashboard.transformImagesIntoVideos"),
-            completed: false,
+            completed: data?.me?.onboarding.hasCreatedFirstVideo,
           },
         ].map((item, index) => (
           <motion.div
