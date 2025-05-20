@@ -38,7 +38,7 @@ export function SignupSuccess() {
               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-violet-200 dark:bg-violet-700 text-violet-700 dark:text-violet-200 text-sm font-medium">
                 1
               </div>
-              <span>{t("signup.checkYourEmailInboxAndSpamFolder")}</span>
+              <span>{t("signup.checkInboxOrSpam")}</span>
             </div>
             <div className="flex items-center gap-3">
               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-violet-200 dark:bg-violet-700 text-violet-700 dark:text-violet-200 text-sm font-medium">
@@ -50,7 +50,7 @@ export function SignupSuccess() {
               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-violet-200 dark:bg-violet-700 text-violet-700 dark:text-violet-200 text-sm font-medium">
                 3
               </div>
-              <span>{t("signup.onceConfirmedYouCanLogInToYourAccount")}</span>
+              <span>{t("signup.onceYouClickTheLink")}</span>
             </div>
           </AlertDescription>
         </Alert>

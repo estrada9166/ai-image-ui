@@ -32,7 +32,8 @@ import { EmptyState } from "./EmptyState";
 import { ImageByIdQuery } from "../common/ImageByIdQuery";
 import { useTranslation } from "react-i18next";
 import { Checkout } from "../checkout/Checkout";
-import { useMeQuery } from "../common/MeQuery";
+import { useMeQuery } from "../common/useMeQuery";
+import { useUsageQuery } from "../common/useUsageQuery";
 
 const VideoCreationMutation = graphql(/* GraphQL */ `
   mutation VideoCreation($input: VideoCreationInput!) {
@@ -62,6 +63,9 @@ export default function VideoCreation() {
 
   const [, generateVideo] = useMutation(VideoCreationMutation);
   const { data: userData } = useMeQuery();
+  const { reexecuteQuery } = useUsageQuery({
+    pause: true,
+  });
 
   const [{ data, fetching, error }] = useQuery({
     query: ImageByIdQuery,
@@ -114,6 +118,10 @@ export default function VideoCreation() {
 
         setCreatedVideoId(result?.data?.videoCreation?.id || null);
       }
+
+      reexecuteQuery({
+        requestPolicy: "network-only",
+      });
     } catch (error) {
       console.error(t("videoCreation.errorGeneratingVideo"), error);
     } finally {

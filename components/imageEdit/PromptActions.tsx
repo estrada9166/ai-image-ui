@@ -2,7 +2,7 @@ import { RefreshCw, Wand2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { PromptActionsProps } from "./types";
-import { useMeQuery } from "../common/MeQuery";
+import { useMeQuery } from "../common/useMeQuery";
 import { Checkout } from "../checkout/Checkout";
 
 export const PromptActions = ({

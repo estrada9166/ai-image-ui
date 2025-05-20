@@ -1,10 +1,11 @@
 import { useQuery } from "urql";
 import { graphql } from "../../gql";
 
-const UsageQueryDocument = graphql(/* GraphQL */ `
+const useUsageQueryDocument = graphql(/* GraphQL */ `
   query Usage {
     me {
       id
+      email
       planFeaturesUsage {
         planId
         startDate
@@ -30,8 +31,11 @@ const UsageQueryDocument = graphql(/* GraphQL */ `
   }
 `);
 
-export function UsageQuery(pause: boolean = false) {
-  const [{ data }] = useQuery({ query: UsageQueryDocument, pause });
+export function useUsageQuery({ pause }: { pause: boolean }) {
+  const [{ data, fetching, error }, reexecuteQuery] = useQuery({
+    query: useUsageQueryDocument,
+    pause,
+  });
 
-  return data;
+  return { data, fetching, error, reexecuteQuery };
 }

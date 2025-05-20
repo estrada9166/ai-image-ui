@@ -24,7 +24,7 @@ import { NavSecondary } from "./nav-secondary";
 import Link from "next/link";
 import { NavRemainingPlan } from "./nav-remainingPlan";
 import Feedback from "../feedback/Feedback";
-import { useMeQuery } from "../common/MeQuery";
+import { useMeQuery } from "../common/useMeQuery";
 import LanguageSelector from "./LanguageSelector";
 import { useTranslation } from "react-i18next";
 

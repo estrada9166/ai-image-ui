@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
-import { useMeQuery } from "../common/MeQuery";
+import { useMeQuery } from "../common/useMeQuery";
 
 interface RedirectIfUserProps {
   children: ReactNode;

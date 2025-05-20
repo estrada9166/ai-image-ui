@@ -22,8 +22,9 @@ import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
 import { ImageGallery } from "../gallery/ImageGallery";
 import { useTranslation } from "react-i18next";
-import { useMeQuery } from "../common/MeQuery";
+import { useMeQuery } from "../common/useMeQuery";
 import { Checkout } from "../checkout/Checkout";
+import { useUsageQuery } from "../common/useUsageQuery";
 // Component for source image display
 interface SourceImageDisplayProps {
   imageUrl: string;
@@ -210,6 +211,10 @@ export default function RestoreImage() {
 
   const [, restoreImage] = useMutation(RestoreImageMutation);
 
+  const { reexecuteQuery: reexecuteUsageQuery } = useUsageQuery({
+    pause: true,
+  });
+
   const [{ data }] = useQuery({
     query: ImageByIdQuery,
     variables: { id: image || "" },
@@ -335,6 +340,9 @@ export default function RestoreImage() {
       if (imageId) {
         setImageId(imageId);
       }
+      reexecuteUsageQuery({
+        requestPolicy: "network-only",
+      });
     } catch (error) {
       console.error("Error editing image:", error);
     } finally {

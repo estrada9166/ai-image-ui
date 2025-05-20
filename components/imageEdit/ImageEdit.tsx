@@ -20,6 +20,7 @@ import { ErrorDisplay } from "./ErrorDisplay";
 import { SourceImageCard } from "./SourceImageCard";
 import { EditedImageCard } from "./EditedImageCard";
 import { useToast } from "@/hooks/use-toast";
+import { useUsageQuery } from "../common/useUsageQuery";
 
 const ImageEditMutation = graphql(/* GraphQL */ `
   mutation ImageEdit($input: ImageEditInput!) {
@@ -51,6 +52,7 @@ export default function ImageEdit() {
   const [originalImageId, setOriginalImageId] = useState<string | null>(null);
 
   const [, editImage] = useMutation(ImageEditMutation);
+  const { reexecuteQuery } = useUsageQuery({ pause: true });
 
   const [{ data, error }] = useQuery({
     query: ImageByIdQuery,
@@ -194,6 +196,9 @@ export default function ImageEdit() {
       if (imageId) {
         setImageId(imageId);
       }
+      reexecuteQuery({
+        requestPolicy: "network-only",
+      });
     } catch (error) {
       console.error("Error editing image:", error);
     } finally {

@@ -5,7 +5,7 @@ import { ImageIcon, VideoIcon, CalendarIcon, CropIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { format } from "date-fns";
-import { UsageQuery } from "../common/UsageQuery";
+import { useUsageQuery } from "../common/useUsageQuery";
 import { Checkout } from "../checkout/Checkout";
 import { Button } from "../ui/button";
 
@@ -15,7 +15,7 @@ export function NavRemainingPlan({
   hasActiveSubscription: boolean;
 }) {
   const { t } = useTranslation();
-  const data = UsageQuery(!hasActiveSubscription);
+  const { data } = useUsageQuery({ pause: !hasActiveSubscription });
 
   const usage = data?.me?.planFeaturesUsage;
   const resetDate = usage?.endDate;

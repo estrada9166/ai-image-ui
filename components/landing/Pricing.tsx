@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CheckIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "next/navigation";
 
 export default function Pricing() {
+  const router = useRouter();
   const { t } = useTranslation();
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "annual">(
     "monthly"
@@ -14,6 +15,7 @@ export default function Pricing() {
 
   const plans = [
     {
+      id: "starter",
       name: t("landing.pricing.plans.starter.name"),
       description: t("landing.pricing.plans.starter.description"),
       monthlyPrice: 15,
@@ -22,11 +24,12 @@ export default function Pricing() {
         returnObjects: true,
       }) as string[],
       ctaText: t("landing.pricing.plans.starter.cta"),
-      ctaLink: `/signup?plan=starter&billingPeriod=${billingPeriod}`,
+      ctaLink: `/signup`,
       popular: false,
       disclaimer: t("landing.pricing.plans.starter.disclaimer"),
     },
     {
+      id: "pro",
       name: t("landing.pricing.plans.pro.name"),
       description: t("landing.pricing.plans.pro.description"),
       monthlyPrice: 40,
@@ -35,11 +38,12 @@ export default function Pricing() {
         returnObjects: true,
       }) as string[],
       ctaText: t("landing.pricing.plans.pro.cta"),
-      ctaLink: `/signup?plan=pro&billingPeriod=${billingPeriod}`,
+      ctaLink: `/signup`,
       popular: true,
       disclaimer: t("landing.pricing.plans.pro.disclaimer"),
     },
     {
+      id: "advanced",
       name: t("landing.pricing.plans.advanced.name"),
       description: t("landing.pricing.plans.advanced.description"),
       monthlyPrice: 75,
@@ -48,7 +52,7 @@ export default function Pricing() {
         returnObjects: true,
       }) as string[],
       ctaText: t("landing.pricing.plans.advanced.cta"),
-      ctaLink: `/contact-sales?plan=advanced&billingPeriod=${billingPeriod}`,
+      ctaLink: `/signup`,
       popular: false,
       disclaimer: t("landing.pricing.plans.advanced.disclaimer"),
     },
@@ -152,18 +156,25 @@ export default function Pricing() {
                   )}
                 </div>
 
-                <Link href={plan.ctaLink}>
-                  <Button
-                    className={`w-full mb-8 ${
-                      plan.popular
-                        ? "bg-indigo-600 hover:bg-indigo-700"
-                        : "bg-gray-900 hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
-                    }`}
-                    size="lg"
-                  >
-                    {plan.ctaText}
-                  </Button>
-                </Link>
+                <Button
+                  className={`w-full mb-8 ${
+                    plan.popular
+                      ? "bg-indigo-600 hover:bg-indigo-700"
+                      : "bg-gray-900 hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
+                  }`}
+                  size="lg"
+                  onClick={() => {
+                    localStorage.setItem("selectedPlan", plan.id);
+                    localStorage.setItem(
+                      "selectedBillingPeriod",
+                      billingPeriod
+                    );
+
+                    router.push(plan.ctaLink);
+                  }}
+                >
+                  {plan.ctaText}
+                </Button>
 
                 <div className="space-y-4">
                   {plan.features.map((feature, featureIndex) => (

@@ -2,7 +2,7 @@ import { ImageIcon, Upload } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import { useMeQuery } from "../common/MeQuery";
+import { useMeQuery } from "../common/useMeQuery";
 import { Checkout } from "../checkout/Checkout";
 
 export function EmptyState({

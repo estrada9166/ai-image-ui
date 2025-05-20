@@ -24,8 +24,9 @@ import {
 } from "@/gql/graphql";
 import { promptIdeas } from "./promptIdeas";
 import { useTranslation } from "react-i18next";
-import { useMeQuery } from "../common/MeQuery";
+import { useMeQuery } from "../common/useMeQuery";
 import { Checkout } from "../checkout/Checkout";
+import { useUsageQuery } from "../common/useUsageQuery";
 
 const ImageCreationMutation = graphql(/* GraphQL */ `
   mutation ImageCreation($input: ImageCreationInput!) {
@@ -49,6 +50,7 @@ export default function ImageCreation() {
   const { t } = useTranslation();
 
   const { data: userData } = useMeQuery();
+  const { reexecuteQuery } = useUsageQuery({ pause: true });
 
   const [imagePrompt, setImagePrompt] = useState("");
   const [avatarType, setAvatarType] = useState(CameraOptionsEnum.NoSelfie);
@@ -96,6 +98,9 @@ export default function ImageCreation() {
           aspectRatio: aspectRatio,
           model,
         },
+      });
+      reexecuteQuery({
+        requestPolicy: "network-only",
       });
     } catch (error) {
       console.error("Error generating image:", error);

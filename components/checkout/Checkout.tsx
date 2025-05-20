@@ -13,8 +13,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { UsageQuery } from "../common/UsageQuery";
+import { useMeQuery } from "../common/useMeQuery";
 import { motion } from "framer-motion";
+import { generatePlanUrl } from "../common/generatePlanUrl";
+import { Skeleton } from "../ui/skeleton";
 
 interface CheckoutProps {
   trigger?: React.ReactNode;
@@ -26,7 +28,18 @@ export function Checkout({ trigger, onOpenChange }: CheckoutProps) {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "annual">(
     "monthly"
   );
-  const data = UsageQuery();
+  const { data, fetching } = useMeQuery();
+
+  if (!data?.me || (!data?.me && fetching)) {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <Skeleton className="w-full h-full" />
+      </div>
+    );
+  }
+
+  const userId = data.me.id;
+  const userEmail = data.me.email;
 
   const plans = [
     {
@@ -38,14 +51,16 @@ export function Checkout({ trigger, onOpenChange }: CheckoutProps) {
         returnObjects: true,
       }) as string[],
       ctaText: t("landing.pricing.plans.starter.cta"),
-      ctaLink:
+      ctaLink: generatePlanUrl(
         billingPeriod === "monthly"
-          ? process.env.NEXT_PUBLIC_STARTER_MONTHLY_URL
-          : process.env.NEXT_PUBLIC_STARTER_ANNUAL_URL,
+          ? process.env.NEXT_PUBLIC_STARTER_MONTHLY_URL!
+          : process.env.NEXT_PUBLIC_STARTER_ANNUAL_URL!,
+        userId,
+        userEmail
+      ),
       popular: false,
       disclaimer: t("landing.pricing.plans.starter.disclaimer"),
       color: "from-blue-400 to-cyan-500",
-      iconColor: "text-blue-500",
     },
     {
       name: t("landing.pricing.plans.pro.name"),
@@ -56,10 +71,13 @@ export function Checkout({ trigger, onOpenChange }: CheckoutProps) {
         returnObjects: true,
       }) as string[],
       ctaText: t("landing.pricing.plans.pro.cta"),
-      ctaLink:
+      ctaLink: generatePlanUrl(
         billingPeriod === "monthly"
-          ? process.env.NEXT_PUBLIC_PRO_MONTHLY_URL
-          : process.env.NEXT_PUBLIC_PRO_ANNUAL_URL,
+          ? process.env.NEXT_PUBLIC_PRO_MONTHLY_URL!
+          : process.env.NEXT_PUBLIC_PRO_ANNUAL_URL!,
+        userId,
+        userEmail
+      ),
       popular: true,
       disclaimer: t("landing.pricing.plans.pro.disclaimer"),
       color: "from-purple-500 to-indigo-600",
@@ -74,18 +92,19 @@ export function Checkout({ trigger, onOpenChange }: CheckoutProps) {
         returnObjects: true,
       }) as string[],
       ctaText: t("landing.pricing.plans.advanced.cta"),
-      ctaLink:
+      ctaLink: generatePlanUrl(
         billingPeriod === "monthly"
-          ? process.env.NEXT_PUBLIC_ADVANCED_MONTHLY_URL
-          : process.env.NEXT_PUBLIC_ADVANCED_ANNUAL_URL,
+          ? process.env.NEXT_PUBLIC_ADVANCED_MONTHLY_URL!
+          : process.env.NEXT_PUBLIC_ADVANCED_ANNUAL_URL!,
+        userId,
+        userEmail
+      ),
       popular: false,
       disclaimer: t("landing.pricing.plans.advanced.disclaimer"),
       color: "from-amber-500 to-orange-600",
       iconColor: "text-amber-500",
     },
   ];
-
-  const currentPlan = data?.me?.planFeaturesUsage?.planId || "";
 
   return (
     <Dialog onOpenChange={onOpenChange}>
@@ -154,11 +173,7 @@ export function Checkout({ trigger, onOpenChange }: CheckoutProps) {
                 plan.popular
                   ? "border-indigo-600/50 dark:border-indigo-500/50 md:scale-105 z-10"
                   : "border-transparent hover:border-gray-200 dark:hover:border-gray-700"
-              } ${
-                currentPlan === plan.name.toLowerCase()
-                  ? "ring-2 ring-purple-500 dark:ring-purple-400"
-                  : ""
-              }`}
+              } `}
             >
               {plan.popular && (
                 <div
@@ -168,11 +183,6 @@ export function Checkout({ trigger, onOpenChange }: CheckoutProps) {
                     <SparklesIcon className="w-3.5 h-3.5 mr-1" />
                     {t("landing.pricing.mostPopular")}
                   </div>
-                </div>
-              )}
-              {currentPlan === plan.name.toLowerCase() && (
-                <div className="bg-gradient-to-r from-purple-500 to-purple-600 text-white text-center py-1.5 text-sm font-medium">
-                  {t("checkout.currentPlan")}
                 </div>
               )}
 
@@ -206,16 +216,9 @@ export function Checkout({ trigger, onOpenChange }: CheckoutProps) {
                       plan.popular
                         ? `bg-gradient-to-r ${plan.color} hover:shadow-lg hover:shadow-indigo-500/20 dark:hover:shadow-indigo-500/10`
                         : "bg-gray-900 hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100 hover:shadow-lg hover:shadow-gray-500/10"
-                    } ${
-                      currentPlan === plan.name.toLowerCase()
-                        ? "opacity-50 cursor-not-allowed"
-                        : ""
-                    }`}
-                    disabled={currentPlan === plan.name.toLowerCase()}
+                    } `}
                   >
-                    {currentPlan === plan.name.toLowerCase()
-                      ? t("checkout.currentPlanButton")
-                      : plan.ctaText}
+                    {plan.ctaText}
                   </Button>
                 </Link>
 

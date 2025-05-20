@@ -4,7 +4,7 @@ import { ImageIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import { useMeQuery } from "./MeQuery";
+import { useMeQuery } from "./useMeQuery";
 import { Checkout } from "../checkout/Checkout";
 
 interface EmptySourceImageProps {
