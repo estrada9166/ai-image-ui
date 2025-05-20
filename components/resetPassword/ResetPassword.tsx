@@ -130,10 +130,10 @@ export default function ResetPasswordPage() {
                 <p>{t("resetPassword.passwordMustContain")}</p>
                 <ul className="list-disc list-inside pl-2 space-y-1">
                   <li>{t("resetPassword.atLeast8Characters")}</li>
-                  <li>{t("resetPassword.oneUppercaseLetter")}</li>
-                  <li>{t("resetPassword.oneLowercaseLetter")}</li>
-                  <li>{t("resetPassword.oneNumber")}</li>
-                  <li>{t("resetPassword.oneSpecialCharacter")}</li>
+                  <li>{t("resetPassword.atLeastOneUppercaseLetter")}</li>
+                  <li>{t("resetPassword.atLeastOneLowercaseLetter")}</li>
+                  <li>{t("resetPassword.atLeastOneNumber")}</li>
+                  <li>{t("resetPassword.atLeastOneSpecialCharacter")}</li>
                 </ul>
               </div>
             </div>

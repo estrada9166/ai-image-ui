@@ -16,7 +16,7 @@ export default function Footer() {
         { label: t("landing.footer.features"), href: "#features" },
         { label: t("landing.footer.pricing"), href: "#pricing" },
         { label: t("landing.footer.examples"), href: "#examples" },
-        { label: t("landing.footer.testimonials"), href: "#testimonials" },
+        // { label: t("landing.footer.testimonials"), href: "#testimonials" },
         { label: t("landing.footer.faq"), href: "#faq" },
       ],
     },

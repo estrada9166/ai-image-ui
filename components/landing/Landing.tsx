@@ -6,7 +6,7 @@ import Hero from "./Hero";
 import Features from "./Features";
 import Examples from "./Examples";
 import UGCGenerator from "./UGCGenerator";
-import Testimonials from "./Testimonials";
+// import Testimonials from "./Testimonials";
 import Pricing from "./Pricing";
 import FAQ from "./FAQ";
 import CTA from "./CTA";
@@ -20,7 +20,7 @@ export default function LandingV2() {
       <Features />
       <UGCGenerator />
       <Examples />
-      <Testimonials />
+      {/* <Testimonials /> */}
       <Pricing />
       <FAQ />
       <CTA />

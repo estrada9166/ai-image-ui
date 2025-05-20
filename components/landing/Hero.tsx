@@ -132,7 +132,7 @@ export default function Hero() {
             </div>
 
             {/* Stats counters */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-6 md:gap-10">
+            {/* <div className="flex flex-wrap justify-center lg:justify-start gap-6 md:gap-10">
               {[
                 {
                   label: t("landing.hero.stats.imagesEnhancedLabel"),
@@ -155,7 +155,7 @@ export default function Hero() {
                   </span>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {/* Right column - Image comparison */}
