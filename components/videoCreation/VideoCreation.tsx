@@ -51,7 +51,6 @@ export default function VideoCreation() {
 
   const [videoPrompt, setVideoPrompt] = useState("");
   const [negativePrompt, setNegativePrompt] = useState("");
-  const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const [createdVideoId, setCreatedVideoId] = useState<string | null>(null);
@@ -59,7 +58,8 @@ export default function VideoCreation() {
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const image = searchParams?.get("image");
+  const [image, setImage] = useState<string | null>(searchParams?.get("image"));
+  const [isLoading, setIsLoading] = useState(false);
 
   const [, generateVideo] = useMutation(VideoCreationMutation);
   const { data: userData } = useMeQuery();
@@ -67,16 +67,29 @@ export default function VideoCreation() {
     pause: true,
   });
 
-  const [{ data, fetching, error }] = useQuery({
+  const [{ data, fetching, error }, reexecuteQuery] = useQuery({
     query: ImageByIdQuery,
     variables: { id: image || "" },
-    pause: !image,
+    pause: true,
   });
 
   useEffect(() => {
-    if (!searchParams?.get("image") || !data?.node) {
-      setImageData(null);
-    } else if (data?.node) {
+    if (image) {
+      reexecuteQuery({ requestPolicy: "network-only" });
+    }
+  }, [image, reexecuteQuery]);
+
+  useEffect(() => {
+    if (createdVideoId && !videoUrl) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+      setShouldRefetch(false);
+    }
+  }, [createdVideoId, videoUrl]);
+
+  useEffect(() => {
+    if (data?.node) {
       setImageData(data.node as Image);
     }
   }, [data, searchParams]);
@@ -84,11 +97,20 @@ export default function VideoCreation() {
   const handleGenerateVideo = async () => {
     if (!videoPrompt.trim() || (!imageData && !previewUrl)) return;
 
-    setIsGeneratingVideo(true);
     setVideoUrl(null);
-
+    setIsLoading(true);
     try {
-      if (uploadedImage) {
+      if (imageData) {
+        const result = await generateVideo({
+          input: {
+            prompt: videoPrompt,
+            imageId: image || "",
+            negativePrompt,
+          },
+        });
+
+        setCreatedVideoId(result?.data?.videoCreation?.id || null);
+      } else if (uploadedImage) {
         const formData = new FormData();
 
         formData.append("file", uploadedImage);
@@ -107,16 +129,7 @@ export default function VideoCreation() {
         );
 
         setCreatedVideoId(response?.data?.id || null);
-      } else if (imageData) {
-        const result = await generateVideo({
-          input: {
-            prompt: videoPrompt,
-            imageId: image || "",
-            negativePrompt,
-          },
-        });
-
-        setCreatedVideoId(result?.data?.videoCreation?.id || null);
+        setImage(response?.data?.originalImage?.id || null);
       }
 
       reexecuteUsageQuery({
@@ -125,8 +138,6 @@ export default function VideoCreation() {
       setShouldRefetch(true);
     } catch (error) {
       console.error(t("videoCreation.errorGeneratingVideo"), error);
-    } finally {
-      setIsGeneratingVideo(false);
     }
   };
 
@@ -162,6 +173,7 @@ export default function VideoCreation() {
   const handleRemoveImage = () => {
     setUploadedImage(null);
     setPreviewUrl(null);
+    setImage(null);
     setImageData(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -171,16 +183,6 @@ export default function VideoCreation() {
     newUrl.searchParams.delete("image");
     router.push(newUrl.pathname);
   };
-
-  // Reset shouldRefetch after VideoGallery has been rendered
-  useEffect(() => {
-    if (shouldRefetch) {
-      const timer = setTimeout(() => {
-        setShouldRefetch(false);
-      }, 0);
-      return () => clearTimeout(timer);
-    }
-  }, [shouldRefetch]);
 
   if (fetching && !imageData) {
     return (
@@ -342,7 +344,7 @@ export default function VideoCreation() {
                   className="min-h-[100px] text-base resize-none border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 transition-colors duration-200 rounded-lg shadow-inner"
                   value={videoPrompt}
                   onChange={(e) => setVideoPrompt(e.target.value)}
-                  disabled={isGeneratingVideo}
+                  disabled={isLoading}
                   maxLength={1500}
                 />
               </div>
@@ -357,7 +359,7 @@ export default function VideoCreation() {
                   className="min-h-[80px] text-base resize-none border-red-100 dark:border-red-900/50 focus:border-red-300 focus:ring-red-500 transition-colors duration-200 rounded-lg shadow-inner"
                   value={negativePrompt}
                   onChange={(e) => setNegativePrompt(e.target.value)}
-                  disabled={isGeneratingVideo}
+                  disabled={isLoading}
                   maxLength={1500}
                 />
               </div>
@@ -366,7 +368,7 @@ export default function VideoCreation() {
                 <Button
                   variant="outline"
                   onClick={() => setVideoPrompt("")}
-                  disabled={!videoPrompt.trim() || isGeneratingVideo}
+                  disabled={!videoPrompt.trim() || isLoading}
                   className="text-sm border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-colors duration-200 rounded-full"
                 >
                   <RefreshCw className="mr-2 h-4 w-4" />
@@ -376,13 +378,13 @@ export default function VideoCreation() {
                   <Button
                     onClick={handleGenerateVideo}
                     disabled={
-                      isGeneratingVideo ||
+                      isLoading ||
                       !videoPrompt.trim() ||
                       (!imageData?.imageUrl && !previewUrl)
                     }
                     className="text-sm bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full"
                   >
-                    {isGeneratingVideo ? (
+                    {isLoading ? (
                       <>
                         <svg
                           className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
@@ -418,7 +420,7 @@ export default function VideoCreation() {
                     trigger={
                       <Button
                         disabled={
-                          isGeneratingVideo ||
+                          isLoading ||
                           !videoPrompt.trim() ||
                           (!imageData?.imageUrl && !previewUrl)
                         }
@@ -448,7 +450,7 @@ export default function VideoCreation() {
                   {t("videoCreation.ready")}
                 </Badge>
               )}
-              {isGeneratingVideo && (
+              {isLoading && (
                 <Badge className="text-sm py-1 px-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0 animate-pulse shadow-sm rounded-full">
                   {t("videoCreation.processing")}
                 </Badge>
@@ -458,7 +460,7 @@ export default function VideoCreation() {
               className="relative overflow-hidden rounded-xl border border-purple-100 dark:border-purple-900/50 bg-gray-100 dark:bg-gray-700 shadow-inner w-full h-auto"
               style={{ aspectRatio: "16/9" }}
             >
-              {isGeneratingVideo ? (
+              {isLoading ? (
                 <div className="text-center p-8 h-full flex flex-col items-center justify-center bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20">
                   <div className="relative w-24 h-24 mb-6">
                     <svg

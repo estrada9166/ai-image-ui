@@ -48,32 +48,41 @@ export default function ImageEdit() {
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const [imageId, setImageId] = useState<string | null>(null);
   const [model, setModel] = useState(AiModelOptionsEnum.Model_1);
-  const [originalImageId, setOriginalImageId] = useState<string | null>(null);
   const [editedImageUrl, setEditedImageUrl] = useState<string | null>(null);
-  const [, editImage] = useMutation(ImageEditMutation);
-  const { reexecuteQuery } = useUsageQuery({ pause: true });
+  const [image, setImage] = useState<string | null>(searchParams?.get("image"));
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [{ data, error }] = useQuery({
+  const [, editImage] = useMutation(ImageEditMutation);
+  const { reexecuteQuery: reexecuteUsageQuery } = useUsageQuery({
+    pause: true,
+  });
+
+  const [{ data, error }, reexecuteQuery] = useQuery({
     query: ImageByIdQuery,
-    variables: { id: originalImageId || "" },
-    pause: !originalImageId,
+    variables: { id: image || "" },
+    pause: true,
   });
 
   useEffect(() => {
-    const image = searchParams?.get("image");
-
     if (image) {
-      setOriginalImageId(image);
+      reexecuteQuery({ requestPolicy: "network-only" });
     }
-  }, [searchParams]);
+  }, [image, reexecuteQuery]);
 
   useEffect(() => {
-    if (!searchParams?.get("image") || !data?.node) {
-      setImageData(null);
-    } else if (data?.node) {
+    if (data?.node) {
       setImageData(data.node as Image);
     }
   }, [data, searchParams]);
+
+  useEffect(() => {
+    if (imageId && !editedImageUrl) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+      setShouldRefetch(false);
+    }
+  }, [imageId, editedImageUrl]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -90,6 +99,8 @@ export default function ImageEdit() {
   const handleRemoveImage = () => {
     setUploadedImage(null);
     setPreviewUrl(null);
+    setImage(null);
+    setImageData(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -115,9 +126,19 @@ export default function ImageEdit() {
       return;
     }
 
+    setIsLoading(true);
+    setEditedImageUrl(null);
+
     try {
       let imageId = null;
-      if (uploadedImage) {
+
+      if (imageData) {
+        const result = await editImage({
+          input: { imageId: imageData.id, prompt: imagePrompt, model },
+        });
+
+        imageId = result.data?.imageEdit.id;
+      } else if (uploadedImage) {
         const formData = new FormData();
 
         formData.append("file", uploadedImage);
@@ -136,26 +157,18 @@ export default function ImageEdit() {
         );
 
         imageId = response.data.id;
-        setOriginalImageId(response.data.originalImage.id);
-      } else if (imageData) {
-        const result = await editImage({
-          input: { imageId: imageData.id, prompt: imagePrompt, model },
-        });
-
-        imageId = result.data?.imageEdit.id;
+        setImage(response.data.originalImage.id);
       }
 
       if (imageId) {
         setImageId(imageId);
       }
-      reexecuteQuery({
+      reexecuteUsageQuery({
         requestPolicy: "network-only",
       });
       setShouldRefetch(true);
     } catch (error) {
       console.error("Error editing image:", error);
-    } finally {
-      setShouldRefetch(false);
     }
   };
 
@@ -189,7 +202,7 @@ export default function ImageEdit() {
           handleRemoveSelectedImage={handleRemoveSelectedImage}
           imagePrompt={imagePrompt}
           setImagePrompt={setImagePrompt}
-          isEditingImage={Boolean(imageId && !editedImageUrl)}
+          isEditingImage={isLoading}
           handleEditImage={handleEditImage}
           handlePromptIdeaClick={handlePromptIdeaClick}
           uploadedImage={uploadedImage}
@@ -199,7 +212,7 @@ export default function ImageEdit() {
 
         {/* Edited Image Output */}
         <EditedImageCard
-          isEditingImage={Boolean(imageId && !editedImageUrl)}
+          isEditingImage={isLoading}
           editedImageUrl={editedImageUrl}
           imagePrompt={imagePrompt}
         />

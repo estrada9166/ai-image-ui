@@ -198,8 +198,6 @@ export default function RestoreImage() {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
 
-  const image = searchParams?.get("image");
-
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [restoredImageUrl, setRestoredImageUrl] = useState<string | null>(null);
@@ -208,23 +206,37 @@ export default function RestoreImage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [imageId, setImageId] = useState<string | null>(null);
   const [shouldRefetch, setShouldRefetch] = useState(false);
+  const [image, setImage] = useState<string | null>(searchParams?.get("image"));
+  const [isLoading, setIsLoading] = useState(false);
 
   const [, restoreImage] = useMutation(RestoreImageMutation);
-
   const { reexecuteQuery: reexecuteUsageQuery } = useUsageQuery({
     pause: true,
   });
 
-  const [{ data }] = useQuery({
+  const [{ data }, reexecuteQuery] = useQuery({
     query: ImageByIdQuery,
     variables: { id: image || "" },
-    pause: !image,
+    pause: true,
   });
 
   useEffect(() => {
-    if (!searchParams?.get("image") || !data?.node) {
-      setImageData(null);
-    } else if (data?.node) {
+    if (image) {
+      reexecuteQuery({ requestPolicy: "network-only" });
+    }
+  }, [image, reexecuteQuery]);
+
+  useEffect(() => {
+    if (imageId && !restoredImageUrl) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+      setShouldRefetch(false);
+    }
+  }, [imageId, restoredImageUrl]);
+
+  useEffect(() => {
+    if (data?.node) {
       setImageData(data.node as Image);
     }
   }, [data, searchParams]);
@@ -254,6 +266,8 @@ export default function RestoreImage() {
     setPreviewUrl(null);
     setRestoredImageUrl(null);
     setShowBeforeAfter(false);
+    setImage(null);
+    setImageData(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -263,9 +277,19 @@ export default function RestoreImage() {
   const handleRestoreImage = async () => {
     if (!uploadedImage && !imageData) return;
 
+    setIsLoading(true);
+    setRestoredImageUrl(null);
+
     try {
       let imageId = null;
-      if (uploadedImage) {
+
+      if (imageData) {
+        const result = await restoreImage({
+          input: { imageId: imageData.id },
+        });
+
+        imageId = result.data?.imageRestore.id;
+      } else if (uploadedImage) {
         const formData = new FormData();
 
         formData.append("file", uploadedImage);
@@ -282,12 +306,7 @@ export default function RestoreImage() {
         );
 
         imageId = response.data.id;
-      } else if (imageData) {
-        const result = await restoreImage({
-          input: { imageId: imageData.id },
-        });
-
-        imageId = result.data?.imageRestore.id;
+        setImage(response.data?.originalImage?.id || null);
       }
 
       if (imageId) {
@@ -299,8 +318,6 @@ export default function RestoreImage() {
       });
     } catch (error) {
       console.error("Error editing image:", error);
-    } finally {
-      setShouldRefetch(false);
     }
   };
 
@@ -370,7 +387,7 @@ export default function RestoreImage() {
             <div className="mt-6 space-y-5">
               <PromptActions
                 onRestore={handleRestoreImage}
-                isRestoring={Boolean(imageId && !restoredImageUrl)}
+                isRestoring={isLoading}
                 hasImage={!!uploadedImage || !!imageData}
               />
             </div>
@@ -393,7 +410,7 @@ export default function RestoreImage() {
               </Badge>
             </div>
             <div className="aspect-square relative overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50 shadow-inner">
-              {imageId && !restoredImageUrl ? (
+              {isLoading ? (
                 <ProcessingRestoredImage />
               ) : restoredImageUrl ? (
                 <img
