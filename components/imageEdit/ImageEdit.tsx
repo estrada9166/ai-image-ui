@@ -45,12 +45,11 @@ export default function ImageEdit() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [imageData, setImageData] = useState<Image | null>(null);
-  const [isEditingImage, setIsEditingImage] = useState(false);
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const [imageId, setImageId] = useState<string | null>(null);
   const [model, setModel] = useState(AiModelOptionsEnum.Model_1);
   const [originalImageId, setOriginalImageId] = useState<string | null>(null);
-
+  const [editedImageUrl, setEditedImageUrl] = useState<string | null>(null);
   const [, editImage] = useMutation(ImageEditMutation);
   const { reexecuteQuery } = useUsageQuery({ pause: true });
 
@@ -58,12 +57,6 @@ export default function ImageEdit() {
     query: ImageByIdQuery,
     variables: { id: originalImageId || "" },
     pause: !originalImageId,
-  });
-
-  const [{ data: editedImageData }, reExecuteQuery] = useQuery({
-    query: ImageByIdQuery,
-    variables: { id: imageId || "" },
-    pause: !imageId,
   });
 
   useEffect(() => {
@@ -81,43 +74,6 @@ export default function ImageEdit() {
       setImageData(data.node as Image);
     }
   }, [data, searchParams]);
-
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout | null = null;
-
-    if (imageId && editedImageData?.node) {
-      // Check if the node is an Image type with imageUrl property
-      const nodeAsImage = editedImageData.node as {
-        __typename?: string;
-        imageUrl?: string | null;
-      };
-
-      if (!nodeAsImage.imageUrl && nodeAsImage.__typename === "Image") {
-        // Immediately execute once
-        reExecuteQuery({
-          requestPolicy: "network-only",
-          variables: { id: imageId },
-        });
-
-        // Set up interval to check every 5 seconds
-        intervalId = setInterval(() => {
-          reExecuteQuery({
-            requestPolicy: "network-only",
-            variables: { id: imageId },
-          });
-        }, 5000);
-      } else if (nodeAsImage.imageUrl) {
-        setIsEditingImage(false);
-      }
-    }
-
-    // Clean up the interval on unmount
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
-  }, [editedImageData, imageId, reExecuteQuery]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -159,11 +115,7 @@ export default function ImageEdit() {
       return;
     }
 
-    setIsEditingImage(true);
-
     try {
-      setShouldRefetch(true);
-
       let imageId = null;
       if (uploadedImage) {
         const formData = new FormData();
@@ -199,10 +151,10 @@ export default function ImageEdit() {
       reexecuteQuery({
         requestPolicy: "network-only",
       });
+      setShouldRefetch(true);
     } catch (error) {
       console.error("Error editing image:", error);
     } finally {
-      setIsEditingImage(true);
       setShouldRefetch(false);
     }
   };
@@ -237,7 +189,7 @@ export default function ImageEdit() {
           handleRemoveSelectedImage={handleRemoveSelectedImage}
           imagePrompt={imagePrompt}
           setImagePrompt={setImagePrompt}
-          isEditingImage={isEditingImage}
+          isEditingImage={Boolean(imageId && !editedImageUrl)}
           handleEditImage={handleEditImage}
           handlePromptIdeaClick={handlePromptIdeaClick}
           uploadedImage={uploadedImage}
@@ -247,8 +199,8 @@ export default function ImageEdit() {
 
         {/* Edited Image Output */}
         <EditedImageCard
-          isEditingImage={isEditingImage}
-          editedImageData={editedImageData}
+          isEditingImage={Boolean(imageId && !editedImageUrl)}
+          editedImageUrl={editedImageUrl}
           imagePrompt={imagePrompt}
         />
       </motion.div>
@@ -275,6 +227,8 @@ export default function ImageEdit() {
                 showPrompt={false}
                 loadPartialGallery
                 tab="edited-images"
+                createdImageId={imageId}
+                setCreatedImageUrl={setEditedImageUrl}
               />
             </div>
           </motion.div>

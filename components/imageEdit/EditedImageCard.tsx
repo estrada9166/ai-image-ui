@@ -9,7 +9,7 @@ import { EditedImageCardProps } from "./types";
 
 export const EditedImageCard = ({
   isEditingImage,
-  editedImageData,
+  editedImageUrl,
   imagePrompt,
 }: EditedImageCardProps) => {
   const { t } = useTranslation();
@@ -33,9 +33,8 @@ export const EditedImageCard = ({
         >
           {isEditingImage ? (
             <ProcessingEditedImage />
-          ) : editedImageData?.node?.__typename === "Image" &&
-            editedImageData?.node?.imageUrl ? (
-            <EditedImageDisplay imageUrl={editedImageData.node?.imageUrl} />
+          ) : editedImageUrl ? (
+            <EditedImageDisplay imageUrl={editedImageUrl} />
           ) : (
             <EmptyEditedImage hasPrompt={!!imagePrompt.trim()} />
           )}

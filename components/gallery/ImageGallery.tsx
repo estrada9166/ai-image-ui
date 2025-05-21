@@ -77,6 +77,8 @@ export function ImageGallery({
   redirectToVideoCreationOnClick = false,
   loadPartialGallery = false,
   tab = "images",
+  createdImageId,
+  setCreatedImageUrl,
 }: {
   type?: ImageTypeOptionsEnum[];
   shouldRefetch?: boolean;
@@ -84,6 +86,8 @@ export function ImageGallery({
   redirectToVideoCreationOnClick?: boolean;
   loadPartialGallery?: boolean;
   tab?: "images" | "edited-images" | "restored-images" | "uploaded-images";
+  createdImageId?: string | null;
+  setCreatedImageUrl?: (imageUrl: string) => void;
 }) {
   const { t } = useTranslation();
   const router = useRouter();
@@ -109,6 +113,18 @@ export function ImageGallery({
   );
 
   useEffect(() => {
+    if (createdImageId && setCreatedImageUrl) {
+      const image = data?.images.edges.find(
+        (image: { node: Image }) => image.node.id === createdImageId
+      );
+
+      if (image?.node.imageUrl) {
+        setCreatedImageUrl(image.node.imageUrl);
+      }
+    }
+  }, [createdImageId, data?.images.edges, setCreatedImageUrl]);
+
+  useEffect(() => {
     let intervalId: NodeJS.Timeout | null = null;
 
     if (hasPendingImage) {
@@ -118,7 +134,7 @@ export function ImageGallery({
       // Set up interval to check every 5 seconds
       intervalId = setInterval(() => {
         reExecuteQuery({ requestPolicy: "network-only" });
-      }, 5000);
+      }, 10000);
     }
 
     // Clean up the interval on unmount

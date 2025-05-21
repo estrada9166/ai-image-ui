@@ -175,7 +175,7 @@
     "sourceImage": "Imagen Original",
     "original": "Original",
     "editingImage": "Editando tu imagen...",
-    "transformingImage": "¡Estamos transformando tu imagen con magia de IA! Esto normalmente tarda entre 15-30 segundos.",
+    "transformingImage": "¡Estamos transformando tu imagen con magia de IA!",
     "clickEditedImage": "Haz clic en el botón \"Editar Imagen\" para transformar tu imagen con IA",
     "yourEditedImageWillAppearHere": "Tu imagen editada aparecerá aquí",
     "enterAPromptToEditYourImage": "Ingresa un prompt para editar tu imagen",
@@ -258,7 +258,7 @@
   "restoreImage": {
     "restoringImage": "Restaurando imagen...",
     "restoreImage": "Restaurar Imagen",
-    "restoringImageDescription": "¡Estamos mejorando tu imagen con restauración de IA! Esto normalmente tarda entre 15-30 segundos.",
+    "restoringImageDescription": "¡Estamos mejorando tu imagen con restauración de IA!",
     "imageRestoration": "Restauración de Imagen",
     "originalImage": "Imagen Original",
     "before": "Antes",

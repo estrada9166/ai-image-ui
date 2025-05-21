@@ -63,7 +63,7 @@ export default function VideoCreation() {
 
   const [, generateVideo] = useMutation(VideoCreationMutation);
   const { data: userData } = useMeQuery();
-  const { reexecuteQuery } = useUsageQuery({
+  const { reexecuteQuery: reexecuteUsageQuery } = useUsageQuery({
     pause: true,
   });
 
@@ -88,8 +88,6 @@ export default function VideoCreation() {
     setVideoUrl(null);
 
     try {
-      setShouldRefetch(true);
-
       if (uploadedImage) {
         const formData = new FormData();
 
@@ -97,7 +95,7 @@ export default function VideoCreation() {
         formData.append("prompt", videoPrompt);
         formData.append("negativePrompt", negativePrompt);
 
-        await axios.post(
+        const response = await axios.post(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/api/upload/video`,
           formData,
           {
@@ -107,6 +105,8 @@ export default function VideoCreation() {
             withCredentials: true,
           }
         );
+
+        setCreatedVideoId(response?.data?.id || null);
       } else if (imageData) {
         const result = await generateVideo({
           input: {
@@ -119,9 +119,10 @@ export default function VideoCreation() {
         setCreatedVideoId(result?.data?.videoCreation?.id || null);
       }
 
-      reexecuteQuery({
+      reexecuteUsageQuery({
         requestPolicy: "network-only",
       });
+      setShouldRefetch(true);
     } catch (error) {
       console.error(t("videoCreation.errorGeneratingVideo"), error);
     } finally {
@@ -133,22 +134,11 @@ export default function VideoCreation() {
     if (!videoUrl) return;
 
     try {
-      // Create a link element
       const a = document.createElement("a");
-
-      // Set the href to the video URL
       a.href = videoUrl;
-
-      // Set a filename for the download
       a.download = "generated-video.mp4";
-
-      // Append to the document
       document.body.appendChild(a);
-
-      // Trigger the download
       a.click();
-
-      // Clean up
       document.body.removeChild(a);
     } catch (error) {
       console.error("Error downloading video:", error);

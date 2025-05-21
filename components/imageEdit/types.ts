@@ -1,8 +1,4 @@
-import {
-  AiModelOptionsEnum,
-  ImageByIdQuery as ImageByIdQueryType,
-  Image,
-} from "../../gql/graphql";
+import { AiModelOptionsEnum, Image } from "../../gql/graphql";
 
 export type ImageEdit = {
   id: string;
@@ -30,7 +26,7 @@ export interface SourceImageCardProps {
 
 export interface EditedImageCardProps {
   isEditingImage: boolean;
-  editedImageData: ImageByIdQueryType | undefined;
+  editedImageUrl: string | null;
   imagePrompt: string;
 }
 

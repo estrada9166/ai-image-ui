@@ -25,6 +25,7 @@ import { useTranslation } from "react-i18next";
 import { useMeQuery } from "../common/useMeQuery";
 import { Checkout } from "../checkout/Checkout";
 import { useUsageQuery } from "../common/useUsageQuery";
+import ReactCompareImage from "react-compare-image";
 // Component for source image display
 interface SourceImageDisplayProps {
   imageUrl: string;
@@ -203,7 +204,6 @@ export default function RestoreImage() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [restoredImageUrl, setRestoredImageUrl] = useState<string | null>(null);
   const [imageData, setImageData] = useState<Image | null>(null);
-  const [isRestoring, setIsRestoring] = useState(false);
   const [showBeforeAfter, setShowBeforeAfter] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [imageId, setImageId] = useState<string | null>(null);
@@ -221,12 +221,6 @@ export default function RestoreImage() {
     pause: !image,
   });
 
-  const [{ data: editedImageData }, reExecuteQuery] = useQuery({
-    query: ImageByIdQuery,
-    variables: { id: imageId || "" },
-    pause: !imageId,
-  });
-
   useEffect(() => {
     if (!searchParams?.get("image") || !data?.node) {
       setImageData(null);
@@ -234,43 +228,6 @@ export default function RestoreImage() {
       setImageData(data.node as Image);
     }
   }, [data, searchParams]);
-
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout | null = null;
-
-    if (imageId && editedImageData?.node) {
-      // Check if the node is an Image type with imageUrl property
-      const nodeAsImage = editedImageData.node as {
-        __typename?: string;
-        imageUrl?: string | null;
-      };
-
-      if (!nodeAsImage.imageUrl && nodeAsImage.__typename === "Image") {
-        // Immediately execute once
-        reExecuteQuery({
-          requestPolicy: "network-only",
-          variables: { id: imageId },
-        });
-
-        // Set up interval to check every 5 seconds
-        intervalId = setInterval(() => {
-          reExecuteQuery({
-            requestPolicy: "network-only",
-            variables: { id: imageId },
-          });
-        }, 5000);
-      } else if (nodeAsImage.imageUrl) {
-        setIsRestoring(false);
-      }
-    }
-
-    // Clean up the interval on unmount
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
-  }, [editedImageData, imageId, reExecuteQuery]);
 
   // Handle file change
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -306,11 +263,7 @@ export default function RestoreImage() {
   const handleRestoreImage = async () => {
     if (!uploadedImage && !imageData) return;
 
-    setIsRestoring(true);
-
     try {
-      setShouldRefetch(true);
-
       let imageId = null;
       if (uploadedImage) {
         const formData = new FormData();
@@ -340,13 +293,13 @@ export default function RestoreImage() {
       if (imageId) {
         setImageId(imageId);
       }
+      setShouldRefetch(true);
       reexecuteUsageQuery({
         requestPolicy: "network-only",
       });
     } catch (error) {
       console.error("Error editing image:", error);
     } finally {
-      setIsRestoring(false);
       setShouldRefetch(false);
     }
   };
@@ -417,7 +370,7 @@ export default function RestoreImage() {
             <div className="mt-6 space-y-5">
               <PromptActions
                 onRestore={handleRestoreImage}
-                isRestoring={isRestoring}
+                isRestoring={Boolean(imageId && !restoredImageUrl)}
                 hasImage={!!uploadedImage || !!imageData}
               />
             </div>
@@ -440,7 +393,7 @@ export default function RestoreImage() {
               </Badge>
             </div>
             <div className="aspect-square relative overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50 shadow-inner">
-              {isRestoring ? (
+              {imageId && !restoredImageUrl ? (
                 <ProcessingRestoredImage />
               ) : restoredImageUrl ? (
                 <img
@@ -503,35 +456,18 @@ export default function RestoreImage() {
             </div>
 
             {showBeforeAfter ? (
-              <div className="relative h-[500px] overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50">
-                <div className="absolute inset-0 overflow-hidden">
-                  <img
-                    src={imageData?.imageUrl || previewUrl || ""}
-                    alt="Before"
-                    className="absolute top-0 left-0 w-full h-full object-contain"
-                    style={{
-                      clipPath: "polygon(0 0, 50% 0, 50% 100%, 0 100%)",
-                    }}
-                  />
-                  <img
-                    src={restoredImageUrl || ""}
-                    alt="After"
-                    className="absolute top-0 left-0 w-full h-full object-contain"
-                    style={{
-                      clipPath: "polygon(50% 0, 100% 0, 100% 100%, 50% 100%)",
-                    }}
-                  />
-                </div>
-                <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-white -ml-0.5 z-10"></div>
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2 z-20 shadow-lg">
-                  <ArrowLeftRight className="h-5 w-5 text-purple-600" />
-                </div>
-                <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
-                  {t("restoreImage.before")}
-                </div>
-                <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
-                  {t("restoreImage.after")}
-                </div>
+              <div className="relative overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50">
+                <ReactCompareImage
+                  leftImage={imageData?.imageUrl || previewUrl || ""}
+                  rightImage={restoredImageUrl || ""}
+                  sliderLineWidth={2}
+                  sliderLineColor="#6366F1"
+                  handleSize={40}
+                  leftImageLabel={t("restoreImage.before")}
+                  rightImageLabel={t("restoreImage.after")}
+                  leftImageCss={{ objectFit: "cover" }}
+                  rightImageCss={{ objectFit: "cover" }}
+                />
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -583,6 +519,8 @@ export default function RestoreImage() {
                 showPrompt={false}
                 loadPartialGallery
                 tab="restored-images"
+                createdImageId={imageId}
+                setCreatedImageUrl={setRestoredImageUrl}
               />
             </div>
           </motion.div>

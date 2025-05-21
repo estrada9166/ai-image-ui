@@ -175,7 +175,7 @@
     "sourceImage": "Source Image",
     "original": "Original",
     "editingImage": "Editing your image...",
-    "transformingImage": "We're transforming your image with AI magic! This typically takes 15-30 seconds.",
+    "transformingImage": "We're transforming your image with AI magic!",
     "clickEditedImage": "Click the \"Edit Image\" button to transform your image with AI",
     "yourEditedImageWillAppearHere": "Your edited image will appear here",
     "enterAPromptToEditYourImage": "Enter a prompt to edit your image",
@@ -258,7 +258,7 @@
   "restoreImage": {
     "restoringImage": "Restoring image...",
     "restoreImage": "Restore Image",
-    "restoringImageDescription": "We're enhancing your image with AI restoration! This typically takes 15-30 seconds.",
+    "restoringImageDescription": "We're enhancing your image with AI restoration!",
     "imageRestoration": "Image Restoration",
     "originalImage": "Original Image",
     "before": "Before",

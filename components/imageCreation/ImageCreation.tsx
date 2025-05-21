@@ -87,7 +87,6 @@ export default function ImageCreation() {
     setIsGeneratingImage(true);
 
     try {
-      setShouldRefetch(true);
       setImagePrompt("");
       setSelectedPromptIdea("");
       await generateImage({
@@ -102,6 +101,7 @@ export default function ImageCreation() {
       reexecuteQuery({
         requestPolicy: "network-only",
       });
+      setShouldRefetch(true);
     } catch (error) {
       console.error("Error generating image:", error);
     } finally {
