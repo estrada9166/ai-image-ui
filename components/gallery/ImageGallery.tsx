@@ -355,25 +355,25 @@ export function ImageGallery({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-50 p-4"
+            className="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-50 p-4 overflow-y-auto"
             onClick={closeModal}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: "spring", damping: 25 }}
-              className="relative max-w-6xl w-full rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl border border-white/10"
+              className="relative max-w-6xl w-full rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl border border-white/10 my-4 md:my-8"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex-1 bg-gradient-to-b from-gray-900/50 to-black">
+              <div className="flex-1 bg-gradient-to-b from-gray-900/50 to-black max-h-[50vh] md:max-h-[85vh]">
                 {selectedImage.status === GenAiStatusEnum.Failed ? (
                   <div className="w-full h-full flex items-center justify-center p-8">
                     <div className="flex flex-col items-center text-center">
-                      <AlertTriangle className="w-16 h-16 text-red-500 mb-4" />
-                      <h3 className="text-xl font-bold text-white mb-2">
+                      <AlertTriangle className="w-12 h-12 md:w-16 md:h-16 text-red-500 mb-4" />
+                      <h3 className="text-lg md:text-xl font-bold text-white mb-2">
                         {t("imageGallery.errorGeneratingImage")}
                       </h3>
-                      <p className="text-gray-400 max-w-md">
+                      <p className="text-gray-400 max-w-md text-sm md:text-base">
                         {t("imageGallery.errorGeneratingImageDescription")}
                       </p>
                     </div>
@@ -381,33 +381,47 @@ export function ImageGallery({
                 ) : tab === "restored-images" &&
                   selectedImage.originalImage?.imageUrl &&
                   selectedImage.imageUrl ? (
-                  <ReactCompareImage
-                    leftImage={selectedImage.originalImage.imageUrl}
-                    rightImage={selectedImage.imageUrl}
-                    sliderLineWidth={2}
-                    sliderLineColor="#ffffff"
-                    leftImageAlt="Original image"
-                    rightImageAlt="Restored image"
-                    leftImageLabel="Original"
-                    rightImageLabel="Restored"
-                    sliderPositionPercentage={0.5}
-                    leftImageCss={{ objectFit: "contain", maxHeight: "85vh" }}
-                    rightImageCss={{ objectFit: "contain", maxHeight: "85vh" }}
-                  />
+                  <div className="h-full max-h-[50vh] md:max-h-[85vh] overflow-hidden">
+                    <ReactCompareImage
+                      leftImage={selectedImage.originalImage.imageUrl}
+                      rightImage={selectedImage.imageUrl}
+                      sliderLineWidth={2}
+                      sliderLineColor="#ffffff"
+                      leftImageAlt="Original image"
+                      rightImageAlt="Restored image"
+                      leftImageLabel="Original"
+                      rightImageLabel="Restored"
+                      sliderPositionPercentage={0.5}
+                      leftImageCss={{
+                        objectFit: "contain",
+                        height: "100%",
+                        maxHeight: "50vh",
+                        width: "100%",
+                      }}
+                      rightImageCss={{
+                        objectFit: "contain",
+                        height: "100%",
+                        maxHeight: "50vh",
+                        width: "100%",
+                      }}
+                    />
+                  </div>
                 ) : (
-                  <img
-                    src={selectedImage.imageUrl || ""}
-                    alt={
-                      selectedImage.prompt ||
-                      `Generated image ${selectedImage.index + 1}`
-                    }
-                    className="w-full h-auto max-h-[85vh] object-contain"
-                  />
+                  <div className="flex items-center justify-center h-full max-h-[50vh] md:max-h-[85vh]">
+                    <img
+                      src={selectedImage.imageUrl || ""}
+                      alt={
+                        selectedImage.prompt ||
+                        `Generated image ${selectedImage.index + 1}`
+                      }
+                      className="w-full h-auto max-h-[50vh] md:max-h-[85vh] object-contain"
+                    />
+                  </div>
                 )}
               </div>
 
-              <div className="md:w-72 bg-gradient-to-r from-gray-900/90 to-gray-800/90 backdrop-blur-md p-6 flex flex-col">
-                <div className="flex justify-end mb-4">
+              <div className="md:w-72 bg-gradient-to-r from-gray-900/90 to-gray-800/90 backdrop-blur-md p-4 md:p-6 flex flex-col">
+                <div className="flex justify-end mb-2 md:mb-4">
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
@@ -420,33 +434,34 @@ export function ImageGallery({
                 </div>
 
                 {selectedImage.status !== GenAiStatusEnum.Failed && (
-                  <div className="flex flex-col gap-3 mt-2">
+                  <div className="flex flex-col gap-2 md:gap-3 mt-1 md:mt-2">
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={(e) =>
                         handleDownloadImage(selectedImage.imageUrl, e)
                       }
-                      className="flex items-center justify-center gap-2 p-3 rounded-xl bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-purple-500/20"
+                      className="flex items-center justify-center gap-2 p-2 md:p-3 rounded-xl bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-purple-500/20 text-sm md:text-base"
                       aria-label="Download image"
                       title="Download image"
                     >
-                      <Download className="w-5 h-5" />
+                      <Download className="w-4 h-4 md:w-5 md:h-5" />
                       <span>{t("imageGallery.download")}</span>
                     </motion.button>
 
                     <Link
                       href={`/dashboard/edit/image?image=${selectedImage.id}`}
+                      className="w-full"
                     >
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={(e) => e.stopPropagation()}
-                        className="flex items-center justify-center gap-2 p-3 w-full rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-green-500/20"
+                        className="flex items-center justify-center gap-2 p-2 md:p-3 w-full rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-green-500/20 text-sm md:text-base"
                         aria-label="Edit image"
                         title="Edit this image"
                       >
-                        <Edit className="w-5 h-5" />
+                        <Edit className="w-4 h-4 md:w-5 md:h-5" />
                         <span>{t("imageGallery.edit")}</span>
                       </motion.button>
                     </Link>
@@ -454,16 +469,17 @@ export function ImageGallery({
                     {tab === "uploaded-images" && (
                       <Link
                         href={`/dashboard/edit/restore?image=${selectedImage.id}`}
+                        className="w-full"
                       >
                         <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={(e) => e.stopPropagation()}
-                          className="flex items-center justify-center gap-2 p-3 w-full rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-amber-500/20"
+                          className="flex items-center justify-center gap-2 p-2 md:p-3 w-full rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-amber-500/20 text-sm md:text-base"
                           aria-label="Restore image"
                           title="Restore this image"
                         >
-                          <RotateCcw className="w-5 h-5" />
+                          <RotateCcw className="w-4 h-4 md:w-5 md:h-5" />
                           <span>{t("imageGallery.restore")}</span>
                         </motion.button>
                       </Link>
@@ -471,16 +487,17 @@ export function ImageGallery({
 
                     <Link
                       href={`/dashboard/create/video?image=${selectedImage.id}`}
+                      className="w-full"
                     >
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={(e) => e.stopPropagation()}
-                        className="flex items-center justify-center gap-2 p-3 w-full rounded-xl bg-gradient-to-r from-purple-500 to-violet-500 hover:from-purple-600 hover:to-violet-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-purple-500/20"
+                        className="flex items-center justify-center gap-2 p-2 md:p-3 w-full rounded-xl bg-gradient-to-r from-purple-500 to-violet-500 hover:from-purple-600 hover:to-violet-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-purple-500/20 text-sm md:text-base"
                         aria-label="Animate image"
                         title="Animate this image"
                       >
-                        <Video className="w-5 h-5" />
+                        <Video className="w-4 h-4 md:w-5 md:h-5" />
                         <span>{t("imageGallery.animate")}</span>
                       </motion.button>
                     </Link>
@@ -489,13 +506,13 @@ export function ImageGallery({
 
                 {selectedImage.prompt &&
                   selectedImage.status !== GenAiStatusEnum.Failed && (
-                    <div className="mt-auto">
-                      <h3 className="text-white text-sm font-medium mb-3 flex items-center gap-2">
-                        <span className="h-1 w-5 bg-purple-500 rounded-full"></span>
+                    <div className="mt-3 md:mt-auto">
+                      <h3 className="text-white text-xs md:text-sm font-medium mb-2 md:mb-3 flex items-center gap-2">
+                        <span className="h-1 w-4 md:w-5 bg-purple-500 rounded-full"></span>
                         Prompt
                       </h3>
-                      <div className="bg-black/30 rounded-xl p-4 border border-white/5 hover:border-purple-500/30 transition-colors duration-300">
-                        <p className="text-white/90 text-xs md:text-sm leading-relaxed">
+                      <div className="bg-black/30 rounded-xl p-3 md:p-4 border border-white/5 hover:border-purple-500/30 transition-colors duration-300">
+                        <p className="text-white/90 text-xs leading-relaxed max-h-24 md:max-h-none overflow-y-auto">
                           {selectedImage.prompt}
                         </p>
                       </div>
