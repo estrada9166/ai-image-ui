@@ -118,6 +118,13 @@ export default function ImageCreation() {
     }
   };
 
+  const handlePromptChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    if (value.length <= 1500) {
+      setImagePrompt(value);
+    }
+  };
+
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       <motion.div
@@ -233,8 +240,9 @@ export default function ImageCreation() {
                   placeholder={t("imageCreation.placeholder")}
                   className="min-h-[150px] resize-none border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 rounded-lg shadow-sm text-base"
                   value={imagePrompt}
-                  onChange={(e) => setImagePrompt(e.target.value)}
+                  onChange={handlePromptChange}
                   disabled={isGeneratingImage}
+                  maxLength={1500}
                 />
               </div>
 

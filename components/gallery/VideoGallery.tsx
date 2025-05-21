@@ -13,7 +13,6 @@ import {
   ChevronRight,
   Loader2,
   Play,
-  Edit,
   AlertTriangle,
 } from "lucide-react";
 import Link from "next/link";
@@ -143,21 +142,12 @@ export function VideoGallery({
       return;
 
     try {
-      const response = await fetch(video.videoUrl, {
-        method: "GET",
-        mode: "cors",
-      });
-      if (!response.ok) throw new Error("Network response was not ok");
-
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = blobUrl;
-      a.download = "generated-video.mp4";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(blobUrl);
+      const link = document.createElement("a");
+      link.href = video.videoUrl;
+      link.download = ""; // you can also set a default filename here
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } catch (error) {
       console.error("Error downloading video:", error);
     }
@@ -270,19 +260,6 @@ export function VideoGallery({
                   >
                     <Download className="w-4 h-4" />
                   </motion.button>
-
-                  <Link href={`/dashboard/edit/video?video=${video.node.id}`}>
-                    <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={(e) => e.stopPropagation()}
-                      className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors shadow-lg backdrop-blur-sm"
-                      aria-label="Edit video"
-                      title="Edit this video"
-                    >
-                      <Edit className="w-4 h-4" />
-                    </motion.button>
-                  </Link>
                 </div>
               )}
 

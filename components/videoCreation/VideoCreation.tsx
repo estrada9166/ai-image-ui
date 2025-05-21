@@ -353,6 +353,7 @@ export default function VideoCreation() {
                   value={videoPrompt}
                   onChange={(e) => setVideoPrompt(e.target.value)}
                   disabled={isGeneratingVideo}
+                  maxLength={1500}
                 />
               </div>
 
@@ -367,6 +368,7 @@ export default function VideoCreation() {
                   value={negativePrompt}
                   onChange={(e) => setNegativePrompt(e.target.value)}
                   disabled={isGeneratingVideo}
+                  maxLength={1500}
                 />
               </div>
 

@@ -21,6 +21,7 @@ export const PromptInput = ({
         value={value}
         onChange={onChange}
         disabled={isDisabled}
+        maxLength={1500}
       />
     </div>
   );

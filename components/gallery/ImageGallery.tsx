@@ -151,21 +151,12 @@ export function ImageGallery({
     if (!imageUrl) return;
 
     try {
-      const response = await fetch(imageUrl, {
-        method: "GET",
-        mode: "cors",
-      });
-      if (!response.ok) throw new Error("Network response was not ok");
-
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = blobUrl;
-      a.download = "generated-image.png";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(blobUrl);
+      const link = document.createElement("a");
+      link.href = imageUrl;
+      link.download = ""; // you can also set a default filename here
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } catch (error) {
       console.error("Error downloading image:", error);
     }

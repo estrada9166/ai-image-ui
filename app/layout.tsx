@@ -30,13 +30,17 @@ export default function RootLayout({
       <html lang="en" className="h-full notranslate" translate="no">
         <CSPostHogProvider>
           <head>
-            {/* {process.env.NEXT_PUBLIC_ENV !== "development" && (
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
+            />
+            {process.env.NEXT_PUBLIC_ENV !== "development" && (
               <script
                 defer
                 data-domain="newpix.ai"
                 src="https://plausible.io/js/script.js"
               ></script>
-            )} */}
+            )}
           </head>
           <body
             className={`${inter.className} antialiased min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white`}
