@@ -500,7 +500,7 @@ export default function VideoCreation() {
                       className="bg-gradient-to-r from-purple-600 to-indigo-600 h-3 rounded-full"
                       initial={{ width: "0%" }}
                       animate={{ width: "100%" }}
-                      transition={{ duration: 60, ease: "linear" }}
+                      transition={{ duration: 60 * 5, ease: "linear" }}
                     />
                   </div>
                 </div>
