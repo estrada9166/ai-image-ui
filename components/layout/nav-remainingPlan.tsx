@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import { useUsageQuery } from "../common/useUsageQuery";
 import { Checkout } from "../checkout/Checkout";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 export function NavRemainingPlan({
   hasActiveSubscription,
@@ -48,21 +49,25 @@ export function NavRemainingPlan({
                 icon: <ImageIcon className="w-3.5 h-3.5 text-purple-500" />,
                 label: "imageCreation",
                 data: usage?.imageCreation,
+                link: "/dashboard/create/image",
               },
               {
                 icon: <CropIcon className="w-3.5 h-3.5 text-purple-500" />,
                 label: "imageEdit",
                 data: usage?.editImage,
+                link: "/dashboard/edit/image",
               },
               {
                 icon: <ImageIcon className="w-3.5 h-3.5 text-purple-500" />,
                 label: "imageRestore",
                 data: usage?.imageRestoration,
+                link: "/dashboard/edit/restore",
               },
               {
                 icon: <VideoIcon className="w-3.5 h-3.5 text-purple-500" />,
                 label: "videoCreation",
                 data: usage?.videoCreation,
+                link: "/dashboard/create/video",
               },
             ].map((item, index) => (
               <UsageItem
@@ -79,6 +84,7 @@ export function NavRemainingPlan({
                   item.data?.used || 0,
                   item.data?.limit || 0
                 )}
+                link={item.link}
               />
             ))}
           </div>
@@ -114,6 +120,7 @@ interface UsageItemProps {
   limit: number;
   progressColor: string;
   percentage: number;
+  link: string;
 }
 
 function UsageItem({
@@ -123,18 +130,21 @@ function UsageItem({
   limit,
   progressColor,
   percentage,
+  link,
 }: UsageItemProps) {
   return (
     <div className="group">
       <div className="flex items-center justify-between mb-0.5">
-        <div className="flex items-center gap-1">
-          <div className="rounded-md group-hover:bg-purple-100 dark:group-hover:bg-purple-900/30 transition-colors duration-300">
-            {icon}
+        <Link href={link}>
+          <div className="flex items-center gap-1">
+            <div className="rounded-md group-hover:bg-purple-100 dark:group-hover:bg-purple-900/30 transition-colors duration-300">
+              {icon}
+            </div>
+            <span className="text-xs font-medium text-slate-700 dark:text-slate-200 group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors duration-300">
+              {label}
+            </span>
           </div>
-          <span className="text-xs font-medium text-slate-700 dark:text-slate-200 group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors duration-300">
-            {label}
-          </span>
-        </div>
+        </Link>
         <span className="text-xs font-semibold text-slate-800 dark:text-slate-100">
           {used}/{limit}
         </span>
