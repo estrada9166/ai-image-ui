@@ -77,13 +77,6 @@ export default function VideoCreation() {
   useEffect(() => {
     if (image) {
       reexecuteQuery({ requestPolicy: "network-only" });
-      if (typeof window !== "undefined") {
-        const url = new URL(window.location.href);
-        url.searchParams.delete("image");
-
-        // Use router.replace to update the URL without full navigation
-        router.replace(url.pathname + url.search, { scroll: false });
-      }
     }
   }, [image, reexecuteQuery]);
 
