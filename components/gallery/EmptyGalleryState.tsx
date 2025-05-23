@@ -8,12 +8,7 @@ import { EditIcon, ImageIcon, VideoIcon, RefreshCwIcon } from "lucide-react";
 export const EmptyGalleryState = ({
   tab,
 }: {
-  tab:
-    | "images"
-    | "edited-images"
-    | "restored-images"
-    | "uploaded-images"
-    | "video";
+  tab: "images" | "edited-images" | "restored-images" | "video";
 }) => {
   const { t } = useTranslation();
 
@@ -46,13 +41,6 @@ export const EmptyGalleryState = ({
       buttonText: t("emptyGalleryState.video.buttonText"),
       link: "/dashboard/create/video",
       Icon: VideoIcon,
-    },
-    "uploaded-images": {
-      title: t("emptyGalleryState.uploadedImages.title"),
-      description: t("emptyGalleryState.uploadedImages.description"),
-      buttonText: t("emptyGalleryState.uploadedImages.buttonText"),
-      link: "/dashboard/create/image",
-      Icon: ImageIcon,
     },
   };
 

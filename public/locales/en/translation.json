@@ -317,9 +317,11 @@
     "emptyState": {
       "title": "Add an Image to Begin",
       "description": "Select or upload an image to transform it with AI editing",
-      "uploadImage": "Upload Image",
+      "uploadImages": "Upload Images",
       "selectFromGallery": "Select from Gallery"
     },
+    "images": "Images",
+    "addMoreImages": "Add More Images",
     "errorGeneratingVideo": "Error generating video",
     "errorLoadingImage": "Error loading image",
     "goBack": "Go Back",

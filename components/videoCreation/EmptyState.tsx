@@ -7,10 +7,8 @@ import { Checkout } from "../checkout/Checkout";
 
 export function EmptyState({
   fileInputRef,
-  handleFileChange,
 }: {
   fileInputRef: React.RefObject<HTMLInputElement>;
-  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   const { t } = useTranslation();
   const { data: userData } = useMeQuery();
@@ -36,19 +34,15 @@ export function EmptyState({
               <Button
                 variant="outline"
                 className="w-full sm:w-auto border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-all duration-300 rounded-full cursor-pointer shadow-sm hover:shadow-md"
-                onClick={() => fileInputRef.current?.click()}
+                onClick={() => {
+                  if (fileInputRef.current) {
+                    fileInputRef.current.click();
+                  }
+                }}
               >
                 <Upload className="mr-2 h-4 w-4" />
-                {t("videoCreation.emptyState.uploadImage")}
+                {t("videoCreation.emptyState.uploadImages")}
               </Button>
-              <input
-                id="image-upload"
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleFileChange}
-                ref={fileInputRef}
-              />
             </>
           ) : (
             <Checkout
@@ -58,7 +52,7 @@ export function EmptyState({
                   className="w-full sm:w-auto border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-all duration-300 rounded-full cursor-pointer shadow-sm hover:shadow-md"
                 >
                   <Upload className="mr-2 h-4 w-4" />
-                  {t("videoCreation.emptyState.uploadImage")}
+                  {t("videoCreation.emptyState.uploadImages")}
                 </Button>
               }
             />

@@ -369,7 +369,7 @@ export default function RestoreImage() {
               ) : (
                 <EmptySourceImage
                   onUploadClick={handleUploadClick}
-                  tab="uploaded-images"
+                  doNotRedirect
                 />
               )}
             </div>

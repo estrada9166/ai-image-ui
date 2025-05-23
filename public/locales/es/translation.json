@@ -317,9 +317,11 @@
     "emptyState": {
       "title": "Añade una Imagen para Comenzar",
       "description": "Selecciona o sube una imagen para transformarla con edición de IA",
-      "uploadImage": "Subir Imagen",
+      "uploadImages": "Subir Imagenes",
       "selectFromGallery": "Seleccionar de la Galería"
     },
+    "images": "Imágenes",
+    "addMoreImages": "Añadir Más Imágenes",
     "errorGeneratingVideo": "Error al generar el video",
     "errorLoadingImage": "Error al cargar la imagen",
     "goBack": "Volver",

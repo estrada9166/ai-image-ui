@@ -9,7 +9,7 @@ import { ImageTypeOptionsEnum } from "../../gql/graphql";
 import { useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
 interface GalleryProps {
-  defaultTab?: "images" | "videos" | "edited-images" | "uploaded-images";
+  defaultTab?: "images" | "videos" | "edited-images";
 }
 
 export default function Gallery({ defaultTab = "images" }: GalleryProps) {
@@ -25,16 +25,13 @@ export default function Gallery({ defaultTab = "images" }: GalleryProps) {
         {t("gallery.gallery")}
       </h1>
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full max-w-sm grid-cols-5 mb-4">
+        <TabsList className="grid w-full max-w-sm grid-cols-4 mb-4">
           <TabsTrigger value="images">{t("gallery.created")}</TabsTrigger>
           <TabsTrigger value="edited-images">{t("gallery.edited")}</TabsTrigger>
           <TabsTrigger value="restored-images">
             {t("gallery.restored")}
           </TabsTrigger>
           <TabsTrigger value="videos">{t("gallery.videos")}</TabsTrigger>
-          <TabsTrigger value="uploaded-images">
-            {t("gallery.uploaded")}
-          </TabsTrigger>
         </TabsList>
         <TabsContent value="images">
           <Card>
@@ -72,17 +69,6 @@ export default function Gallery({ defaultTab = "images" }: GalleryProps) {
                 type={[ImageTypeOptionsEnum.Restored]}
                 showPrompt={false}
                 tab="restored-images"
-              />
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="uploaded-images">
-          <Card>
-            <CardContent className="pt-4">
-              <ImageGallery
-                type={[ImageTypeOptionsEnum.UserUploaded]}
-                showPrompt={false}
-                tab="uploaded-images"
               />
             </CardContent>
           </Card>

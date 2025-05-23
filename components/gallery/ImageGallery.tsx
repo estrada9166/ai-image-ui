@@ -466,25 +466,6 @@ export function ImageGallery({
                       </motion.button>
                     </Link>
 
-                    {tab === "uploaded-images" && (
-                      <Link
-                        href={`/dashboard/edit/restore?image=${selectedImage.id}`}
-                        className="w-full"
-                      >
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={(e) => e.stopPropagation()}
-                          className="flex items-center justify-center gap-2 p-2 md:p-3 w-full rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-amber-500/20 text-sm md:text-base"
-                          aria-label="Restore image"
-                          title="Restore this image"
-                        >
-                          <RotateCcw className="w-4 h-4 md:w-5 md:h-5" />
-                          <span>{t("imageGallery.restore")}</span>
-                        </motion.button>
-                      </Link>
-                    )}
-
                     <Link
                       href={`/dashboard/create/video?image=${selectedImage.id}`}
                       className="w-full"

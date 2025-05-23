@@ -9,12 +9,14 @@ import { Checkout } from "../checkout/Checkout";
 
 interface EmptySourceImageProps {
   onUploadClick: () => void;
-  tab?: "images" | "videos" | "edited-images" | "uploaded-images";
+  tab?: "images" | "videos" | "edited-images";
+  doNotRedirect?: boolean;
 }
 
 export const EmptySourceImage = ({
   onUploadClick,
   tab,
+  doNotRedirect,
 }: EmptySourceImageProps) => {
   const { t } = useTranslation();
 
@@ -61,15 +63,17 @@ export const EmptySourceImage = ({
             />
           )}
 
-          <Link
-            href={`/dashboard/gallery${tab ? `?tab=${tab}` : ""}`}
-            className="w-full sm:w-auto"
-          >
-            <Button className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full">
-              <ImageIcon className="mr-2 h-4 w-4" />
-              {t("emptySourceImage.selectFromGallery")}
-            </Button>
-          </Link>
+          {!doNotRedirect && (
+            <Link
+              href={`/dashboard/gallery${tab ? `?tab=${tab}` : ""}`}
+              className="w-full sm:w-auto"
+            >
+              <Button className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full">
+                <ImageIcon className="mr-2 h-4 w-4" />
+                {t("emptySourceImage.selectFromGallery")}
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </div>

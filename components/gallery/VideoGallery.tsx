@@ -48,7 +48,7 @@ const VideoGalleryQuery = graphql(/* GraphQL */ `
           negativePrompt
           status
           videoUrl
-          originalImage {
+          originalImages {
             id
             thumbnailUrl
           }
