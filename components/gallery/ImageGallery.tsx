@@ -85,7 +85,7 @@ export function ImageGallery({
   showPrompt?: boolean;
   redirectToVideoCreationOnClick?: boolean;
   loadPartialGallery?: boolean;
-  tab?: "images" | "edited-images" | "restored-images" | "uploaded-images";
+  tab?: "images" | "edited-images" | "restored-images";
   createdImageId?: string | null;
   setCreatedImageUrl?: (imageUrl: string) => void;
 }) {
