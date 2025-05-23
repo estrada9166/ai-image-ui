@@ -413,11 +413,13 @@ export default function RestoreImage() {
               {isLoading ? (
                 <ProcessingRestoredImage />
               ) : restoredImageUrl ? (
-                <img
-                  src={restoredImageUrl}
-                  alt="Restored image"
-                  className="w-full h-full object-contain"
-                />
+                <div className="w-full h-full flex items-center justify-center">
+                  <img
+                    src={restoredImageUrl}
+                    alt="Restored image"
+                    className="max-w-full max-h-full object-contain"
+                  />
+                </div>
               ) : (
                 <div className="flex flex-col items-center justify-center h-full bg-gray-50 dark:bg-gray-900/30">
                   <div className="p-4 rounded-full bg-purple-100 dark:bg-purple-900/20 mb-4">
@@ -482,28 +484,32 @@ export default function RestoreImage() {
                   handleSize={40}
                   leftImageLabel={t("restoreImage.before")}
                   rightImageLabel={t("restoreImage.after")}
-                  leftImageCss={{ objectFit: "cover" }}
-                  rightImageCss={{ objectFit: "cover" }}
+                  leftImageCss={{ objectFit: "contain", maxHeight: "100%" }}
+                  rightImageCss={{ objectFit: "contain", maxHeight: "100%" }}
                 />
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="relative aspect-square overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50">
-                  <img
-                    src={imageData?.imageUrl || previewUrl || ""}
-                    alt="Before"
-                    className="w-full h-full object-contain"
-                  />
+                  <div className="w-full h-full flex items-center justify-center">
+                    <img
+                      src={imageData?.imageUrl || previewUrl || ""}
+                      alt="Before"
+                      className="max-w-full max-h-full object-contain"
+                    />
+                  </div>
                   <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
                     {t("restoreImage.before")}
                   </div>
                 </div>
                 <div className="relative aspect-square overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50">
-                  <img
-                    src={restoredImageUrl || ""}
-                    alt="After"
-                    className="w-full h-full object-contain"
-                  />
+                  <div className="w-full h-full flex items-center justify-center">
+                    <img
+                      src={restoredImageUrl || ""}
+                      alt="After"
+                      className="max-w-full max-h-full object-contain"
+                    />
+                  </div>
                   <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
                     {t("restoreImage.after")}
                   </div>
