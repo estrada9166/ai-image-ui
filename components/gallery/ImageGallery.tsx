@@ -9,6 +9,8 @@ import {
   GenAiStatusEnum,
   ImageTypeOptionsEnum,
   AiModelOptionsEnum,
+  AspectRatioOptionsEnum,
+  CameraOptionsEnum,
 } from "@/gql/graphql";
 import { graphql } from "../../gql";
 import { useQuery } from "urql";
@@ -38,6 +40,8 @@ type Image = {
   status: GenAiStatusEnum;
   thumbnailUrl?: string | null;
   model?: AiModelOptionsEnum | null;
+  camera: CameraOptionsEnum;
+  aspectRatio: AspectRatioOptionsEnum;
   originalImage?: {
     id: string;
     imageUrl?: string | null;
@@ -59,6 +63,8 @@ const ImageGalleryQuery = graphql(/* GraphQL */ `
       edges {
         node {
           id
+          camera
+          aspectRatio
           prompt
           status
           imageUrl
@@ -516,6 +522,32 @@ export function ImageGallery({
                 )}
 
                 <div className="mt-3 md:mt-auto space-y-4">
+                  {selectedImage.camera && (
+                    <div>
+                      <h3 className="text-white text-xs md:text-sm font-medium mb-2 md:mb-3 flex items-center gap-2">
+                        <span className="h-1 w-4 md:w-5 bg-purple-500 rounded-full"></span>
+                        {selectedImage.camera === CameraOptionsEnum.Selfie
+                          ? t("imageCreation.cameraTypes.selfie")
+                          : t("imageCreation.cameraTypes.noSelfie")}
+                      </h3>
+                    </div>
+                  )}
+
+                  {selectedImage.aspectRatio && (
+                    <div>
+                      <h3 className="text-white text-xs md:text-sm font-medium mb-2 md:mb-3 flex items-center gap-2">
+                        <span className="h-1 w-4 md:w-5 bg-purple-500 rounded-full"></span>
+                        {selectedImage.aspectRatio ===
+                        AspectRatioOptionsEnum.Square
+                          ? t("imageCreation.aspectRatios.square")
+                          : selectedImage.aspectRatio ===
+                            AspectRatioOptionsEnum.Portrait
+                          ? t("imageCreation.aspectRatios.portrait")
+                          : t("imageCreation.aspectRatios.landscape")}
+                      </h3>
+                    </div>
+                  )}
+
                   {selectedImage.model && (
                     <div>
                       <h3 className="text-white text-xs md:text-sm font-medium mb-2 md:mb-3 flex items-center gap-2">
