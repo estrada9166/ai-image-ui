@@ -97,7 +97,8 @@
     "download": "Descargar",
     "edit": "Editar",
     "restore": "Restaurar",
-    "animate": "Animar"
+    "animate": "Animar",
+    "example": "Ejemplo"
   },
   "videoGallery": {
     "loadingMoreVideos": "Cargando más videos...",
@@ -105,7 +106,8 @@
     "viewFullGallery": "Ver galería completa",
     "download": "Descargar",
     "generationFailed": "Error al generar video",
-    "tryAgain": "Intenta de nuevo"
+    "tryAgain": "Intenta de nuevo",
+    "example": "Ejemplo"
   },
   "googleLogin": {
     "loginWithGoogle": "Iniciar sesión con Google"
@@ -320,6 +322,8 @@
       "uploadImages": "Subir Imagenes",
       "selectFromGallery": "Seleccionar de la Galería"
     },
+    "useDefault": "Usar Predeterminado",
+    "defaultPrompt": "Crea movimiento realista con movimiento de cámara realista, transiciones suaves y efectos de cámara de mano naturales que traen a la vida la imagen",
     "images": "Imágenes",
     "addMoreImages": "Añadir Más Imágenes",
     "errorGeneratingVideo": "Error al generar el video",

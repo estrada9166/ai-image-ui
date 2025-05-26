@@ -97,7 +97,8 @@
     "download": "Download",
     "edit": "Edit",
     "restore": "Restore",
-    "animate": "Animate"
+    "animate": "Animate",
+    "example": "Example"
   },
   "videoGallery": {
     "loadingMoreVideos": "Loading more videos...",
@@ -105,7 +106,8 @@
     "viewFullGallery": "View full gallery",
     "download": "Download",
     "generationFailed": "Generation failed",
-    "tryAgain": "Try again"
+    "tryAgain": "Try again",
+    "example": "Example"
   },
   "googleLogin": {
     "loginWithGoogle": "Login with Google"
@@ -320,6 +322,8 @@
       "uploadImages": "Upload Images",
       "selectFromGallery": "Select from Gallery"
     },
+    "useDefault": "Use Default",
+    "defaultPrompt": "Create lifelike movement with realistic camera motion, smooth transitions, and natural handheld camera effects that bring your the image to life",
     "images": "Images",
     "addMoreImages": "Add More Images",
     "errorGeneratingVideo": "Error generating video",

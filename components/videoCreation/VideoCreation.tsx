@@ -490,10 +490,26 @@ export default function VideoCreation() {
             {/* Prompt Input Below Image */}
             <div className="mt-6 space-y-5">
               <div className="space-y-3">
-                <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-purple-500" />
-                  {t("videoCreation.animationDescription")}
-                </h3>
+                <div className="flex justify-between items-center">
+                  <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                    <Sparkles className="h-5 w-5 text-purple-500" />
+                    {t("videoCreation.animationDescription")}
+                  </h3>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() =>
+                      setVideoPrompt(
+                        t("videoCreation.defaultPrompt") ||
+                          "move the camera around. Use realistic motion. Make them smile as if enjoying their travels"
+                      )
+                    }
+                    className="text-xs text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300"
+                  >
+                    <Sparkles className="mr-1 h-3 w-3" />
+                    {t("videoCreation.useDefault")}
+                  </Button>
+                </div>
                 <Textarea
                   placeholder={t("videoCreation.placeholder")}
                   className="min-h-[100px] text-base resize-none border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 transition-colors duration-200 rounded-lg shadow-inner"

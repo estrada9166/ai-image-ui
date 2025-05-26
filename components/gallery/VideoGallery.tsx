@@ -14,6 +14,7 @@ import {
   Loader2,
   Play,
   AlertTriangle,
+  Sparkles,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -32,6 +33,7 @@ type Video = {
     id: string;
     thumbnailUrl?: string | null;
   } | null;
+  isExample?: boolean | null;
 };
 
 type VideoWithIndex = Video & {
@@ -48,6 +50,7 @@ const VideoGalleryQuery = graphql(/* GraphQL */ `
           negativePrompt
           status
           videoUrl
+          isExample
           originalImages {
             id
             thumbnailUrl
@@ -230,6 +233,12 @@ export function VideoGallery({
               </div>
             ) : (
               <div className="relative w-full h-full overflow-hidden">
+                {video.node.isExample && (
+                  <div className="absolute top-3 left-3 z-10 bg-purple-600/90 backdrop-blur-sm px-3 py-1 rounded-md text-white text-sm font-medium flex items-center gap-1.5 shadow-lg">
+                    <Sparkles className="w-4 h-4" />
+                    <span>{t("videoGallery.example")}</span>
+                  </div>
+                )}
                 <video
                   src={video.node.videoUrl || ""}
                   poster={video.node.originalImage?.thumbnailUrl ?? undefined}
@@ -324,7 +333,13 @@ export function VideoGallery({
               className="relative max-w-6xl w-full rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl border border-white/10 my-4 md:my-8"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex-1 bg-gradient-to-b from-gray-900/50 to-black max-h-[50vh] md:max-h-[85vh]">
+              <div className="flex-1 bg-gradient-to-b from-gray-900/50 to-black max-h-[50vh] md:max-h-[85vh] relative">
+                {selectedVideo.isExample && (
+                  <div className="absolute top-3 left-3 z-10 bg-purple-600/90 backdrop-blur-sm px-3 py-1 rounded-md text-white text-sm font-medium flex items-center gap-1.5 shadow-lg">
+                    <Sparkles className="w-4 h-4" />
+                    <span>{t("videoGallery.example")}</span>
+                  </div>
+                )}
                 <video
                   src={selectedVideo.videoUrl || ""}
                   controls

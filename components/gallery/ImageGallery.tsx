@@ -24,6 +24,7 @@ import {
   ChevronRight,
   Loader2,
   AlertTriangle,
+  Sparkles,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -41,6 +42,7 @@ type Image = {
     id: string;
     imageUrl?: string | null;
   } | null;
+  isExample?: boolean | null;
 };
 
 type ImageWithIndex = Image & {
@@ -62,6 +64,7 @@ const ImageGalleryQuery = graphql(/* GraphQL */ `
           imageUrl
           thumbnailUrl
           model
+          isExample
           originalImage {
             id
             imageUrl
@@ -262,6 +265,14 @@ export function ImageGallery({
               </>
             )}
 
+            {/* Example badge */}
+            {image.node.isExample && (
+              <div className="absolute top-3 left-3 bg-purple-600/90 backdrop-blur-sm px-2 py-1 rounded-md text-white text-xs font-medium flex items-center gap-1 shadow-lg z-10">
+                <Sparkles className="w-3 h-3" />
+                <span>{t("imageGallery.example")}</span>
+              </div>
+            )}
+
             {/* Overlay gradient */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
@@ -371,7 +382,14 @@ export function ImageGallery({
               className="relative max-w-6xl w-full rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl border border-white/10 my-4 md:my-8"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex-1 bg-gradient-to-b from-gray-900/50 to-black max-h-[50vh] md:max-h-[85vh]">
+              <div className="flex-1 bg-gradient-to-b from-gray-900/50 to-black max-h-[50vh] md:max-h-[85vh] relative">
+                {selectedImage.isExample && (
+                  <div className="absolute top-3 left-3 z-10 bg-purple-600/90 backdrop-blur-sm px-3 py-1 rounded-md text-white text-sm font-medium flex items-center gap-1.5 shadow-lg">
+                    <Sparkles className="w-4 h-4" />
+                    <span>{t("imageGallery.example")}</span>
+                  </div>
+                )}
+
                 {selectedImage.status === GenAiStatusEnum.Failed ? (
                   <div className="w-full h-full flex items-center justify-center p-8">
                     <div className="flex flex-col items-center text-center">
@@ -427,12 +445,18 @@ export function ImageGallery({
               </div>
 
               <div className="md:w-72 bg-gradient-to-r from-gray-900/90 to-gray-800/90 backdrop-blur-md p-4 md:p-6 flex flex-col">
-                <div className="flex justify-end mb-2 md:mb-4">
+                <div className="flex justify-between mb-2 md:mb-4">
+                  {selectedImage.isExample && (
+                    <div className="bg-purple-600/90 backdrop-blur-sm px-2 py-1 rounded-md text-white text-xs font-medium flex items-center gap-1 shadow-lg md:hidden">
+                      <Sparkles className="w-3 h-3" />
+                      <span>{t("imageGallery.example")}</span>
+                    </div>
+                  )}
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={closeModal}
-                    className="p-2 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors backdrop-blur-sm"
+                    className="p-2 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors backdrop-blur-sm ml-auto"
                     aria-label="Close modal"
                   >
                     <X className="w-5 h-5" />
