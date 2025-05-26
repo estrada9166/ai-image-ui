@@ -492,7 +492,7 @@
       }
     },
     "ugcGenerator": {
-      "badge": "Creación de Contenido con IA",
+      "badge": "Creación de Contenido IA",
       "title": "Genera Contenido UGC Profesional en Segundos",
       "description": "Crea impresionantes imágenes y videos profesionales para tus campañas de marketing sin necesidad de sesiones fotográficas",
       "tabs": {
@@ -501,10 +501,8 @@
       },
       "prompt": {
         "title": "Tu Prompt",
-        "imagePrompt": "Retrato profesional de una CEO tecnológica segura de sí misma, treinta y tantos años, con una sonrisa cálida, vistiendo un atuendo de negocios moderno contra un fondo de degradado suave, iluminación de estudio, fotografía profesional, alto detalle",
-        "videoPrompt": "Video promocional profesional de un elegante teléfono inteligente siendo utilizado por personas diversas en diferentes entornos - cafetería, oficina y al aire libre. Muestra las características del teléfono con transiciones suaves, iluminación brillante y estética moderna",
-        "imageGenTime": "Tiempo de generación: ~4 segundos",
-        "videoGenTime": "Tiempo de generación: ~20 segundos",
+        "imagePrompt": "Chica, 30 años. Está viajando por el mundo y actualmente se encuentra en Madrid",
+        "videoPrompt": "mueve la cámara alrededor. Usa movimiento realista. Haz que sonría como si estuviera disfrutando de su viaje",
         "videoFeature1": "Escenas y transiciones completamente personalizables",
         "imageFeature2": "No se requiere modelo, solo describe lo que necesitas",
         "videoFeature2": "No se necesita equipo de video ni habilidades de edición",
@@ -514,15 +512,11 @@
       "results": {
         "imageTitle": "Resultados Generados",
         "imageDescription": "Selecciona la mejor variación para tus necesidades",
-        "selected": "Seleccionada",
-        "tryAnotherPrompt": "Probar Otro Prompt",
-        "downloadImage": "Descargar Imagen",
+        "selected": "Seleccionado",
         "videoTitle": "Video Generado",
         "videoDescription": "Video de alta calidad generado por IA para tu marketing",
-        "videoCaption": "Video generado por IA",
-        "videoDetails": "15 segundos • Calidad HD",
-        "readyToDownload": "Listo para descargar",
-        "downloadVideo": "Descargar Video"
+        "videoCaption": "Video de producto generado por IA",
+        "videoDetails": "5 segundos • Calidad HD"
       },
       "footer": "Genera tantas variaciones como necesites para encontrar el ajuste perfecto para tu marca"
     },

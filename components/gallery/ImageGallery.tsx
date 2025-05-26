@@ -5,7 +5,11 @@ import type React from "react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { GenAiStatusEnum, ImageTypeOptionsEnum } from "@/gql/graphql";
+import {
+  GenAiStatusEnum,
+  ImageTypeOptionsEnum,
+  AiModelOptionsEnum,
+} from "@/gql/graphql";
 import { graphql } from "../../gql";
 import { useQuery } from "urql";
 import { useRouter } from "next/navigation";
@@ -32,6 +36,7 @@ type Image = {
   prompt?: string | null;
   status: GenAiStatusEnum;
   thumbnailUrl?: string | null;
+  model?: AiModelOptionsEnum | null;
   originalImage?: {
     id: string;
     imageUrl?: string | null;
@@ -56,6 +61,7 @@ const ImageGalleryQuery = graphql(/* GraphQL */ `
           status
           imageUrl
           thumbnailUrl
+          model
           originalImage {
             id
             imageUrl
@@ -485,20 +491,33 @@ export function ImageGallery({
                   </div>
                 )}
 
-                {selectedImage.prompt &&
-                  selectedImage.status !== GenAiStatusEnum.Failed && (
-                    <div className="mt-3 md:mt-auto">
+                <div className="mt-3 md:mt-auto space-y-4">
+                  {selectedImage.model && (
+                    <div>
                       <h3 className="text-white text-xs md:text-sm font-medium mb-2 md:mb-3 flex items-center gap-2">
                         <span className="h-1 w-4 md:w-5 bg-purple-500 rounded-full"></span>
-                        Prompt
+                        {selectedImage.model === AiModelOptionsEnum.Model_1
+                          ? t("imageCreation.aiModels.model1")
+                          : t("imageCreation.aiModels.model2")}
                       </h3>
-                      <div className="bg-black/30 rounded-xl p-3 md:p-4 border border-white/5 hover:border-purple-500/30 transition-colors duration-300">
-                        <p className="text-white/90 text-xs leading-relaxed max-h-24 md:max-h-none overflow-y-auto">
-                          {selectedImage.prompt}
-                        </p>
-                      </div>
                     </div>
                   )}
+
+                  {selectedImage.prompt &&
+                    selectedImage.status !== GenAiStatusEnum.Failed && (
+                      <div>
+                        <h3 className="text-white text-xs md:text-sm font-medium mb-2 md:mb-3 flex items-center gap-2">
+                          <span className="h-1 w-4 md:w-5 bg-purple-500 rounded-full"></span>
+                          Prompt
+                        </h3>
+                        <div className="bg-black/30 rounded-xl p-3 md:p-4 border border-white/5 hover:border-purple-500/30 transition-colors duration-300">
+                          <p className="text-white/90 text-xs leading-relaxed max-h-24 md:max-h-none overflow-y-auto">
+                            {selectedImage.prompt}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                </div>
               </div>
             </motion.div>
           </motion.div>,
