@@ -123,7 +123,7 @@ export function VideoGallery({
         clearInterval(intervalId);
       }
     };
-  }, [data?.videos?.edges?.length, reExecuteQuery]);
+  }, [data?.videos?.edges, reExecuteQuery]);
 
   const handleVideoClick = (video: Video, index: number) => {
     // Only allow clicking if the video is not pending or failed
