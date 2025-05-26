@@ -107,7 +107,8 @@
     "download": "Download",
     "generationFailed": "Generation failed",
     "tryAgain": "Try again",
-    "example": "Example"
+    "example": "Example",
+    "negativePrompt": "Negative Prompt"
   },
   "googleLogin": {
     "loginWithGoogle": "Login with Google"

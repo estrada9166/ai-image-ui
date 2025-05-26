@@ -391,6 +391,20 @@ export function VideoGallery({
                     </div>
                   </div>
                 )}
+
+                {selectedVideo.negativePrompt && (
+                  <div className="mt-3">
+                    <h3 className="text-white text-xs md:text-sm font-medium mb-2 md:mb-3 flex items-center gap-2">
+                      <span className="h-1 w-5 bg-purple-500 rounded-full"></span>
+                      {t("videoGallery.negativePrompt")}
+                    </h3>
+                    <div className="bg-black/30 rounded-xl p-3 md:p-4 border border-white/5 hover:border-purple-500/30 transition-colors duration-300">
+                      <p className="text-white/90 text-xs leading-relaxed">
+                        {selectedVideo.negativePrompt}
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             </motion.div>
           </motion.div>,

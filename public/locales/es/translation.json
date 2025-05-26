@@ -107,7 +107,8 @@
     "download": "Descargar",
     "generationFailed": "Error al generar video",
     "tryAgain": "Intenta de nuevo",
-    "example": "Ejemplo"
+    "example": "Ejemplo",
+    "negativePrompt": "Prompt Negativo"
   },
   "googleLogin": {
     "loginWithGoogle": "Iniciar sesión con Google"
