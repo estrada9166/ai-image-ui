@@ -91,16 +91,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </div>
         </Link>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="overflow-y-auto flex-shrink">
         <NavMain items={data.navMain} onClick={handleToggleSidebar} />
       </SidebarContent>
-      <SidebarFooter>
-        <NavRemainingPlan
-          hasActiveSubscription={userData?.me?.hasActiveSubscription ?? false}
-        />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
-        <LanguageSelector />
-
+      <SidebarFooter className="flex-shrink-0">
+        <div className="overflow-y-auto max-h-[40vh] flex flex-col">
+          <NavRemainingPlan
+            hasActiveSubscription={userData?.me?.hasActiveSubscription ?? false}
+          />
+          <NavSecondary items={data.navSecondary} className="mt-auto" />
+          <LanguageSelector />
+        </div>
         <NavUser
           user={{
             name: userData?.me?.fullName ?? "",
