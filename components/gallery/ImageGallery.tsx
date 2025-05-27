@@ -40,7 +40,7 @@ type Image = {
   status: GenAiStatusEnum;
   thumbnailUrl?: string | null;
   model?: AiModelOptionsEnum | null;
-  camera: CameraOptionsEnum;
+  camera?: CameraOptionsEnum | null;
   aspectRatio: AspectRatioOptionsEnum;
   originalImage?: {
     id: string;

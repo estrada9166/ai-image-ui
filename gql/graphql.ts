@@ -64,7 +64,7 @@ export enum GenAiStatusEnum {
 export type Image = Node & {
   __typename?: 'Image';
   aspectRatio: AspectRatioOptionsEnum;
-  camera: CameraOptionsEnum;
+  camera?: Maybe<CameraOptionsEnum>;
   /** Globally unique identifier representing a concrete GraphQL ObjectType */
   id: Scalars['ID']['output'];
   imageUrl?: Maybe<Scalars['String']['output']>;
@@ -387,7 +387,7 @@ export type ImageGalleryQueryVariables = Exact<{
 }>;
 
 
-export type ImageGalleryQuery = { __typename?: 'Query', images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id: string, camera: CameraOptionsEnum, aspectRatio: AspectRatioOptionsEnum, prompt?: string | null, status: GenAiStatusEnum, imageUrl?: string | null, thumbnailUrl?: string | null, model?: AiModelOptionsEnum | null, isExample: boolean, originalImage?: { __typename?: 'Image', id: string, imageUrl?: string | null } | null } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
+export type ImageGalleryQuery = { __typename?: 'Query', images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id: string, camera?: CameraOptionsEnum | null, aspectRatio: AspectRatioOptionsEnum, prompt?: string | null, status: GenAiStatusEnum, imageUrl?: string | null, thumbnailUrl?: string | null, model?: AiModelOptionsEnum | null, isExample: boolean, originalImage?: { __typename?: 'Image', id: string, imageUrl?: string | null } | null } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
 
 export type VideoGalleryQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
