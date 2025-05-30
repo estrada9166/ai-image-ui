@@ -102,7 +102,6 @@ export type ImageEdge = {
 
 export type ImageEditInput = {
   imageId: Scalars['String']['input'];
-  model?: InputMaybe<AiModelOptionsEnum>;
   prompt: Scalars['String']['input'];
 };
 

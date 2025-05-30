@@ -4,7 +4,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EmptySourceImage } from "../common/EmptySourceImage";
 import { SourceImageDisplay } from "./SourceImageDisplay";
-import { AiModelSelector } from "./AiModelSelector";
 import { PromptIdeasSelector } from "./PromptIdeasSelector";
 import { PromptInput } from "./PromptInput";
 import { PromptActions } from "./PromptActions";
@@ -23,8 +22,6 @@ export const SourceImageCard = ({
   handleEditImage,
   handlePromptIdeaClick,
   uploadedImage,
-  model,
-  setModel,
 }: SourceImageCardProps) => {
   const { t } = useTranslation();
 
@@ -75,9 +72,6 @@ export const SourceImageCard = ({
         {/* Prompt Input Below Image */}
         <div className="mt-6 space-y-5">
           <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1">
-              <AiModelSelector model={model} setModel={setModel} />
-            </div>
             <div className="flex-1">
               <PromptIdeasSelector onSelectPrompt={handlePromptIdeaClick} />
             </div>

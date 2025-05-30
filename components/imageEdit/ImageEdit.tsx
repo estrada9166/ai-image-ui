@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ImageIcon } from "lucide-react";
 import { ImageGallery } from "../gallery/ImageGallery";
-import { AiModelOptionsEnum, ImageTypeOptionsEnum } from "../../gql/graphql";
+import { ImageTypeOptionsEnum } from "../../gql/graphql";
 import axios from "axios";
 import { useSearchParams, useRouter } from "next/navigation";
 
@@ -47,7 +47,6 @@ export default function ImageEdit() {
   const [imageData, setImageData] = useState<Image | null>(null);
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const [imageId, setImageId] = useState<string | null>(null);
-  const [model, setModel] = useState(AiModelOptionsEnum.Model_1);
   const [editedImageUrl, setEditedImageUrl] = useState<string | null>(null);
   const [image, setImage] = useState<string | null>(searchParams?.get("image"));
   const [isLoading, setIsLoading] = useState(false);
@@ -134,7 +133,7 @@ export default function ImageEdit() {
 
       if (imageData) {
         const result = await editImage({
-          input: { imageId: imageData.id, prompt: imagePrompt, model },
+          input: { imageId: imageData.id, prompt: imagePrompt },
         });
 
         imageId = result.data?.imageEdit.id;
@@ -143,7 +142,6 @@ export default function ImageEdit() {
 
         formData.append("file", uploadedImage);
         formData.append("prompt", imagePrompt);
-        formData.append("model", model);
 
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/api/upload/image`,
@@ -206,8 +204,6 @@ export default function ImageEdit() {
           handleEditImage={handleEditImage}
           handlePromptIdeaClick={handlePromptIdeaClick}
           uploadedImage={uploadedImage}
-          model={model}
-          setModel={setModel}
         />
 
         {/* Edited Image Output */}

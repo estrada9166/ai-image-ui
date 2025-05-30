@@ -20,8 +20,6 @@ export interface SourceImageCardProps {
   handleEditImage: () => void;
   handlePromptIdeaClick: (idea: string) => void;
   uploadedImage: File | null;
-  model: AiModelOptionsEnum;
-  setModel: React.Dispatch<React.SetStateAction<AiModelOptionsEnum>>;
 }
 
 export interface EditedImageCardProps {
