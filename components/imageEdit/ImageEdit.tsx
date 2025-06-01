@@ -50,6 +50,7 @@ export default function ImageEdit() {
   const [editedImageUrl, setEditedImageUrl] = useState<string | null>(null);
   const [images, setImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [requestSubmitted, setRequestSubmitted] = useState(false);
 
   const [, editImage] = useMutation(ImageEditMutation);
   const { reexecuteQuery: reexecuteUsageQuery } = useUsageQuery({
@@ -119,7 +120,10 @@ export default function ImageEdit() {
       setIsLoading(true);
     } else {
       setIsLoading(false);
-      setShouldRefetch(false);
+      if (editedImageUrl) {
+        setShouldRefetch(false);
+        setRequestSubmitted(false);
+      }
     }
   }, [imageId, editedImageUrl]);
 
@@ -195,7 +199,8 @@ export default function ImageEdit() {
   const handleEditImage = async () => {
     if (
       !imagePrompt.trim() ||
-      (uploadedImages.length === 0 && imageData.length === 0)
+      (uploadedImages.length === 0 && imageData.length === 0) ||
+      requestSubmitted
     )
       return;
 
@@ -222,6 +227,7 @@ export default function ImageEdit() {
 
     setIsLoading(true);
     setEditedImageUrl(null);
+    setRequestSubmitted(true);
 
     try {
       let imageId = null;
@@ -272,6 +278,13 @@ export default function ImageEdit() {
             newUrl.searchParams.set("images", JSON.stringify(originalImageIds));
           }
           router.push(newUrl.pathname + newUrl.search);
+
+          // Clear the uploaded images and previews after successful upload
+          setUploadedImages([]);
+          setPreviewUrls([]);
+          if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+          }
         }
       }
 
@@ -289,6 +302,7 @@ export default function ImageEdit() {
         description: t("imageEdit.editingFailed"),
         variant: "destructive",
       });
+      setRequestSubmitted(false);
     }
   };
 
