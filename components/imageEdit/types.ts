@@ -8,18 +8,18 @@ export type ImageEdit = {
 };
 
 export interface SourceImageCardProps {
-  imageData: Image | null;
-  previewUrl: string | null;
+  imageData: Image[];
+  previewUrls: (string | null)[];
   fileInputRef: React.RefObject<HTMLInputElement> | null;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleRemoveImage: () => void;
-  handleRemoveSelectedImage: () => void;
+  handleRemoveImage: (index: number) => void;
+  handleRemoveSelectedImage: (index: number) => void;
   imagePrompt: string;
   setImagePrompt: React.Dispatch<React.SetStateAction<string>>;
   isEditingImage: boolean;
   handleEditImage: () => void;
   handlePromptIdeaClick: (idea: string) => void;
-  uploadedImage: File | null;
+  uploadedImages: File[];
 }
 
 export interface EditedImageCardProps {
@@ -46,6 +46,7 @@ export interface SourceImageDisplayProps {
   imageUrl: string;
   prompt?: string | null;
   onRemove: () => void;
+  index?: number;
 }
 
 export interface EmptyEditedImageProps {

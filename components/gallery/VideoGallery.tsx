@@ -29,10 +29,12 @@ type Video = {
   prompt?: string | null;
   negativePrompt?: string | null;
   status: string;
-  originalImage?: {
-    id: string;
-    thumbnailUrl?: string | null;
-  } | null;
+  originalImages?:
+    | {
+        id: string;
+        thumbnailUrl?: string | null;
+      }[]
+    | null;
   isExample?: boolean | null;
 };
 
@@ -241,7 +243,9 @@ export function VideoGallery({
                 )}
                 <video
                   src={video.node.videoUrl || ""}
-                  poster={video.node.originalImage?.thumbnailUrl ?? undefined}
+                  poster={
+                    video.node.originalImages?.[0]?.thumbnailUrl ?? undefined
+                  }
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
 
@@ -346,7 +350,7 @@ export function VideoGallery({
                   autoPlay
                   className="w-full h-auto max-h-[50vh] md:max-h-[85vh] object-contain"
                   poster={
-                    selectedVideo.originalImage?.thumbnailUrl ?? undefined
+                    selectedVideo.originalImages?.[0]?.thumbnailUrl ?? undefined
                   }
                 />
               </div>

@@ -176,6 +176,7 @@
     "editing": "Editando...",
     "editImage": "Editar Imagen",
     "sourceImage": "Imagen Original",
+    "sourceImages": "Imágenes Originales",
     "original": "Original",
     "editingImage": "Editando tu imagen...",
     "transformingImage": "¡Estamos transformando tu imagen con magia de IA!",
@@ -184,7 +185,11 @@
     "enterAPromptToEditYourImage": "Ingresa un prompt para editar tu imagen",
     "editedImage": "Imagen Editada",
     "processingEditedImage": "Procesando imagen editada...",
-    "yourEditedImages": "Tus Imágenes Editadas"
+    "yourEditedImages": "Tus Imágenes Editadas",
+    "maxTwoImages": "Máximo 2 imágenes permitidas",
+    "addAnotherImage": "Añadir Otra Imagen",
+    "editingFailed": "Falló la edición de imágenes. Por favor, inténtalo de nuevo.",
+    "addImage": "Añadir Imagen"
   },
   "imageEditPromptIdeas": {
     "idea1": "Transforma el fondo a una playa tropical prístina con agua turquesa cristalina, arena dorada y palmeras meciéndose. Añade un cálido resplandor de atardecer que proyecte suaves reflejos naranjas sobre el sujeto.",
@@ -270,7 +275,9 @@
     "yourRestoredImageWillAppearHere": "Tu imagen restaurada aparecerá aquí",
     "downloadRestoredImage": "Descargar Imagen Restaurada",
     "beforeAndAfterComparison": "Comparación de Antes y Después",
-    "yourRestoredImages": "Tus Imágenes Restauradas"
+    "yourRestoredImages": "Tus Imágenes Restauradas",
+    "slideView": "Vista Deslizante",
+    "sideBySide": "Lado a Lado"
   },
   "settings": {
     "currentPasswordRequired": "Se requiere la contraseña actual",
@@ -323,6 +330,7 @@
       "uploadImages": "Subir Imagenes",
       "selectFromGallery": "Seleccionar de la Galería"
     },
+    "addAnotherImage": "Añadir Otra Imagen",
     "useDefault": "Usar Predeterminado",
     "defaultPrompt": "Crea movimiento realista con movimiento de cámara realista, transiciones suaves y efectos de cámara de mano naturales que traen a la vida la imagen",
     "images": "Imágenes",

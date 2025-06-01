@@ -176,6 +176,7 @@
     "editing": "Editing...",
     "editImage": "Edit Image",
     "sourceImage": "Source Image",
+    "sourceImages": "Source Images",
     "original": "Original",
     "editingImage": "Editing your image...",
     "transformingImage": "We're transforming your image with AI magic!",
@@ -184,7 +185,11 @@
     "enterAPromptToEditYourImage": "Enter a prompt to edit your image",
     "editedImage": "Edited Image",
     "processingEditedImage": "Processing edited image...",
-    "yourEditedImages": "Your Edited Images"
+    "yourEditedImages": "Your Edited Images",
+    "maxTwoImages": "Maximum 2 images allowed",
+    "addAnotherImage": "Add Another Image",
+    "editingFailed": "Failed to edit images. Please try again.",
+    "addImage": "Add Image"
   },
   "imageEditPromptIdeas": {
     "idea1": "Transform the background to a pristine tropical beach with crystal-clear turquoise water, golden sand, and swaying palm trees. Add a warm sunset glow that casts soft orange highlights on the subject.",
@@ -270,7 +275,9 @@
     "yourRestoredImageWillAppearHere": "Your restored image will appear here",
     "downloadRestoredImage": "Download Restored Image",
     "beforeAndAfterComparison": "Before and After Comparison",
-    "yourRestoredImages": "Your Restored Images"
+    "yourRestoredImages": "Your Restored Images",
+    "slideView": "Slide View",
+    "sideBySide": "Side by Side"
   },
   "settings": {
     "currentPasswordRequired": "Current password is required",
@@ -323,6 +330,7 @@
       "uploadImages": "Upload Images",
       "selectFromGallery": "Select from Gallery"
     },
+    "addAnotherImage": "Add Another Image",
     "useDefault": "Use Default",
     "defaultPrompt": "Create lifelike movement with realistic camera motion, smooth transitions, and natural handheld camera effects that bring your the image to life",
     "images": "Images",

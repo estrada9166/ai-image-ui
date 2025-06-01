@@ -7,11 +7,21 @@ import { Checkout } from "../checkout/Checkout";
 
 export function EmptyState({
   fileInputRef,
+  onUploadClick,
 }: {
   fileInputRef: React.RefObject<HTMLInputElement>;
+  onUploadClick?: () => void;
 }) {
   const { t } = useTranslation();
   const { data: userData } = useMeQuery();
+
+  const handleUploadClick = () => {
+    if (onUploadClick) {
+      onUploadClick();
+    } else if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
 
   return (
     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-purple-50 dark:from-gray-800 dark:to-purple-900/20 backdrop-blur-sm">
@@ -34,11 +44,7 @@ export function EmptyState({
               <Button
                 variant="outline"
                 className="w-full sm:w-auto border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-all duration-300 rounded-full cursor-pointer shadow-sm hover:shadow-md"
-                onClick={() => {
-                  if (fileInputRef.current) {
-                    fileInputRef.current.click();
-                  }
-                }}
+                onClick={handleUploadClick}
               >
                 <Upload className="mr-2 h-4 w-4" />
                 {t("videoCreation.emptyState.uploadImages")}

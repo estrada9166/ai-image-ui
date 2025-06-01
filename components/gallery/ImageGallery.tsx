@@ -42,10 +42,12 @@ type Image = {
   model?: AiModelOptionsEnum | null;
   camera?: CameraOptionsEnum | null;
   aspectRatio: AspectRatioOptionsEnum;
-  originalImage?: {
-    id: string;
-    imageUrl?: string | null;
-  } | null;
+  originalImages?:
+    | {
+        id: string;
+        imageUrl?: string | null;
+      }[]
+    | null;
   isExample?: boolean | null;
 };
 
@@ -71,7 +73,7 @@ const ImageGalleryQuery = graphql(/* GraphQL */ `
           thumbnailUrl
           model
           isExample
-          originalImage {
+          originalImages {
             id
             imageUrl
           }
@@ -100,7 +102,7 @@ export function ImageGallery({
   showPrompt?: boolean;
   redirectToVideoCreationOnClick?: boolean;
   loadPartialGallery?: boolean;
-  tab?: "images" | "edited-images" | "restored-images";
+  tab?: "images" | "edited-images" | "restored-images" | "user-uploaded";
   createdImageId?: string | null;
   setCreatedImageUrl?: (imageUrl: string) => void;
 }) {
@@ -409,11 +411,11 @@ export function ImageGallery({
                     </div>
                   </div>
                 ) : tab === "restored-images" &&
-                  selectedImage.originalImage?.imageUrl &&
+                  selectedImage.originalImages?.[0]?.imageUrl &&
                   selectedImage.imageUrl ? (
                   <div className="h-full max-h-[50vh] md:max-h-[85vh] overflow-hidden">
                     <ReactCompareImage
-                      leftImage={selectedImage.originalImage.imageUrl}
+                      leftImage={selectedImage.originalImages[0].imageUrl}
                       rightImage={selectedImage.imageUrl}
                       sliderLineWidth={2}
                       sliderLineColor="#ffffff"

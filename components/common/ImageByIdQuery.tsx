@@ -8,7 +8,7 @@ export const ImageByIdQuery = graphql(/* GraphQL */ `
         prompt
         thumbnailUrl
         imageUrl
-        originalImage {
+        originalImages {
           id
         }
       }

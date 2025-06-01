@@ -19,7 +19,6 @@ import { graphql } from "../../gql";
 import { useMutation, useQuery } from "urql";
 import { ImageByIdQuery } from "../common/ImageByIdQuery";
 import { motion } from "framer-motion";
-import { AnimatePresence } from "framer-motion";
 import { ImageGallery } from "../gallery/ImageGallery";
 import { useTranslation } from "react-i18next";
 import { useMeQuery } from "../common/useMeQuery";
@@ -306,7 +305,7 @@ export default function RestoreImage() {
         );
 
         imageId = response.data.id;
-        setImage(response.data?.originalImage?.id || null);
+        setImage(response.data?.originalImages?.id || null);
       }
 
       if (imageId) {
@@ -334,33 +333,46 @@ export default function RestoreImage() {
   };
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-        {t("restoreImage.imageRestoration")}
-      </h1>
+    <div className="w-full max-w-6xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <div className="flex items-center gap-x-2 mb-6">
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+            {t("restoreImage.imageRestoration")}
+          </h1>
+        </div>
+      </motion.div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
         className="grid grid-cols-1 lg:grid-cols-2 gap-6"
       >
         {/* Source Image Card */}
-        <Card className="border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden hover:shadow-xl transition-all duration-300 rounded-xl">
-          <CardContent className="p-8">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                <ImageIcon className="h-5 w-5 text-purple-500" />
-                {t("restoreImage.originalImage")}
-              </h3>
+        <Card className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border border-purple-100/30 dark:border-purple-800/30 shadow-xl overflow-hidden rounded-xl">
+          <CardContent className="p-6 lg:p-8">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-x-2">
+                <div className="inline-flex items-center justify-center w-8 h-8 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg shadow-sm">
+                  <ImageIcon className="h-4 w-4 text-white" />
+                </div>
+                <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">
+                  {t("restoreImage.originalImage")}
+                </h3>
+              </div>
               <Badge
                 variant="outline"
-                className="text-sm py-1 px-2 bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/20 dark:text-purple-400 dark:border-purple-800/30"
+                className="text-sm py-1 px-3 bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/20 dark:text-purple-400 dark:border-purple-800/30 rounded-full"
               >
                 {t("restoreImage.before")}
               </Badge>
             </div>
-            <div className="aspect-square relative overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50 shadow-inner group">
+
+            <div className="aspect-[4/3] relative overflow-hidden rounded-xl border border-purple-100/50 dark:border-purple-900/50 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 shadow-inner mb-6">
               {imageData?.imageUrl || previewUrl ? (
                 <SourceImageDisplay
                   imageUrl={imageData?.imageUrl || previewUrl || ""}
@@ -383,8 +395,7 @@ export default function RestoreImage() {
               onChange={handleFileChange}
             />
 
-            {/* Prompt Input Below Image */}
-            <div className="mt-6 space-y-5">
+            <div className="bg-white/70 dark:bg-gray-800/70 rounded-xl p-4 border border-purple-100/30 dark:border-purple-800/30">
               <PromptActions
                 onRestore={handleRestoreImage}
                 isRestoring={isLoading}
@@ -395,21 +406,26 @@ export default function RestoreImage() {
         </Card>
 
         {/* Restored Image Card */}
-        <Card className="border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden hover:shadow-xl transition-all duration-300 rounded-xl">
-          <CardContent className="p-8">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-purple-500" />
-                {t("restoreImage.restoredImage")}
-              </h3>
+        <Card className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border border-purple-100/30 dark:border-purple-800/30 shadow-xl overflow-hidden rounded-xl">
+          <CardContent className="p-6 lg:p-8">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-x-2">
+                <div className="inline-flex items-center justify-center w-8 h-8 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg shadow-sm">
+                  <Sparkles className="h-4 w-4 text-white" />
+                </div>
+                <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">
+                  {t("restoreImage.restoredImage")}
+                </h3>
+              </div>
               <Badge
                 variant="outline"
-                className="text-sm py-1 px-2 bg-green-50 text-green-700 border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800/30"
+                className="text-sm py-1 px-3 bg-green-50 text-green-700 border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800/30 rounded-full"
               >
                 {t("restoreImage.after")}
               </Badge>
             </div>
-            <div className="aspect-square relative overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50 shadow-inner">
+
+            <div className="aspect-[4/3] relative overflow-hidden rounded-xl border border-purple-100/50 dark:border-purple-900/50 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 shadow-inner mb-6">
               {isLoading ? (
                 <ProcessingRestoredImage />
               ) : restoredImageUrl ? (
@@ -421,8 +437,8 @@ export default function RestoreImage() {
                   />
                 </div>
               ) : (
-                <div className="flex flex-col items-center justify-center h-full bg-gray-50 dark:bg-gray-900/30">
-                  <div className="p-4 rounded-full bg-purple-100 dark:bg-purple-900/20 mb-4">
+                <div className="flex flex-col items-center justify-center h-full">
+                  <div className="p-4 rounded-full bg-purple-100/50 dark:bg-purple-900/30 mb-4">
                     <Sparkles className="h-8 w-8 text-purple-500" />
                   </div>
                   <p className="text-gray-500 dark:text-gray-400 text-center px-4">
@@ -434,21 +450,23 @@ export default function RestoreImage() {
 
             {/* Download button for restored image */}
             {restoredImageUrl && (
-              <div className="mt-6 flex justify-center">
-                <Button
-                  className="bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 shadow-md hover:shadow-lg transition-all duration-300 rounded-full"
-                  onClick={() => {
-                    // Create a temporary link to download the image
-                    const link = document.createElement("a");
-                    link.href = restoredImageUrl;
-                    link.download = "restored-image.jpg";
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                  }}
-                >
-                  {t("restoreImage.downloadRestoredImage")}
-                </Button>
+              <div className="bg-white/70 dark:bg-gray-800/70 rounded-xl p-4 border border-purple-100/30 dark:border-purple-800/30">
+                <div className="flex justify-center">
+                  <Button
+                    className="bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 shadow-md hover:shadow-lg transition-all duration-300 rounded-full"
+                    onClick={() => {
+                      // Create a temporary link to download the image
+                      const link = document.createElement("a");
+                      link.href = restoredImageUrl;
+                      link.download = "restored-image.jpg";
+                      document.body.appendChild(link);
+                      link.click();
+                      document.body.removeChild(link);
+                    }}
+                  >
+                    {t("restoreImage.downloadRestoredImage")}
+                  </Button>
+                </div>
               </div>
             )}
           </CardContent>
@@ -457,98 +475,116 @@ export default function RestoreImage() {
 
       {/* Before/After Comparison */}
       {restoredImageUrl && (
-        <Card className="mt-8 border border-purple-100 dark:border-purple-900/30 shadow-lg bg-white/95 backdrop-blur-sm dark:bg-gray-800/95 overflow-hidden hover:shadow-xl transition-all duration-300 rounded-xl">
-          <CardContent className="p-8">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                <ArrowLeftRight className="h-5 w-5 text-purple-500" />
-                {t("restoreImage.beforeAndAfterComparison")}
-              </h3>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={toggleBeforeAfterView}
-                className="text-sm border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-colors duration-200 rounded-full"
-              >
-                {showBeforeAfter ? "Side by Side" : "Slide View"}
-              </Button>
-            </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
+        >
+          <Card className="mt-8 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border border-purple-100/30 dark:border-purple-800/30 shadow-xl overflow-hidden rounded-xl">
+            <CardContent className="p-6 lg:p-8">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-x-2">
+                  <div className="inline-flex items-center justify-center w-8 h-8 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg shadow-sm">
+                    <ArrowLeftRight className="h-4 w-4 text-white" />
+                  </div>
+                  <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">
+                    {t("restoreImage.beforeAndAfterComparison")}
+                  </h3>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={toggleBeforeAfterView}
+                  className="text-sm border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-colors duration-200 rounded-full"
+                >
+                  {showBeforeAfter
+                    ? t("restoreImage.sideBySide")
+                    : t("restoreImage.slideView")}
+                </Button>
+              </div>
 
-            {showBeforeAfter ? (
-              <div className="relative overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50">
-                <ReactCompareImage
-                  leftImage={imageData?.imageUrl || previewUrl || ""}
-                  rightImage={restoredImageUrl || ""}
-                  sliderLineWidth={2}
-                  sliderLineColor="#6366F1"
-                  handleSize={40}
-                  leftImageLabel={t("restoreImage.before")}
-                  rightImageLabel={t("restoreImage.after")}
-                  leftImageCss={{ objectFit: "contain", maxHeight: "100%" }}
-                  rightImageCss={{ objectFit: "contain", maxHeight: "100%" }}
-                />
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="relative aspect-square overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50">
-                  <div className="w-full h-full flex items-center justify-center">
-                    <img
-                      src={imageData?.imageUrl || previewUrl || ""}
-                      alt="Before"
-                      className="max-w-full max-h-full object-contain"
+              <div className="bg-white/70 dark:bg-gray-800/70 rounded-xl p-4 border border-purple-100/30 dark:border-purple-800/30">
+                {showBeforeAfter ? (
+                  <div className="relative overflow-hidden rounded-lg">
+                    <ReactCompareImage
+                      leftImage={imageData?.imageUrl || previewUrl || ""}
+                      rightImage={restoredImageUrl || ""}
+                      sliderLineWidth={2}
+                      sliderLineColor="#6366F1"
+                      handleSize={40}
+                      leftImageLabel={t("restoreImage.before")}
+                      rightImageLabel={t("restoreImage.after")}
+                      leftImageCss={{ objectFit: "contain", maxHeight: "100%" }}
+                      rightImageCss={{
+                        objectFit: "contain",
+                        maxHeight: "100%",
+                      }}
                     />
                   </div>
-                  <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
-                    {t("restoreImage.before")}
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-lg border border-purple-100/50 dark:border-purple-900/50 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
+                      <div className="w-full h-full flex items-center justify-center">
+                        <img
+                          src={imageData?.imageUrl || previewUrl || ""}
+                          alt="Before"
+                          className="max-w-full max-h-full object-contain"
+                        />
+                      </div>
+                      <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                        {t("restoreImage.before")}
+                      </div>
+                    </div>
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-lg border border-purple-100/50 dark:border-purple-900/50 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
+                      <div className="w-full h-full flex items-center justify-center">
+                        <img
+                          src={restoredImageUrl || ""}
+                          alt="After"
+                          className="max-w-full max-h-full object-contain"
+                        />
+                      </div>
+                      <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                        {t("restoreImage.after")}
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="relative aspect-square overflow-hidden rounded-lg border border-purple-100 dark:border-purple-900/50">
-                  <div className="w-full h-full flex items-center justify-center">
-                    <img
-                      src={restoredImageUrl || ""}
-                      alt="After"
-                      className="max-w-full max-h-full object-contain"
-                    />
-                  </div>
-                  <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
-                    {t("restoreImage.after")}
-                  </div>
-                </div>
+                )}
               </div>
-            )}
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </motion.div>
       )}
 
-      <div className="container mx-auto md:py-6 px-4">
-        <AnimatePresence>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="space-y-4"
-          >
-            <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-              <ImageIcon className="h-5 w-5 text-purple-500" />
-              {t("restoreImage.yourRestoredImages")}
-              <span className="text-sm text-gray-500 dark:text-gray-400 font-normal"></span>
-            </h3>
+      {/* Gallery Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
+        className="mt-8"
+      >
+        <div className="flex items-center gap-x-2 mb-6">
+          <div className="inline-flex items-center justify-center w-8 h-8 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg shadow-sm">
+            <ImageIcon className="h-4 w-4 text-white" />
+          </div>
+          <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">
+            {t("restoreImage.yourRestoredImages")}
+          </h3>
+        </div>
 
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-violet-100 dark:border-violet-900/30">
-              <ImageGallery
-                type={[ImageTypeOptionsEnum.Restored]}
-                shouldRefetch={shouldRefetch}
-                showPrompt={false}
-                loadPartialGallery
-                tab="restored-images"
-                createdImageId={imageId}
-                setCreatedImageUrl={setRestoredImageUrl}
-              />
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+        <Card className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border border-purple-100/30 dark:border-purple-800/30 shadow-xl overflow-hidden rounded-xl">
+          <CardContent className="p-6">
+            <ImageGallery
+              type={[ImageTypeOptionsEnum.Restored]}
+              shouldRefetch={shouldRefetch}
+              showPrompt={false}
+              loadPartialGallery
+              tab="restored-images"
+              createdImageId={imageId}
+              setCreatedImageUrl={setRestoredImageUrl}
+            />
+          </CardContent>
+        </Card>
+      </motion.div>
     </div>
   );
 }

@@ -41,14 +41,14 @@ export default function ImageEdit() {
   const { toast } = useToast();
 
   const [imagePrompt, setImagePrompt] = useState("");
-  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [uploadedImages, setUploadedImages] = useState<File[]>([]);
+  const [previewUrls, setPreviewUrls] = useState<(string | null)[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [imageData, setImageData] = useState<Image | null>(null);
+  const [imageData, setImageData] = useState<Image[]>([]);
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const [imageId, setImageId] = useState<string | null>(null);
   const [editedImageUrl, setEditedImageUrl] = useState<string | null>(null);
-  const [image, setImage] = useState<string | null>(searchParams?.get("image"));
+  const [images, setImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const [, editImage] = useMutation(ImageEditMutation);
@@ -56,23 +56,63 @@ export default function ImageEdit() {
     pause: true,
   });
 
-  const [{ data, error }, reexecuteQuery] = useQuery({
+  useEffect(() => {
+    const imageParam = searchParams?.get("image");
+    const imagesParam = searchParams?.get("images");
+
+    if (imageParam) {
+      setImages([imageParam]);
+    } else if (imagesParam) {
+      try {
+        const imageIds = JSON.parse(imagesParam);
+        if (Array.isArray(imageIds) && imageIds.length <= 2) {
+          setImages(imageIds);
+        }
+      } catch {
+        // Invalid JSON, ignore
+      }
+    }
+  }, [searchParams]);
+
+  const [firstImageResult, reexecuteFirstQuery] = useQuery({
     query: ImageByIdQuery,
-    variables: { id: image || "" },
-    pause: true,
+    variables: { id: images[0] || "" },
+    pause: !images[0],
+  });
+
+  const [secondImageResult, reexecuteSecondQuery] = useQuery({
+    query: ImageByIdQuery,
+    variables: { id: images[1] || "" },
+    pause: !images[1],
   });
 
   useEffect(() => {
-    if (image) {
-      reexecuteQuery({ requestPolicy: "network-only" });
+    if (images.length > 0) {
+      reexecuteFirstQuery({ requestPolicy: "network-only" });
     }
-  }, [image, reexecuteQuery]);
+    if (images.length > 1) {
+      reexecuteSecondQuery({ requestPolicy: "network-only" });
+    }
+  }, [images, reexecuteFirstQuery, reexecuteSecondQuery]);
 
   useEffect(() => {
-    if (data?.node) {
-      setImageData(data.node as Image);
+    const loadedImages: Image[] = [];
+
+    if (firstImageResult.data?.node && !firstImageResult.error) {
+      loadedImages.push(firstImageResult.data.node as Image);
     }
-  }, [data, searchParams]);
+
+    if (secondImageResult.data?.node && !secondImageResult.error) {
+      loadedImages.push(secondImageResult.data.node as Image);
+    }
+
+    setImageData(loadedImages);
+  }, [
+    firstImageResult.data,
+    secondImageResult.data,
+    firstImageResult.error,
+    secondImageResult.error,
+  ]);
 
   useEffect(() => {
     if (imageId && !editedImageUrl) {
@@ -84,45 +124,100 @@ export default function ImageEdit() {
   }, [imageId, editedImageUrl]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setUploadedImage(file);
+    const files = Array.from(e.target.files || []);
+
+    if (files.length > 2) {
+      toast({
+        title: "Error",
+        description: t("imageEdit.maxTwoImages"),
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const totalFiles = uploadedImages.length + files.length;
+    if (totalFiles > 2) {
+      toast({
+        title: "Error",
+        description: t("imageEdit.maxTwoImages"),
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const newUploadedImages = [...uploadedImages, ...files];
+    setUploadedImages(newUploadedImages);
+
+    const newPreviewUrls = [...previewUrls];
+    files.forEach((file, index) => {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPreviewUrl(reader.result as string);
+        newPreviewUrls[uploadedImages.length + index] = reader.result as string;
+        setPreviewUrls([...newPreviewUrls]);
       };
       reader.readAsDataURL(file);
-    }
+    });
   };
 
-  const handleRemoveImage = () => {
-    setUploadedImage(null);
-    setPreviewUrl(null);
-    setImage(null);
-    setImageData(null);
+  const handleRemoveImage = (index: number) => {
+    const newUploadedImages = uploadedImages.filter((_, i) => i !== index);
+    const newPreviewUrls = previewUrls.filter((_, i) => i !== index);
+
+    setUploadedImages(newUploadedImages);
+    setPreviewUrls(newPreviewUrls);
+
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
   };
 
-  const handleRemoveSelectedImage = () => {
-    // Clear the URL parameter
+  const handleRemoveSelectedImage = (index: number) => {
+    const newImages = images.filter((_, i) => i !== index);
+    const newImageData = imageData.filter((_, i) => i !== index);
+
+    setImages(newImages);
+    setImageData(newImageData);
+
     const newUrl = new URL(window.location.href);
-    newUrl.searchParams.delete("image");
-    router.push(newUrl.pathname);
+    if (newImages.length === 0) {
+      newUrl.searchParams.delete("image");
+      newUrl.searchParams.delete("images");
+    } else if (newImages.length === 1) {
+      newUrl.searchParams.set("image", newImages[0]);
+      newUrl.searchParams.delete("images");
+    } else {
+      newUrl.searchParams.delete("image");
+      newUrl.searchParams.set("images", JSON.stringify(newImages));
+    }
+    router.push(newUrl.pathname + newUrl.search);
   };
 
   const handleEditImage = async () => {
-    if (!imagePrompt.trim() || (!uploadedImage && !imageData)) return;
+    if (
+      !imagePrompt.trim() ||
+      (uploadedImages.length === 0 && imageData.length === 0)
+    )
+      return;
 
-    // Check file size limit (10MB)
-    if (uploadedImage && uploadedImage.size > 10 * 1024 * 1024) {
+    const totalImages = uploadedImages.length + imageData.length;
+    if (totalImages > 2) {
       toast({
         title: "Error",
-        description: t("imageEdit.fileSizeExceeded"),
+        description: t("imageEdit.maxTwoImages"),
         variant: "destructive",
       });
       return;
+    }
+
+    for (const file of uploadedImages) {
+      if (file.size > 10 * 1024 * 1024) {
+        toast({
+          title: "Error",
+          description: t("imageEdit.fileSizeExceeded"),
+          variant: "destructive",
+        });
+        return;
+      }
     }
 
     setIsLoading(true);
@@ -131,17 +226,25 @@ export default function ImageEdit() {
     try {
       let imageId = null;
 
-      if (imageData) {
+      if (imageData.length > 0 && uploadedImages.length === 0) {
         const result = await editImage({
-          input: { imageId: imageData.id, prompt: imagePrompt },
+          input: {
+            imageIds: imageData.map((img) => img.id),
+            prompt: imagePrompt,
+          },
         });
 
         imageId = result.data?.imageEdit.id;
-      } else if (uploadedImage) {
+      } else if (uploadedImages.length > 0) {
         const formData = new FormData();
 
-        formData.append("file", uploadedImage);
+        uploadedImages.forEach((file) => {
+          formData.append("files", file);
+        });
         formData.append("prompt", imagePrompt);
+        if (imageData.length > 0) {
+          formData.append("imageId", imageData[0].id);
+        }
 
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/api/upload/image`,
@@ -155,7 +258,21 @@ export default function ImageEdit() {
         );
 
         imageId = response.data.id;
-        setImage(response.data.originalImage.id);
+
+        if (response.data.originalImages) {
+          const originalImageIds = response.data.originalImages.map(
+            (img: { id: string }) => img.id
+          );
+          const newUrl = new URL(window.location.href);
+          if (originalImageIds.length === 1) {
+            newUrl.searchParams.set("image", originalImageIds[0]);
+            newUrl.searchParams.delete("images");
+          } else {
+            newUrl.searchParams.delete("image");
+            newUrl.searchParams.set("images", JSON.stringify(originalImageIds));
+          }
+          router.push(newUrl.pathname + newUrl.search);
+        }
       }
 
       if (imageId) {
@@ -166,7 +283,12 @@ export default function ImageEdit() {
       });
       setShouldRefetch(true);
     } catch (error) {
-      console.error("Error editing image:", error);
+      console.error("Error editing images:", error);
+      toast({
+        title: "Error",
+        description: t("imageEdit.editingFailed"),
+        variant: "destructive",
+      });
     }
   };
 
@@ -174,8 +296,11 @@ export default function ImageEdit() {
     setImagePrompt(idea);
   };
 
-  if (error) {
-    return <ErrorDisplay errorMessage={error.message} />;
+  const hasError = firstImageResult.error || secondImageResult.error;
+  const firstError = firstImageResult.error || secondImageResult.error;
+
+  if (hasError && firstError) {
+    return <ErrorDisplay errorMessage={firstError.message} />;
   }
 
   return (
@@ -190,10 +315,9 @@ export default function ImageEdit() {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="grid grid-cols-1 lg:grid-cols-2 gap-6"
       >
-        {/* Source Image */}
         <SourceImageCard
           imageData={imageData}
-          previewUrl={previewUrl}
+          previewUrls={previewUrls}
           fileInputRef={fileInputRef as React.RefObject<HTMLInputElement>}
           handleFileChange={handleFileChange}
           handleRemoveImage={handleRemoveImage}
@@ -203,10 +327,9 @@ export default function ImageEdit() {
           isEditingImage={isLoading}
           handleEditImage={handleEditImage}
           handlePromptIdeaClick={handlePromptIdeaClick}
-          uploadedImage={uploadedImage}
+          uploadedImages={uploadedImages}
         />
 
-        {/* Edited Image Output */}
         <EditedImageCard
           isEditingImage={isLoading}
           editedImageUrl={editedImageUrl}
