@@ -10,6 +10,7 @@ import {
   Download,
   X,
   Plus,
+  Grid,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -28,13 +29,16 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { VideoGallery } from "../gallery/VideoGallery";
+import { ImageWithIndex } from "../gallery/ImageGallery";
 import axios from "axios";
 import { EmptyState } from "./EmptyState";
 import { ImageByIdQuery } from "../common/ImageByIdQuery";
+import { GallerySelectionModal } from "../common/GallerySelectionModal";
 import { useTranslation } from "react-i18next";
 import { Checkout } from "../checkout/Checkout";
 import { useMeQuery } from "../common/useMeQuery";
 import { useUsageQuery } from "../common/useUsageQuery";
+import { useToast } from "../../hooks/use-toast";
 
 const VideoCreationMutation = graphql(/* GraphQL */ `
   mutation VideoCreation($input: VideoCreationInput!) {
@@ -49,6 +53,7 @@ export default function VideoCreation() {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { toast } = useToast();
 
   const [videoPrompt, setVideoPrompt] = useState("");
   const [negativePrompt, setNegativePrompt] = useState("");
@@ -62,6 +67,12 @@ export default function VideoCreation() {
   const [image, setImage] = useState<string | null>(searchParams?.get("image"));
   const [isLoading, setIsLoading] = useState(false);
 
+  // Gallery selection state
+  const [showGalleryModal, setShowGalleryModal] = useState(false);
+  const [gallerySelectedImages, setGallerySelectedImages] = useState<
+    ImageWithIndex[]
+  >([]);
+
   const [, generateVideo] = useMutation(VideoCreationMutation);
   const { data: userData } = useMeQuery();
   const { reexecuteQuery: reexecuteUsageQuery } = useUsageQuery({
@@ -71,7 +82,7 @@ export default function VideoCreation() {
   const [{ data, fetching, error }, reexecuteQuery] = useQuery({
     query: ImageByIdQuery,
     variables: { id: image || "" },
-    pause: true,
+    pause: !image,
   });
 
   useEffect(() => {
@@ -185,6 +196,97 @@ export default function VideoCreation() {
     }
   };
 
+  const handleGalleryImagesSelect = (images: ImageWithIndex[]) => {
+    setGallerySelectedImages(images);
+  };
+
+  const handleGalleryModalChange = (open: boolean) => {
+    setShowGalleryModal(open);
+    // Reset selected images when modal is closed without confirming
+    if (!open) {
+      setGallerySelectedImages([]);
+    }
+  };
+
+  const handleConfirmGallerySelection = async () => {
+    if (isLoading) return;
+
+    setIsLoading(true);
+
+    const remainingSlots = 4 - ((imageData ? 1 : 0) + uploadedImages.length);
+    const imagesToAdd = gallerySelectedImages.slice(0, remainingSlots);
+
+    if (imagesToAdd.length === 0) {
+      toast({
+        title: t("chat.imageSelection.limitReached"),
+        description: t("chat.imageSelection.limitDescription"),
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // Convert gallery images to File objects for consistency
+      const results = await Promise.all(
+        imagesToAdd.map(async (img) => {
+          try {
+            const response = await fetch(img.imageUrl || "");
+            const blob = await response.blob();
+            const file = new File([blob], `gallery-image-${img.id}.jpg`, {
+              type: "image/jpeg",
+            });
+            return { file, url: img.imageUrl || "" };
+          } catch (error) {
+            console.error("Error converting gallery image to file:", error);
+            return null;
+          }
+        })
+      );
+
+      const validResults = results.filter((result) => result !== null);
+
+      if (validResults.length > 0) {
+        // Update state synchronously to ensure the images are added
+        setUploadedImages((prev) => [
+          ...prev,
+          ...validResults.map((r) => r!.file),
+        ]);
+        setPreviewUrls((prev) => [...prev, ...validResults.map((r) => r!.url)]);
+
+        // Show success feedback
+        if (gallerySelectedImages.length > validResults.length) {
+          toast({
+            title: t("chat.imageSelection.someSkipped"),
+            description: t("chat.imageSelection.skippedDescription", {
+              count: validResults.length,
+            }),
+            variant: "default",
+          });
+        } else {
+          toast({
+            title: t("chat.imageSelection.imagesAdded"),
+            description: t("chat.imageSelection.imagesAddedDescription", {
+              count: validResults.length,
+            }),
+            variant: "default",
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error processing gallery images:", error);
+      toast({
+        title: t("common.error"),
+        description: t("chat.imageSelection.errorProcessing"),
+        variant: "destructive",
+      });
+    } finally {
+      // Always clean up state regardless of success or failure
+      setGallerySelectedImages([]);
+      setShowGalleryModal(false);
+      setIsLoading(false);
+    }
+  };
+
   const handleGenerateVideo = async () => {
     if (!videoPrompt.trim() || (imageData === null && previewUrls.length === 0))
       return;
@@ -238,6 +340,12 @@ export default function VideoCreation() {
       setShouldRefetch(true);
     } catch (error) {
       console.error(t("videoCreation.errorGeneratingVideo"), error);
+      setIsLoading(false);
+      toast({
+        title: t("videoCreation.errorGeneratingVideo"),
+        description: t("videoCreation.errorGeneratingVideoDescription"),
+        variant: "destructive",
+      });
     }
   };
 
@@ -253,6 +361,11 @@ export default function VideoCreation() {
       document.body.removeChild(a);
     } catch (error) {
       console.error("Error downloading video:", error);
+      toast({
+        title: t("videoCreation.errorDownloadingVideo"),
+        description: t("videoCreation.errorDownloadingVideoDescription"),
+        variant: "destructive",
+      });
     }
   };
 
@@ -457,39 +570,56 @@ export default function VideoCreation() {
                 </div>
               ) : (
                 <div className="aspect-[4/3] max-w-md mx-auto rounded-xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border border-purple-100/30 dark:border-purple-800/30">
-                  <EmptyState
-                    fileInputRef={
-                      fileInputRef as React.RefObject<HTMLInputElement>
-                    }
-                    onUploadClick={() => {
-                      if (fileInputRef.current) {
-                        fileInputRef.current.click();
-                      }
-                    }}
-                  />
+                  <EmptyState />
                 </div>
               )}
             </div>
 
-            {/* Upload Button below the grid */}
-            {previewUrls.length < 4 && (
-              <div className="mb-6 text-center">
-                <Button
-                  onClick={() => {
-                    if (fileInputRef.current) {
-                      fileInputRef.current.click();
+            {/* Upload and Gallery Buttons below the grid */}
+            {(imageData ? 1 : 0) + previewUrls.length < 4 && (
+              <div className="mb-6 text-center space-y-3">
+                <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                  <Button
+                    onClick={() => {
+                      if (fileInputRef.current) {
+                        fileInputRef.current.click();
+                      }
+                    }}
+                    variant="outline"
+                    className="group border-2 border-dashed border-purple-300 dark:border-purple-700 text-purple-700 dark:text-purple-300 hover:border-purple-500 dark:hover:border-purple-600 rounded-xl py-3 px-6 transition-all"
+                    disabled={isLoading}
+                  >
+                    <Plus className="h-4 w-4 mr-2 group-hover:rotate-90 transition-transform" />
+                    <span>{t("videoCreation.emptyState.uploadImages")}</span>
+                  </Button>
+
+                  <GallerySelectionModal
+                    open={showGalleryModal}
+                    onOpenChange={handleGalleryModalChange}
+                    selectedImages={gallerySelectedImages}
+                    onImagesSelect={handleGalleryImagesSelect}
+                    onConfirmSelection={handleConfirmGallerySelection}
+                    trigger={
+                      <Button
+                        variant="outline"
+                        className="group border-2 border-dashed border-indigo-300 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300 hover:border-indigo-500 dark:hover:border-indigo-600 rounded-xl py-3 px-6 transition-all"
+                        disabled={isLoading}
+                      >
+                        <Grid className="h-4 w-4 mr-2" />
+                        <span>
+                          {t("videoCreation.emptyState.selectFromGallery")}
+                        </span>
+                      </Button>
                     }
-                  }}
-                  variant="outline"
-                  className="group border-2 border-dashed border-purple-300 dark:border-purple-700 text-purple-700 dark:text-purple-300 hover:border-purple-500 dark:hover:border-purple-600 rounded-xl py-3 px-6 transition-all"
-                  disabled={isLoading}
-                >
-                  <Plus className="h-4 w-4 mr-2 group-hover:rotate-90 transition-transform" />
-                  <span>{t("videoCreation.addAnotherImage")}</span>
-                  <span className="ml-2 inline-flex items-center justify-center bg-purple-100 dark:bg-purple-800 text-purple-800 dark:text-purple-200 rounded-full w-5 h-5 text-xs font-bold">
+                  />
+                </div>
+
+                <div className="text-xs text-gray-500 dark:text-gray-400">
+                  <span className="inline-flex items-center justify-center bg-purple-100 dark:bg-purple-800 text-purple-800 dark:text-purple-200 rounded-full w-6 h-6 text-xs font-bold mr-2">
                     {(imageData ? 1 : 0) + previewUrls.length}/4
                   </span>
-                </Button>
+                  {t("videoCreation.images")} {t("common.selected", "selected")}
+                </div>
               </div>
             )}
 

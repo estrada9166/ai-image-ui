@@ -9,6 +9,7 @@ import {
   BookImageIcon,
   CropIcon,
   ImageIcon,
+  MessageCircle,
 } from "lucide-react";
 
 import { NavMain } from "./nav-main";
@@ -46,6 +47,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: t("layout.dashboard"),
         url: "/dashboard",
         icon: LayoutDashboardIcon,
+      },
+      {
+        title: "Chats",
+        url: "/dashboard/chats",
+        icon: MessageCircle,
       },
       {
         title: t("layout.gallery"),

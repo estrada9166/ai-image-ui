@@ -1,4 +1,5 @@
 import { AiModelOptionsEnum, Image } from "../../gql/graphql";
+import { ImageWithIndex } from "../gallery/ImageGallery";
 
 export type ImageEdit = {
   id: string;
@@ -20,6 +21,11 @@ export interface SourceImageCardProps {
   handleEditImage: () => void;
   handlePromptIdeaClick: (idea: string) => void;
   uploadedImages: File[];
+  showGalleryModal: boolean;
+  gallerySelectedImages: ImageWithIndex[];
+  handleGalleryImagesSelect: (images: ImageWithIndex[]) => void;
+  handleGalleryModalChange: (open: boolean) => void;
+  handleConfirmGallerySelection: () => Promise<void>;
 }
 
 export interface EditedImageCardProps {

@@ -21,6 +21,7 @@ import { SourceImageCard } from "./SourceImageCard";
 import { EditedImageCard } from "./EditedImageCard";
 import { useToast } from "@/hooks/use-toast";
 import { useUsageQuery } from "../common/useUsageQuery";
+import { ImageWithIndex } from "../gallery/ImageGallery";
 
 const ImageEditMutation = graphql(/* GraphQL */ `
   mutation ImageEdit($input: ImageEditInput!) {
@@ -51,6 +52,12 @@ export default function ImageEdit() {
   const [images, setImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [requestSubmitted, setRequestSubmitted] = useState(false);
+
+  // Gallery selection state
+  const [showGalleryModal, setShowGalleryModal] = useState(false);
+  const [gallerySelectedImages, setGallerySelectedImages] = useState<
+    ImageWithIndex[]
+  >([]);
 
   const [, editImage] = useMutation(ImageEditMutation);
   const { reexecuteQuery: reexecuteUsageQuery } = useUsageQuery({
@@ -126,6 +133,98 @@ export default function ImageEdit() {
       }
     }
   }, [imageId, editedImageUrl]);
+
+  const handleGalleryImagesSelect = (images: ImageWithIndex[]) => {
+    setGallerySelectedImages(images);
+  };
+
+  const handleGalleryModalChange = (open: boolean) => {
+    setShowGalleryModal(open);
+    // Reset selected images when modal is closed without confirming
+    if (!open) {
+      setGallerySelectedImages([]);
+    }
+  };
+
+  const handleConfirmGallerySelection = async () => {
+    if (isLoading) return;
+
+    setIsLoading(true);
+
+    const remainingSlots = 2 - (imageData.length + uploadedImages.length);
+    const imagesToAdd = gallerySelectedImages.slice(0, remainingSlots);
+
+    if (imagesToAdd.length === 0) {
+      toast({
+        title: t("chat.imageSelection.limitReached"),
+        description: t("chat.imageSelection.limitDescription"),
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      // Convert gallery images to File objects for consistency
+      const results = await Promise.all(
+        imagesToAdd.map(async (img) => {
+          try {
+            const response = await fetch(img.imageUrl || "");
+            const blob = await response.blob();
+            const file = new File([blob], `gallery-image-${img.id}.jpg`, {
+              type: "image/jpeg",
+            });
+            return { file, url: img.imageUrl || "" };
+          } catch (error) {
+            console.error("Error converting gallery image to file:", error);
+            return null;
+          }
+        })
+      );
+
+      const validResults = results.filter((result) => result !== null);
+
+      if (validResults.length > 0) {
+        // Update state synchronously to ensure the images are added
+        setUploadedImages((prev) => [
+          ...prev,
+          ...validResults.map((r) => r!.file),
+        ]);
+        setPreviewUrls((prev) => [...prev, ...validResults.map((r) => r!.url)]);
+
+        // Show success feedback
+        if (gallerySelectedImages.length > validResults.length) {
+          toast({
+            title: t("chat.imageSelection.someSkipped"),
+            description: t("chat.imageSelection.skippedDescription", {
+              count: validResults.length,
+            }),
+            variant: "default",
+          });
+        } else {
+          toast({
+            title: t("chat.imageSelection.imagesAdded"),
+            description: t("chat.imageSelection.imagesAddedDescription", {
+              count: validResults.length,
+            }),
+            variant: "default",
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error processing gallery images:", error);
+      toast({
+        title: t("common.error"),
+        description: t("chat.imageSelection.errorProcessing"),
+        variant: "destructive",
+      });
+    } finally {
+      // Always clean up state regardless of success or failure
+      setGallerySelectedImages([]);
+      setShowGalleryModal(false);
+      setIsLoading(false);
+    }
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -342,6 +441,11 @@ export default function ImageEdit() {
           handleEditImage={handleEditImage}
           handlePromptIdeaClick={handlePromptIdeaClick}
           uploadedImages={uploadedImages}
+          showGalleryModal={showGalleryModal}
+          gallerySelectedImages={gallerySelectedImages}
+          handleGalleryImagesSelect={handleGalleryImagesSelect}
+          handleGalleryModalChange={handleGalleryModalChange}
+          handleConfirmGallerySelection={handleConfirmGallerySelection}
         />
 
         <EditedImageCard

@@ -92,7 +92,6 @@ export default function ImageCreation() {
       await generateImage({
         input: {
           prompt: imagePrompt,
-          type: ImageTypeOptionsEnum.Created,
           camera: avatarType,
           aspectRatio: aspectRatio,
           model,

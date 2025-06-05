@@ -45,6 +45,80 @@ export enum CameraOptionsEnum {
   Selfie = 'SELFIE'
 }
 
+export type Chat = {
+  __typename?: 'Chat';
+  id: Scalars['ID']['output'];
+  messages: ChatMessageConnection;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type ChatMessagesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** Action to be performed */
+export enum ChatActionEnum {
+  Create = 'CREATE',
+  Edit = 'EDIT',
+  Video = 'VIDEO'
+}
+
+export type ChatConnection = {
+  __typename?: 'ChatConnection';
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Edge-Types */
+  edges: Array<ChatEdge>;
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo */
+  pageInfo: PageInfo;
+};
+
+export type ChatEdge = {
+  __typename?: 'ChatEdge';
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Cursor */
+  cursor: Scalars['String']['output'];
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Node */
+  node: Chat;
+};
+
+export type ChatInput = {
+  action: ChatActionEnum;
+  aspectRatio?: InputMaybe<AspectRatioOptionsEnum>;
+  camera?: InputMaybe<CameraOptionsEnum>;
+  chatId: Scalars['ID']['input'];
+  imageIds?: InputMaybe<Array<Scalars['String']['input']>>;
+  model?: InputMaybe<AiModelOptionsEnum>;
+  negativePrompt?: InputMaybe<Scalars['String']['input']>;
+  prompt: Scalars['String']['input'];
+};
+
+export type ChatMessage = Node & {
+  __typename?: 'ChatMessage';
+  /** Globally unique identifier representing a concrete GraphQL ObjectType */
+  id: Scalars['ID']['output'];
+  message?: Maybe<ChatMessageUnion>;
+};
+
+export type ChatMessageConnection = {
+  __typename?: 'ChatMessageConnection';
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Edge-Types */
+  edges: Array<ChatMessageEdge>;
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo */
+  pageInfo: PageInfo;
+};
+
+export type ChatMessageEdge = {
+  __typename?: 'ChatMessageEdge';
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Cursor */
+  cursor: Scalars['String']['output'];
+  /** https://facebook.github.io/relay/graphql/connections.htm#sec-Node */
+  node: ChatMessage;
+};
+
+export type ChatMessageUnion = Image | Video;
+
 export type ConfirmUserEmailInput = {
   hash: Scalars['String']['input'];
 };
@@ -89,7 +163,6 @@ export type ImageCreationInput = {
   camera?: InputMaybe<CameraOptionsEnum>;
   model?: InputMaybe<AiModelOptionsEnum>;
   prompt: Scalars['String']['input'];
-  type: ImageTypeOptionsEnum;
 };
 
 export type ImageEdge = {
@@ -119,6 +192,7 @@ export enum ImageTypeOptionsEnum {
 
 export type Me = Node & UserLike & {
   __typename?: 'Me';
+  chats: ChatConnection;
   customerPortalUrl: Scalars['String']['output'];
   email: Scalars['String']['output'];
   fullName: Scalars['String']['output'];
@@ -130,10 +204,20 @@ export type Me = Node & UserLike & {
   planFeaturesUsage?: Maybe<PlanFeaturesUsage>;
 };
 
+
+export type MeChatsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addFeedback: Scalars['Boolean']['output'];
+  chat: Scalars['String']['output'];
   confirmUserEmail?: Maybe<Me>;
+  createChat: Chat;
   forgotPassword: Scalars['Boolean']['output'];
   imageCreation: Image;
   imageEdit: Image;
@@ -149,6 +233,11 @@ export type Mutation = {
 
 export type MutationAddFeedbackArgs = {
   input: AddFeedbackInput;
+};
+
+
+export type MutationChatArgs = {
+  input: ChatInput;
 };
 
 
@@ -241,10 +330,16 @@ export type PlanFeaturesUsage = {
 
 export type Query = {
   __typename?: 'Query';
+  chat: Chat;
   images: ImageConnection;
   me?: Maybe<Me>;
   node?: Maybe<Node>;
   videos: VideoConnection;
+};
+
+
+export type QueryChatArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -336,12 +431,40 @@ export type VideoEdge = {
   node: Video;
 };
 
+export type ChatQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+  before?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ChatQuery = { __typename?: 'Query', me?: { __typename?: 'Me', id: string, planFeaturesUsage?: { __typename?: 'PlanFeaturesUsage', imageCreation: { __typename?: 'UsageLimit', used: number }, editImage: { __typename?: 'UsageLimit', used: number }, imageRestoration: { __typename?: 'UsageLimit', used: number }, videoCreation: { __typename?: 'UsageLimit', used: number } } | null } | null, chat: { __typename?: 'Chat', id: string, messages: { __typename?: 'ChatMessageConnection', edges: Array<{ __typename?: 'ChatMessageEdge', node: { __typename?: 'ChatMessage', id: string, message?: { __typename: 'Image', id: string, camera?: CameraOptionsEnum | null, aspectRatio: AspectRatioOptionsEnum, status: GenAiStatusEnum, imageUrl?: string | null, thumbnailUrl?: string | null, model?: AiModelOptionsEnum | null, imagePrompt?: string | null, originalImages: Array<{ __typename?: 'Image', id: string, thumbnailUrl?: string | null, imageUrl?: string | null }> } | { __typename: 'Video', id: string, negativePrompt?: string | null, status: GenAiStatusEnum, videoUrl?: string | null, videoPrompt: string, originalImages: Array<{ __typename?: 'Image', id: string, thumbnailUrl?: string | null, imageUrl?: string | null }> } | null } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } } };
+
+export type ChatMutationMutationVariables = Exact<{
+  input: ChatInput;
+}>;
+
+
+export type ChatMutationMutation = { __typename?: 'Mutation', chat: string };
+
+export type UserChatsQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type UserChatsQuery = { __typename?: 'Query', me?: { __typename?: 'Me', id: string, chats: { __typename?: 'ChatConnection', edges: Array<{ __typename?: 'ChatEdge', node: { __typename?: 'Chat', id: string, title?: string | null, messages: { __typename?: 'ChatMessageConnection', edges: Array<{ __typename?: 'ChatMessageEdge', node: { __typename?: 'ChatMessage', id: string, message?: { __typename: 'Image', id: string, thumbnailUrl?: string | null, status: GenAiStatusEnum, imagePrompt?: string | null } | { __typename: 'Video', id: string, status: GenAiStatusEnum, videoPrompt: string } | null } }> } } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null } } } | null };
+
+export type CreateChatMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreateChatMutation = { __typename?: 'Mutation', createChat: { __typename?: 'Chat', id: string } };
+
 export type ImageByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type ImageByIdQuery = { __typename?: 'Query', node?: { __typename?: 'Image', id: string, prompt?: string | null, thumbnailUrl?: string | null, imageUrl?: string | null, originalImages: Array<{ __typename?: 'Image', id: string }> } | { __typename?: 'Me' } | { __typename?: 'Video' } | null };
+export type ImageByIdQuery = { __typename?: 'Query', node?: { __typename?: 'ChatMessage' } | { __typename?: 'Image', id: string, prompt?: string | null, thumbnailUrl?: string | null, imageUrl?: string | null, originalImages: Array<{ __typename?: 'Image', id: string }> } | { __typename?: 'Me' } | { __typename?: 'Video' } | null };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -463,6 +586,10 @@ export type VideoCreationMutationVariables = Exact<{
 export type VideoCreationMutation = { __typename?: 'Mutation', videoCreation: { __typename?: 'Video', id: string, status: GenAiStatusEnum } };
 
 
+export const ChatDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Chat"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"before"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"planFeaturesUsage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"imageCreation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"used"}}]}},{"kind":"Field","name":{"kind":"Name","value":"editImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"used"}}]}},{"kind":"Field","name":{"kind":"Name","value":"imageRestoration"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"used"}}]}},{"kind":"Field","name":{"kind":"Name","value":"videoCreation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"used"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"chat"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"messages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"last"},"value":{"kind":"IntValue","value":"20"}},{"kind":"Argument","name":{"kind":"Name","value":"before"},"value":{"kind":"Variable","name":{"kind":"Name","value":"before"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"message"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Image"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"camera"}},{"kind":"Field","name":{"kind":"Name","value":"aspectRatio"}},{"kind":"Field","alias":{"kind":"Name","value":"imagePrompt"},"name":{"kind":"Name","value":"prompt"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailUrl"}},{"kind":"Field","name":{"kind":"Name","value":"model"}},{"kind":"Field","name":{"kind":"Name","value":"originalImages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailUrl"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Video"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"videoPrompt"},"name":{"kind":"Name","value":"prompt"}},{"kind":"Field","name":{"kind":"Name","value":"negativePrompt"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"videoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"originalImages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailUrl"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endCursor"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ChatQuery, ChatQueryVariables>;
+export const ChatMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ChatMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ChatInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<ChatMutationMutation, ChatMutationMutationVariables>;
+export const UserChatsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserChats"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"chats"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"messages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"last"},"value":{"kind":"IntValue","value":"3"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"message"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Image"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"imagePrompt"},"name":{"kind":"Name","value":"prompt"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailUrl"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Video"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"videoPrompt"},"name":{"kind":"Name","value":"prompt"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"endCursor"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UserChatsQuery, UserChatsQueryVariables>;
+export const CreateChatDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateChat"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createChat"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateChatMutation, CreateChatMutationVariables>;
 export const ImageByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ImageById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Image"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"prompt"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailUrl"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"originalImages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ImageByIdQuery, ImageByIdQueryVariables>;
 export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"isSocialLogin"}},{"kind":"Field","name":{"kind":"Name","value":"hasActiveSubscription"}}]}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
 export const UsageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Usage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"planFeaturesUsage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"planId"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}},{"kind":"Field","name":{"kind":"Name","value":"imageCreation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"limit"}},{"kind":"Field","name":{"kind":"Name","value":"used"}}]}},{"kind":"Field","name":{"kind":"Name","value":"editImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"limit"}},{"kind":"Field","name":{"kind":"Name","value":"used"}}]}},{"kind":"Field","name":{"kind":"Name","value":"imageRestoration"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"limit"}},{"kind":"Field","name":{"kind":"Name","value":"used"}}]}},{"kind":"Field","name":{"kind":"Name","value":"videoCreation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"limit"}},{"kind":"Field","name":{"kind":"Name","value":"used"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UsageQuery, UsageQueryVariables>;

@@ -8,7 +8,7 @@ import { useMeQuery } from "./useMeQuery";
 import { Checkout } from "../checkout/Checkout";
 
 interface EmptySourceImageProps {
-  onUploadClick: () => void;
+  onUploadClick?: () => void;
   tab?: "images" | "videos" | "edited-images";
   doNotRedirect?: boolean;
 }
@@ -39,42 +39,44 @@ export const EmptySourceImage = ({
             "emptySourceImage.selectOrUploadAnImageToTransformItWithAIEditing"
           )}
         </p>
-        <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:justify-center sm:gap-4">
-          {userData?.me?.hasActiveSubscription ? (
-            <Button
-              variant="outline"
-              className="w-full sm:w-auto border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-all duration-300 rounded-full cursor-pointer shadow-sm hover:shadow-md"
-              onClick={onUploadClick}
-            >
-              <Upload className="mr-2 h-4 w-4" />
-              {t("emptySourceImage.uploadImage")}
-            </Button>
-          ) : (
-            <Checkout
-              trigger={
-                <Button
-                  variant="outline"
-                  className="w-full sm:w-auto border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-all duration-300 rounded-full cursor-pointer shadow-sm hover:shadow-md"
-                >
-                  <Upload className="mr-2 h-4 w-4" />
-                  {t("emptySourceImage.uploadImage")}
-                </Button>
-              }
-            />
-          )}
-
-          {!doNotRedirect && (
-            <Link
-              href={`/dashboard/gallery${tab ? `?tab=${tab}` : ""}`}
-              className="w-full sm:w-auto"
-            >
-              <Button className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full">
-                <ImageIcon className="mr-2 h-4 w-4" />
-                {t("emptySourceImage.selectFromGallery")}
+        {onUploadClick && (
+          <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:justify-center sm:gap-4">
+            {userData?.me?.hasActiveSubscription ? (
+              <Button
+                variant="outline"
+                className="w-full sm:w-auto border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-all duration-300 rounded-full cursor-pointer shadow-sm hover:shadow-md"
+                onClick={onUploadClick}
+              >
+                <Upload className="mr-2 h-4 w-4" />
+                {t("emptySourceImage.uploadImage")}
               </Button>
-            </Link>
-          )}
-        </div>
+            ) : (
+              <Checkout
+                trigger={
+                  <Button
+                    variant="outline"
+                    className="w-full sm:w-auto border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-all duration-300 rounded-full cursor-pointer shadow-sm hover:shadow-md"
+                  >
+                    <Upload className="mr-2 h-4 w-4" />
+                    {t("emptySourceImage.uploadImage")}
+                  </Button>
+                }
+              />
+            )}
+
+            {!doNotRedirect && (
+              <Link
+                href={`/dashboard/gallery${tab ? `?tab=${tab}` : ""}`}
+                className="w-full sm:w-auto"
+              >
+                <Button className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full">
+                  <ImageIcon className="mr-2 h-4 w-4" />
+                  {t("emptySourceImage.selectFromGallery")}
+                </Button>
+              </Link>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
