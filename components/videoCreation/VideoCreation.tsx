@@ -10,6 +10,7 @@ import {
   Download,
   X,
   Plus,
+  Grid,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -28,13 +29,16 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { VideoGallery } from "../gallery/VideoGallery";
+import { ImageWithIndex } from "../gallery/ImageGallery";
 import axios from "axios";
 import { EmptyState } from "./EmptyState";
 import { ImageByIdQuery } from "../common/ImageByIdQuery";
+import { GallerySelectionModal } from "../common/GallerySelectionModal";
 import { useTranslation } from "react-i18next";
 import { Checkout } from "../checkout/Checkout";
 import { useMeQuery } from "../common/useMeQuery";
 import { useUsageQuery } from "../common/useUsageQuery";
+import { useToast } from "../../hooks/use-toast";
 
 const VideoCreationMutation = graphql(/* GraphQL */ `
   mutation VideoCreation($input: VideoCreationInput!) {
@@ -45,10 +49,18 @@ const VideoCreationMutation = graphql(/* GraphQL */ `
   }
 `);
 
+type SelectedImage = {
+  id: string;
+  imageUrl: string;
+};
+
 export default function VideoCreation() {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { toast } = useToast();
+
+  const imageToAnimate = searchParams?.get("image");
 
   const [videoPrompt, setVideoPrompt] = useState("");
   const [negativePrompt, setNegativePrompt] = useState("");
@@ -57,10 +69,16 @@ export default function VideoCreation() {
   const [createdVideoId, setCreatedVideoId] = useState<string | null>(null);
   const [imageData, setImageData] = useState<Image | null>(null);
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
+  const [selectedImages, setSelectedImages] = useState<SelectedImage[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [image, setImage] = useState<string | null>(searchParams?.get("image"));
   const [isLoading, setIsLoading] = useState(false);
+
+  // Gallery selection state
+  const [showGalleryModal, setShowGalleryModal] = useState(false);
+  const [gallerySelectedImages, setGallerySelectedImages] = useState<
+    ImageWithIndex[]
+  >([]);
 
   const [, generateVideo] = useMutation(VideoCreationMutation);
   const { data: userData } = useMeQuery();
@@ -68,17 +86,11 @@ export default function VideoCreation() {
     pause: true,
   });
 
-  const [{ data, fetching, error }, reexecuteQuery] = useQuery({
+  const [{ data, fetching, error }] = useQuery({
     query: ImageByIdQuery,
-    variables: { id: image || "" },
-    pause: true,
+    variables: { id: imageToAnimate || "" },
+    pause: !imageToAnimate,
   });
-
-  useEffect(() => {
-    if (image) {
-      reexecuteQuery({ requestPolicy: "network-only" });
-    }
-  }, [image, reexecuteQuery]);
 
   useEffect(() => {
     if (createdVideoId && !videoUrl) {
@@ -91,9 +103,21 @@ export default function VideoCreation() {
 
   useEffect(() => {
     if (data?.node) {
-      setImageData(data.node as Image);
+      const node = data.node;
+      console.log("node", node);
+      if (node.__typename === "Image" && node.id && node.imageUrl) {
+        setSelectedImages((prev) => [
+          ...prev,
+          { id: node.id, imageUrl: node.imageUrl } as SelectedImage,
+        ]);
+
+        // cleanup the url parameter
+        const url = new URL(window.location.href);
+        url.searchParams.delete("image");
+        router.replace(url.pathname + url.search, { scroll: false });
+      }
     }
-  }, [data, searchParams]);
+  }, [data]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -135,13 +159,14 @@ export default function VideoCreation() {
     }
   };
 
-  const handleRemoveImage = (index: number) => {
+  const handleRemoveImage = (
+    type: "imageData" | "uploaded" | "selected",
+    index: number
+  ) => {
     // Case 1: Remove imageData (from URL parameter)
-    if (index === -1) {
+    if (type === "imageData") {
       // First set the state variables to null
-      setImage(null);
       setImageData(null);
-      setPreviewUrls([]);
 
       // Reset video state when removing the source image
       setVideoUrl(null);
@@ -158,7 +183,7 @@ export default function VideoCreation() {
       }
     }
     // Case 2: Remove uploaded image
-    else {
+    else if (type === "uploaded") {
       setUploadedImages((prev) => {
         const newUploadedImages = [...prev];
         newUploadedImages.splice(index, 1);
@@ -170,13 +195,24 @@ export default function VideoCreation() {
         newPreviewUrls.splice(index, 1);
         return newPreviewUrls;
       });
+    }
+    // Case 3: Remove selected gallery image
+    else if (type === "selected") {
+      setSelectedImages((prev) => {
+        const newSelectedImages = [...prev];
+        newSelectedImages.splice(index, 1);
+        return newSelectedImages;
+      });
+    }
 
-      // If removing the last image, reset video state
-      if (uploadedImages.length === 1 && imageData === null) {
-        setVideoUrl(null);
-        setCreatedVideoId(null);
-        setIsLoading(false);
-      }
+    // If removing the last image, reset video state
+    const totalImages =
+      (imageData ? 1 : 0) + uploadedImages.length + selectedImages.length;
+    if (totalImages === 1) {
+      // Will be 0 after removal
+      setVideoUrl(null);
+      setCreatedVideoId(null);
+      setIsLoading(false);
     }
 
     // Reset file input to allow re-uploading the same file if needed
@@ -185,19 +221,109 @@ export default function VideoCreation() {
     }
   };
 
+  const handleGalleryImagesSelect = (images: ImageWithIndex[]) => {
+    setGallerySelectedImages(images);
+  };
+
+  const handleGalleryModalChange = (open: boolean) => {
+    setShowGalleryModal(open);
+    // Reset selected images when modal is closed without confirming
+    if (!open) {
+      setGallerySelectedImages([]);
+    }
+  };
+
+  const handleConfirmGallerySelection = async () => {
+    if (isLoading) return;
+
+    setIsLoading(true);
+
+    const remainingSlots = 4 - ((imageData ? 1 : 0) + uploadedImages.length);
+    const imagesToAdd = gallerySelectedImages.slice(0, remainingSlots);
+
+    if (imagesToAdd.length === 0) {
+      toast({
+        title: t("videoCreation.imageSelection.limitReached"),
+        description: t("videoCreation.imageSelection.limitDescription"),
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // Convert gallery images to File objects for consistency
+      const results = imagesToAdd.map((img) => ({
+        id: img.id,
+        imageUrl: img.imageUrl,
+      }));
+
+      const validResults = results.filter((result) => Boolean(result.imageUrl));
+
+      if (validResults.length > 0) {
+        // Update state synchronously to ensure the images are added
+        setSelectedImages((prev) => [
+          ...prev,
+          ...(validResults as SelectedImage[]),
+        ]);
+
+        // Show success feedback
+        if (gallerySelectedImages.length > validResults.length) {
+          toast({
+            title: t("videoCreation.imageSelection.someSkipped"),
+            description: t("videoCreation.imageSelection.skippedDescription", {
+              count: validResults.length,
+            }),
+            variant: "default",
+          });
+        } else {
+          toast({
+            title: t("videoCreation.imageSelection.imagesAdded"),
+            description: t(
+              "videoCreation.imageSelection.imagesAddedDescription",
+              {
+                count: validResults.length,
+              }
+            ),
+            variant: "default",
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error processing gallery images:", error);
+      toast({
+        title: t("common.error"),
+        description: t("videoCreation.imageSelection.errorProcessing"),
+        variant: "destructive",
+      });
+    } finally {
+      // Always clean up state regardless of success or failure
+      setGallerySelectedImages([]);
+      setShowGalleryModal(false);
+      setIsLoading(false);
+    }
+  };
+
   const handleGenerateVideo = async () => {
-    if (!videoPrompt.trim() || (imageData === null && previewUrls.length === 0))
+    if (
+      !videoPrompt.trim() ||
+      (imageData === null &&
+        previewUrls.length === 0 &&
+        selectedImages.length === 0)
+    )
       return;
 
     setVideoUrl(null);
     setIsLoading(true);
     try {
-      if (imageData !== null && uploadedImages.length === 0) {
+      if (
+        (imageData !== null || selectedImages.length > 0) &&
+        uploadedImages.length === 0
+      ) {
         const result = await generateVideo({
           input: {
             prompt: videoPrompt,
-            imageId: image || "",
             negativePrompt,
+            imagesIds: selectedImages.map((image) => image.id),
           },
         });
 
@@ -208,12 +334,15 @@ export default function VideoCreation() {
         uploadedImages.forEach((file) => {
           formData.append("files", file);
         });
+
+        if (selectedImages.length > 0) {
+          selectedImages.forEach((selectedImage) => {
+            formData.append("imageIds", selectedImage.id);
+          });
+        }
+
         formData.append("prompt", videoPrompt);
         formData.append("negativePrompt", negativePrompt);
-
-        if (image) {
-          formData.append("imageId", image);
-        }
 
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/api/upload/video`,
@@ -227,17 +356,19 @@ export default function VideoCreation() {
         );
 
         setCreatedVideoId(response?.data?.id || null);
-        if (response?.data?.originalImages?.length === 1) {
-          setImage(response?.data?.originalImages[0]?.id);
-        }
       }
 
       reexecuteUsageQuery({
         requestPolicy: "network-only",
       });
       setShouldRefetch(true);
-    } catch (error) {
-      console.error(t("videoCreation.errorGeneratingVideo"), error);
+    } catch {
+      setIsLoading(false);
+      toast({
+        title: t("videoCreation.errorGeneratingVideo"),
+        description: t("videoCreation.errorGeneratingVideoDescription"),
+        variant: "destructive",
+      });
     }
   };
 
@@ -253,6 +384,11 @@ export default function VideoCreation() {
       document.body.removeChild(a);
     } catch (error) {
       console.error("Error downloading video:", error);
+      toast({
+        title: t("videoCreation.errorDownloadingVideo"),
+        description: t("videoCreation.errorDownloadingVideoDescription"),
+        variant: "destructive",
+      });
     }
   };
 
@@ -383,11 +519,16 @@ export default function VideoCreation() {
             </div>
 
             <div className="mb-6 relative">
-              {imageData?.imageUrl || previewUrls.length > 0 ? (
+              {imageData?.imageUrl ||
+              selectedImages.length > 0 ||
+              previewUrls.length > 0 ? (
                 <div className="relative">
                   <div
                     className={`grid ${
-                      (imageData ? 1 : 0) + previewUrls.length > 1
+                      (imageData ? 1 : 0) +
+                        selectedImages.length +
+                        previewUrls.length >
+                      1
                         ? "grid-cols-2"
                         : "grid-cols-1"
                     } gap-3 max-w-md mx-auto`}
@@ -404,7 +545,7 @@ export default function VideoCreation() {
                             className="w-full h-full object-cover"
                           />
                           <button
-                            onClick={() => handleRemoveImage(-1)}
+                            onClick={() => handleRemoveImage("imageData", 0)}
                             className="absolute top-2 right-2 bg-black/60 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black/80"
                             title="Remove image"
                           >
@@ -429,6 +570,31 @@ export default function VideoCreation() {
                       </div>
                     )}
 
+                    {selectedImages.map((image, index) => (
+                      <motion.div
+                        key={index}
+                        className="aspect-[4/3] rounded-xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border border-purple-100/30 dark:border-purple-800/30 shadow-sm"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                      >
+                        <div className="relative group h-full">
+                          <img
+                            src={image.imageUrl}
+                            alt={`Selected image ${index + 1}`}
+                            className="w-full h-full object-contain"
+                          />
+                          <button
+                            onClick={() => handleRemoveImage("selected", index)}
+                            className="absolute top-2 right-2 bg-black/60 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black/80"
+                            title="Remove image"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </motion.div>
+                    ))}
+
                     {previewUrls.map((url, index) => (
                       <motion.div
                         key={index}
@@ -444,7 +610,7 @@ export default function VideoCreation() {
                             className="w-full h-full object-contain"
                           />
                           <button
-                            onClick={() => handleRemoveImage(index)}
+                            onClick={() => handleRemoveImage("uploaded", index)}
                             className="absolute top-2 right-2 bg-black/60 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black/80"
                             title="Remove image"
                           >
@@ -457,39 +623,61 @@ export default function VideoCreation() {
                 </div>
               ) : (
                 <div className="aspect-[4/3] max-w-md mx-auto rounded-xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border border-purple-100/30 dark:border-purple-800/30">
-                  <EmptyState
-                    fileInputRef={
-                      fileInputRef as React.RefObject<HTMLInputElement>
-                    }
-                    onUploadClick={() => {
-                      if (fileInputRef.current) {
-                        fileInputRef.current.click();
-                      }
-                    }}
-                  />
+                  <EmptyState />
                 </div>
               )}
             </div>
 
-            {/* Upload Button below the grid */}
-            {previewUrls.length < 4 && (
-              <div className="mb-6 text-center">
-                <Button
-                  onClick={() => {
-                    if (fileInputRef.current) {
-                      fileInputRef.current.click();
+            {/* Upload and Gallery Buttons below the grid */}
+            {(imageData ? 1 : 0) + selectedImages.length + previewUrls.length <
+              4 && (
+              <div className="mb-6 text-center space-y-3">
+                <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                  <Button
+                    onClick={() => {
+                      if (fileInputRef.current) {
+                        fileInputRef.current.click();
+                      }
+                    }}
+                    variant="outline"
+                    className="group border-2 border-dashed border-purple-300 dark:border-purple-700 text-purple-700 dark:text-purple-300 hover:border-purple-500 dark:hover:border-purple-600 rounded-xl py-3 px-6 transition-all"
+                    disabled={isLoading}
+                  >
+                    <Plus className="h-4 w-4 mr-2 group-hover:rotate-90 transition-transform" />
+                    <span>{t("videoCreation.emptyState.uploadImages")}</span>
+                  </Button>
+
+                  <GallerySelectionModal
+                    open={showGalleryModal}
+                    onOpenChange={handleGalleryModalChange}
+                    selectedImages={gallerySelectedImages}
+                    onImagesSelect={handleGalleryImagesSelect}
+                    onConfirmSelection={handleConfirmGallerySelection}
+                    maxImages={4}
+                    trigger={
+                      <Button
+                        variant="outline"
+                        className="group border-2 border-dashed border-indigo-300 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300 hover:border-indigo-500 dark:hover:border-indigo-600 rounded-xl py-3 px-6 transition-all"
+                        disabled={isLoading}
+                      >
+                        <Grid className="h-4 w-4 mr-2" />
+                        <span>
+                          {t("videoCreation.emptyState.selectFromGallery")}
+                        </span>
+                      </Button>
                     }
-                  }}
-                  variant="outline"
-                  className="group border-2 border-dashed border-purple-300 dark:border-purple-700 text-purple-700 dark:text-purple-300 hover:border-purple-500 dark:hover:border-purple-600 rounded-xl py-3 px-6 transition-all"
-                  disabled={isLoading}
-                >
-                  <Plus className="h-4 w-4 mr-2 group-hover:rotate-90 transition-transform" />
-                  <span>{t("videoCreation.addAnotherImage")}</span>
-                  <span className="ml-2 inline-flex items-center justify-center bg-purple-100 dark:bg-purple-800 text-purple-800 dark:text-purple-200 rounded-full w-5 h-5 text-xs font-bold">
-                    {(imageData ? 1 : 0) + previewUrls.length}/4
+                  />
+                </div>
+
+                <div className="text-xs text-gray-500 dark:text-gray-400">
+                  <span className="inline-flex items-center justify-center bg-purple-100 dark:bg-purple-800 text-purple-800 dark:text-purple-200 rounded-full w-6 h-6 text-xs font-bold mr-2">
+                    {(imageData ? 1 : 0) +
+                      selectedImages.length +
+                      previewUrls.length}
+                    /4
                   </span>
-                </Button>
+                  {t("videoCreation.images")} {t("common.selected", "selected")}
+                </div>
               </div>
             )}
 
@@ -558,7 +746,9 @@ export default function VideoCreation() {
                     disabled={
                       isLoading ||
                       !videoPrompt.trim() ||
-                      (imageData === null && previewUrls.length === 0)
+                      (imageData === null &&
+                        previewUrls.length === 0 &&
+                        selectedImages.length === 0)
                     }
                     className="text-sm bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full"
                   >
@@ -600,7 +790,9 @@ export default function VideoCreation() {
                         disabled={
                           isLoading ||
                           !videoPrompt.trim() ||
-                          (imageData === null && previewUrls.length === 0)
+                          (imageData === null &&
+                            previewUrls.length === 0 &&
+                            selectedImages.length === 0)
                         }
                         className="text-sm bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full"
                       >

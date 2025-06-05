@@ -9,18 +9,16 @@ import axios from "axios";
 import { useSearchParams, useRouter } from "next/navigation";
 
 import { useMutation, useQuery } from "urql";
-import { Image } from "../../gql/graphql";
 import { graphql } from "../../gql";
 
 import { ImageByIdQuery } from "../common/ImageByIdQuery";
 import { useTranslation } from "react-i18next";
 
-// Import components
-import { ErrorDisplay } from "./ErrorDisplay";
 import { SourceImageCard } from "./SourceImageCard";
 import { EditedImageCard } from "./EditedImageCard";
 import { useToast } from "@/hooks/use-toast";
 import { useUsageQuery } from "../common/useUsageQuery";
+import { ImageWithIndex } from "../gallery/ImageGallery";
 
 const ImageEditMutation = graphql(/* GraphQL */ `
   mutation ImageEdit($input: ImageEditInput!) {
@@ -33,6 +31,11 @@ const ImageEditMutation = graphql(/* GraphQL */ `
   }
 `);
 
+type SelectedImage = {
+  id: string;
+  imageUrl: string;
+};
+
 // Main component
 export default function ImageEdit() {
   const { t } = useTranslation();
@@ -40,80 +43,35 @@ export default function ImageEdit() {
   const router = useRouter();
   const { toast } = useToast();
 
+  const imageToEdit = searchParams?.get("image");
+
   const [imagePrompt, setImagePrompt] = useState("");
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<(string | null)[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [imageData, setImageData] = useState<Image[]>([]);
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const [imageId, setImageId] = useState<string | null>(null);
   const [editedImageUrl, setEditedImageUrl] = useState<string | null>(null);
-  const [images, setImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [requestSubmitted, setRequestSubmitted] = useState(false);
+  const [selectedImages, setSelectedImages] = useState<SelectedImage[]>([]);
+
+  // Gallery selection state
+  const [showGalleryModal, setShowGalleryModal] = useState(false);
+  const [gallerySelectedImages, setGallerySelectedImages] = useState<
+    ImageWithIndex[]
+  >([]);
 
   const [, editImage] = useMutation(ImageEditMutation);
   const { reexecuteQuery: reexecuteUsageQuery } = useUsageQuery({
     pause: true,
   });
 
-  useEffect(() => {
-    const imageParam = searchParams?.get("image");
-    const imagesParam = searchParams?.get("images");
-
-    if (imageParam) {
-      setImages([imageParam]);
-    } else if (imagesParam) {
-      try {
-        const imageIds = JSON.parse(imagesParam);
-        if (Array.isArray(imageIds) && imageIds.length <= 2) {
-          setImages(imageIds);
-        }
-      } catch {
-        // Invalid JSON, ignore
-      }
-    }
-  }, [searchParams]);
-
-  const [firstImageResult, reexecuteFirstQuery] = useQuery({
+  const [{ data }] = useQuery({
     query: ImageByIdQuery,
-    variables: { id: images[0] || "" },
-    pause: !images[0],
+    variables: { id: imageToEdit || "" },
+    pause: !imageToEdit,
   });
-
-  const [secondImageResult, reexecuteSecondQuery] = useQuery({
-    query: ImageByIdQuery,
-    variables: { id: images[1] || "" },
-    pause: !images[1],
-  });
-
-  useEffect(() => {
-    if (images.length > 0) {
-      reexecuteFirstQuery({ requestPolicy: "network-only" });
-    }
-    if (images.length > 1) {
-      reexecuteSecondQuery({ requestPolicy: "network-only" });
-    }
-  }, [images, reexecuteFirstQuery, reexecuteSecondQuery]);
-
-  useEffect(() => {
-    const loadedImages: Image[] = [];
-
-    if (firstImageResult.data?.node && !firstImageResult.error) {
-      loadedImages.push(firstImageResult.data.node as Image);
-    }
-
-    if (secondImageResult.data?.node && !secondImageResult.error) {
-      loadedImages.push(secondImageResult.data.node as Image);
-    }
-
-    setImageData(loadedImages);
-  }, [
-    firstImageResult.data,
-    secondImageResult.data,
-    firstImageResult.error,
-    secondImageResult.error,
-  ]);
 
   useEffect(() => {
     if (imageId && !editedImageUrl) {
@@ -126,6 +84,102 @@ export default function ImageEdit() {
       }
     }
   }, [imageId, editedImageUrl]);
+
+  useEffect(() => {
+    if (data?.node) {
+      const node = data.node;
+      console.log("node", node);
+      if (node.__typename === "Image" && node.id && node.imageUrl) {
+        setSelectedImages((prev) => [
+          ...prev,
+          { id: node.id, imageUrl: node.imageUrl } as SelectedImage,
+        ]);
+
+        // cleanup the url parameter
+        const url = new URL(window.location.href);
+        url.searchParams.delete("image");
+        router.replace(url.pathname + url.search, { scroll: false });
+      }
+    }
+  }, [data]);
+
+  const handleGalleryImagesSelect = (images: ImageWithIndex[]) => {
+    setGallerySelectedImages(images);
+  };
+
+  const handleGalleryModalChange = (open: boolean) => {
+    setShowGalleryModal(open);
+    // Reset selected images when modal is closed without confirming
+    if (!open) {
+      setGallerySelectedImages([]);
+    }
+  };
+
+  const handleConfirmGallerySelection = async () => {
+    if (isLoading) return;
+
+    setIsLoading(true);
+
+    const remainingSlots = 2 - (selectedImages.length + uploadedImages.length);
+    const imagesToAdd = gallerySelectedImages.slice(0, remainingSlots);
+
+    if (imagesToAdd.length === 0) {
+      toast({
+        title: t("imageEdit.imageSelection.limitReached"),
+        description: t("imageEdit.imageSelection.limitDescription"),
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // Convert gallery images to File objects for consistency
+      const results = imagesToAdd.map((img) => ({
+        id: img.id,
+        imageUrl: img.imageUrl,
+      }));
+
+      const validResults = results.filter((result) => Boolean(result.imageUrl));
+
+      if (validResults.length > 0) {
+        // Update state synchronously to ensure the images are added
+        setSelectedImages((prev) => [
+          ...prev,
+          ...(validResults as SelectedImage[]),
+        ]);
+
+        // Show success feedback
+        if (gallerySelectedImages.length > validResults.length) {
+          toast({
+            title: t("imageEdit.imageSelection.someSkipped"),
+            description: t("imageEdit.imageSelection.skippedDescription", {
+              count: validResults.length,
+            }),
+            variant: "default",
+          });
+        } else {
+          toast({
+            title: t("imageEdit.imageSelection.imagesAdded"),
+            description: t("imageEdit.imageSelection.imagesAddedDescription", {
+              count: validResults.length,
+            }),
+            variant: "default",
+          });
+        }
+      }
+    } catch {
+      toast({
+        title: t("common.error"),
+        description: t("imageEdit.imageSelection.errorProcessing"),
+        variant: "destructive",
+      });
+    } finally {
+      // Always clean up state regardless of success or failure
+      setGallerySelectedImages([]);
+      setShowGalleryModal(false);
+      setIsLoading(false);
+    }
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -176,35 +230,20 @@ export default function ImageEdit() {
   };
 
   const handleRemoveSelectedImage = (index: number) => {
-    const newImages = images.filter((_, i) => i !== index);
-    const newImageData = imageData.filter((_, i) => i !== index);
+    const newImages = selectedImages.filter((_, i) => i !== index);
 
-    setImages(newImages);
-    setImageData(newImageData);
-
-    const newUrl = new URL(window.location.href);
-    if (newImages.length === 0) {
-      newUrl.searchParams.delete("image");
-      newUrl.searchParams.delete("images");
-    } else if (newImages.length === 1) {
-      newUrl.searchParams.set("image", newImages[0]);
-      newUrl.searchParams.delete("images");
-    } else {
-      newUrl.searchParams.delete("image");
-      newUrl.searchParams.set("images", JSON.stringify(newImages));
-    }
-    router.push(newUrl.pathname + newUrl.search);
+    setSelectedImages(newImages);
   };
 
   const handleEditImage = async () => {
     if (
       !imagePrompt.trim() ||
-      (uploadedImages.length === 0 && imageData.length === 0) ||
+      (uploadedImages.length === 0 && selectedImages.length === 0) ||
       requestSubmitted
     )
       return;
 
-    const totalImages = uploadedImages.length + imageData.length;
+    const totalImages = uploadedImages.length + selectedImages.length;
     if (totalImages > 2) {
       toast({
         title: "Error",
@@ -232,10 +271,10 @@ export default function ImageEdit() {
     try {
       let imageId = null;
 
-      if (imageData.length > 0 && uploadedImages.length === 0) {
+      if (selectedImages.length > 0 && uploadedImages.length === 0) {
         const result = await editImage({
           input: {
-            imageIds: imageData.map((img) => img.id),
+            imageIds: selectedImages.map((img) => img.id),
             prompt: imagePrompt,
           },
         });
@@ -248,8 +287,10 @@ export default function ImageEdit() {
           formData.append("files", file);
         });
         formData.append("prompt", imagePrompt);
-        if (imageData.length > 0) {
-          formData.append("imageId", imageData[0].id);
+        if (selectedImages.length > 0) {
+          selectedImages.forEach((selectedImage) => {
+            formData.append("imageIds", selectedImage.id);
+          });
         }
 
         const response = await axios.post(
@@ -310,13 +351,6 @@ export default function ImageEdit() {
     setImagePrompt(idea);
   };
 
-  const hasError = firstImageResult.error || secondImageResult.error;
-  const firstError = firstImageResult.error || secondImageResult.error;
-
-  if (hasError && firstError) {
-    return <ErrorDisplay errorMessage={firstError.message} />;
-  }
-
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
@@ -330,7 +364,7 @@ export default function ImageEdit() {
         className="grid grid-cols-1 lg:grid-cols-2 gap-6"
       >
         <SourceImageCard
-          imageData={imageData}
+          imageData={selectedImages}
           previewUrls={previewUrls}
           fileInputRef={fileInputRef as React.RefObject<HTMLInputElement>}
           handleFileChange={handleFileChange}
@@ -342,6 +376,11 @@ export default function ImageEdit() {
           handleEditImage={handleEditImage}
           handlePromptIdeaClick={handlePromptIdeaClick}
           uploadedImages={uploadedImages}
+          showGalleryModal={showGalleryModal}
+          gallerySelectedImages={gallerySelectedImages}
+          handleGalleryImagesSelect={handleGalleryImagesSelect}
+          handleGalleryModalChange={handleGalleryModalChange}
+          handleConfirmGallerySelection={handleConfirmGallerySelection}
         />
 
         <EditedImageCard

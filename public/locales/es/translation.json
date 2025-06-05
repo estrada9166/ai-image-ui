@@ -189,7 +189,17 @@
     "maxTwoImages": "Máximo 2 imágenes permitidas",
     "addAnotherImage": "Añadir Otra Imagen",
     "editingFailed": "Falló la edición de imágenes. Por favor, inténtalo de nuevo.",
-    "addImage": "Añadir Imagen"
+    "addImage": "Añadir Imagen",
+    "selectFromGallery": "Seleccionar de la Galería",
+    "uploadImages": "Subir Imágenes",
+    "imageSelection": {
+      "limitReached": "Has alcanzado el límite máximo de imágenes para añadir.",
+      "limitDescription": "El límite máximo de imágenes para añadir es 2.",
+      "someSkipped": "Algunas imágenes fueron omitidas",
+      "skippedDescription": "{{count}} imágenes fueron omitidas",
+      "imagesAdded": "Imágenes añadidas",
+      "errorProcessing": "Error al procesar las imágenes. Por favor, inténtalo de nuevo."
+    }
   },
   "imageEditPromptIdeas": {
     "idea1": "Transforma el fondo a una playa tropical prístina con agua turquesa cristalina, arena dorada y palmeras meciéndose. Añade un cálido resplandor de atardecer que proyecte suaves reflejos naranjas sobre el sujeto.",
@@ -357,7 +367,15 @@
     "videoWillAppearHere": "Tu video aparecerá aquí una vez generado",
     "enterPromptToGenerateVideo": "Ingresa un prompt para generar un video",
     "clickGenerateVideo": "Haz clic en el botón \"Generar Video\" para transformar tu imagen estática en un video dinámico",
-    "downloadVideo": "Descargar Video"
+    "downloadVideo": "Descargar Video",
+    "imageSelection": {
+      "limitReached": "Has alcanzado el límite máximo de imágenes para añadir.",
+      "limitDescription": "El límite máximo de imágenes para añadir es 4.",
+      "someSkipped": "Algunas imágenes fueron omitidas",
+      "skippedDescription": "{{count}} imágenes fueron omitidas",
+      "imagesAdded": "Imágenes añadidas",
+      "errorProcessing": "Error al procesar las imágenes. Por favor, inténtalo de nuevo."
+    }
   },
   "landing": {
     "footer": {
@@ -734,5 +752,11 @@
     "checkoutButton": "Finalizar Compra",
     "cancelButton": "Cancelar",
     "billing": "Facturación"
+  },
+  "gallerySelectionModal": {
+    "title": "Seleccionar Imágenes",
+    "selectedImages": "{{count}} de {{max}} imágenes seleccionadas",
+    "maximumLimitReached": "Límite máximo alcanzado",
+    "useImages": "Usar ({{count}}) imágenes"
   }
 }

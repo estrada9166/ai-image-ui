@@ -14,7 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n        originalImages {\n          id\n        }\n      }\n    }\n  }\n": typeof types.ImageByIdDocument,
+    "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      __typename\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n        originalImages {\n          id\n        }\n      }\n    }\n  }\n": typeof types.ImageByIdDocument,
     "\n  query Me {\n    me {\n      id\n      fullName\n      email\n      isSocialLogin\n      hasActiveSubscription\n    }\n  }\n": typeof types.MeDocument,
     "\n  query Usage {\n    me {\n      id\n      email\n      planFeaturesUsage {\n        planId\n        startDate\n        endDate\n        imageCreation {\n          limit\n          used\n        }\n        editImage {\n          limit\n          used\n        }\n        imageRestoration {\n          limit\n          used\n        }\n        videoCreation {\n          limit\n          used\n        }\n      }\n    }\n  }\n": typeof types.UsageDocument,
     "\n  mutation ConfirmUserEmail($input: ConfirmUserEmailInput!) {\n    confirmUserEmail(input: $input) {\n      id\n    }\n  }\n": typeof types.ConfirmUserEmailDocument,
@@ -35,7 +35,7 @@ type Documents = {
     "\n  mutation VideoCreation($input: VideoCreationInput!) {\n    videoCreation(input: $input) {\n      id\n      status\n    }\n  }\n": typeof types.VideoCreationDocument,
 };
 const documents: Documents = {
-    "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n        originalImages {\n          id\n        }\n      }\n    }\n  }\n": types.ImageByIdDocument,
+    "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      __typename\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n        originalImages {\n          id\n        }\n      }\n    }\n  }\n": types.ImageByIdDocument,
     "\n  query Me {\n    me {\n      id\n      fullName\n      email\n      isSocialLogin\n      hasActiveSubscription\n    }\n  }\n": types.MeDocument,
     "\n  query Usage {\n    me {\n      id\n      email\n      planFeaturesUsage {\n        planId\n        startDate\n        endDate\n        imageCreation {\n          limit\n          used\n        }\n        editImage {\n          limit\n          used\n        }\n        imageRestoration {\n          limit\n          used\n        }\n        videoCreation {\n          limit\n          used\n        }\n      }\n    }\n  }\n": types.UsageDocument,
     "\n  mutation ConfirmUserEmail($input: ConfirmUserEmailInput!) {\n    confirmUserEmail(input: $input) {\n      id\n    }\n  }\n": types.ConfirmUserEmailDocument,
@@ -73,7 +73,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n        originalImages {\n          id\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n        originalImages {\n          id\n        }\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      __typename\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n        originalImages {\n          id\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      __typename\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n        originalImages {\n          id\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

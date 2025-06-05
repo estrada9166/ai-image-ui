@@ -1,15 +1,8 @@
 import { X } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { SourceImageDisplayProps } from "./types";
 
 export const SourceImageDisplay = ({
   imageUrl,
-  prompt,
   onRemove,
 }: SourceImageDisplayProps) => (
   <div className="relative group h-full">
@@ -25,19 +18,5 @@ export const SourceImageDisplay = ({
     >
       <X className="h-4 w-4" />
     </button>
-    {prompt && (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 text-white text-sm truncate cursor-help">
-              {prompt}
-            </div>
-          </TooltipTrigger>
-          <TooltipContent className="max-w-xs bg-gray-900/95 text-white border-purple-500/20 backdrop-blur-md">
-            <p>{prompt}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    )}
   </div>
 );

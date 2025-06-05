@@ -1,27 +1,8 @@
-import { ImageIcon, Upload } from "lucide-react";
-import { Button } from "../ui/button";
-import Link from "next/link";
+import { ImageIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useMeQuery } from "../common/useMeQuery";
-import { Checkout } from "../checkout/Checkout";
 
-export function EmptyState({
-  fileInputRef,
-  onUploadClick,
-}: {
-  fileInputRef: React.RefObject<HTMLInputElement>;
-  onUploadClick?: () => void;
-}) {
+export function EmptyState() {
   const { t } = useTranslation();
-  const { data: userData } = useMeQuery();
-
-  const handleUploadClick = () => {
-    if (onUploadClick) {
-      onUploadClick();
-    } else if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
 
   return (
     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-purple-50 dark:from-gray-800 dark:to-purple-900/20 backdrop-blur-sm">
@@ -38,39 +19,6 @@ export function EmptyState({
         <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mb-4 sm:mb-6 px-2">
           {t("videoCreation.emptyState.description")}
         </p>
-        <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:justify-center sm:gap-4">
-          {userData?.me?.hasActiveSubscription ? (
-            <>
-              <Button
-                variant="outline"
-                className="w-full sm:w-auto border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-all duration-300 rounded-full cursor-pointer shadow-sm hover:shadow-md"
-                onClick={handleUploadClick}
-              >
-                <Upload className="mr-2 h-4 w-4" />
-                {t("videoCreation.emptyState.uploadImages")}
-              </Button>
-            </>
-          ) : (
-            <Checkout
-              trigger={
-                <Button
-                  variant="outline"
-                  className="w-full sm:w-auto border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-900/30 dark:text-purple-400 dark:hover:bg-purple-900/20 transition-all duration-300 rounded-full cursor-pointer shadow-sm hover:shadow-md"
-                >
-                  <Upload className="mr-2 h-4 w-4" />
-                  {t("videoCreation.emptyState.uploadImages")}
-                </Button>
-              }
-            />
-          )}
-
-          <Link href="/dashboard/gallery" className="w-full sm:w-auto">
-            <Button className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg rounded-full">
-              <ImageIcon className="mr-2 h-4 w-4" />
-              {t("videoCreation.emptyState.selectFromGallery")}
-            </Button>
-          </Link>
-        </div>
       </div>
     </div>
   );

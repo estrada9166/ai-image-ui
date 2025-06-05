@@ -1,14 +1,13 @@
-import { AiModelOptionsEnum, Image } from "../../gql/graphql";
+import { AiModelOptionsEnum } from "../../gql/graphql";
+import { ImageWithIndex } from "../gallery/ImageGallery";
 
-export type ImageEdit = {
+export type SelectedImage = {
   id: string;
-  prompt?: string | null;
-  status: string;
   imageUrl?: string | null;
 };
 
 export interface SourceImageCardProps {
-  imageData: Image[];
+  imageData: SelectedImage[];
   previewUrls: (string | null)[];
   fileInputRef: React.RefObject<HTMLInputElement> | null;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -20,6 +19,11 @@ export interface SourceImageCardProps {
   handleEditImage: () => void;
   handlePromptIdeaClick: (idea: string) => void;
   uploadedImages: File[];
+  showGalleryModal: boolean;
+  gallerySelectedImages: ImageWithIndex[];
+  handleGalleryImagesSelect: (images: ImageWithIndex[]) => void;
+  handleGalleryModalChange: (open: boolean) => void;
+  handleConfirmGallerySelection: () => Promise<void>;
 }
 
 export interface EditedImageCardProps {
@@ -44,7 +48,6 @@ export interface PromptActionsProps {
 
 export interface SourceImageDisplayProps {
   imageUrl: string;
-  prompt?: string | null;
   onRemove: () => void;
   index?: number;
 }

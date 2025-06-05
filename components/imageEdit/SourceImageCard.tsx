@@ -1,4 +1,4 @@
-import { ImageIcon, Plus } from "lucide-react";
+import { ImageIcon, Plus, Grid } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { PromptInput } from "./PromptInput";
 import { PromptActions } from "./PromptActions";
 import { SourceImageCardProps } from "./types";
 import { motion } from "framer-motion";
+import { GallerySelectionModal } from "../common/GallerySelectionModal";
 
 export const SourceImageCard = ({
   imageData,
@@ -23,14 +24,13 @@ export const SourceImageCard = ({
   handleEditImage,
   handlePromptIdeaClick,
   uploadedImages,
+  showGalleryModal,
+  gallerySelectedImages,
+  handleGalleryImagesSelect,
+  handleGalleryModalChange,
+  handleConfirmGallerySelection,
 }: SourceImageCardProps) => {
   const { t } = useTranslation();
-
-  const handleUploadClick = () => {
-    if (fileInputRef?.current) {
-      fileInputRef.current.click();
-    }
-  };
 
   const totalImages = imageData.length + uploadedImages.length;
 
@@ -38,7 +38,6 @@ export const SourceImageCard = ({
   const allImages = [
     ...imageData.map((img, index) => ({
       imageUrl: img.imageUrl || "",
-      prompt: img.prompt,
       type: "stored" as const,
       index,
     })),
@@ -84,7 +83,6 @@ export const SourceImageCard = ({
                   >
                     <SourceImageDisplay
                       imageUrl={image.imageUrl}
-                      prompt={image.prompt}
                       onRemove={() => {
                         if (image.type === "stored") {
                           handleRemoveSelectedImage(image.index);
@@ -99,7 +97,7 @@ export const SourceImageCard = ({
               </div>
             ) : (
               <div className="aspect-[4/3] max-w-md mx-auto rounded-xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border border-purple-100/30 dark:border-purple-800/30">
-                <EmptySourceImage onUploadClick={handleUploadClick} />
+                <EmptySourceImage />
               </div>
             )}
           </div>
@@ -115,26 +113,49 @@ export const SourceImageCard = ({
           />
 
           {/* Upload Button */}
-          {totalImages < 2 && (
-            <div className="mb-6 text-center">
-              <Button
-                onClick={handleUploadClick}
-                variant="outline"
-                className="group border-2 border-dashed border-purple-300 dark:border-purple-700 text-purple-700 dark:text-purple-300 hover:border-purple-500 dark:hover:border-purple-600 rounded-xl py-3 px-6 transition-all"
-                disabled={isEditingImage}
-              >
-                <Plus className="h-4 w-4 mr-2 group-hover:rotate-90 transition-transform" />
-                <span>
-                  {totalImages === 0
-                    ? t("imageEdit.addImage")
-                    : t("imageEdit.addAnotherImage")}
+          {imageData.length + uploadedImages.length < 2 && (
+            <div className="mb-6 text-center space-y-3">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                <Button
+                  onClick={() => {
+                    if (fileInputRef?.current) {
+                      fileInputRef.current.click();
+                    }
+                  }}
+                  variant="outline"
+                  className="group border-2 border-dashed border-purple-300 dark:border-purple-700 text-purple-700 dark:text-purple-300 hover:border-purple-500 dark:hover:border-purple-600 rounded-xl py-3 px-6 transition-all"
+                  disabled={isEditingImage}
+                >
+                  <Plus className="h-4 w-4 mr-2 group-hover:rotate-90 transition-transform" />
+                  <span>{t("imageEdit.uploadImages")}</span>
+                </Button>
+
+                <GallerySelectionModal
+                  open={showGalleryModal}
+                  onOpenChange={handleGalleryModalChange}
+                  selectedImages={gallerySelectedImages}
+                  onImagesSelect={handleGalleryImagesSelect}
+                  onConfirmSelection={handleConfirmGallerySelection}
+                  maxImages={2}
+                  trigger={
+                    <Button
+                      variant="outline"
+                      className="group border-2 border-dashed border-indigo-300 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300 hover:border-indigo-500 dark:hover:border-indigo-600 rounded-xl py-3 px-6 transition-all"
+                      disabled={isEditingImage}
+                    >
+                      <Grid className="h-4 w-4 mr-2" />
+                      <span>{t("imageEdit.selectFromGallery")}</span>
+                    </Button>
+                  }
+                />
+              </div>
+
+              <div className="text-xs text-gray-500 dark:text-gray-400">
+                <span className="inline-flex items-center justify-center bg-purple-100 dark:bg-purple-800 text-purple-800 dark:text-purple-200 rounded-full w-6 h-6 text-xs font-bold mr-2">
+                  {imageData.length + uploadedImages.length}/2
                 </span>
-                {totalImages > 0 && (
-                  <span className="ml-2 inline-flex items-center justify-center bg-purple-100 dark:bg-purple-800 text-purple-800 dark:text-purple-200 rounded-full w-5 h-5 text-xs font-bold">
-                    {totalImages}/2
-                  </span>
-                )}
-              </Button>
+                {t("imageEdit.images")} {t("common.selected", "selected")}
+              </div>
             </div>
           )}
 

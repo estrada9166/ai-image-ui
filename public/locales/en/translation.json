@@ -189,7 +189,16 @@
     "maxTwoImages": "Maximum 2 images allowed",
     "addAnotherImage": "Add Another Image",
     "editingFailed": "Failed to edit images. Please try again.",
-    "addImage": "Add Image"
+    "addImage": "Add Image",
+    "selectFromGallery": "Select from Gallery",
+    "uploadImages": "Upload Images",
+    "imageSelection": {
+      "limitReached": "You've reached the maximum number of images to add.",
+      "limitDescription": "The maximum number of images to add is 2.",
+      "someSkipped": "Some images were skipped",
+      "skippedDescription": "{{count}} images were skipped",
+      "imagesAdded": "Images added"
+    }
   },
   "imageEditPromptIdeas": {
     "idea1": "Transform the background to a pristine tropical beach with crystal-clear turquoise water, golden sand, and swaying palm trees. Add a warm sunset glow that casts soft orange highlights on the subject.",
@@ -357,7 +366,16 @@
     "videoWillAppearHere": "Your video will appear here once generated",
     "enterPromptToGenerateVideo": "Enter a prompt to generate a video",
     "clickGenerateVideo": "Click the \"Generate Video\" button to transform your static image into a dynamic video",
-    "downloadVideo": "Download Video"
+    "downloadVideo": "Download Video",
+    "imageSelection": {
+      "limitReached": "You've reached the maximum number of images to add.",
+      "limitDescription": "The maximum number of images to add is 4.",
+      "someSkipped": "Some images were skipped",
+      "skippedDescription": "{{count}} images were skipped",
+      "imagesAdded": "Images added",
+      "imagesAddedDescription": "{{count}} images were added",
+      "errorProcessing": "Error processing images"
+    }
   },
   "landing": {
     "footer": {
@@ -704,5 +722,11 @@
     "checkoutButton": "Checkout",
     "cancelButton": "Cancel",
     "billing": "Billing"
+  },
+  "gallerySelectionModal": {
+    "title": "Select Images",
+    "selectedImages": "{{count}} of {{max}} images selected",
+    "maximumLimitReached": "Maximum limit reached",
+    "useImages": "Use ({{count}}) images"
   }
 }
