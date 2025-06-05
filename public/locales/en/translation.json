@@ -215,7 +215,8 @@
     "settings": "Settings"
   },
   "navMain": {
-    "quickCreate": "Quick Create"
+    "quickCreate": "Quick Create",
+    "newChat": "New Chat"
   },
   "navRemainingPlan": {
     "yourPlanUsage": "Your Plan Usage",
@@ -704,5 +705,88 @@
     "checkoutButton": "Checkout",
     "cancelButton": "Cancel",
     "billing": "Billing"
+  },
+  "chat": {
+    "title": "AI Image Chat",
+    "description": "Transform your ideas into stunning visuals with our powerful AI chat interface.",
+    "welcomeCards": {
+      "create": {
+        "title": "Create New Images",
+        "description": "Describe what you want and our AI will generate it from scratch"
+      },
+      "edit": {
+        "title": "Edit Existing Images",
+        "description": "Upload or select 1-2 images to modify, enhance, or transform them"
+      },
+      "video": {
+        "title": "Create Videos",
+        "description": "Use 1-4 images to generate animated videos with custom prompts"
+      }
+    },
+    "buttons": {
+      "uploadImages": "Upload Images",
+      "browseGallery": "Browse Gallery",
+      "create": "Create",
+      "edit": "Edit",
+      "video": "Video"
+    },
+    "placeholders": {
+      "createImage": "Describe the image you want to create...",
+      "editImage": "Describe how to modify the images...",
+      "createVideo": "Describe the video you want to create...",
+      "negativePrompt": "Negative prompt (optional)..."
+    },
+    "settings": {
+      "camera": {
+        "standard": "Standard",
+        "selfie": "Selfie"
+      },
+      "aspectRatio": {
+        "square": "Square",
+        "landscape": "Landscape",
+        "portrait": "Portrait"
+      },
+      "aiModel": {
+        "model1": "Model 1",
+        "model2": "Model 2"
+      }
+    },
+    "messages": {
+      "generatedImage": "Generated image",
+      "generatedVideo": "Generated video",
+      "processing": "Processing your request... This may take a moment.",
+      "errorPrefix": "Sorry, I encountered an error processing your request: "
+    },
+    "imageSelection": {
+      "limitReached": "Image Limit Reached",
+      "limitDescription": "You can only select up to 4 images at a time.",
+      "someSkipped": "Some Images Skipped",
+      "skippedDescription": "Only {count} images were added due to the 4-image limit.",
+      "selectedCount": "{count} of 4 images selected",
+      "maxReached": "Max reached",
+      "videoOnly": "Video only",
+      "editOrVideo": "Edit or Video"
+    },
+    "actions": {
+      "actionRestricted": "Action Restricted",
+      "videoOnlyDescription": "With more than 2 images, only video creation is available."
+    },
+    "errors": {
+      "unauthorized": "Unauthorized",
+      "unauthorizedDescription": "You don't have permission to access one or more selected images.",
+      "error": "Error",
+      "failedToProcess": "Failed to process your request: {error}"
+    },
+    "videoOptions": {
+      "showMoreOptions": "Show More Options",
+      "hideOptions": "Hide Options"
+    },
+    "instructions": {
+      "selectImagesFirst": "Please upload or select images first to use {mode} mode"
+    },
+    "loadingMoreMessages": "Loading more messages...",
+    "galleryModal": {
+      "title": "Select Images from Gallery"
+    }
   }
 }

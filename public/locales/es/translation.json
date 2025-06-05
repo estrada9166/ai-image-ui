@@ -215,7 +215,8 @@
     "settings": "Ajustes"
   },
   "navMain": {
-    "quickCreate": "Creación Rápida"
+    "quickCreate": "Creación Rápida",
+    "newChat": "Nuevo Chat"
   },
   "navRemainingPlan": {
     "yourPlanUsage": "Uso de Tu Plan",
@@ -734,5 +735,88 @@
     "checkoutButton": "Finalizar Compra",
     "cancelButton": "Cancelar",
     "billing": "Facturación"
+  },
+  "chat": {
+    "title": "Chat de Imágenes IA",
+    "description": "Transforma tus ideas en visuales impresionantes con nuestra poderosa interfaz de chat IA.",
+    "welcomeCards": {
+      "create": {
+        "title": "Crear Nuevas Imágenes",
+        "description": "Describe lo que quieres y nuestra IA lo generará desde cero"
+      },
+      "edit": {
+        "title": "Editar Imágenes Existentes",
+        "description": "Sube o selecciona 1-2 imágenes para modificar, mejorar o transformarlas"
+      },
+      "video": {
+        "title": "Crear Videos",
+        "description": "Usa 1-4 imágenes para generar videos animados con prompts personalizados"
+      }
+    },
+    "buttons": {
+      "uploadImages": "Subir Imágenes",
+      "browseGallery": "Explorar Galería",
+      "create": "Crear",
+      "edit": "Editar",
+      "video": "Video"
+    },
+    "placeholders": {
+      "createImage": "Describe la imagen que quieres crear...",
+      "editImage": "Describe cómo modificar las imágenes...",
+      "createVideo": "Describe el video que quieres crear...",
+      "negativePrompt": "Prompt negativo (opcional)..."
+    },
+    "settings": {
+      "camera": {
+        "standard": "Estándar",
+        "selfie": "Selfie"
+      },
+      "aspectRatio": {
+        "square": "Cuadrado",
+        "landscape": "Paisaje",
+        "portrait": "Retrato"
+      },
+      "aiModel": {
+        "model1": "Modelo 1",
+        "model2": "Modelo 2"
+      }
+    },
+    "messages": {
+      "generatedImage": "Imagen generada",
+      "generatedVideo": "Video generado",
+      "processing": "Procesando tu solicitud... Esto puede tomar un momento.",
+      "errorPrefix": "Lo siento, encontré un error procesando tu solicitud: "
+    },
+    "imageSelection": {
+      "limitReached": "Límite de Imágenes Alcanzado",
+      "limitDescription": "Solo puedes seleccionar hasta 4 imágenes a la vez.",
+      "someSkipped": "Algunas Imágenes Omitidas",
+      "skippedDescription": "Solo se agregaron {count} imágenes debido al límite de 4 imágenes.",
+      "selectedCount": "{count} de 4 imágenes seleccionadas",
+      "maxReached": "Máximo alcanzado",
+      "videoOnly": "Solo video",
+      "editOrVideo": "Editar o Video"
+    },
+    "actions": {
+      "actionRestricted": "Acción Restringida",
+      "videoOnlyDescription": "Con más de 2 imágenes, solo está disponible la creación de videos."
+    },
+    "errors": {
+      "unauthorized": "No Autorizado",
+      "unauthorizedDescription": "No tienes permiso para acceder a una o más imágenes seleccionadas.",
+      "error": "Error",
+      "failedToProcess": "Error al procesar tu solicitud: {error}"
+    },
+    "videoOptions": {
+      "showMoreOptions": "Mostrar Más Opciones",
+      "hideOptions": "Ocultar Opciones"
+    },
+    "instructions": {
+      "selectImagesFirst": "Por favor sube o selecciona imágenes primero para usar el modo {mode}"
+    },
+    "loadingMoreMessages": "Cargando más mensajes...",
+    "galleryModal": {
+      "title": "Seleccionar Imágenes de la Galería"
+    }
   }
 }
