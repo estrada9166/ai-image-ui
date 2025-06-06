@@ -63,9 +63,7 @@ export default function ImageEdit() {
   >([]);
 
   const [, editImage] = useMutation(ImageEditMutation);
-  const { reexecuteQuery: reexecuteUsageQuery } = useUsageQuery({
-    pause: true,
-  });
+  const { reexecuteQuery: reexecuteUsageQuery } = useUsageQuery();
 
   const [{ data }] = useQuery({
     query: ImageByIdQuery,
@@ -289,7 +287,7 @@ export default function ImageEdit() {
         formData.append("prompt", imagePrompt);
         if (selectedImages.length > 0) {
           selectedImages.forEach((selectedImage) => {
-            formData.append("imageIds", selectedImage.id);
+            formData.append("imagesIds[]", selectedImage.id);
           });
         }
 
@@ -305,28 +303,6 @@ export default function ImageEdit() {
         );
 
         imageId = response.data.id;
-
-        if (response.data.originalImages) {
-          const originalImageIds = response.data.originalImages.map(
-            (img: { id: string }) => img.id
-          );
-          const newUrl = new URL(window.location.href);
-          if (originalImageIds.length === 1) {
-            newUrl.searchParams.set("image", originalImageIds[0]);
-            newUrl.searchParams.delete("images");
-          } else {
-            newUrl.searchParams.delete("image");
-            newUrl.searchParams.set("images", JSON.stringify(originalImageIds));
-          }
-          router.push(newUrl.pathname + newUrl.search);
-
-          // Clear the uploaded images and previews after successful upload
-          setUploadedImages([]);
-          setPreviewUrls([]);
-          if (fileInputRef.current) {
-            fileInputRef.current.value = "";
-          }
-        }
       }
 
       if (imageId) {

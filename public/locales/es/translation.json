@@ -134,8 +134,8 @@
     },
     "aiModel": "Modelo de IA",
     "aiModels": {
-      "model1": "Modelo 1",
-      "model2": "Modelo 2"
+      "model1": "Modelo 1 (Mejor para productos)",
+      "model2": "Modelo 2 (Mejor para personajes)"
     },
     "promptIdeas": "Ideas de Prompt",
     "clear": "Limpiar",
@@ -168,8 +168,8 @@
     "goBack": "Volver",
     "promptIdeas": "Ideas de Prompt",
     "aiModel": "Modelo de IA",
-    "model1": "Modelo 1",
-    "model2": "Modelo 2",
+    "model1": "Modelo 1 (Mejor para productos)",
+    "model2": "Modelo 2 (Mejor para personajes)",
     "editInstructions": "Instrucciones de Edición",
     "editInstructionsPlaceholder": "Describe cómo quieres editar tu imagen...",
     "clear": "Limpiar",
@@ -198,6 +198,7 @@
       "someSkipped": "Algunas imágenes fueron omitidas",
       "skippedDescription": "{{count}} imágenes fueron omitidas",
       "imagesAdded": "Imágenes añadidas",
+      "imagesAddedDescription": "{{count}} imágenes añadidas",
       "errorProcessing": "Error al procesar las imágenes. Por favor, inténtalo de nuevo."
     }
   },

@@ -4,7 +4,11 @@ import { relayPagination } from "@urql/exchange-graphcache/extras";
 
 export function createUrqlClient(cookie?: string) {
   const cache = cacheExchange({
-    keys: {},
+    keys: {
+      UsageLimit: () => null,
+      PlanFeaturesUsage: () => null,
+      Onboarding: () => null,
+    },
     resolvers: {
       Query: {
         images: relayPagination(),

@@ -36,7 +36,6 @@ import { ImageByIdQuery } from "../common/ImageByIdQuery";
 import { GallerySelectionModal } from "../common/GallerySelectionModal";
 import { useTranslation } from "react-i18next";
 import { Checkout } from "../checkout/Checkout";
-import { useMeQuery } from "../common/useMeQuery";
 import { useUsageQuery } from "../common/useUsageQuery";
 import { useToast } from "../../hooks/use-toast";
 
@@ -73,6 +72,7 @@ export default function VideoCreation() {
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [canGenerateVideo, setCanGenerateVideo] = useState(false);
 
   // Gallery selection state
   const [showGalleryModal, setShowGalleryModal] = useState(false);
@@ -81,10 +81,21 @@ export default function VideoCreation() {
   >([]);
 
   const [, generateVideo] = useMutation(VideoCreationMutation);
-  const { data: userData } = useMeQuery();
-  const { reexecuteQuery: reexecuteUsageQuery } = useUsageQuery({
-    pause: true,
-  });
+
+  const { data: usageData, reexecuteQuery: reexecuteUsageQuery } =
+    useUsageQuery();
+
+  useEffect(() => {
+    const imageCreationUsage = usageData?.me?.planFeaturesUsage?.videoCreation;
+    if (
+      !imageCreationUsage ||
+      imageCreationUsage.used >= imageCreationUsage.limit
+    ) {
+      setCanGenerateVideo(false);
+    } else {
+      setCanGenerateVideo(true);
+    }
+  }, [usageData]);
 
   const [{ data, fetching, error }] = useQuery({
     query: ImageByIdQuery,
@@ -337,7 +348,7 @@ export default function VideoCreation() {
 
         if (selectedImages.length > 0) {
           selectedImages.forEach((selectedImage) => {
-            formData.append("imageIds", selectedImage.id);
+            formData.append("imagesIds[]", selectedImage.id);
           });
         }
 
@@ -740,7 +751,7 @@ export default function VideoCreation() {
                   <RefreshCw className="mr-2 h-4 w-4" />
                   {t("common.clear")}
                 </Button>
-                {userData?.me?.hasActiveSubscription ? (
+                {canGenerateVideo ? (
                   <Button
                     onClick={handleGenerateVideo}
                     disabled={

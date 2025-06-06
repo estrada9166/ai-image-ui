@@ -10,13 +10,9 @@ import { Checkout } from "../checkout/Checkout";
 import { Button } from "../ui/button";
 import Link from "next/link";
 
-export function NavRemainingPlan({
-  hasActiveSubscription,
-}: {
-  hasActiveSubscription: boolean;
-}) {
+export function NavRemainingPlan() {
   const { t } = useTranslation();
-  const { data } = useUsageQuery({ pause: !hasActiveSubscription });
+  const { data } = useUsageQuery();
 
   const usage = data?.me?.planFeaturesUsage;
   const resetDate = usage?.endDate;
@@ -39,72 +35,74 @@ export function NavRemainingPlan({
   const getUsagePercentage = (used: number, limit: number) =>
     (used / limit) * 100;
 
+  const isFreePlan = data?.me?.planFeaturesUsage?.planId === "FREE_PLAN";
+
   return (
     <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/90 dark:to-slate-800/80 backdrop-blur-lg rounded-xl p-2 md:p-3 mb-3 shadow-md border border-slate-200/50 dark:border-slate-700/50 transition-all duration-300 hover:shadow-lg w-full max-w-full overflow-hidden">
-      {hasActiveSubscription ? (
-        <>
-          <div className="space-y-1.5 md:space-y-2 mb-2 md:mb-3">
-            {[
-              {
-                icon: (
-                  <ImageIcon className="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-500" />
-                ),
-                label: "imageCreation",
-                data: usage?.imageCreation,
-                link: "/dashboard/create/image",
-              },
-              {
-                icon: (
-                  <CropIcon className="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-500" />
-                ),
-                label: "imageEdit",
-                data: usage?.editImage,
-                link: "/dashboard/edit/image",
-              },
-              {
-                icon: (
-                  <ImageIcon className="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-500" />
-                ),
-                label: "imageRestore",
-                data: usage?.imageRestoration,
-                link: "/dashboard/edit/restore",
-              },
-              {
-                icon: (
-                  <VideoIcon className="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-500" />
-                ),
-                label: "videoCreation",
-                data: usage?.videoCreation,
-                link: "/dashboard/create/video",
-              },
-            ].map((item, index) => (
-              <UsageItem
-                key={index}
-                icon={item.icon}
-                label={t(`navRemainingPlan.${item.label}`)}
-                used={item.data?.used || 0}
-                limit={item.data?.limit || 0}
-                progressColor={getProgressColor(
-                  item.data?.used || 0,
-                  item.data?.limit || 0
-                )}
-                percentage={getUsagePercentage(
-                  item.data?.used || 0,
-                  item.data?.limit || 0
-                )}
-                link={item.link}
-              />
-            ))}
-          </div>
+      <div className="space-y-1.5 md:space-y-2 mb-2 md:mb-3">
+        {[
+          {
+            icon: (
+              <ImageIcon className="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-500" />
+            ),
+            label: "imageCreation",
+            data: usage?.imageCreation,
+            link: "/dashboard/create/image",
+          },
+          {
+            icon: (
+              <CropIcon className="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-500" />
+            ),
+            label: "imageEdit",
+            data: usage?.editImage,
+            link: "/dashboard/edit/image",
+          },
+          {
+            icon: (
+              <ImageIcon className="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-500" />
+            ),
+            label: "imageRestore",
+            data: usage?.imageRestoration,
+            link: "/dashboard/edit/restore",
+          },
+          {
+            icon: (
+              <VideoIcon className="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-500" />
+            ),
+            label: "videoCreation",
+            data: usage?.videoCreation,
+            link: "/dashboard/create/video",
+          },
+        ].map((item, index) => (
+          <UsageItem
+            key={index}
+            icon={item.icon}
+            label={t(`navRemainingPlan.${item.label}`)}
+            used={item.data?.used || 0}
+            limit={item.data?.limit || 0}
+            progressColor={getProgressColor(
+              item.data?.used || 0,
+              item.data?.limit || 0
+            )}
+            percentage={getUsagePercentage(
+              item.data?.used || 0,
+              item.data?.limit || 0
+            )}
+            link={item.link}
+          />
+        ))}
+      </div>
 
-          <div className="flex items-center gap-1 text-[10px] md:text-xs text-slate-500 dark:text-slate-400 py-1 md:py-2">
-            <CalendarIcon className="w-2.5 h-2.5 md:w-3 md:h-3 flex-shrink-0" />
-            <span className="truncate">
-              {t("navRemainingPlan.resetsIn", { date: formattedResetDate })}
-            </span>
-          </div>
-        </>
-      ) : (
+      {!isFreePlan && (
+        <div className="flex items-center gap-1 text-[10px] md:text-xs text-slate-500 dark:text-slate-400 py-1 md:py-2">
+          <CalendarIcon className="w-2.5 h-2.5 md:w-3 md:h-3 flex-shrink-0" />
+          <span className="truncate">
+            {t("navRemainingPlan.resetsIn", { date: formattedResetDate })}
+          </span>
+        </div>
+      )}
+
+      {isFreePlan && (
         <Checkout
           trigger={
             <Button

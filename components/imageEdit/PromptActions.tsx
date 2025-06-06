@@ -2,8 +2,9 @@ import { RefreshCw, Wand2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { PromptActionsProps } from "./types";
-import { useMeQuery } from "../common/useMeQuery";
 import { Checkout } from "../checkout/Checkout";
+import { useEffect, useState } from "react";
+import { useUsageQuery } from "../common/useUsageQuery";
 
 export const PromptActions = ({
   onClear,
@@ -14,7 +15,18 @@ export const PromptActions = ({
 }: PromptActionsProps) => {
   const { t } = useTranslation();
 
-  const { data: userData } = useMeQuery();
+  const [canEditImage, setCanEditImage] = useState(false);
+
+  const { data: usageData } = useUsageQuery();
+
+  useEffect(() => {
+    const editImageUsage = usageData?.me?.planFeaturesUsage?.editImage;
+    if (!editImageUsage || editImageUsage.used >= editImageUsage.limit) {
+      setCanEditImage(false);
+    } else {
+      setCanEditImage(true);
+    }
+  }, [usageData]);
 
   return (
     <div className="flex justify-end gap-3 pt-2">
@@ -27,7 +39,7 @@ export const PromptActions = ({
         <RefreshCw className="mr-2 h-4 w-4" />
         {t("imageEdit.clear")}
       </Button>
-      {userData?.me?.hasActiveSubscription ? (
+      {canEditImage ? (
         <Button
           onClick={onEdit}
           disabled={isEditing || !hasPrompt || !hasImage}

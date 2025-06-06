@@ -134,8 +134,8 @@
     },
     "aiModel": "AI Model",
     "aiModels": {
-      "model1": "Model 1",
-      "model2": "Model 2"
+      "model1": "Model 1 (Better for products)",
+      "model2": "Model 2 (Better for characters)"
     },
     "promptIdeas": "Prompt Ideas",
     "clear": "Clear",

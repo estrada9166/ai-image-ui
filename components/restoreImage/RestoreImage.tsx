@@ -21,7 +21,6 @@ import { ImageByIdQuery } from "../common/ImageByIdQuery";
 import { motion } from "framer-motion";
 import { ImageGallery } from "../gallery/ImageGallery";
 import { useTranslation } from "react-i18next";
-import { useMeQuery } from "../common/useMeQuery";
 import { Checkout } from "../checkout/Checkout";
 import { useUsageQuery } from "../common/useUsageQuery";
 import ReactCompareImage from "react-compare-image";
@@ -91,11 +90,26 @@ const PromptActions = ({
   hasImage,
 }: PromptActionsProps) => {
   const { t } = useTranslation();
-  const { data: userData } = useMeQuery();
+  const { data: usageData } = useUsageQuery();
+
+  const [canRestoreImage, setCanRestoreImage] = useState(false);
+
+  useEffect(() => {
+    const imageCreationUsage =
+      usageData?.me?.planFeaturesUsage?.imageRestoration;
+    if (
+      !imageCreationUsage ||
+      imageCreationUsage.used >= imageCreationUsage.limit
+    ) {
+      setCanRestoreImage(false);
+    } else {
+      setCanRestoreImage(true);
+    }
+  }, [usageData]);
 
   return (
     <div className="flex justify-end gap-3 pt-2">
-      {userData?.me?.hasActiveSubscription ? (
+      {canRestoreImage ? (
         <Button
           onClick={onRestore}
           disabled={isRestoring || !hasImage}
@@ -209,9 +223,7 @@ export default function RestoreImage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [, restoreImage] = useMutation(RestoreImageMutation);
-  const { reexecuteQuery: reexecuteUsageQuery } = useUsageQuery({
-    pause: true,
-  });
+  const { reexecuteQuery: reexecuteUsageQuery } = useUsageQuery();
 
   const [{ data }, reexecuteQuery] = useQuery({
     query: ImageByIdQuery,

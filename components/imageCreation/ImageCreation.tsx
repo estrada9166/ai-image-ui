@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ImageIcon, Wand2, Sparkles, RefreshCw, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,6 @@ import {
 } from "@/gql/graphql";
 import { promptIdeas } from "./promptIdeas";
 import { useTranslation } from "react-i18next";
-import { useMeQuery } from "../common/useMeQuery";
 import { Checkout } from "../checkout/Checkout";
 import { useUsageQuery } from "../common/useUsageQuery";
 
@@ -49,8 +48,7 @@ type ImageCreation = {
 export default function ImageCreation() {
   const { t } = useTranslation();
 
-  const { data: userData } = useMeQuery();
-  const { reexecuteQuery } = useUsageQuery({ pause: true });
+  const { data: usageData, reexecuteQuery } = useUsageQuery();
 
   const [imagePrompt, setImagePrompt] = useState("");
   const [avatarType, setAvatarType] = useState(CameraOptionsEnum.NoSelfie);
@@ -62,8 +60,21 @@ export default function ImageCreation() {
 
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [shouldRefetch, setShouldRefetch] = useState(false);
+  const [canGenerateImage, setCanGenerateImage] = useState(false);
 
   const [, generateImage] = useMutation(ImageCreationMutation);
+
+  useEffect(() => {
+    const imageCreationUsage = usageData?.me?.planFeaturesUsage?.imageCreation;
+    if (
+      !imageCreationUsage ||
+      imageCreationUsage.used >= imageCreationUsage.limit
+    ) {
+      setCanGenerateImage(false);
+    } else {
+      setCanGenerateImage(true);
+    }
+  }, [usageData]);
 
   // Available aspect ratios
   const aspectRatios = [
@@ -105,7 +116,6 @@ export default function ImageCreation() {
       console.error("Error generating image:", error);
     } finally {
       setIsGeneratingImage(false);
-      setShouldRefetch(false);
     }
   };
 
@@ -258,7 +268,7 @@ export default function ImageCreation() {
                   <RefreshCw className="mr-2 h-4 w-4" />
                   {t("imageCreation.clear")}
                 </Button>
-                {userData?.me?.hasActiveSubscription ? (
+                {canGenerateImage ? (
                   <Button
                     onClick={handleGenerateImage}
                     disabled={isGeneratingImage || !imagePrompt.trim()}

@@ -96,9 +96,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarFooter className="flex-shrink-0">
         <div className="overflow-y-auto max-h-[40vh] flex flex-col">
-          <NavRemainingPlan
-            hasActiveSubscription={userData?.me?.hasActiveSubscription ?? false}
-          />
+          <NavRemainingPlan />
           <NavSecondary items={data.navSecondary} className="mt-auto" />
           <LanguageSelector />
         </div>
