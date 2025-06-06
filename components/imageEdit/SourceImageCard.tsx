@@ -136,7 +136,7 @@ export const SourceImageCard = ({
                   selectedImages={gallerySelectedImages}
                   onImagesSelect={handleGalleryImagesSelect}
                   onConfirmSelection={handleConfirmGallerySelection}
-                  maxImages={2}
+                  maxImages={1}
                   trigger={
                     <Button
                       variant="outline"
