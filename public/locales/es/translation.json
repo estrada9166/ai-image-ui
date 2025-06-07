@@ -161,6 +161,7 @@
     "idea16": "Un reloj inteligente moderno con una pantalla iluminada mostrando métricas de fitness, usado en una muñeca, capturado durante un entrenamiento al aire libre en la hora dorada con suave contraluz resaltando el diseño elegante y la cómoda correa, fotografía de producto de estilo de vida enfatizando un estilo de vida activo y saludable"
   },
   "imageEdit": {
+    "imagesSelected": "Imágenes Seleccionadas",
     "fileSizeExceeded": "El tamaño del archivo excede el límite de 10MB. Por favor, inténtalo de nuevo con un archivo más pequeño.",
     "imageEdit": "Edición de Imagen",
     "promptIdeaPlaceholder": "Elige una idea de prompt o escribe la tuya",
@@ -375,6 +376,7 @@
       "someSkipped": "Algunas imágenes fueron omitidas",
       "skippedDescription": "{{count}} imágenes fueron omitidas",
       "imagesAdded": "Imágenes añadidas",
+      "imagesAddedDescription": "{{count}} imágenes añadidas",
       "errorProcessing": "Error al procesar las imágenes. Por favor, inténtalo de nuevo."
     }
   },

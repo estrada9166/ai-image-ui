@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { Check } from "lucide-react";
 import { ImageWithIndex } from "./ImageGallery";
 import { VideoGallery } from "./VideoGallery";
+import { cn } from "../../lib/utils";
 
 interface GalleryProps {
   defaultTab?: "images" | "videos" | "edited-images";
@@ -69,13 +70,20 @@ export default function Gallery({
       )}
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full max-w-sm grid-cols-5 mb-4">
+        <TabsList
+          className={cn(
+            "grid w-full max-w-sm  mb-4",
+            multiSelect ? "grid-cols-4" : "grid-cols-5"
+          )}
+        >
           <TabsTrigger value="images">{t("gallery.created")}</TabsTrigger>
           <TabsTrigger value="edited-images">{t("gallery.edited")}</TabsTrigger>
           <TabsTrigger value="restored-images">
             {t("gallery.restored")}
           </TabsTrigger>
-          <TabsTrigger value="videos">{t("gallery.videos")}</TabsTrigger>
+          {!multiSelect && (
+            <TabsTrigger value="videos">{t("gallery.videos")}</TabsTrigger>
+          )}
           <TabsTrigger value="user-uploaded">
             {t("gallery.uploaded")}
           </TabsTrigger>

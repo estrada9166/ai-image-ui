@@ -68,7 +68,7 @@ export default function ImageEdit() {
   const [{ data }] = useQuery({
     query: ImageByIdQuery,
     variables: { id: imageToEdit || "" },
-    pause: !imageToEdit,
+    pause: !imageToEdit && !selectedImages.length,
   });
 
   useEffect(() => {
@@ -86,7 +86,7 @@ export default function ImageEdit() {
   useEffect(() => {
     if (data?.node) {
       const node = data.node;
-      console.log("node", node);
+
       if (node.__typename === "Image" && node.id && node.imageUrl) {
         setSelectedImages((prev) => [
           ...prev,
@@ -102,10 +102,14 @@ export default function ImageEdit() {
   }, [data]);
 
   const handleGalleryImagesSelect = (images: ImageWithIndex[]) => {
+    if (isLoading) return;
+
     setGallerySelectedImages(images);
   };
 
   const handleGalleryModalChange = (open: boolean) => {
+    if (isLoading) return;
+
     setShowGalleryModal(open);
     // Reset selected images when modal is closed without confirming
     if (!open) {
@@ -180,6 +184,8 @@ export default function ImageEdit() {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (isLoading) return;
+
     const files = Array.from(e.target.files || []);
 
     if (files.length > 2) {
@@ -216,6 +222,8 @@ export default function ImageEdit() {
   };
 
   const handleRemoveImage = (index: number) => {
+    if (isLoading) return;
+
     const newUploadedImages = uploadedImages.filter((_, i) => i !== index);
     const newPreviewUrls = previewUrls.filter((_, i) => i !== index);
 
@@ -228,12 +236,16 @@ export default function ImageEdit() {
   };
 
   const handleRemoveSelectedImage = (index: number) => {
+    if (isLoading) return;
+
     const newImages = selectedImages.filter((_, i) => i !== index);
 
     setSelectedImages(newImages);
   };
 
   const handleEditImage = async () => {
+    if (isLoading) return;
+
     if (
       !imagePrompt.trim() ||
       (uploadedImages.length === 0 && selectedImages.length === 0) ||

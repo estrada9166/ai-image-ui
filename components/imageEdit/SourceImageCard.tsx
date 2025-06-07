@@ -154,7 +154,7 @@ export const SourceImageCard = ({
                 <span className="inline-flex items-center justify-center bg-purple-100 dark:bg-purple-800 text-purple-800 dark:text-purple-200 rounded-full w-6 h-6 text-xs font-bold mr-2">
                   {imageData.length + uploadedImages.length}/2
                 </span>
-                {t("imageEdit.images")} {t("common.selected", "selected")}
+                {t("imageEdit.imagesSelected")}
               </div>
             </div>
           )}

@@ -161,6 +161,7 @@
     "idea16": "A modern smart watch with an illuminated display showing fitness metrics, worn on a wrist, captured during an outdoor workout at golden hour with soft backlighting highlighting the sleek design and comfortable band, lifestyle product photography emphasizing an active healthy lifestyle"
   },
   "imageEdit": {
+    "imagesSelected": "Images Selected",
     "fileSizeExceeded": "The file size exceeds the limit of 10MB. Please try again with a smaller file.",
     "imageEdit": "Image Edit",
     "promptIdeaPlaceholder": "Choose a prompt idea or write your own",
@@ -197,6 +198,7 @@
       "limitDescription": "The maximum number of images to add is 2.",
       "someSkipped": "Some images were skipped",
       "skippedDescription": "{{count}} images were skipped",
+      "imagesAddedDescription": "{{count}} images were added",
       "imagesAdded": "Images added"
     }
   },

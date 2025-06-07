@@ -100,7 +100,7 @@ export default function VideoCreation() {
   const [{ data, fetching, error }] = useQuery({
     query: ImageByIdQuery,
     variables: { id: imageToAnimate || "" },
-    pause: !imageToAnimate,
+    pause: !imageToAnimate && !selectedImages.length,
   });
 
   useEffect(() => {
@@ -115,7 +115,7 @@ export default function VideoCreation() {
   useEffect(() => {
     if (data?.node) {
       const node = data.node;
-      console.log("node", node);
+
       if (node.__typename === "Image" && node.id && node.imageUrl) {
         setSelectedImages((prev) => [
           ...prev,
@@ -131,6 +131,8 @@ export default function VideoCreation() {
   }, [data]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (isLoading) return;
+
     const files = Array.from(e.target.files || []);
     if (files.length > 0) {
       // Calculate how many more images we can add (max 4 total including imageData)
@@ -174,6 +176,8 @@ export default function VideoCreation() {
     type: "imageData" | "uploaded" | "selected",
     index: number
   ) => {
+    if (isLoading) return;
+
     // Case 1: Remove imageData (from URL parameter)
     if (type === "imageData") {
       // First set the state variables to null
@@ -233,10 +237,14 @@ export default function VideoCreation() {
   };
 
   const handleGalleryImagesSelect = (images: ImageWithIndex[]) => {
+    if (isLoading) return;
+
     setGallerySelectedImages(images);
   };
 
   const handleGalleryModalChange = (open: boolean) => {
+    if (isLoading) return;
+
     setShowGalleryModal(open);
     // Reset selected images when modal is closed without confirming
     if (!open) {
@@ -315,6 +323,8 @@ export default function VideoCreation() {
   };
 
   const handleGenerateVideo = async () => {
+    if (isLoading) return;
+
     if (
       !videoPrompt.trim() ||
       (imageData === null &&
