@@ -78,6 +78,11 @@
       "title": "Uploaded Images",
       "description": "Upload your first image to see it appear in your gallery",
       "buttonText": "Upload an Image"
+    },
+    "virtualTryOn": {
+      "title": "Virtual Try On",
+      "description": "Create your first virtual try on to see it appear in your gallery",
+      "buttonText": "Create a Virtual Try On"
     }
   },
   "gallery": {
@@ -86,7 +91,8 @@
     "edited": "Edited",
     "restored": "Restored",
     "videos": "Videos",
-    "uploaded": "Uploaded"
+    "uploaded": "Uploaded",
+    "virtualTryOn": "Try On"
   },
   "imageGallery": {
     "loadingMoreImages": "Loading more images...",
@@ -181,9 +187,7 @@
     "original": "Original",
     "editingImage": "Editing your image...",
     "transformingImage": "We're transforming your image with AI magic!",
-    "clickEditedImage": "Click the \"Edit Image\" button to transform your image with AI",
     "yourEditedImageWillAppearHere": "Your edited image will appear here",
-    "enterAPromptToEditYourImage": "Enter a prompt to edit your image",
     "editedImage": "Edited Image",
     "processingEditedImage": "Processing edited image...",
     "yourEditedImages": "Your Edited Images",
@@ -223,7 +227,8 @@
     "editImage": "Edit Image",
     "restoreImage": "Restore Image",
     "videosCreation": "Videos creation",
-    "settings": "Settings"
+    "settings": "Settings",
+    "virtualTryOn": "Virtual Try On"
   },
   "navMain": {
     "quickCreate": "Quick Create"
@@ -730,5 +735,41 @@
     "selectedImages": "{{count}} of {{max}} images selected",
     "maximumLimitReached": "Maximum limit reached",
     "useImages": "Use ({{count}}) images"
+  },
+  "virtualTryOn": {
+    "virtualTryOn": "Virtual Try On",
+    "modelImage": "Model Image",
+    "uploadModelImage": "Upload Model Image",
+    "productImage": "Product Image",
+    "uploadProductImage": "Upload Product Image",
+    "selectModelFromGallery": "Select from Gallery",
+    "selectProductFromGallery": "Select from Gallery",
+    "modelImageDescription": "Select a model image to use as a reference for the virtual try on",
+    "productImageDescription": "Select a product image to use as a reference for the virtual try on",
+    "modelImageSelected": "Model image selected",
+    "productImageSelected": "Product image selected",
+    "processing": "Processing...",
+    "startTryOn": "Start Try On",
+    "bothImagesNeeded": "Both model and product images are needed to start the virtual try on",
+    "maxOneModelImage": "You can only upload one model image at a time",
+    "maxOneProductImage": "You can only upload one product image at a time",
+    "bothImagesRequired": "Both model and product images are required to start the virtual try on",
+    "fileSizeExceeded": "The file size exceeds the limit of 10MB. Please try again with a smaller file.",
+    "processingFailed": "Failed to process virtual try on. Please try again.",
+    "yourResults": "Your Results",
+    "modelSelection": {
+      "limitReached": "Limit reached",
+      "limitDescription": "You can only select up to 1 model image",
+      "imageAdded": "Image added",
+      "imageAddedDescription": "The image has been added to the selection",
+      "errorProcessing": "Error processing images"
+    },
+    "productSelection": {
+      "limitReached": "Limit reached",
+      "limitDescription": "You can only select up to 1 product image",
+      "imageAdded": "Image added",
+      "imageAddedDescription": "The image has been added to the selection",
+      "errorProcessing": "Error processing images"
+    }
   }
 }

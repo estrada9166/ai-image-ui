@@ -33,6 +33,7 @@ type Documents = {
     "\n  mutation UpdateUserPassword($input: UpdateUserPasswordInput!) {\n    updateUserPassword(input: $input) {\n      id\n      email\n    }\n  }\n": typeof types.UpdateUserPasswordDocument,
     "\n  mutation signUp($input: SignUpUserInput!) {\n    signUp(input: $input)\n  }\n": typeof types.SignUpDocument,
     "\n  mutation VideoCreation($input: VideoCreationInput!) {\n    videoCreation(input: $input) {\n      id\n      status\n    }\n  }\n": typeof types.VideoCreationDocument,
+    "\n  mutation VirtualTryOn($input: VirtualTryOnInput!) {\n    virtualTryOn(input: $input) {\n      id\n      status\n      imageUrl\n    }\n  }\n": typeof types.VirtualTryOnDocument,
 };
 const documents: Documents = {
     "\n  query ImageById($id: ID!) {\n    node(id: $id) {\n      __typename\n      ... on Image {\n        id\n        prompt\n        thumbnailUrl\n        imageUrl\n        originalImages {\n          id\n        }\n      }\n    }\n  }\n": types.ImageByIdDocument,
@@ -54,6 +55,7 @@ const documents: Documents = {
     "\n  mutation UpdateUserPassword($input: UpdateUserPasswordInput!) {\n    updateUserPassword(input: $input) {\n      id\n      email\n    }\n  }\n": types.UpdateUserPasswordDocument,
     "\n  mutation signUp($input: SignUpUserInput!) {\n    signUp(input: $input)\n  }\n": types.SignUpDocument,
     "\n  mutation VideoCreation($input: VideoCreationInput!) {\n    videoCreation(input: $input) {\n      id\n      status\n    }\n  }\n": types.VideoCreationDocument,
+    "\n  mutation VirtualTryOn($input: VirtualTryOnInput!) {\n    virtualTryOn(input: $input) {\n      id\n      status\n      imageUrl\n    }\n  }\n": types.VirtualTryOnDocument,
 };
 
 /**
@@ -146,6 +148,10 @@ export function graphql(source: "\n  mutation signUp($input: SignUpUserInput!) {
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation VideoCreation($input: VideoCreationInput!) {\n    videoCreation(input: $input) {\n      id\n      status\n    }\n  }\n"): (typeof documents)["\n  mutation VideoCreation($input: VideoCreationInput!) {\n    videoCreation(input: $input) {\n      id\n      status\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation VirtualTryOn($input: VirtualTryOnInput!) {\n    virtualTryOn(input: $input) {\n      id\n      status\n      imageUrl\n    }\n  }\n"): (typeof documents)["\n  mutation VirtualTryOn($input: VirtualTryOnInput!) {\n    virtualTryOn(input: $input) {\n      id\n      status\n      imageUrl\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

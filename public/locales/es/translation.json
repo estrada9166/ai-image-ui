@@ -78,6 +78,11 @@
       "title": "Imágenes Subidas",
       "description": "Sube tu primera imagen para verla aparecer en tu galería",
       "buttonText": "Subir una Imagen"
+    },
+    "virtualTryOn": {
+      "title": "Prueba Virtual de Prendas",
+      "description": "Crea tu primera prueba virtual de prendas para verla aparecer en tu galería",
+      "buttonText": "Crear una Prueba Virtual de Prendas"
     }
   },
   "gallery": {
@@ -86,7 +91,8 @@
     "edited": "Editado",
     "restored": "Restaurado",
     "videos": "Videos",
-    "uploaded": "Subido"
+    "uploaded": "Subido",
+    "virtualTryOn": "Virtual"
   },
   "imageGallery": {
     "loadingMoreImages": "Cargando más imágenes...",
@@ -181,9 +187,7 @@
     "original": "Original",
     "editingImage": "Editando tu imagen...",
     "transformingImage": "¡Estamos transformando tu imagen con magia de IA!",
-    "clickEditedImage": "Haz clic en el botón \"Editar Imagen\" para transformar tu imagen con IA",
     "yourEditedImageWillAppearHere": "Tu imagen editada aparecerá aquí",
-    "enterAPromptToEditYourImage": "Ingresa un prompt para editar tu imagen",
     "editedImage": "Imagen Editada",
     "processingEditedImage": "Procesando imagen editada...",
     "yourEditedImages": "Tus Imágenes Editadas",
@@ -224,7 +228,8 @@
     "editImage": "Editar Imagen",
     "restoreImage": "Restaurar Imagen",
     "videosCreation": "Creación de Videos",
-    "settings": "Ajustes"
+    "settings": "Ajustes",
+    "virtualTryOn": "Prueba Virtual de Prendas"
   },
   "navMain": {
     "quickCreate": "Creación Rápida"
@@ -761,5 +766,41 @@
     "selectedImages": "{{count}} de {{max}} imágenes seleccionadas",
     "maximumLimitReached": "Límite máximo alcanzado",
     "useImages": "Usar ({{count}}) imágenes"
+  },
+  "virtualTryOn": {
+    "virtualTryOn": "Prueba Virtual de Prendas",
+    "modelImage": "Imagen de Modelo",
+    "uploadModelImage": "Subir Imagen de Modelo",
+    "productImage": "Imagen de Prenda",
+    "uploadProductImage": "Subir Imagen de Prenda",
+    "selectModelFromGallery": "Seleccionar de la Galería",
+    "selectProductFromGallery": "Seleccionar de la Galería",
+    "modelImageDescription": "Selecciona una imagen de modelo para usar como referencia para la prueba virtual",
+    "productImageDescription": "Selecciona una imagen de prenda para usar como referencia para la prueba virtual",
+    "modelImageSelected": "Imagen de modelo seleccionada",
+    "productImageSelected": "Imagen de prenda seleccionada",
+    "processing": "Procesando...",
+    "startTryOn": "Comenzar Prueba Virtual",
+    "bothImagesNeeded": "Se necesitan ambas imágenes de modelo y prenda para iniciar la prueba virtual",
+    "maxOneModelImage": "Solo puedes subir una imagen de modelo a la vez",
+    "maxOneProductImage": "Solo puedes subir una imagen de prenda a la vez",
+    "bothImagesRequired": "Se necesitan ambas imágenes de modelo y prenda para iniciar la prueba virtual",
+    "fileSizeExceeded": "El tamaño del archivo excede el límite de 10MB. Por favor, inténtalo de nuevo con un archivo más pequeño.",
+    "processingFailed": "Error al procesar la prueba virtual. Por favor, inténtalo de nuevo.",
+    "yourResults": "Tus Resultados",
+    "modelSelection": {
+      "limitReached": "Límite alcanzado",
+      "limitDescription": "Solo puedes seleccionar hasta 1 imagen de modelo",
+      "imageAdded": "Imagen añadida",
+      "imageAddedDescription": "La imagen ha sido añadida a la selección",
+      "errorProcessing": "Error al procesar las imágenes"
+    },
+    "productSelection": {
+      "limitReached": "Límite alcanzado",
+      "limitDescription": "Solo puedes seleccionar hasta 1 imagen de prenda",
+      "imageAdded": "Imagen añadida",
+      "imageAddedDescription": "La imagen ha sido añadida a la selección",
+      "errorProcessing": "Error al procesar las imágenes"
+    }
   }
 }

@@ -104,7 +104,12 @@ export function ImageGallery({
   showPrompt?: boolean;
   redirectToVideoCreationOnClick?: boolean;
   loadPartialGallery?: boolean;
-  tab?: "images" | "edited-images" | "restored-images" | "user-uploaded";
+  tab?:
+    | "images"
+    | "edited-images"
+    | "restored-images"
+    | "user-uploaded"
+    | "virtual-try-on";
   createdImageId?: string | null;
   setCreatedImageUrl?: (imageUrl: string) => void;
   multiSelect?: boolean;

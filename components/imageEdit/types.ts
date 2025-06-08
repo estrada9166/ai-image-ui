@@ -29,7 +29,6 @@ export interface SourceImageCardProps {
 export interface EditedImageCardProps {
   isEditingImage: boolean;
   editedImageUrl: string | null;
-  imagePrompt: string;
 }
 
 export interface PromptInputProps {
@@ -50,10 +49,6 @@ export interface SourceImageDisplayProps {
   imageUrl: string;
   onRemove: () => void;
   index?: number;
-}
-
-export interface EmptyEditedImageProps {
-  hasPrompt: boolean;
 }
 
 export interface EditedImageDisplayProps {

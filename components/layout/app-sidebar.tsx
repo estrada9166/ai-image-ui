@@ -63,6 +63,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: ImageIcon,
       },
       {
+        title: t("layout.virtualTryOn"),
+        url: "/dashboard/create/virtual-try-on",
+        icon: ImageIcon,
+      },
+      {
         title: t("layout.videosCreation"),
         url: "/dashboard/create/video",
         icon: VideoIcon,

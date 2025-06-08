@@ -10,7 +10,6 @@ import { EditedImageCardProps } from "./types";
 export const EditedImageCard = ({
   isEditingImage,
   editedImageUrl,
-  imagePrompt,
 }: EditedImageCardProps) => {
   const { t } = useTranslation();
   return (
@@ -36,7 +35,7 @@ export const EditedImageCard = ({
           ) : editedImageUrl ? (
             <EditedImageDisplay imageUrl={editedImageUrl} />
           ) : (
-            <EmptyEditedImage hasPrompt={!!imagePrompt.trim()} />
+            <EmptyEditedImage />
           )}
         </div>
       </CardContent>

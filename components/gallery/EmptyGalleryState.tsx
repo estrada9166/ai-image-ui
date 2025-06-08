@@ -13,7 +13,8 @@ export const EmptyGalleryState = ({
     | "edited-images"
     | "restored-images"
     | "video"
-    | "user-uploaded";
+    | "user-uploaded"
+    | "virtual-try-on";
 }) => {
   const { t } = useTranslation();
 
@@ -52,6 +53,13 @@ export const EmptyGalleryState = ({
       description: t("emptyGalleryState.uploadedImages.description"),
       buttonText: t("emptyGalleryState.uploadedImages.buttonText"),
       link: "/dashboard/create/image",
+      Icon: ImageIcon,
+    },
+    "virtual-try-on": {
+      title: t("emptyGalleryState.virtualTryOn.title"),
+      description: t("emptyGalleryState.virtualTryOn.description"),
+      buttonText: t("emptyGalleryState.virtualTryOn.buttonText"),
+      link: "/dashboard/create/virtual-try-on",
       Icon: ImageIcon,
     },
   };

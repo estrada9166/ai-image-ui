@@ -374,7 +374,6 @@ export default function ImageEdit() {
         <EditedImageCard
           isEditingImage={isLoading}
           editedImageUrl={editedImageUrl}
-          imagePrompt={imagePrompt}
         />
       </motion.div>
 
