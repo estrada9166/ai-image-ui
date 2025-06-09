@@ -7,7 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { graphql } from "@/gql";
-import { ImageTypeOptionsEnum } from "../../gql/graphql";
+import {
+  GenderOptionsEnum,
+  ImageTypeOptionsEnum,
+  ImageCreationTypeEnum,
+} from "../../gql/graphql";
 import { useMutation } from "urql";
 import { ImageGallery } from "../gallery/ImageGallery";
 import {
@@ -22,7 +26,7 @@ import {
   AspectRatioOptionsEnum,
   AiModelOptionsEnum,
 } from "@/gql/graphql";
-import { promptIdeas } from "./promptIdeas";
+import { promptIdeas, PromptCategory } from "./promptIdeas";
 import { useTranslation } from "react-i18next";
 import { Checkout } from "../checkout/Checkout";
 import { useUsageQuery } from "../common/useUsageQuery";
@@ -58,6 +62,14 @@ export default function ImageCreation() {
     AspectRatioOptionsEnum.Portrait
   );
 
+  // Add new state variables for conditional logic
+  const [imageCreationType, setImageCreationType] =
+    useState<ImageCreationTypeEnum>(ImageCreationTypeEnum.AiModel);
+  const [gender, setGender] = useState<GenderOptionsEnum>(
+    GenderOptionsEnum.Male
+  );
+  const [age, setAge] = useState(25);
+
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const [canGenerateImage, setCanGenerateImage] = useState(false);
@@ -92,6 +104,20 @@ export default function ImageCreation() {
     },
   ];
 
+  // Filter prompt ideas based on image creation type
+  const getFilteredPromptIdeas = () => {
+    const allIdeas = promptIdeas(t);
+    if (imageCreationType === ImageCreationTypeEnum.AiModel) {
+      return allIdeas.filter(
+        (idea) => idea.category === PromptCategory.AI_MODEL
+      );
+    } else {
+      return allIdeas.filter(
+        (idea) => idea.category === PromptCategory.OTHER_IMAGE
+      );
+    }
+  };
+
   const handleGenerateImage = async () => {
     if (!imagePrompt.trim()) return;
 
@@ -103,9 +129,18 @@ export default function ImageCreation() {
       await generateImage({
         input: {
           prompt: imagePrompt,
-          camera: avatarType,
+          camera:
+            imageCreationType === ImageCreationTypeEnum.AiModel
+              ? avatarType
+              : CameraOptionsEnum.NoSelfie,
           aspectRatio: aspectRatio,
-          model,
+          model:
+            imageCreationType === ImageCreationTypeEnum.OtherImage
+              ? model
+              : AiModelOptionsEnum.Model_2,
+          gender: gender,
+          age: age,
+          imageCreationType: imageCreationType,
         },
       });
       reexecuteQuery({
@@ -121,7 +156,8 @@ export default function ImageCreation() {
 
   const handlePromptIdeaChange = (value: string) => {
     setSelectedPromptIdea(value);
-    const selectedIdea = promptIdeas(t).find((idea) => idea.id === value);
+    const filteredIdeas = getFilteredPromptIdeas();
+    const selectedIdea = filteredIdeas.find((idea) => idea.id === value);
     if (selectedIdea) {
       setImagePrompt(selectedIdea.text);
     }
@@ -131,6 +167,29 @@ export default function ImageCreation() {
     const value = e.target.value;
     if (value.length <= 1500) {
       setImagePrompt(value);
+    }
+  };
+
+  const handleImageTypeChange = (value: ImageCreationTypeEnum) => {
+    setImageCreationType(value);
+    // Clear prompt and selected idea when changing type
+    setImagePrompt("");
+    setSelectedPromptIdea("");
+
+    // Reset to default values based on type
+    if (value === ImageCreationTypeEnum.AiModel) {
+      setAvatarType(CameraOptionsEnum.NoSelfie);
+      setGender(GenderOptionsEnum.Male);
+      setAge(25);
+    } else {
+      setModel(AiModelOptionsEnum.Model_1);
+    }
+  };
+
+  const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value >= 18 && value <= 99) {
+      setAge(value);
     }
   };
 
@@ -153,28 +212,117 @@ export default function ImageCreation() {
                   {t("imageCreation.description")}
                 </p>
 
+                {/* Image Creation Type Selection */}
+                <div className="mb-6">
+                  <label className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-2 block">
+                    {t("imageCreation.creationType")}
+                  </label>
+                  <Select
+                    value={imageCreationType}
+                    onValueChange={handleImageTypeChange}
+                  >
+                    <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all max-w-xs">
+                      <SelectValue placeholder="Select creation type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value={ImageCreationTypeEnum.AiModel}>
+                        {t("imageCreation.creationTypes.aiModel")}
+                      </SelectItem>
+                      <SelectItem value={ImageCreationTypeEnum.OtherImage}>
+                        {t("imageCreation.creationTypes.otherImage")}
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 <div className="flex flex-col md:flex-row gap-4 mb-5">
-                  <div className="w-full md:w-1/5">
-                    <label className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-1 block">
-                      {t("imageCreation.cameraType")}
-                    </label>
-                    <Select
-                      value={avatarType}
-                      onValueChange={setAvatarType as (value: string) => void}
-                    >
-                      <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
-                        <SelectValue placeholder="Avatar type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value={CameraOptionsEnum.Selfie}>
-                          {t("imageCreation.cameraTypes.selfie")}
-                        </SelectItem>
-                        <SelectItem value={CameraOptionsEnum.NoSelfie}>
-                          {t("imageCreation.cameraTypes.noSelfie")}
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  {/* Conditional controls based on image creation type */}
+                  {imageCreationType === ImageCreationTypeEnum.AiModel ? (
+                    <>
+                      <div className="w-full md:w-1/5">
+                        <label className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-1 block">
+                          {t("imageCreation.cameraType")}
+                        </label>
+                        <Select
+                          value={avatarType}
+                          onValueChange={
+                            setAvatarType as (value: string) => void
+                          }
+                        >
+                          <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
+                            <SelectValue placeholder="Camera type" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value={CameraOptionsEnum.Selfie}>
+                              {t("imageCreation.cameraTypes.selfie")}
+                            </SelectItem>
+                            <SelectItem value={CameraOptionsEnum.NoSelfie}>
+                              {t("imageCreation.cameraTypes.noSelfie")}
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="w-full md:w-1/5">
+                        <label className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-1 block">
+                          {t("imageCreation.gender")}
+                        </label>
+                        <Select
+                          value={gender}
+                          onValueChange={setGender as (value: string) => void}
+                        >
+                          <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
+                            <SelectValue placeholder="Select gender" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value={GenderOptionsEnum.Male}>
+                              {t("imageCreation.genders.male")}
+                            </SelectItem>
+                            <SelectItem value={GenderOptionsEnum.Female}>
+                              {t("imageCreation.genders.female")}
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="w-full md:w-1/5">
+                        <label className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-1 block">
+                          {t("imageCreation.age")}
+                        </label>
+                        <input
+                          type="number"
+                          min="18"
+                          max="99"
+                          value={age}
+                          onChange={handleAgeChange}
+                          className="w-full px-3 py-2 border border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                          placeholder="25"
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <div className="w-full md:w-1/5">
+                      <label className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-1 block">
+                        {t("imageCreation.aiModel")}
+                      </label>
+                      <Select
+                        value={model}
+                        onValueChange={setModel as (value: string) => void}
+                      >
+                        <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
+                          <SelectValue placeholder="Select model" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value={AiModelOptionsEnum.Model_1}>
+                            {t("imageCreation.aiModels.model1")}
+                          </SelectItem>
+                          <SelectItem value={AiModelOptionsEnum.Model_2}>
+                            {t("imageCreation.aiModels.model2")}
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+
+                  {/* Aspect Ratio - shown for both types */}
                   <div className="w-full md:w-1/5">
                     <label className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-1 block">
                       {t("imageCreation.aspectRatio")}
@@ -195,27 +343,8 @@ export default function ImageCreation() {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="w-full md:w-1/5">
-                    <label className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-1 block">
-                      {t("imageCreation.aiModel")}
-                    </label>
-                    <Select
-                      value={model}
-                      onValueChange={setModel as (value: string) => void}
-                    >
-                      <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
-                        <SelectValue placeholder="Select model" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value={AiModelOptionsEnum.Model_1}>
-                          {t("imageCreation.aiModels.model1")}
-                        </SelectItem>
-                        <SelectItem value={AiModelOptionsEnum.Model_2}>
-                          {t("imageCreation.aiModels.model2")}
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+
+                  {/* Prompt Ideas - filtered based on type */}
                   <div className="w-full md:w-2/5">
                     <label className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-1 block">
                       {t("imageCreation.promptIdeas")}
@@ -230,7 +359,7 @@ export default function ImageCreation() {
                         />
                       </SelectTrigger>
                       <SelectContent>
-                        {promptIdeas(t).map((idea) => (
+                        {getFilteredPromptIdeas().map((idea) => (
                           <SelectItem key={idea.id} value={idea.id}>
                             <div className="flex items-center gap-2">
                               <BookOpen className="h-4 w-4 text-purple-500" />
@@ -246,7 +375,11 @@ export default function ImageCreation() {
                 </div>
 
                 <Textarea
-                  placeholder={t("imageCreation.placeholder")}
+                  placeholder={
+                    imageCreationType === ImageCreationTypeEnum.AiModel
+                      ? t("imageCreation.placeholderAiModel")
+                      : t("imageCreation.placeholderOtherImage")
+                  }
                   className="min-h-[150px] resize-none border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 rounded-lg shadow-sm text-base"
                   value={imagePrompt}
                   onChange={handlePromptChange}

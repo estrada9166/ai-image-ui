@@ -87,9 +87,11 @@ export const SelectedVideoModal: React.FC<SelectedVideoModalProps> = ({
                 Prompt
               </h3>
               <div className="bg-black/30 rounded-xl p-3 md:p-4 border border-white/5 hover:border-purple-500/30 transition-colors duration-300">
-                <p className="text-white/90 text-xs leading-relaxed">
-                  {selectedVideo.prompt}
-                </p>
+                <div className="max-h-40 md:max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-transparent pr-2">
+                  <p className="text-white/90 text-xs leading-relaxed">
+                    {selectedVideo.prompt}
+                  </p>
+                </div>
               </div>
             </div>
           )}
@@ -101,9 +103,11 @@ export const SelectedVideoModal: React.FC<SelectedVideoModalProps> = ({
                 {t("videoGallery.negativePrompt")}
               </h3>
               <div className="bg-black/30 rounded-xl p-3 md:p-4 border border-white/5 hover:border-purple-500/30 transition-colors duration-300">
-                <p className="text-white/90 text-xs leading-relaxed">
-                  {selectedVideo.negativePrompt}
-                </p>
+                <div className="max-h-40 md:max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-transparent pr-2">
+                  <p className="text-white/90 text-xs leading-relaxed">
+                    {selectedVideo.negativePrompt}
+                  </p>
+                </div>
               </div>
             </div>
           )}

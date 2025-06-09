@@ -120,10 +120,16 @@
     "loginWithGoogle": "Iniciar sesión con Google"
   },
   "imageCreation": {
-    "placeholder": "Un personaje profesional con cabello corto castaño, ojos azules, vistiendo un traje de negocios...",
+    "placeholderAiModel": "Un personaje profesional con cabello corto castaño, ojos azules, vistiendo un traje de negocios...",
+    "placeholderOtherImage": "Un hermoso paisaje con montañas, un lago sereno y una puesta de sol dorada...",
     "promptIdeaPlaceholder": "Elige una idea de prompt o escribe la tuya",
     "title": "Crea Tu Obra Maestra",
-    "description": "Describe a ti mismo o a la persona para la que quieres crear un avatar. Sé específico sobre características, estilo y apariencia para obtener los mejores resultados.",
+    "description": "Elige qué tipo de imagen quieres crear. Para modelos/avatares de IA, sé específico sobre características, estilo y apariencia. Para otras imágenes, describe objetos, escenas o conceptos que quieras visualizar.",
+    "creationType": "Tipo de Creación",
+    "creationTypes": {
+      "aiModel": "Modelo de IA / Avatar",
+      "otherImage": "Otra Imagen"
+    },
     "cameraType": "Tipo de Cámara",
     "generateImage": "Generar Imagen",
     "generateImageDescription": "Generar una imagen a partir de un texto",
@@ -138,6 +144,12 @@
       "selfie": "Selfie",
       "noSelfie": "No Selfie"
     },
+    "gender": "Género",
+    "genders": {
+      "male": "Masculino",
+      "female": "Femenino"
+    },
+    "age": "Edad",
     "aiModel": "Modelo de IA",
     "aiModels": {
       "model1": "Modelo 1 (Mejor para productos)",

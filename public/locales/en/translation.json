@@ -120,10 +120,16 @@
     "loginWithGoogle": "Login with Google"
   },
   "imageCreation": {
-    "placeholder": "A professional-looking person with short brown hair, blue eyes, wearing a business suit...",
+    "placeholderAiModel": "A professional-looking person with short brown hair, blue eyes, wearing a business suit...",
+    "placeholderOtherImage": "A beautiful landscape with mountains, a serene lake, and golden sunset...",
     "promptIdeaPlaceholder": "Choose a prompt idea or write your own",
     "title": "Create Your Masterpiece",
-    "description": "Describe yourself or the person you want to create an avatar for. Be specific about features, style, and appearance for the best results.",
+    "description": "Choose what type of image you want to create. For AI models/avatars, be specific about features, style, and appearance. For other images, describe objects, scenes, or concepts you want to visualize.",
+    "creationType": "Creation Type",
+    "creationTypes": {
+      "aiModel": "AI Model / Avatar",
+      "otherImage": "Other Image"
+    },
     "cameraType": "Camera Type",
     "generateImage": "Generate Image",
     "generateImageDescription": "Generate an image from a text prompt",
@@ -138,6 +144,12 @@
       "selfie": "Selfie",
       "noSelfie": "No Selfie"
     },
+    "gender": "Gender",
+    "genders": {
+      "male": "Male",
+      "female": "Female"
+    },
+    "age": "Age",
     "aiModel": "AI Model",
     "aiModels": {
       "model1": "Model 1 (Better for products)",

@@ -61,6 +61,12 @@ export enum GenAiStatusEnum {
   Pending = 'PENDING'
 }
 
+/** Gender of the image */
+export enum GenderOptionsEnum {
+  Female = 'FEMALE',
+  Male = 'MALE'
+}
+
 export type Image = Node & {
   __typename?: 'Image';
   aspectRatio: AspectRatioOptionsEnum;
@@ -85,11 +91,20 @@ export type ImageConnection = {
 };
 
 export type ImageCreationInput = {
+  age?: InputMaybe<Scalars['Int']['input']>;
   aspectRatio?: InputMaybe<AspectRatioOptionsEnum>;
   camera?: InputMaybe<CameraOptionsEnum>;
+  gender?: InputMaybe<GenderOptionsEnum>;
+  imageCreationType?: InputMaybe<ImageCreationTypeEnum>;
   model?: InputMaybe<AiModelOptionsEnum>;
   prompt: Scalars['String']['input'];
 };
+
+/** Type of the image */
+export enum ImageCreationTypeEnum {
+  AiModel = 'AI_MODEL',
+  OtherImage = 'OTHER_IMAGE'
+}
 
 export type ImageEdge = {
   __typename?: 'ImageEdge';

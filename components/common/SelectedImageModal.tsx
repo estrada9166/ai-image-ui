@@ -225,13 +225,9 @@ export const SelectedImageModal: React.FC<SelectedImageModalProps> = ({
 
                   {selectedImage.prompt &&
                     selectedImage.status !== GenAiStatusEnum.Failed && (
-                      <div>
-                        <h3 className="text-white text-xs md:text-sm font-medium mb-2 md:mb-3 flex items-center gap-2">
-                          <span className="h-1 w-4 md:w-5 bg-purple-500 rounded-full"></span>
-                          Prompt
-                        </h3>
-                        <div className="bg-black/30 rounded-xl p-3 md:p-4 border border-white/5 hover:border-purple-500/30 transition-colors duration-300">
-                          <p className="text-white/90 text-xs leading-relaxed max-h-24 md:max-h-none overflow-y-auto">
+                      <div className="bg-black/30 rounded-xl p-3 md:p-4 border border-white/5 hover:border-purple-500/30 transition-colors duration-300">
+                        <div className="max-h-40 md:max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-transparent pr-2">
+                          <p className="text-white/90 text-xs leading-relaxed">
                             {selectedImage.prompt}
                           </p>
                         </div>

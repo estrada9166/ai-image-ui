@@ -335,10 +335,13 @@ export function ImageGallery({
               {image.node.status === GenAiStatusEnum.Pending ? (
                 <div className="w-full h-full flex items-center justify-center">
                   <div className="flex flex-col items-center">
-                    <div className="relative w-16 h-16">
-                      <div className="absolute inset-0 rounded-full border-t-2 border-purple-500 animate-spin"></div>
-                      <div className="absolute inset-2 rounded-full border-t-2 border-purple-300 animate-spin animation-delay-150"></div>
-                      <div className="absolute inset-4 rounded-full border-t-2 border-purple-200 animate-spin animation-delay-300"></div>
+                    <div className="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <motion.div
+                        className="bg-gradient-to-r from-purple-600 to-indigo-600 h-3 rounded-full"
+                        initial={{ width: "0%" }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 60, ease: "linear", repeat: 0 }}
+                      />
                     </div>
                     <p className="mt-4 text-sm font-medium text-gray-600 dark:text-gray-300">
                       {t("imageGallery.generatingImage")}
