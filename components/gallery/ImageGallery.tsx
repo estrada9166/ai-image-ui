@@ -357,7 +357,7 @@ export function ImageGallery({
                 <>
                   <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors duration-300"></div>
                   <img
-                    src={image.node.imageUrl || image.node.imageUrl || ""}
+                    src={image.node.thumbnailUrl || image.node.imageUrl || ""}
                     alt={`Generated image ${index + 1}`}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
