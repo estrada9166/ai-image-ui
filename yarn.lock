@@ -7851,13 +7851,6 @@ raw-body@^3.0.0:
     iconv-lite "0.6.3"
     unpipe "1.0.0"
 
-react-compare-image@^3.5.4:
-  version "3.5.4"
-  resolved "https://registry.yarnpkg.com/react-compare-image/-/react-compare-image-3.5.4.tgz#b130e4c1996552f7afabce3d42e35b529c3db049"
-  integrity sha512-dDxRgTaJ2ulhX4dJnjhWZUKM9FQBg5W2lgTU9T2JFqFXow5YUtS3wAJqmUlqhixa+snZDPF1yYUsosQ2OC/2Mw==
-  dependencies:
-    tiny-invariant "^1.3.3"
-
 react-day-picker@8.10.1:
   version "8.10.1"
   resolved "https://registry.npmjs.org/react-day-picker/-/react-day-picker-8.10.1.tgz"
@@ -8914,7 +8907,7 @@ timeout-signal@^2.0.0:
   resolved "https://registry.yarnpkg.com/timeout-signal/-/timeout-signal-2.0.0.tgz#23207ea448d50258bb0defe3beea4a467643abba"
   integrity sha512-YBGpG4bWsHoPvofT6y/5iqulfXIiIErl5B0LdtHT1mGXDFTAhhRrbUpTvBgYbovr+3cKblya2WAOcpoy90XguA==
 
-tiny-invariant@^1.3.1, tiny-invariant@^1.3.3:
+tiny-invariant@^1.3.1:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.3.3.tgz#46680b7a873a0d5d10005995eb90a70d74d60127"
   integrity sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==

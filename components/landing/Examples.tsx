@@ -2,8 +2,7 @@
 
 import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ImageIcon, Wand2, RefreshCw, Video, Zap } from "lucide-react";
-import ReactCompareImage from "react-compare-image";
+import { ImageIcon, Wand2, Video, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 type ExampleCreation = {
@@ -20,14 +19,6 @@ type ExampleEditing = {
   prompt: string;
 };
 
-type ExampleRestoration = {
-  title: string;
-  description: string;
-  beforeImage: string;
-  afterImage: string;
-  prompt: null;
-};
-
 type ExampleVideo = {
   title: string;
   description: string;
@@ -39,7 +30,6 @@ type ExampleVideo = {
 type Examples = {
   creation: ExampleCreation;
   editing: ExampleEditing;
-  restoration: ExampleRestoration;
   video: ExampleVideo;
 };
 
@@ -60,13 +50,6 @@ export default function Examples() {
       description: t("landing.examples.editing.description"),
       image: "/examples/examples/editing.png",
       prompt: t("landing.examples.editing.prompt"),
-    },
-    restoration: {
-      title: t("landing.examples.restoration.title"),
-      description: t("landing.examples.restoration.description"),
-      beforeImage: "/examples/examples/before.webp",
-      afterImage: "/examples/examples/after.png",
-      prompt: null,
     },
     video: {
       title: t("landing.examples.video.title"),
@@ -92,11 +75,6 @@ export default function Examples() {
       id: "video",
       label: t("landing.examples.tabs.videoGeneration"),
       icon: <Video className="w-4 h-4 mr-2" />,
-    },
-    {
-      id: "restoration",
-      label: t("landing.examples.tabs.restoration"),
-      icon: <RefreshCw className="w-4 h-4 mr-2" />,
     },
   ];
 
@@ -160,18 +138,6 @@ export default function Examples() {
                           {t("landing.examples.aiEnhanced")}
                         </div>
                       </div>
-                    ) : exampleKey === "restoration" ? (
-                      <ReactCompareImage
-                        leftImage={examples.restoration.beforeImage}
-                        rightImage={examples.restoration.afterImage}
-                        sliderLineWidth={2}
-                        sliderLineColor="#6366F1"
-                        handleSize={40}
-                        leftImageLabel={t("landing.examples.before")}
-                        rightImageLabel={t("landing.examples.after")}
-                        leftImageCss={{ objectFit: "cover" }}
-                        rightImageCss={{ objectFit: "cover" }}
-                      />
                     ) : (
                       <div className="relative w-full h-full">
                         {tab === "video" && (

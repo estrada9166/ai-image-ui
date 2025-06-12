@@ -58,11 +58,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: CropIcon,
       },
       {
-        title: t("layout.restoreImage"),
-        url: "/dashboard/edit/restore",
-        icon: ImageIcon,
-      },
-      {
         title: t("layout.virtualTryOn"),
         url: "/dashboard/create/virtual-try-on",
         icon: ImageIcon,

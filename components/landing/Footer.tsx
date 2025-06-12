@@ -40,8 +40,8 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-gray-600 dark:text-gray-400 mb-4 max-w-xs">
-              Transform your images with AI-powered enhancement, restoration,
-              and creative editing tools.
+              Transform your images with AI-powered enhancement, and creative
+              editing tools.
             </p>
           </div>
 

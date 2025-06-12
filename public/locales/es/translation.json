@@ -32,12 +32,10 @@
     "createNew": "Crear nuevo",
     "yourImages": "Tus Imágenes",
     "editedImages": "Imágenes Editadas",
-    "restoredImages": "Imágenes Restauradas",
     "yourVideos": "Tus Videos",
     "gallery": "Galería",
     "generateAIimagesFromText": "Generar imágenes de IA a partir de texto",
-    "editAnImage": "Editar una imagen",
-    "restoreAnImage": "Restaurar una imagen"
+    "editAnImage": "Editar una imagen"
   },
   "forgotPassword": {
     "checkYourEmail": "Revisa tu correo electrónico",
@@ -64,11 +62,6 @@
       "description": "Crea tu primera imagen editada para verla aparecer en tu galería",
       "buttonText": "Editar una Imagen"
     },
-    "restoredImages": {
-      "title": "Imágenes Restauradas",
-      "description": "Crea tu primera imagen restaurada para verla aparecer en tu galería",
-      "buttonText": "Restaurar una Imagen"
-    },
     "video": {
       "title": "Videos",
       "description": "Crea tu primer video para verlo aparecer en tu galería",
@@ -89,7 +82,6 @@
     "gallery": "Galería",
     "created": "Creado",
     "edited": "Editado",
-    "restored": "Restaurado",
     "videos": "Videos",
     "uploaded": "Subido",
     "virtualTryOn": "Virtual"
@@ -102,7 +94,6 @@
     "errorGeneratingImageDescription": "No pudimos generar esta imagen. Por favor, inténtalo de nuevo.",
     "download": "Descargar",
     "edit": "Editar",
-    "restore": "Restaurar",
     "animate": "Animar",
     "example": "Ejemplo"
   },
@@ -238,7 +229,6 @@
     "dashboard": "Panel",
     "gallery": "Galería",
     "editImage": "Editar Imagen",
-    "restoreImage": "Restaurar Imagen",
     "videosCreation": "Creación de Videos",
     "settings": "Ajustes",
     "virtualTryOn": "Prueba Virtual de Prendas"
@@ -250,7 +240,6 @@
     "yourPlanUsage": "Uso de Tu Plan",
     "imageCreation": "Creación de Imágenes",
     "imageEdit": "Edición de Imágenes",
-    "imageRestore": "Restauración de Imágenes",
     "videoCreation": "Creación de Videos",
     "left": "Restantes",
     "resetsIn": "Se restablece en {{date}}",
@@ -291,22 +280,6 @@
     "error": "Error",
     "success": "Éxito",
     "yourPasswordHasBeenReset": "Tu contraseña ha sido restablecida con éxito. Serás redirigido a la página de inicio de sesión en unos segundos."
-  },
-  "restoreImage": {
-    "restoringImage": "Restaurando imagen...",
-    "restoreImage": "Restaurar Imagen",
-    "restoringImageDescription": "¡Estamos mejorando tu imagen con restauración de IA!",
-    "imageRestoration": "Restauración de Imagen",
-    "originalImage": "Imagen Original",
-    "before": "Antes",
-    "restoredImage": "Imagen Restaurada",
-    "after": "Después",
-    "yourRestoredImageWillAppearHere": "Tu imagen restaurada aparecerá aquí",
-    "downloadRestoredImage": "Descargar Imagen Restaurada",
-    "beforeAndAfterComparison": "Comparación de Antes y Después",
-    "yourRestoredImages": "Tus Imágenes Restauradas",
-    "slideView": "Vista Deslizante",
-    "sideBySide": "Lado a Lado"
   },
   "settings": {
     "currentPasswordRequired": "Se requiere la contraseña actual",
@@ -419,7 +392,7 @@
     "hero": {
       "badge": "Magia de Imágenes con IA",
       "title": "Transforma tus Imágenes con Magia de IA",
-      "description": "Mejora, restaura y reimagina tus fotos con tecnología de IA de vanguardia. Convierte imágenes ordinarias en extraordinarias obras de arte en segundos.",
+      "description": "Mejora y reimagina tus fotos con tecnología de IA de vanguardia. Convierte imágenes ordinarias en extraordinarias obras de arte en segundos.",
       "startNow": "Comenzar Ahora",
       "viewExamples": "Ver Ejemplos",
       "stats": {
@@ -431,8 +404,6 @@
       "showcase": {
         "imageEnhancement": "Mejora de Imágenes",
         "imageEnhancementDescription": "Transforma fotos ordinarias en impresionantes imágenes profesionales",
-        "photoRestoration": "Restauración de Fotos",
-        "photoRestorationDescription": "Da nueva vida a fotos antiguas o dañadas",
         "objectRemoval": "Eliminación de Objetos",
         "objectRemovalDescription": "Elimina elementos no deseados de tus fotos sin dejar rastro",
         "ugcCreation": "Creación de UGC",
@@ -456,9 +427,7 @@
         "aiImageEnhancement": "Mejora de Imágenes con IA",
         "aiImageEnhancementDescription": "Mejora la calidad de imagen con un solo clic. Corrige iluminación, colores y más.",
         "creativeEditing": "Edición Creativa",
-        "creativeEditingDescription": "Transforma imágenes con instrucciones. Añade o elimina elementos con lenguaje natural.",
-        "photoRestoration": "Restauración de Fotos",
-        "photoRestorationDescription": "Restaura fotos antiguas o dañadas a su antigua gloria con restauración avanzada de IA."
+        "creativeEditingDescription": "Transforma imágenes con instrucciones. Añade o elimina elementos con lenguaje natural."
       }
     },
     "features": {
@@ -471,8 +440,6 @@
         "aiImageEnhancementDescription": "Mejora automáticamente tus fotos con nuestro modelo de IA que perfecciona colores, contraste y nitidez.",
         "textGuidedEditing": "Edición Guiada por Texto",
         "textGuidedEditingDescription": "Usa lenguaje natural para describir los cambios que deseas. Nuestra IA transformará tu imagen en consecuencia.",
-        "photoRestoration": "Restauración de Fotos",
-        "photoRestorationDescription": "Da nueva vida a fotos antiguas o dañadas. Repara arañazos, rasgaduras y colores desvanecidos con un clic.",
         "objectRemoval": "Eliminación de Objetos",
         "objectRemovalDescription": "Elimina sin esfuerzo objetos o personas no deseadas de tus fotos con IA que completa el fondo.",
         "highResolutionUpscaling": "Ampliación de Alta Resolución",
@@ -593,7 +560,6 @@
           "features": [
             "10 creaciones de imágenes AI por mes",
             "10 ediciones de imágenes AI por mes",
-            "5 restauraciones de fotos por mes",
             "2 generaciones de video por mes"
           ],
           "cta": "Comenzar",
@@ -611,7 +577,6 @@
           "features": [
             "70 creaciones de imágenes AI por mes",
             "70 ediciones de imágenes AI por mes",
-            "50 restauraciones de fotos por mes",
             "25 generaciones de video por mes",
             "Crea múltiples imágenes de un solo prompt",
             "Soporte prioritario"
@@ -631,7 +596,6 @@
           "features": [
             "140 creaciones de imágenes AI por mes",
             "140 ediciones de imágenes AI por mes",
-            "100 restauraciones de fotos por mes",
             "50 generaciones de video por mes",
             "Crea múltiples imágenes de un solo prompt",
             "Soporte prioritario"
@@ -703,10 +667,6 @@
           "title": "Edición Guiada por Texto",
           "description": "Transforma tus imágenes usando simples instrucciones de texto para añadir, modificar o eliminar elementos."
         },
-        "restoration": {
-          "title": "Restauración de Fotos",
-          "description": "Devuelve la vida a fotos antiguas o dañadas con nuestra avanzada tecnología de restauración."
-        },
         "removal": {
           "title": "Eliminación de Objetos",
           "description": "Elimina objetos o personas no deseadas de tus fotos sin problemas con relleno inteligente de fondo."
@@ -741,7 +701,6 @@
       "tabs": {
         "imageCreation": "Creación de Imágenes",
         "textEditing": "Edición con Texto",
-        "restoration": "Restauración",
         "videoGeneration": "Generación de Video"
       },
       "creation": {
@@ -753,10 +712,6 @@
         "title": "Edición Guiada por Texto",
         "description": "Transforma tus imágenes usando simples instrucciones textuales para añadir, modificar o eliminar elementos.",
         "prompt": "Crea un aspecto de fotografía de producto profesional con un fondo blanco minimalista, sutil sombra debajo del sujeto, reflejos perfectos de luz y detalles ultra nítidos que enfatizan la textura y la forma."
-      },
-      "restoration": {
-        "title": "Restauración de Fotos",
-        "description": "Devuelve la vida a fotos antiguas o dañadas con nuestra avanzada tecnología de restauración."
       },
       "video": {
         "title": "Generación de Video",

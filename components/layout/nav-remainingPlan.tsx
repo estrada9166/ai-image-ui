@@ -59,14 +59,6 @@ export function NavRemainingPlan() {
           },
           {
             icon: (
-              <ImageIcon className="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-500" />
-            ),
-            label: "imageRestore",
-            data: usage?.imageRestoration,
-            link: "/dashboard/edit/restore",
-          },
-          {
-            icon: (
               <VideoIcon className="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-500" />
             ),
             label: "videoCreation",

@@ -20,7 +20,6 @@ import { EmptyGalleryState } from "./EmptyGalleryState";
 import {
   Download,
   Edit,
-  RotateCcw,
   Video,
   ChevronRight,
   Loader2,
@@ -104,12 +103,7 @@ export function ImageGallery({
   showPrompt?: boolean;
   redirectToVideoCreationOnClick?: boolean;
   loadPartialGallery?: boolean;
-  tab?:
-    | "images"
-    | "edited-images"
-    | "restored-images"
-    | "user-uploaded"
-    | "virtual-try-on";
+  tab?: "images" | "edited-images" | "user-uploaded" | "virtual-try-on";
   createdImageId?: string | null;
   setCreatedImageUrl?: (imageUrl: string) => void;
   multiSelect?: boolean;
@@ -400,23 +394,6 @@ export function ImageGallery({
                       </motion.button>
                     </Link>
 
-                    {type?.includes(ImageTypeOptionsEnum.UserUploaded) && (
-                      <Link
-                        href={`/dashboard/edit/restore?image=${image.node.id}`}
-                      >
-                        <motion.button
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={(e) => e.stopPropagation()}
-                          className="p-2 rounded-full bg-amber-500 text-white hover:bg-amber-600 transition-colors shadow-lg backdrop-blur-sm"
-                          aria-label="Restore image"
-                          title="Restore this image"
-                        >
-                          <RotateCcw className="w-4 h-4" />
-                        </motion.button>
-                      </Link>
-                    )}
-
                     <Link
                       href={`/dashboard/create/video?image=${image.node.id}`}
                     >
@@ -481,7 +458,6 @@ export function ImageGallery({
           selectedImage={selectedImage}
           closeModal={closeModal}
           handleDownloadImage={handleDownloadImage}
-          tab={tab}
         />
       )}
     </>

@@ -18,10 +18,6 @@ const useUsageQueryDocument = graphql(/* GraphQL */ `
           limit
           used
         }
-        imageRestoration {
-          limit
-          used
-        }
         videoCreation {
           limit
           used

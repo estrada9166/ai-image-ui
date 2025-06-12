@@ -20,14 +20,6 @@ export const getTranslatedExampleImages = () => {
       after:
         "https://images.unsplash.com/photo-1561571994-3c61c554181a?q=80&w=2070&auto=format&fit=crop",
     },
-    restoration: {
-      title: t("landing.examples.items.restoration.title"),
-      description: t("landing.examples.items.restoration.description"),
-      before:
-        "https://images.unsplash.com/photo-1610126996694-69e2f0b5931f?q=80&w=1974&auto=format&fit=crop",
-      after:
-        "https://images.unsplash.com/photo-1627037558426-c2d07beda3af?q=80&w=1975&auto=format&fit=crop",
-    },
     removal: {
       title: t("landing.examples.items.removal.title"),
       description: t("landing.examples.items.removal.description"),

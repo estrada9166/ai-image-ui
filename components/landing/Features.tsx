@@ -6,7 +6,6 @@ import {
   Wand2,
   Sparkles,
   ImagePlus,
-  RefreshCw,
   Palette,
   Layers,
   Film,
@@ -34,12 +33,6 @@ export default function Features() {
       title: t("landing.features.items.textGuidedEditing"),
       description: t("landing.features.items.textGuidedEditingDescription"),
       bgColor: "from-violet-500/10 to-purple-500/10",
-    },
-    {
-      icon: <RefreshCw />,
-      title: t("landing.features.items.photoRestoration"),
-      description: t("landing.features.items.photoRestorationDescription"),
-      bgColor: "from-purple-500/10 to-pink-500/10",
     },
     {
       icon: <Film />,

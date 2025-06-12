@@ -168,20 +168,6 @@ export default function Dashboard() {
             ),
           },
           {
-            icon: <Edit className="h-5 w-5 text-primary" />,
-            title: t("dashboard.restoredImages"),
-            href: "/dashboard/edit/restore",
-            linkText: t("dashboard.restoreAnImage"),
-            gallery: (
-              <ImageGallery
-                type={[ImageTypeOptionsEnum.Restored]}
-                showPrompt={false}
-                tab="restored-images"
-                loadPartialGallery
-              />
-            ),
-          },
-          {
             icon: <VideoIcon className="h-5 w-5 text-primary" />,
             title: t("dashboard.yourVideos"),
             href: "/dashboard/create/video",

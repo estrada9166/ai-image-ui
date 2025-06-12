@@ -10,7 +10,6 @@ import {
   Video,
 } from "lucide-react";
 import Link from "next/link";
-import ReactCompareImage from "react-compare-image";
 import {
   CameraOptionsEnum,
   AspectRatioOptionsEnum,
@@ -23,14 +22,12 @@ interface SelectedImageModalProps {
   selectedImage: ImageWithIndex | null;
   closeModal: () => void;
   handleDownloadImage: (imageUrl: string, e: React.MouseEvent) => void;
-  tab?: string;
 }
 
 export const SelectedImageModal: React.FC<SelectedImageModalProps> = ({
   selectedImage,
   closeModal,
   handleDownloadImage,
-  tab,
 }) => {
   const { t } = useTranslation();
 
@@ -71,34 +68,6 @@ export const SelectedImageModal: React.FC<SelectedImageModalProps> = ({
                         {t("imageGallery.errorGeneratingImageDescription")}
                       </p>
                     </div>
-                  </div>
-                ) : tab === "restored-images" &&
-                  selectedImage.originalImages?.[0]?.imageUrl &&
-                  selectedImage.imageUrl ? (
-                  <div className="h-full max-h-[50vh] md:max-h-[85vh] overflow-hidden">
-                    <ReactCompareImage
-                      leftImage={selectedImage.originalImages[0].imageUrl}
-                      rightImage={selectedImage.imageUrl}
-                      sliderLineWidth={2}
-                      sliderLineColor="#ffffff"
-                      leftImageAlt="Original image"
-                      rightImageAlt="Restored image"
-                      leftImageLabel="Original"
-                      rightImageLabel="Restored"
-                      sliderPositionPercentage={0.5}
-                      leftImageCss={{
-                        objectFit: "contain",
-                        height: "100%",
-                        maxHeight: "50vh",
-                        width: "100%",
-                      }}
-                      rightImageCss={{
-                        objectFit: "contain",
-                        height: "100%",
-                        maxHeight: "50vh",
-                        width: "100%",
-                      }}
-                    />
                   </div>
                 ) : (
                   <div className="flex items-center justify-center h-full max-h-[50vh] md:max-h-[85vh]">

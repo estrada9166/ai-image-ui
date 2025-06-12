@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { useTranslation } from "react-i18next";
 
-import { EditIcon, ImageIcon, VideoIcon, RefreshCwIcon } from "lucide-react";
+import { EditIcon, ImageIcon, VideoIcon } from "lucide-react";
 
 // Empty state component for when there are no images
 export const EmptyGalleryState = ({
@@ -11,7 +11,6 @@ export const EmptyGalleryState = ({
   tab:
     | "images"
     | "edited-images"
-    | "restored-images"
     | "video"
     | "user-uploaded"
     | "virtual-try-on";
@@ -33,13 +32,6 @@ export const EmptyGalleryState = ({
       buttonText: t("emptyGalleryState.editedImages.buttonText"),
       link: "/dashboard/edit/image",
       Icon: EditIcon,
-    },
-    "restored-images": {
-      title: t("emptyGalleryState.restoredImages.title"),
-      description: t("emptyGalleryState.restoredImages.description"),
-      buttonText: t("emptyGalleryState.restoredImages.buttonText"),
-      link: "/dashboard/edit/restore",
-      Icon: RefreshCwIcon,
     },
     video: {
       title: t("emptyGalleryState.video.title"),

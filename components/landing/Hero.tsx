@@ -8,15 +8,11 @@ import {
   Sparkles,
   ImagePlus,
   Wand2,
-  Image,
   ChevronLeft,
   ChevronRight,
-  Camera,
-  Zap,
   Video,
   Film,
 } from "lucide-react";
-import ReactCompareImage from "react-compare-image";
 import { useTranslation } from "react-i18next";
 
 export default function Hero() {
@@ -38,14 +34,6 @@ export default function Hero() {
       image: "/examples/hero/editing.png",
       prompt: t("landing.hero.showcase.creativeEditingPrompt"),
     },
-    {
-      id: "restoration",
-      title: t("landing.hero.showcase.photoRestoration"),
-      description: t("landing.hero.showcase.photoRestorationDescription"),
-      before: "/examples/hero/restoration-before.png",
-      after: "/examples/hero/restoration-after.png",
-    },
-
     {
       id: "ugc-creation",
       title: t("landing.hero.showcase.ugcCreation"),
@@ -208,7 +196,7 @@ export default function Hero() {
                         {t("landing.hero.showcase.aiGeneratedVideo")}
                       </div>
                     </div>
-                  ) : currentExample.image ? (
+                  ) : (
                     <div className="w-full h-full">
                       <img
                         src={currentExample.image}
@@ -238,43 +226,6 @@ export default function Hero() {
                         </div>
                       )}
                     </div>
-                  ) : (
-                    <>
-                      <ReactCompareImage
-                        leftImage={currentExample.before || ""}
-                        rightImage={currentExample.after || ""}
-                        sliderLineWidth={2}
-                        sliderLineColor="#6366F1"
-                        handleSize={40}
-                        leftImageLabel={t("landing.hero.showcase.original")}
-                        rightImageLabel={t("landing.hero.showcase.aiEnhanced")}
-                        leftImageCss={{ objectFit: "cover" }}
-                        rightImageCss={{ objectFit: "cover" }}
-                      />
-
-                      {/* Indicator badges */}
-                      <div className="absolute top-3 left-3 bg-black/60 text-white px-2 py-0.5 text-xs font-medium rounded-full backdrop-blur-sm flex items-center">
-                        <Camera className="w-3 h-3 mr-1" />
-                        {t("landing.hero.showcase.original")}
-                      </div>
-                      <div className="absolute top-3 right-3 bg-indigo-600/90 text-white px-2 py-0.5 text-xs font-medium rounded-full backdrop-blur-sm flex items-center">
-                        {currentExample.isUGC ? (
-                          <>
-                            <Wand2 className="w-3 h-3 mr-1" />
-                            {t("landing.hero.showcase.aiUGC")}
-                          </>
-                        ) : (
-                          <>
-                            <Zap className="w-3 h-3 mr-1" />
-                            {t("landing.hero.showcase.aiEnhanced")}
-                          </>
-                        )}
-                      </div>
-
-                      <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 rounded-full bg-indigo-600 text-white px-3 py-0.5 text-xs font-medium whitespace-nowrap shadow-lg">
-                        {t("landing.hero.showcase.slideToCompare")}
-                      </div>
-                    </>
                   )}
                 </div>
 
@@ -313,13 +264,6 @@ export default function Hero() {
               title: t("landing.hero.featureShowcase.creativeEditing"),
               description: t(
                 "landing.hero.featureShowcase.creativeEditingDescription"
-              ),
-            },
-            {
-              icon: <Image className="w-5 h-5" />,
-              title: t("landing.hero.featureShowcase.photoRestoration"),
-              description: t(
-                "landing.hero.featureShowcase.photoRestorationDescription"
               ),
             },
             {

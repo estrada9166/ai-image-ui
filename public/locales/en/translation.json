@@ -32,12 +32,10 @@
     "createNew": "Create new",
     "yourImages": "Your Images",
     "editedImages": "Edited Images",
-    "restoredImages": "Restored Images",
     "yourVideos": "Your Videos",
     "gallery": "Gallery",
     "generateAIimagesFromText": "Generate AI images from text",
-    "editAnImage": "Edit an image",
-    "restoreAnImage": "Restore an image"
+    "editAnImage": "Edit an image"
   },
   "forgotPassword": {
     "checkYourEmail": "Check your email",
@@ -64,11 +62,6 @@
       "description": "Create your first edited image to see it appear in your gallery",
       "buttonText": "Edit an Image"
     },
-    "restoredImages": {
-      "title": "Restored Images",
-      "description": "Create your first restored image to see it appear in your gallery",
-      "buttonText": "Restore an Image"
-    },
     "video": {
       "title": "Videos",
       "description": "Create your first video to see it appear in your gallery",
@@ -89,7 +82,6 @@
     "gallery": "Gallery",
     "created": "Created",
     "edited": "Edited",
-    "restored": "Restored",
     "videos": "Videos",
     "uploaded": "Uploaded",
     "virtualTryOn": "Try On"
@@ -102,7 +94,6 @@
     "errorGeneratingImageDescription": "We couldn't generate this image. Please try again.",
     "download": "Download",
     "edit": "Edit",
-    "restore": "Restore",
     "animate": "Animate",
     "example": "Example"
   },
@@ -237,7 +228,6 @@
     "dashboard": "Dashboard",
     "gallery": "Gallery",
     "editImage": "Edit Image",
-    "restoreImage": "Restore Image",
     "videosCreation": "Videos creation",
     "settings": "Settings",
     "virtualTryOn": "Virtual Try On"
@@ -249,7 +239,6 @@
     "yourPlanUsage": "Your Plan Usage",
     "imageCreation": "Image Creation",
     "imageEdit": "Image Edit",
-    "imageRestore": "Image Restore",
     "videoCreation": "Video Creation",
     "left": "Left",
     "resetsIn": "Resets in {{date}}",
@@ -290,22 +279,6 @@
     "error": "Error",
     "success": "Success",
     "yourPasswordHasBeenReset": " Your password has been reset successfully. You will be redirected to the login page in a few seconds."
-  },
-  "restoreImage": {
-    "restoringImage": "Restoring image...",
-    "restoreImage": "Restore Image",
-    "restoringImageDescription": "We're enhancing your image with AI restoration!",
-    "imageRestoration": "Image Restoration",
-    "originalImage": "Original Image",
-    "before": "Before",
-    "restoredImage": "Restored Image",
-    "after": "After",
-    "yourRestoredImageWillAppearHere": "Your restored image will appear here",
-    "downloadRestoredImage": "Download Restored Image",
-    "beforeAndAfterComparison": "Before and After Comparison",
-    "yourRestoredImages": "Your Restored Images",
-    "slideView": "Slide View",
-    "sideBySide": "Side by Side"
   },
   "settings": {
     "currentPasswordRequired": "Current password is required",
@@ -418,7 +391,7 @@
     "hero": {
       "badge": "AI-Powered Image Magic",
       "title": "Transform Your Images with AI Magic",
-      "description": "Enhance, restore, and reimagine your photos with cutting-edge AI technology. Turn ordinary images into extraordinary works of art or captivating videos.",
+      "description": "Enhance and reimagine your photos with cutting-edge AI technology. Turn ordinary images into extraordinary works of art or captivating videos.",
       "startNow": "Start Now",
       "viewExamples": "View Examples",
       "stats": {
@@ -434,8 +407,6 @@
         "imageCreationPrompt": "A majestic mountain landscape at sunset with snow-capped peaks, alpine meadows filled with wildflowers, and a crystal-clear lake reflecting the golden sky, wispy clouds catching the last light of day, ultra-high-definition nature photography with vibrant colors and sharp details",
         "imageEnhancement": "Image Enhancement",
         "imageEnhancementDescription": "Transform ordinary photos into stunning professional images",
-        "photoRestoration": "Photo Restoration",
-        "photoRestorationDescription": "Breathe new life into old or damaged photos",
         "creativeEditing": "Creative Editing",
         "creativeEditingDescription": "Transform images with prompts. Add or remove elements with natural language.",
         "creativeEditingPrompt": "Convert the image into an artistic watercolor painting with visible brush strokes, soft color bleeding at the edges, and delicate paper texture. Enhance the most prominent features while allowing colors to blend naturally in less detailed areas. Add subtle splatter effects for artistic flair.",
@@ -454,9 +425,7 @@
         "aiImageEnhancement": "AI Image Enhancement",
         "aiImageEnhancementDescription": "Enhance image quality with a single click. Fix lighting, colors, and more.",
         "creativeEditing": "Creative Editing",
-        "creativeEditingDescription": "Transform images with prompts. Add or remove elements with natural language.",
-        "photoRestoration": "Photo Restoration",
-        "photoRestorationDescription": "Restore old, damaged photos to their former glory with advanced AI restoration."
+        "creativeEditingDescription": "Transform images with prompts. Add or remove elements with natural language."
       }
     },
     "features": {
@@ -471,8 +440,6 @@
         "aiImageEnhancementDescription": "Automatically enhance your photos with our AI model that improves colors, contrast, and sharpness.",
         "textGuidedEditing": "Text-Guided Editing",
         "textGuidedEditingDescription": "Use natural language to describe the changes you want. Our AI will transform your image accordingly.",
-        "photoRestoration": "Photo Restoration",
-        "photoRestorationDescription": "Breathe new life into old, damaged photos. Fix scratches, tears, and faded colors with one click.",
         "styleTransfer": "Style Transfer",
         "styleTransferDescription": "Apply artistic styles to your photos, transforming them into works of art inspired by famous painters.",
         "backgroundReplacement": "Background Replacement",
@@ -580,7 +547,6 @@
           "features": [
             "10 AI image creations per month",
             "10 AI image edits per month",
-            "5 photo restorations per month",
             "2 video generations per month"
           ],
           "cta": "Get Started",
@@ -598,7 +564,6 @@
           "features": [
             "70 AI image creations per month",
             "70 AI image edits per month",
-            "50 photo restorations per month",
             "25 video generations per month",
             "High-resolution image output",
             "Priority support"
@@ -618,7 +583,6 @@
           "features": [
             "140 AI image creations per month",
             "140 AI image edits per month",
-            "100 photo restorations per month",
             "50 video generations per month",
             "High-resolution image output",
             "Priority support"
@@ -647,10 +611,6 @@
           "content": "I was skeptical at first, but the results are incredible. The style transfer creates unique visuals, and the image generation gives me a head start when creating concept art for clients."
         },
         {
-          "name": "Em Wilson",
-          "content": "I restored my grandparents' old photos and the results brought tears to my family's eyes. It's preserving our memories in ways I never thought possible."
-        },
-        {
           "name": "Dave P.",
           "content": "The background replacement and image enhancement transformed our product listings. We create consistent, professional-looking photos in minutes, and the UGC creator helps us make compelling ads."
         },
@@ -671,10 +631,6 @@
         "editing": {
           "title": "Text-Guided Editing",
           "description": "Transform your images using simple text prompts to add, modify, or remove elements."
-        },
-        "restoration": {
-          "title": "Photo Restoration",
-          "description": "Bring old or damaged photos back to life with our advanced restoration technology."
         },
         "removal": {
           "title": "Object Removal",
@@ -710,7 +666,6 @@
       "tabs": {
         "imageCreation": "Image Creation",
         "textEditing": "Text Editing",
-        "restoration": "Restoration",
         "videoGeneration": "Video Generation"
       },
       "creation": {
@@ -722,10 +677,6 @@
         "title": "Text-Guided Editing",
         "description": "Transform your images using simple text prompts to add, modify, or remove elements.",
         "prompt": "Create a professional product photography look with a minimalist white background, subtle drop shadow beneath the subject, perfect highlight reflections, and ultra-sharp details that emphasize texture and form."
-      },
-      "restoration": {
-        "title": "Photo Restoration",
-        "description": "Bring old or damaged photos back to life with our advanced restoration technology."
       },
       "video": {
         "title": "Video Generation",

@@ -73,16 +73,13 @@ export default function Gallery({
         <TabsList
           className={cn(
             "grid w-full max-w-sm  mb-4",
-            multiSelect ? "grid-cols-5" : "grid-cols-6"
+            multiSelect ? "grid-cols-4" : "grid-cols-5"
           )}
         >
           <TabsTrigger value="images">{t("gallery.created")}</TabsTrigger>
           <TabsTrigger value="edited-images">{t("gallery.edited")}</TabsTrigger>
           <TabsTrigger value="virtual-try-on">
             {t("gallery.virtualTryOn")}
-          </TabsTrigger>
-          <TabsTrigger value="restored-images">
-            {t("gallery.restored")}
           </TabsTrigger>
           {!multiSelect && (
             <TabsTrigger value="videos">{t("gallery.videos")}</TabsTrigger>
@@ -128,21 +125,6 @@ export default function Gallery({
                 type={[ImageTypeOptionsEnum.VirtualTryOn]}
                 showPrompt={false}
                 tab="virtual-try-on"
-                multiSelect={multiSelect}
-                selectedImages={selectedImages}
-                onImagesSelect={onImagesSelect}
-                maxImages={maxImages}
-              />
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="restored-images">
-          <Card>
-            <CardContent className="pt-4">
-              <ImageGallery
-                type={[ImageTypeOptionsEnum.Restored]}
-                showPrompt={false}
-                tab="restored-images"
                 multiSelect={multiSelect}
                 selectedImages={selectedImages}
                 onImagesSelect={onImagesSelect}
