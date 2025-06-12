@@ -18,24 +18,24 @@ import { useTranslation } from "react-i18next";
 export default function Hero() {
   const { t } = useTranslation();
 
-  // Showcase examples data
+  // Showcase examples data - updated for product photography
   const showcaseExamples = [
     {
-      id: "image-creation",
+      id: "product-creation",
       title: t("landing.hero.showcase.imageCreation"),
       description: t("landing.hero.showcase.imageCreationDescription"),
       image: "/examples/hero/image-creation.png",
       prompt: t("landing.hero.showcase.imageCreationPrompt"),
     },
     {
-      id: "editing",
+      id: "background-editing",
       title: t("landing.hero.showcase.creativeEditing"),
       description: t("landing.hero.showcase.creativeEditingDescription"),
       image: "/examples/hero/editing.png",
       prompt: t("landing.hero.showcase.creativeEditingPrompt"),
     },
     {
-      id: "ugc-creation",
+      id: "lifestyle-creation",
       title: t("landing.hero.showcase.ugcCreation"),
       description: t("landing.hero.showcase.ugcCreationDescription"),
       image: "/examples/hero/ugc.png",
@@ -43,7 +43,7 @@ export default function Hero() {
       isUGC: true,
     },
     {
-      id: "ugc-video",
+      id: "product-video",
       title: t("landing.hero.showcase.ugcVideoGeneration"),
       video: "/examples/hero/ugc-video-example.mp4",
       isVideo: true,
@@ -90,8 +90,12 @@ export default function Hero() {
               </span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-violet-600 to-indigo-600 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 dark:text-white leading-tight">
               {t("landing.hero.title")}
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-violet-600 to-indigo-600">
+                {" "}
+                {t("landing.hero.title2")}
+              </span>
             </h1>
 
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-xl mx-auto lg:mx-0">
@@ -100,50 +104,20 @@ export default function Hero() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
               <Link href="/signup">
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white px-8 py-6 rounded-lg text-lg shadow-lg hover:shadow-indigo-500/25 transition-all group"
-                >
-                  {t("landing.hero.startNow")}
+                <Button className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white px-8 py-6 rounded-lg text-sm md:text-lg shadow-lg hover:shadow-indigo-500/25 transition-all group font-semibold">
+                  {t("landing.hero.getStarted")}
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
               <Link href="#examples">
                 <Button
-                  size="lg"
                   variant="outline"
-                  className="px-8 py-6 rounded-lg text-lg border-2 border-indigo-200 dark:border-indigo-800 hover:border-indigo-600 dark:hover:border-indigo-600 transition-all"
+                  className="px-8 py-6 rounded-lg  border-2 border-gray-300 dark:border-gray-600 hover:border-gray-500 dark:hover:border-gray-400 transition-all text-sm md:text-lg"
                 >
                   {t("landing.hero.viewExamples")}
                 </Button>
               </Link>
             </div>
-
-            {/* Stats counters */}
-            {/* <div className="flex flex-wrap justify-center lg:justify-start gap-6 md:gap-10">
-              {[
-                {
-                  label: t("landing.hero.stats.imagesEnhancedLabel"),
-                  value: t("landing.hero.stats.imagesEnhanced"),
-                },
-                {
-                  label: t("landing.hero.stats.happyUsersLabel"),
-                  value: t("landing.hero.stats.happyUsers"),
-                },
-              ].map((stat, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col items-center lg:items-start"
-                >
-                  <span className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600">
-                    {stat.value}
-                  </span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
-            </div> */}
           </div>
 
           {/* Right column - Image comparison */}
@@ -250,7 +224,7 @@ export default function Hero() {
         </div>
 
         {/* Features showcase */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-5 max-w-5xl mx-auto mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-16">
           {[
             {
               icon: <ImagePlus className="w-5 h-5" />,

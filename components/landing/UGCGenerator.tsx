@@ -165,6 +165,9 @@ export default function UGCGenerator() {
                       <div className="absolute top-2 right-2 bg-indigo-600 text-white text-xs font-medium px-2 py-0.5 sm:py-1 rounded-full">
                         {t("landing.ugcGenerator.results.selected")}
                       </div>
+                      <div className="absolute bottom-2 left-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm">
+                        {t("landing.ugcGenerator.perfectForEcommerceListings")}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -233,9 +236,7 @@ export default function UGCGenerator() {
                             src="/examples/ugc/ugc-video.mp4"
                             type="video/mp4"
                           />
-                          {t(
-                            "landing.ugcGenerator.results.browserDoesNotSupportVideo"
-                          )}
+                          Your browser does not support video playback
                         </video>
 
                         {/* Video play button overlay - only show if video is not playing */}

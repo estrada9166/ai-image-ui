@@ -2,7 +2,14 @@
 
 import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ImageIcon, Wand2, Video, Zap } from "lucide-react";
+import {
+  ShoppingCart,
+  Wand2,
+  Video,
+  Zap,
+  Sparkles,
+  ArrowRight,
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 type ExampleCreation = {
@@ -37,7 +44,6 @@ export default function Examples() {
   const [tab, setTab] = useState("creation");
   const { t } = useTranslation();
 
-  // Example data structure - in a real application, you would use actual image paths
   const examples: Examples = {
     creation: {
       title: t("landing.examples.creation.title"),
@@ -64,49 +70,62 @@ export default function Examples() {
     {
       id: "creation",
       label: t("landing.examples.tabs.imageCreation"),
-      icon: <ImageIcon className="w-4 h-4 mr-2" />,
+      icon: <ShoppingCart className="w-4 h-4 mr-2" />,
+      gradient: "from-blue-500 to-indigo-600",
+      bgColor: "bg-blue-50 dark:bg-blue-900/30",
     },
     {
       id: "editing",
       label: t("landing.examples.tabs.textEditing"),
       icon: <Wand2 className="w-4 h-4 mr-2" />,
+      gradient: "from-blue-500 to-indigo-600",
+      bgColor: "bg-blue-50 dark:bg-blue-900/30",
     },
     {
       id: "video",
       label: t("landing.examples.tabs.videoGeneration"),
       icon: <Video className="w-4 h-4 mr-2" />,
+      gradient: "from-violet-500 to-purple-600",
+      bgColor: "bg-violet-50 dark:bg-violet-900/30",
     },
   ];
 
   return (
     <section
       id="examples"
-      className="py-12 sm:py-16 md:py-20 bg-gray-50 dark:bg-gray-900"
+      className="py-20 relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-base font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wide mb-2 sm:mb-3">
-            {t("landing.examples.seeItInAction")}
-          </h2>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
+      {/* Enhanced background decoration */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 -left-20 w-80 h-80 bg-gradient-to-r from-blue-300/20 to-blue-400/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 -right-20 w-80 h-80 bg-gradient-to-r from-violet-300/20 to-pink-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-50 to-blue-50 dark:from-blue-900/30 dark:to-blue-900/30 border border-blue-200 dark:border-blue-800 mb-6">
+            <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400 mr-2" />
+            <span className="text-sm font-medium text-blue-800 dark:text-blue-300">
+              {t("landing.examples.seeItInAction")}
+            </span>
+          </div>
+
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             {t("landing.examples.stunningTransformations")}
-          </h3>
-          <p className="max-w-2xl mx-auto text-lg sm:text-xl text-gray-600 dark:text-gray-300">
-            {t("landing.examples.sliderDescription")}
-          </p>
+          </h2>
         </div>
 
         <Tabs value={tab} onValueChange={setTab} className="w-full">
-          <div className="flex justify-center mb-6 sm:mb-8">
-            <TabsList className="bg-gray-100 dark:bg-gray-800 p-1 rounded-lg overflow-x-auto max-w-full flex-wrap h-auto min-h-12">
+          <div className="flex justify-center mb-12">
+            <TabsList className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-1.5 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
               {tabOptions.map((option) => (
                 <TabsTrigger
                   key={option.id}
                   value={option.id}
-                  className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 px-3 sm:px-4 py-2 flex items-center whitespace-nowrap text-sm sm:text-base"
+                  className={`data-[state=active]:bg-gradient-to-r data-[state=active]:${option.gradient}  px-6 py-3 flex items-center whitespace-nowrap text-sm font-medium rounded-xl transition-all duration-300 data-[state=active]:shadow-lg`}
                 >
                   {option.icon}
-                  <span className="hidden xs:inline">{option.label}</span>
+                  <span className="hidden sm:block">{option.label}</span>
                 </TabsTrigger>
               ))}
             </TabsList>
@@ -114,12 +133,12 @@ export default function Examples() {
 
           {Object.keys(examples).map((exampleKey) => (
             <TabsContent key={exampleKey} value={exampleKey} className="mt-0">
-              <div className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl overflow-hidden">
-                <div className="grid grid-cols-1 lg:grid-cols-5">
-                  {/* Left side - Image comparison */}
-                  <div className="col-span-1 lg:col-span-3 relative min-h-[250px] sm:min-h-[300px] md:min-h-[400px] lg:min-h-[500px]">
+              <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-gray-200/50 dark:border-gray-700/50">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
+                  {/* Left side - Image showcase */}
+                  <div className="lg:col-span-2 relative min-h-[400px] lg:min-h-[600px]">
                     {exampleKey === "editing" || exampleKey === "creation" ? (
-                      <div className="relative w-full h-full">
+                      <div className="relative w-full h-full group">
                         <img
                           src={
                             (
@@ -129,17 +148,21 @@ export default function Examples() {
                             ).image
                           }
                           alt={examples[exampleKey as keyof Examples].title}
-                          className="w-full h-full object-cover"
-                          width={800}
-                          height={600}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
-                        <div className="absolute top-2 sm:top-3 right-2 sm:right-3 bg-indigo-600/90 text-white px-2 py-0.5 text-xs font-medium rounded-full backdrop-blur-sm flex items-center">
-                          <Zap className="w-3 h-3 mr-1" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+                        <div className="absolute top-4 right-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-3 py-1.5 text-sm font-medium rounded-full backdrop-blur-sm flex items-center shadow-lg">
+                          <Zap className="w-4 h-4 mr-1.5" />
                           {t("landing.examples.aiEnhanced")}
+                        </div>
+                        <div className="absolute bottom-4 left-4 right-4 bg-black/60 text-white p-4 rounded-xl backdrop-blur-sm">
+                          <p className="text-sm font-medium">
+                            {t("landing.examples.perfectForEcommerce")}
+                          </p>
                         </div>
                       </div>
                     ) : (
-                      <div className="relative w-full h-full">
+                      <div className="relative w-full h-full group">
                         {tab === "video" && (
                           <video
                             src={examples.video.video}
@@ -148,54 +171,67 @@ export default function Examples() {
                             loop
                             muted
                             playsInline
+                            poster={examples.video.image}
                           />
                         )}
                         {tab !== "video" && (
                           <img
                             src={examples.video.image}
                             alt={examples.video.title}
-                            className="w-full h-full object-cover"
-                            width={800}
-                            height={600}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           />
                         )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+                        <div className="absolute top-4 right-4 bg-gradient-to-r from-violet-500 to-purple-600 text-white px-3 py-1.5 text-sm font-medium rounded-full backdrop-blur-sm flex items-center shadow-lg">
+                          <Video className="w-4 h-4 mr-1.5" />
+                          {t("landing.examples.productVideo")}
+                        </div>
                       </div>
                     )}
                   </div>
 
                   {/* Right side - Description */}
-                  <div className="col-span-1 lg:col-span-2 p-4 sm:p-6 md:p-8 flex flex-col justify-center">
-                    <div className="mb-4 sm:mb-6 md:mb-8">
-                      <h4 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
+                  <div className="p-8 lg:p-10 flex flex-col justify-center">
+                    <div className="mb-8">
+                      <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-4">
                         {examples[exampleKey as keyof Examples].title}
-                      </h4>
-                      <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg">
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
                         {examples[exampleKey as keyof Examples].description}
                       </p>
                     </div>
 
-                    <div className="space-y-3 sm:space-y-4">
-                      <div className="bg-gray-50 dark:bg-gray-700/50 p-3 sm:p-4 rounded-lg">
-                        <h5 className="font-medium text-gray-900 dark:text-white mb-1 sm:mb-2 text-sm sm:text-base">
+                    <div className="space-y-6">
+                      <div className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700/50 dark:to-gray-800/50 p-6 rounded-2xl border border-gray-200 dark:border-gray-600">
+                        <h4 className="font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                          <Sparkles className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />
                           {t("landing.examples.howItWorks")}
-                        </h5>
-                        <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-0.5 sm:space-y-1 text-sm sm:text-base">
-                          <li>{t("landing.examples.steps.upload")}</li>
-                          <li>
-                            {t("landing.examples.steps.select")}{" "}
-                            {examples[exampleKey as keyof Examples].title}
-                          </li>
-                          <li>{t("landing.examples.steps.adjust")}</li>
-                          <li>{t("landing.examples.steps.download")}</li>
-                        </ul>
+                        </h4>
+                        <div className="space-y-3">
+                          {[
+                            t("landing.examples.steps.upload"),
+                            `${t("landing.examples.steps.select")} ${
+                              examples[exampleKey as keyof Examples].title
+                            }`,
+                            t("landing.examples.steps.adjust"),
+                            t("landing.examples.steps.download"),
+                          ].map((step, index) => (
+                            <div key={index} className="flex items-center">
+                              <span className="text-gray-700 dark:text-gray-300">
+                                - {step}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
 
                       {examples[exampleKey as keyof Examples].prompt && (
-                        <div className="bg-gray-50 dark:bg-gray-700/50 p-3 sm:p-4 rounded-lg">
-                          <h5 className="font-medium text-gray-900 dark:text-white mb-1 sm:mb-2 text-sm sm:text-base">
-                            Example Prompt:
-                          </h5>
-                          <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm italic">
+                        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-2xl border border-blue-200 dark:border-blue-800">
+                          <h4 className="font-bold text-gray-900 dark:text-white mb-3 flex items-center">
+                            <ArrowRight className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />
+                            {t("landing.examples.examplePrompt")}
+                          </h4>
+                          <p className="text-gray-700 dark:text-gray-300 italic leading-relaxed">
                             &ldquo;
                             {examples[exampleKey as keyof Examples].prompt}
                             &rdquo;

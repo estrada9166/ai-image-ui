@@ -325,6 +325,7 @@
     "onceYouClickTheLink": "Once confirmed, you can log in to your account"
   },
   "videoCreation": {
+    "betterResultsDisclaimer": "To have better results and more accurate video, we recommend using only 1 image",
     "emptyState": {
       "title": "Add an Image to Begin",
       "description": "Select or upload an image to transform it with AI editing",
@@ -376,110 +377,142 @@
       "examples": "Examples",
       "testimonials": "Testimonials",
       "faq": "FAQ",
-      "pricing": "Pricing"
+      "pricing": "Pricing",
+      "description": "Transform your product images with AI-powered enhancement tools designed specifically for e-commerce success.",
+      "boostSales": "Boost sales by 30% on average",
+      "commercialLicense": "Commercial license included",
+      "copyright": "All rights reserved. Made for shop owners who want to sell more.",
+      "contactEmail": "contact@newpix.ai",
+      "terms": "Terms"
     },
     "navbar": {
-      "logo": "Newpix.ai",
+      "logo": "Newpix",
       "features": "Features",
       "ugcCreator": "UGC Creator",
       "examples": "Examples",
       "pricing": "Pricing",
       "faq": "FAQ",
       "signIn": "Sign In",
-      "getStarted": "Get Started"
+      "getStarted": "Try Free"
     },
     "hero": {
-      "badge": "AI-Powered Image Magic",
-      "title": "Transform Your Images with AI Magic",
-      "description": "Enhance and reimagine your photos with cutting-edge AI technology. Turn ordinary images into extraordinary works of art or captivating videos.",
-      "startNow": "Start Now",
-      "viewExamples": "View Examples",
+      "badge": "AI-Powered Product Photography",
+      "title": "Transform Your Product Images Into",
+      "title2": "Sales Magnets",
+      "description": "AI-powered image enhancement that increases conversions by 30%. Create professional product photos and marketing visuals in seconds.",
+      "startNow": "Try It Free - No Credit Card",
+      "viewExamples": "See Examples",
+      "getStarted": "Try It Free - No Credit Card",
       "stats": {
-        "imagesEnhanced": "10k+",
-        "imagesEnhancedLabel": "Images Enhanced",
-        "happyUsers": "1K+",
-        "happyUsersLabel": "Happy Users"
+        "imagesEnhanced": "50k+",
+        "imagesEnhancedLabel": "Product Photos Enhanced",
+        "happyUsers": "2.5K+",
+        "happyUsersLabel": "Shop Owners"
       },
       "showcase": {
         "aiGenerated": "AI Generated",
-        "imageCreation": "Image Creation",
-        "imageCreationDescription": "Create stunning images with AI. No photoshoot required.",
-        "imageCreationPrompt": "A majestic mountain landscape at sunset with snow-capped peaks, alpine meadows filled with wildflowers, and a crystal-clear lake reflecting the golden sky, wispy clouds catching the last light of day, ultra-high-definition nature photography with vibrant colors and sharp details",
-        "imageEnhancement": "Image Enhancement",
-        "imageEnhancementDescription": "Transform ordinary photos into stunning professional images",
-        "creativeEditing": "Creative Editing",
-        "creativeEditingDescription": "Transform images with prompts. Add or remove elements with natural language.",
-        "creativeEditingPrompt": "Convert the image into an artistic watercolor painting with visible brush strokes, soft color bleeding at the edges, and delicate paper texture. Enhance the most prominent features while allowing colors to blend naturally in less detailed areas. Add subtle splatter effects for artistic flair.",
-        "ugcCreation": "UGC Creation",
-        "ugcCreationDescription": "Create engaging user-generated content with AI",
-        "ugcCreationPrompt": "A professional executive with neatly styled short brown hair wearing a tailored navy business suit and light blue shirt, standing confidently in a modern high-rise office with floor-to-ceiling windows overlooking a city skyline, soft natural lighting highlighting their determined expression, ultra-realistic 4K detail",
-        "ugcVideoGeneration": "UGC Video Generation",
-        "ugcVideoGenerationDescription": "Transform your UGC content into engaging videos",
-        "original": "Original",
-        "aiEnhanced": "AI Enhanced",
-        "aiUGC": "AI UGC",
         "aiGeneratedVideo": "AI Generated Video",
-        "slideToCompare": "← Slide to compare →"
+        "imageCreation": "Product Photography",
+        "imageCreationDescription": "Create stunning product photos without expensive equipment or studio setup.",
+        "imageCreationPrompt": "Premium wireless headphones in matte black finish with subtle metallic accents, floating in mid-air against a clean white background with dramatic studio lighting highlighting the contours and design elements, commercial product photography with perfect symmetry and ultra-sharp details",
+        "imageEnhancement": "Background Replacement",
+        "imageEnhancementDescription": "Transform simple product photos into professional marketplace images",
+        "creativeEditing": "Smart Product Editing",
+        "creativeEditingDescription": "Enhance product colors, lighting, and remove unwanted elements with simple text commands.",
+        "creativeEditingPrompt": "Remove the cluttered background and replace it with a clean, professional white background. Enhance the product colors to be more vibrant and appealing, improve the lighting to highlight the product features, and add subtle shadows for depth.",
+        "ugcCreation": "Lifestyle Product Shots",
+        "ugcCreationDescription": "Create authentic lifestyle images showing your products in use",
+        "ugcCreationPrompt": "A fashionable woman in her late 20s with a warm smile, wearing the product naturally in a modern, well-lit coffee shop setting. Natural lighting streaming through large windows, creating an authentic lifestyle moment that showcases the product in everyday use, high-quality commercial photography style",
+        "ugcVideoGeneration": "Product Video Creation",
+        "ugcVideoGenerationDescription": "Transform static product images into engaging promotional videos",
+        "original": "Before",
+        "aiEnhanced": "After AI Enhancement",
+        "aiUGC": "Lifestyle Shot",
+        "aiGeneratedVideo": "Product Video",
+        "slideToCompare": "← Slide to see the difference →"
       },
       "featureShowcase": {
-        "aiImageEnhancement": "AI Image Enhancement",
-        "aiImageEnhancementDescription": "Enhance image quality with a single click. Fix lighting, colors, and more.",
-        "creativeEditing": "Creative Editing",
-        "creativeEditingDescription": "Transform images with prompts. Add or remove elements with natural language."
+        "aiImageEnhancement": "Product Photo Enhancement",
+        "aiImageEnhancementDescription": "Instantly improve your product photos with professional lighting and color correction.",
+        "creativeEditing": "Smart Background Editing",
+        "creativeEditingDescription": "Remove clutter, change backgrounds, and enhance products with simple text instructions."
       }
     },
     "features": {
-      "header": "Powerful Features",
-      "title": "Everything You Need for Perfect Images",
-      "description": "Our AI-powered tools make professional-quality image editing accessible to everyone, no design skills required.",
-      "poweredBy": "Powered by advanced AI image processing models",
+      "header": "Everything Your Shop Needs",
+      "title": "Professional Product Photography Made Simple",
+      "description": "Transform your product photos into sales-driving images with our AI-powered tools. No expensive equipment or design skills required.",
+      "poweredBy": "Trusted by thousands of online shops and marketplaces",
+      "whyChooseOurPlatform": "Why Choose Our Platform",
+      "everythingYouNeedToBoostSales": "Everything You Need to Boost Sales",
+      "professionalGradeTools": "Professional-grade AI tools designed specifically for e-commerce businesses. Increase conversions with stunning product visuals that sell.",
       "items": {
-        "imageCreation": "Image Creation",
-        "imageCreationDescription": "Create stunning images with AI. No photoshoot required.",
-        "aiImageEnhancement": "AI Image Enhancement",
-        "aiImageEnhancementDescription": "Automatically enhance your photos with our AI model that improves colors, contrast, and sharpness.",
-        "textGuidedEditing": "Text-Guided Editing",
-        "textGuidedEditingDescription": "Use natural language to describe the changes you want. Our AI will transform your image accordingly.",
-        "styleTransfer": "Style Transfer",
-        "styleTransferDescription": "Apply artistic styles to your photos, transforming them into works of art inspired by famous painters.",
-        "backgroundReplacement": "Background Replacement",
-        "backgroundReplacementDescription": "Swap backgrounds with ease. Place your subjects in any environment with seamless integration.",
-        "smartRetouching": "Smart Retouching",
-        "smartRetouchingDescription": "Auto-retouch portraits with natural-looking skin smoothing, lighting adjustments, and more."
+        "imageCreation": "Product Photo Creation",
+        "imageCreationDescription": "Generate professional product photos from simple descriptions. Perfect for dropshipping and new products.",
+        "aiImageEnhancement": "Product Photo Enhancement",
+        "aiImageEnhancementDescription": "Automatically improve your product photos with professional lighting, colors, and sharpness to increase sales.",
+        "textGuidedEditing": "Smart Product Editing",
+        "textGuidedEditingDescription": "Use simple text commands to edit your products: 'remove background', 'enhance colors', 'add shadows'.",
+        "styleTransfer": "Seasonal & Themed Styling",
+        "styleTransferDescription": "Transform your products for different seasons, holidays, or brand aesthetics to boost engagement.",
+        "backgroundReplacement": "Professional Backgrounds",
+        "backgroundReplacementDescription": "Replace cluttered backgrounds with clean, professional ones that make your products shine.",
+        "smartRetouching": "Product Perfection",
+        "smartRetouchingDescription": "Remove scratches, enhance textures, and perfect product appearance automatically.",
+        "instantEnhancement": {
+          "title": "Instant Enhancement",
+          "description": "Transform ordinary product photos into professional-quality images in under 5 seconds. No design skills required."
+        },
+        "boostConversions": {
+          "title": "Boost Conversions",
+          "description": "Proven to increase sales by up to 30%. Better images lead to more clicks, views, and purchases."
+        },
+        "marketplaceReady": {
+          "title": "Marketplace Ready",
+          "description": "Create images that stand out on Amazon, eBay, Shopify, and all major e-commerce platforms."
+        },
+        "aiPoweredMagic": {
+          "title": "AI-Powered Magic",
+          "description": "Advanced AI removes backgrounds, enhances lighting, and improves product appeal automatically."
+        }
       }
     },
     "cta": {
-      "title": "Ready to Transform Your Images with AI?",
-      "description": "Join thousands of photographers, designers, and content creators who are elevating their work with our powerful AI image tools.",
-      "startNow": "Start Now",
-      "seeMoreExamples": "See More Examples"
+      "title": "Ready to {{highlightStart}}Boost Your Sales?{{highlightEnd}}",
+      "titleReady": "Ready to",
+      "titleBoost": "Boost Your Sales?",
+      "description": "Join thousands of businesses already using AI to create stunning product images that convert visitors into customers.",
+      "startNow": "Start Free Trial Now",
+      "seeMoreExamples": "View Pricing",
+      "higherConversions": "30% Higher Conversions",
+      "marketplaceReady": "Marketplace Ready"
     },
     "faq": {
       "badge": "FAQ",
       "title": "Frequently Asked Questions",
-      "description": "Everything you need to know about our image enhancement tools.",
+      "description": "Everything you need to know about creating professional product photos for your shop.",
       "stillHaveQuestions": "Still have questions?",
       "contactSupport": "Contact our support team",
       "questions": {
         "whatKindOfImages": {
-          "question": "What kind of images can I enhance with your tool?",
-          "answer": "Our AI tools work with most common image formats, including JPG, PNG, WebP, and more. You can enhance portraits, landscapes, product photos, art, and virtually any type of image you'd like to improve."
+          "question": "What kind of product photos can I create and enhance?",
+          "answer": "Our AI tools work with all types of products - electronics, clothing, jewelry, home goods, beauty products, and more. You can enhance existing product photos or create new ones from scratch using text descriptions."
         },
         "howDoesImageEnhancement": {
-          "question": "How does the image enhancement technology work?",
-          "answer": "Our technology uses advanced AI models trained on millions of images to understand what makes a high-quality photo. The AI can identify elements that need improvement — like lighting, color balance, sharpness, and detail — and enhances them automatically while preserving the natural look of your image."
+          "question": "How will this help my shop sell more products?",
+          "answer": "Professional product photos can increase conversion rates by up to 30%. Our AI technology automatically optimizes lighting, colors, and backgrounds to make your products look their best, helping customers make purchasing decisions faster and reducing returns."
         },
         "whatIsTextGuidedEditing": {
-          "question": "What is 'text-guided editing' and how does it work?",
-          "answer": "Text-guided editing allows you to describe changes you want to make to your image in plain language. For example, you might type 'make the sky more blue' or 'add flowers to the foreground,' and our AI will interpret your request and apply those changes to your image. It's like having a professional editor who understands exactly what you want."
+          "question": "How easy is it to edit my product photos?",
+          "answer": "Extremely easy! Just describe what you want in plain language. For example, type 'remove background and make it white' or 'enhance the product colors' and our AI will apply those changes instantly. No design skills or expensive software needed."
         },
         "howAccurateIsImageCreation": {
-          "question": "How realistic are the AI-generated images?",
-          "answer": "Our image creation technology produces highly realistic images based on your text descriptions. The AI has been trained on millions of high-quality images to understand visual concepts and composition. While results vary based on the complexity of your request, most users are amazed by the photorealistic quality and creative interpretations our system generates."
+          "question": "Can I create product photos without having the physical product?",
+          "answer": "Yes! Our AI can generate realistic product photos from text descriptions, perfect for dropshipping, pre-orders, or concept validation. The generated images are so realistic that many customers use them for their online stores before having physical inventory."
         },
         "canIUseCommercially": {
-          "question": "Can I use the enhanced images commercially?",
-          "answer": "Yes, all enhanced images remain your property and can be used for commercial purposes according to your rights to the original image. Our service does not claim any rights to your content."
+          "question": "Can I use these images to sell my products online?",
+          "answer": "Absolutely! All images you create or enhance remain your property and can be used for commercial purposes including online stores, marketplaces, social media, and advertising. Perfect for Amazon, Shopify, eBay, and other platforms."
         },
 
         "doINeedPowerfulComputer": {
@@ -497,47 +530,111 @@
       }
     },
     "ugcGenerator": {
-      "badge": "AI Content Creation",
-      "title": "Generate Professional UGC in Seconds",
-      "description": "Create stunning professional images and videos for your marketing campaigns without a photoshoot",
+      "badge": "Product Content Creation",
+      "title": "Generate Professional Product Content in Seconds",
+      "description": "Create stunning product photography and promotional videos that sell - no expensive photoshoot or equipment needed",
       "tabs": {
-        "images": "Professional Images",
-        "videos": "AI Videos"
+        "images": "Product Photos",
+        "videos": "Product Videos"
       },
       "prompt": {
-        "title": "Your Prompt",
-        "imagePrompt": "Girl, mid 30's. She's traveling the world and currently she is in madrid",
-        "videoPrompt": "move the camera around. Use realistic movement. Make her smile as having fun in her trip",
-        "videoFeature1": "Fully customizable scenes and transitions",
-        "imageFeature2": "No model required, just describe what you need",
-        "videoFeature2": "No video equipment or editing skills needed",
-        "tryImageGeneration": "Try Image Generation",
-        "tryVideoGeneration": "Try Video Generation"
+        "title": "Describe Your Product",
+        "imagePrompt": "Premium wireless earbuds in white, displayed on a modern marble surface with soft studio lighting",
+        "videoPrompt": "Slowly rotate the product 360 degrees. Show key features with smooth camera movements and professional lighting",
+        "videoFeature1": "Perfect for e-commerce listings and social media",
+        "imageFeature2": "No physical product needed, just describe it",
+        "videoFeature2": "No video production costs or technical skills required",
+        "tryImageGeneration": "Generate Product Photos",
+        "tryVideoGeneration": "Create Product Video"
       },
       "results": {
-        "imageTitle": "Generated Results",
-        "imageDescription": "Select the best variation for your needs",
+        "imageTitle": "Product Photos Generated",
+        "imageDescription": "Choose the best shots for your store",
         "selected": "Selected",
-        "videoTitle": "Generated Video",
-        "videoDescription": "High-quality AI-generated video for your marketing",
-        "videoCaption": "AI-generated product video",
-        "videoDetails": "5 seconds • HD quality"
+        "videoTitle": "Product Video Generated",
+        "videoDescription": "Professional marketing video ready for your store",
+        "videoCaption": "AI-generated product showcase",
+        "videoDetails": "5 seconds • Commercial quality"
       },
-      "footer": "Generate as many variations as you need to find the perfect fit for your brand"
+      "footer": "Create unlimited variations to test what converts best for your products",
+      "perfectForEcommerceListings": "Perfect for e-commerce listings"
+    },
+    "examples": {
+      "perfectForEcommerce": "Perfect for e-commerce listings and marketplace sales",
+      "productVideo": "Product Video",
+      "examplePrompt": "Example Prompt:",
+      "seeItInAction": "See It In Action",
+      "stunningTransformations": "Professional Product Photography Results",
+      "aiEnhanced": "AI Enhanced",
+      "howItWorks": "How It Works",
+      "steps": {
+        "upload": "Upload your product photo",
+        "select": "Choose enhancement type:",
+        "adjust": "Let AI work its magic",
+        "download": "Download your professional image"
+      },
+      "tabs": {
+        "imageCreation": "Product Photos",
+        "textEditing": "Background Editing",
+        "videoGeneration": "Product Videos"
+      },
+      "creation": {
+        "title": "AI Product Photography",
+        "description": "Generate professional product photos without expensive equipment or studio setups.",
+        "prompt": "A handcrafted ceramic coffee mug with an organic, textured glaze in deep blue tones, steam rising from the fresh coffee inside, placed on a rustic wooden table with scattered coffee beans around it, natural window lighting creating a cozy morning atmosphere, lifestyle product photography"
+      },
+      "editing": {
+        "title": "Background Replacement",
+        "description": "Transform cluttered or amateur backgrounds into clean, professional ones that make your products shine.",
+        "prompt": "Create a professional product photography look with a minimalist white background, subtle drop shadow beneath the subject, perfect highlight reflections, and ultra-sharp details that emphasize texture and form."
+      },
+      "video": {
+        "title": "Product Video Creation",
+        "description": "Turn static product images into engaging videos perfect for social media and marketing campaigns.",
+        "prompt": "Create a cinematic scene where someone slowly pours freshly brewed coffee from a French press into the cup. Emphasize the rich textures of the coffee, rising steam, warm natural lighting, and shallow depth of field for an atmospheric and intimate feel."
+      },
+      "items": {
+        "enhancement": {
+          "title": "Product Enhancement",
+          "description": "Transform basic product photos into professional marketplace-ready images"
+        },
+        "editing": {
+          "title": "Smart Background Editing",
+          "description": "Replace backgrounds and enhance product presentation with AI precision"
+        },
+        "removal": {
+          "title": "Imperfection Removal",
+          "description": "Remove scratches, dust, and unwanted elements to perfect your products"
+        },
+        "upscaling": {
+          "title": "Resolution Enhancement",
+          "description": "Upscale low-quality images to high-resolution marketplace standards"
+        },
+        "style": {
+          "title": "Seasonal Styling",
+          "description": "Adapt your products for different seasons, holidays, or marketing campaigns"
+        }
+      }
     },
     "pricing": {
-      "title": "Simple, Transparent Pricing",
-      "description": "Choose the perfect plan for your needs. Save with annual billing.",
+      "title": "Pricing Plans",
+      "free": "Free",
+      "simplePricing": "Simple Pricing",
+      "maximumResults": "Maximum Results",
+      "description": "Start free and scale as you grow. No hidden fees, no complex tiers. Just powerful AI tools that help you sell more.",
+      "pricingPlans": "Pricing Plans",
+      "simplePricingMaxResults": "Simple Pricing, Maximum Results",
       "billing": {
         "monthly": "Monthly",
         "annual": "Annual",
-        "saveLabel": "Save 17%"
+        "saveLabel": "Save 30%"
       },
       "mostPopular": "Most Popular",
+      "bestForGrowingShops": "Best for Growing Shops",
       "plans": {
         "starter": {
-          "name": "Starter",
-          "description": "Perfect for individuals with basic image editing needs",
+          "name": "Small Shop",
+          "description": "Perfect for new shops or those with a smaller product catalog",
           "monthlyPrice": "$15",
           "annualPrice": "$150",
           "period": {
@@ -545,16 +642,16 @@
             "annual": "/year"
           },
           "features": [
-            "10 AI image creations per month",
-            "10 AI image edits per month",
-            "2 video generations per month"
+            "10 product photo generations per month",
+            "10 product photo enhancements per month",
+            "2 product video creations per month"
           ],
-          "cta": "Get Started",
-          "disclaimer": "Cancel anytime"
+          "cta": "Start Small Shop Plan",
+          "disclaimer": "No commitment • Cancel anytime"
         },
         "pro": {
-          "name": "Pro",
-          "description": "For professionals who need regular image editing",
+          "name": "Growing Shop",
+          "description": "For established shops scaling their product photography needs",
           "monthlyPrice": "$40",
           "annualPrice": "$400",
           "period": {
@@ -562,18 +659,18 @@
             "annual": "/year"
           },
           "features": [
-            "70 AI image creations per month",
-            "70 AI image edits per month",
-            "25 video generations per month",
-            "High-resolution image output",
-            "Priority support"
+            "70 product photo generations per month",
+            "70 product photo enhancements per month",
+            "25 product video creations per month",
+            "High-resolution marketplace-ready images",
+            "Priority support for urgent orders"
           ],
-          "cta": "Subscribe Now",
-          "disclaimer": "Cancel anytime"
+          "cta": "Boost Your Sales Now",
+          "disclaimer": "Most popular choice"
         },
         "advanced": {
-          "name": "Advanced",
-          "description": "For teams and organizations with high volume needs",
+          "name": "Enterprise Shop",
+          "description": "For large catalogs and multi-brand businesses with high volume needs",
           "monthlyPrice": "$75",
           "annualPrice": "$750",
           "period": {
@@ -581,14 +678,14 @@
             "annual": "/year"
           },
           "features": [
-            "140 AI image creations per month",
-            "140 AI image edits per month",
-            "50 video generations per month",
-            "High-resolution image output",
-            "Priority support"
+            "140 product photo generations per month",
+            "140 product photo enhancements per month",
+            "50 product video creations per month",
+            "Ultra high-resolution commercial images",
+            "Dedicated account manager"
           ],
-          "cta": "Subscribe Now",
-          "disclaimer": "Cancel anytime",
+          "cta": "Scale Your Business",
+          "disclaimer": "Custom enterprise features available",
           "savePercent": "Save {{percent}}% with annual billing! 🎉"
         }
       }
@@ -619,70 +716,6 @@
           "content": "I can now generate unique images and transform them into short videos that keep our feed fresh and engaging. Our followers can't believe the quality of content we produce daily."
         }
       ]
-    },
-    "examples": {
-      "title": "See What's Possible",
-      "description": "Explore how our AI transforms images in different ways",
-      "items": {
-        "enhancement": {
-          "title": "AI Image Enhancement",
-          "description": "Our AI automatically improves the quality, lighting, and details of your images."
-        },
-        "editing": {
-          "title": "Text-Guided Editing",
-          "description": "Transform your images using simple text prompts to add, modify, or remove elements."
-        },
-        "removal": {
-          "title": "Object Removal",
-          "description": "Seamlessly remove unwanted objects or people from your photos with intelligent background filling."
-        },
-        "upscaling": {
-          "title": "High-Resolution Upscaling",
-          "description": "Transform low-resolution images into crystal-clear, high-definition photos."
-        },
-        "style": {
-          "title": "Style Transfer",
-          "description": "Apply artistic styles to your photos, transforming them into works of art."
-        }
-      },
-      "original": "Original",
-      "enhanced": "Enhanced",
-      "viewMore": "View More Examples",
-      "startNow": "Start Now",
-      "seeItInAction": "See It In Action",
-      "stunningTransformations": "Stunning Transformations",
-      "sliderDescription": "Drag the slider to see the before and after results of our AI image processing.",
-      "before": "Before",
-      "after": "After",
-      "aiEnhanced": "AI Enhanced",
-      "howItWorks": "How it works:",
-      "steps": {
-        "upload": "Upload your image or create a new one",
-        "select": "Select",
-        "mode": "mode",
-        "adjust": "Adjust settings if needed",
-        "download": "Download your transformed image or video"
-      },
-      "tabs": {
-        "imageCreation": "Image Creation",
-        "textEditing": "Text Editing",
-        "videoGeneration": "Video Generation"
-      },
-      "creation": {
-        "title": "AI Image Creation",
-        "description": "Our AI automatically creates stunning images based on your text prompts.",
-        "prompt": "A handcrafted ceramic coffee mug with an organic, textured glaze in deep blue tones, steam rising from the fresh coffee inside, placed on a rustic wooden table with scattered coffee beans around it, natural window lighting creating a cozy morning atmosphere, lifestyle product photography"
-      },
-      "editing": {
-        "title": "Text-Guided Editing",
-        "description": "Transform your images using simple text prompts to add, modify, or remove elements.",
-        "prompt": "Create a professional product photography look with a minimalist white background, subtle drop shadow beneath the subject, perfect highlight reflections, and ultra-sharp details that emphasize texture and form."
-      },
-      "video": {
-        "title": "Video Generation",
-        "description": "Generate stunning videos based on your text prompts.",
-        "prompt": "Create a cinematic scene where someone slowly pours freshly brewed coffee from a French press into the cup. Emphasize the rich textures of the coffee, rising steam, warm natural lighting, and shallow depth of field for an atmospheric and intimate feel."
-      }
     }
   },
   "checkout": {

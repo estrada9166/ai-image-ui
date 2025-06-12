@@ -326,6 +326,7 @@
     "onceYouClickTheLink": "Una vez confirmado, podrás iniciar sesión en tu cuenta"
   },
   "videoCreation": {
+    "betterResultsDisclaimer": "Para obtener mejores resultados y un video más preciso, recomendamos usar solo 1 imagen",
     "emptyState": {
       "title": "Añade una Imagen para Comenzar",
       "description": "Selecciona o sube una imagen para transformarla con edición de IA",
@@ -377,29 +378,37 @@
       "examples": "Ejemplos",
       "testimonials": "Testimonios",
       "faq": "Preguntas Frecuentes",
-      "pricing": "Precios"
+      "pricing": "Precios",
+      "description": "Transforma las imágenes de tus productos con herramientas de mejora impulsadas por IA diseñadas específicamente para el éxito del comercio electrónico.",
+      "boostSales": "Aumenta las ventas en un 30% en promedio",
+      "commercialLicense": "Licencia comercial incluida",
+      "copyright": "Todos los derechos reservados. Hecho para propietarios de tiendas que quieren vender más.",
+      "contactEmail": "contact@newpix.ai",
+      "terms": "Términos"
     },
     "navbar": {
-      "logo": "Newpix.ai",
+      "logo": "Newpix",
       "features": "Características",
       "ugcCreator": "Creador UGC",
       "examples": "Ejemplos",
       "pricing": "Precios",
       "faq": "Preguntas Frecuentes",
       "signIn": "Iniciar Sesión",
-      "getStarted": "Comenzar"
+      "getStarted": "Prueba Gratis"
     },
     "hero": {
-      "badge": "Magia de Imágenes con IA",
-      "title": "Transforma tus Imágenes con Magia de IA",
-      "description": "Mejora y reimagina tus fotos con tecnología de IA de vanguardia. Convierte imágenes ordinarias en extraordinarias obras de arte en segundos.",
-      "startNow": "Comenzar Ahora",
+      "badge": "Fotografía de Productos con IA",
+      "title": "Transforma las Imágenes de tus Productos en",
+      "title2": "Imanes de Ventas",
+      "description": "Mejora de imágenes impulsada por IA que aumenta las conversiones en un 30%. Crea fotos profesionales de productos y visuales de marketing en segundos.",
+      "startNow": "Pruébalo Gratis - Sin Tarjeta de Crédito",
       "viewExamples": "Ver Ejemplos",
+      "getStarted": "Pruébalo Gratis - Sin Tarjeta de Crédito",
       "stats": {
-        "imagesEnhanced": "10K+",
-        "imagesEnhancedLabel": "Imágenes Mejoradas",
-        "happyUsers": "1K+",
-        "happyUsersLabel": "Usuarios Satisfechos"
+        "imagesEnhanced": "50K+",
+        "imagesEnhancedLabel": "Fotos de Productos Mejoradas",
+        "happyUsers": "2.5K+",
+        "happyUsersLabel": "Propietarios de Tiendas"
       },
       "showcase": {
         "imageEnhancement": "Mejora de Imágenes",
@@ -431,10 +440,13 @@
       }
     },
     "features": {
-      "header": "Características Potentes",
-      "title": "Todo lo que Necesitas para Imágenes Perfectas",
-      "description": "Nuestras herramientas impulsadas por IA hacen que la edición de imágenes de calidad profesional sea accesible para todos, sin necesidad de habilidades de diseño.",
-      "poweredBy": "Potenciado por modelos avanzados de procesamiento de imágenes de IA",
+      "header": "Todo lo que Tu Tienda Necesita",
+      "title": "Fotografía de Productos Profesional Simplificada",
+      "description": "Transforma las fotos de tus productos en imágenes que impulsan las ventas con nuestras herramientas de IA. Sin equipos costosos ni habilidades de diseño.",
+      "poweredBy": "Confiado por miles de tiendas online y marketplaces",
+      "whyChooseOurPlatform": "Por Qué Elegir Nuestra Plataforma",
+      "everythingYouNeedToBoostSales": "Todo lo que Necesitas para Impulsar las Ventas",
+      "professionalGradeTools": "Herramientas de IA de grado profesional diseñadas específicamente para negocios de comercio electrónico. Aumenta las conversiones con visuales de productos impresionantes que venden.",
       "items": {
         "aiImageEnhancement": "Mejora de Imágenes con IA",
         "aiImageEnhancementDescription": "Mejora automáticamente tus fotos con nuestro modelo de IA que perfecciona colores, contraste y nitidez.",
@@ -451,14 +463,34 @@
         "smartRetouching": "Retoque Inteligente",
         "smartRetouchingDescription": "Auto-retoca retratos con suavizado de piel de aspecto natural, ajustes de iluminación y más.",
         "imageCreation": "Creación de Imágenes",
-        "imageCreationDescription": "Crea imágenes impresionantes con IA. No se requiere sesión fotográfica."
+        "imageCreationDescription": "Crea imágenes impresionantes con IA. No se requiere sesión fotográfica.",
+        "instantEnhancement": {
+          "title": "Mejora Instantánea",
+          "description": "Transforma fotos ordinarias de productos en imágenes de calidad profesional en menos de 5 segundos. No se requieren habilidades de diseño."
+        },
+        "boostConversions": {
+          "title": "Impulsa las Conversiones",
+          "description": "Comprobado que aumenta las ventas hasta un 30%. Mejores imágenes llevan a más clics, vistas y compras."
+        },
+        "marketplaceReady": {
+          "title": "Listo para Marketplace",
+          "description": "Crea imágenes que destacan en Amazon, eBay, Shopify y todas las principales plataformas de comercio electrónico."
+        },
+        "aiPoweredMagic": {
+          "title": "Magia Impulsada por IA",
+          "description": "IA avanzada elimina fondos, mejora la iluminación y mejora el atractivo del producto automáticamente."
+        }
       }
     },
     "cta": {
-      "title": "¿Listo para Transformar tus Imágenes con IA?",
-      "description": "Únete a miles de fotógrafos, diseñadores y creadores de contenido que están elevando su trabajo con nuestras potentes herramientas de imágenes de IA.",
-      "startNow": "Comenzar Ahora",
-      "seeMoreExamples": "Ver Más Ejemplos"
+      "title": "¿Listo para {{highlightStart}}Impulsar tus Ventas?{{highlightEnd}}",
+      "titleReady": "¿Listo para",
+      "titleBoost": "Impulsar tus Ventas?",
+      "description": "Únete a miles de empresas que ya están usando IA para crear imágenes impresionantes de productos que convierten visitantes en clientes.",
+      "startNow": "Comenzar Prueba Gratuita Ahora",
+      "seeMoreExamples": "Ver Precios",
+      "higherConversions": "30% Más Conversiones",
+      "marketplaceReady": "Listo para Marketplace"
     },
     "faq": {
       "badge": "FAQ",
@@ -536,21 +568,85 @@
         "videoCaption": "Video de producto generado por IA",
         "videoDetails": "5 segundos • Calidad HD"
       },
-      "footer": "Genera tantas variaciones como necesites para encontrar el ajuste perfecto para tu marca"
+      "footer": "Genera tantas variaciones como necesites para encontrar el ajuste perfecto para tu marca",
+      "perfectForEcommerceListings": "Perfecto para listados de comercio electrónico"
+    },
+    "examples": {
+      "perfectForEcommerce": "Perfecto para listados de comercio electrónico y ventas en marketplace",
+      "productVideo": "Video de Producto",
+      "examplePrompt": "Ejemplo de Prompt:",
+      "seeItInAction": "Míralo en Acción",
+      "stunningTransformations": "Resultados de Fotografía Profesional de Productos",
+      "aiEnhanced": "Mejorado con IA",
+      "howItWorks": "Cómo Funciona",
+      "steps": {
+        "upload": "Sube tu foto de producto",
+        "select": "Elige el tipo de mejora:",
+        "adjust": "Deja que la IA haga su magia",
+        "download": "Descarga tu imagen profesional"
+      },
+      "tabs": {
+        "imageCreation": "Fotos de Productos",
+        "textEditing": "Edición de Fondo",
+        "videoGeneration": "Videos de Productos"
+      },
+      "creation": {
+        "title": "Fotografía de Productos con IA",
+        "description": "Genera fotos profesionales de productos sin equipos costosos o configuraciones de estudio.",
+        "prompt": "Una taza de café de cerámica hecha a mano con un esmalte texturizado orgánico en tonos azul profundo, vapor elevándose del café fresco en su interior, colocada sobre una mesa rústica de madera con granos de café esparcidos alrededor, iluminación natural de ventana creando una acogedora atmósfera matutina, fotografía de producto de estilo de vida"
+      },
+      "editing": {
+        "title": "Reemplazo de Fondo",
+        "description": "Transforma fondos desordenados o amateur en fondos limpios y profesionales que hacen brillar tus productos.",
+        "prompt": "Crea un aspecto de fotografía de producto profesional con un fondo blanco minimalista, sutil sombra debajo del sujeto, reflejos perfectos de luz y detalles ultra nítidos que enfatizan la textura y la forma."
+      },
+      "video": {
+        "title": "Creación de Videos de Productos",
+        "description": "Convierte imágenes estáticas de productos en videos atractivos perfectos para redes sociales y campañas de marketing.",
+        "prompt": "Crea una escena cinematográfica donde alguien vierte lentamente café recién preparado de una prensa francesa a la taza. Enfatiza las ricas texturas del café, el vapor que se eleva, la cálida iluminación natural y poca profundidad de campo para una sensación atmosférica e íntima."
+      },
+      "items": {
+        "enhancement": {
+          "title": "Mejora de Productos",
+          "description": "Transforma fotos básicas de productos en imágenes profesionales listas para marketplace"
+        },
+        "editing": {
+          "title": "Edición Inteligente de Fondo",
+          "description": "Reemplaza fondos y mejora la presentación del producto con precisión de IA"
+        },
+        "removal": {
+          "title": "Eliminación de Imperfecciones",
+          "description": "Elimina rayones, polvo y elementos no deseados para perfeccionar tus productos"
+        },
+        "upscaling": {
+          "title": "Mejora de Resolución",
+          "description": "Aumenta la escala de imágenes de baja calidad a estándares de alta resolución para marketplace"
+        },
+        "style": {
+          "title": "Estilo Estacional",
+          "description": "Adapta tus productos para diferentes temporadas, festividades o campañas de marketing"
+        }
+      }
     },
     "pricing": {
-      "title": "Precios Simples y Transparentes",
-      "description": "Elige el plan perfecto para tus necesidades. Ahorra con facturación anual.",
+      "title": "Precios",
+      "free": "Gratis",
+      "simplePricing": "Precios Simples",
+      "maximumResults": "Resultados Máximos",
+      "description": "Comienza gratis y escala a medida que crezcas. Sin tarifas ocultas, sin niveles complejos. Solo herramientas de IA poderosas que te ayudan a vender más.",
+      "pricingPlans": "Planes de Precios",
+      "simplePricingMaxResults": "Precios Simples, Resultados Máximos",
       "billing": {
         "monthly": "Mensual",
         "annual": "Anual",
-        "saveLabel": "Ahorra 17%"
+        "saveLabel": "Ahorra 30%"
       },
       "mostPopular": "Más Popular",
+      "bestForGrowingShops": "Mejor para Tiendas en Crecimiento",
       "plans": {
         "starter": {
-          "name": "Starter",
-          "description": "Perfecto para individuos con necesidades básicas de edición de imágenes",
+          "name": "Tienda Pequeña",
+          "description": "Perfecto para nuevas tiendas o aquellas con un catálogo de productos más pequeño",
           "monthlyPrice": "$15",
           "annualPrice": "$150",
           "period": {
@@ -558,16 +654,16 @@
             "annual": "/año"
           },
           "features": [
-            "10 creaciones de imágenes AI por mes",
-            "10 ediciones de imágenes AI por mes",
-            "2 generaciones de video por mes"
+            "10 generaciones de fotos de productos por mes",
+            "10 mejoras de fotos de productos por mes",
+            "2 creaciones de videos de productos por mes"
           ],
-          "cta": "Comenzar",
-          "disclaimer": "Cancela cuando quieras"
+          "cta": "Comenzar Plan Tienda Pequeña",
+          "disclaimer": "Sin compromiso • Cancela cuando quieras"
         },
         "pro": {
-          "name": "Pro",
-          "description": "Para profesionales que necesitan edición regular de imágenes",
+          "name": "Tienda en Crecimiento",
+          "description": "Para tiendas establecidas que escalan sus necesidades de fotografía de productos",
           "monthlyPrice": "$40",
           "annualPrice": "$400",
           "period": {
@@ -575,18 +671,18 @@
             "annual": "/año"
           },
           "features": [
-            "70 creaciones de imágenes AI por mes",
-            "70 ediciones de imágenes AI por mes",
-            "25 generaciones de video por mes",
-            "Crea múltiples imágenes de un solo prompt",
-            "Soporte prioritario"
+            "70 generaciones de fotos de productos por mes",
+            "70 mejoras de fotos de productos por mes",
+            "25 creaciones de videos de productos por mes",
+            "Imágenes de alta resolución listas para marketplace",
+            "Soporte prioritario para pedidos urgentes"
           ],
-          "cta": "Suscribirse Ahora",
-          "disclaimer": "Cancela cuando quieras"
+          "cta": "Impulsa tus Ventas Ahora",
+          "disclaimer": "Opción más popular"
         },
         "advanced": {
-          "name": "Avanzado",
-          "description": "Para equipos y organizaciones con necesidades de alto volumen",
+          "name": "Tienda Empresarial",
+          "description": "Para catálogos grandes y negocios multi-marca con necesidades de alto volumen",
           "monthlyPrice": "$75",
           "annualPrice": "$750",
           "period": {
@@ -594,14 +690,14 @@
             "annual": "/año"
           },
           "features": [
-            "140 creaciones de imágenes AI por mes",
-            "140 ediciones de imágenes AI por mes",
-            "50 generaciones de video por mes",
-            "Crea múltiples imágenes de un solo prompt",
-            "Soporte prioritario"
+            "140 generaciones de fotos de productos por mes",
+            "140 mejoras de fotos de productos por mes",
+            "50 creaciones de videos de productos por mes",
+            "Imágenes comerciales de ultra alta resolución",
+            "Gerente de cuenta dedicado"
           ],
-          "cta": "Suscribirse Ahora",
-          "disclaimer": "Cancela cuando quieras",
+          "cta": "Escala tu Negocio",
+          "disclaimer": "Características empresariales personalizadas disponibles",
           "savePercent": "¡Ahorra {{percent}}% con facturación anual! 🎉"
         }
       }
@@ -654,70 +750,6 @@
           "content": "Ahora puedo generar imágenes únicas y transformarlas en videos cortos que mantienen nuestro feed fresco y atractivo. Nuestros seguidores no pueden creer la calidad del contenido que producimos diariamente."
         }
       ]
-    },
-    "examples": {
-      "title": "Descubre Lo Que Es Posible",
-      "description": "Explora cómo nuestra IA transforma imágenes de diferentes maneras",
-      "items": {
-        "enhancement": {
-          "title": "Mejora de Imágenes con IA",
-          "description": "Nuestra IA mejora automáticamente la calidad, iluminación y detalles de tus imágenes."
-        },
-        "editing": {
-          "title": "Edición Guiada por Texto",
-          "description": "Transforma tus imágenes usando simples instrucciones de texto para añadir, modificar o eliminar elementos."
-        },
-        "removal": {
-          "title": "Eliminación de Objetos",
-          "description": "Elimina objetos o personas no deseadas de tus fotos sin problemas con relleno inteligente de fondo."
-        },
-        "upscaling": {
-          "title": "Ampliación de Alta Resolución",
-          "description": "Transforma imágenes de baja resolución en fotos nítidas y de alta definición."
-        },
-        "style": {
-          "title": "Transferencia de Estilo",
-          "description": "Aplica estilos artísticos a tus fotos, transformándolas en obras de arte."
-        }
-      },
-      "original": "Original",
-      "enhanced": "Mejorada",
-      "viewMore": "Ver Más Ejemplos",
-      "startNow": "Comenzar Ahora",
-      "seeItInAction": "Véalo en acción",
-      "stunningTransformations": "Transformaciones Impresionantes",
-      "sliderDescription": "Arrastra el deslizador para ver los resultados antes y después de nuestro procesamiento de imágenes con IA.",
-      "before": "Antes",
-      "after": "Después",
-      "aiEnhanced": "Mejorado con IA",
-      "howItWorks": "Cómo funciona:",
-      "steps": {
-        "upload": "Sube tu imagen o crea una nueva",
-        "select": "Selecciona",
-        "mode": "modo",
-        "adjust": "Ajusta la configuración si es necesario",
-        "download": "Descarga tu imagen o video transformado"
-      },
-      "tabs": {
-        "imageCreation": "Creación de Imágenes",
-        "textEditing": "Edición con Texto",
-        "videoGeneration": "Generación de Video"
-      },
-      "creation": {
-        "title": "Creación de Imágenes IA",
-        "description": "Nuestra IA crea automáticamente imágenes impresionantes basadas en tus descripciones textuales.",
-        "prompt": "Una taza de café de cerámica hecha a mano con un esmalte texturizado orgánico en tonos azul profundo, vapor elevándose del café fresco en su interior, colocada sobre una mesa rústica de madera con granos de café esparcidos alrededor, iluminación natural de ventana creando una acogedora atmósfera matutina, fotografía de producto de estilo de vida"
-      },
-      "editing": {
-        "title": "Edición Guiada por Texto",
-        "description": "Transforma tus imágenes usando simples instrucciones textuales para añadir, modificar o eliminar elementos.",
-        "prompt": "Crea un aspecto de fotografía de producto profesional con un fondo blanco minimalista, sutil sombra debajo del sujeto, reflejos perfectos de luz y detalles ultra nítidos que enfatizan la textura y la forma."
-      },
-      "video": {
-        "title": "Generación de Video",
-        "description": "Genera videos impresionantes basados en tus descripciones textuales.",
-        "prompt": "Crea una escena cinematográfica donde alguien vierte lentamente café recién preparado de una prensa francesa a la taza. Enfatiza las ricas texturas del café, el vapor que se eleva, la cálida iluminación natural y poca profundidad de campo para una sensación atmosférica e íntima."
-      }
     }
   },
   "checkout": {

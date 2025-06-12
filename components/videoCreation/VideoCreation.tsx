@@ -11,6 +11,7 @@ import {
   X,
   Plus,
   Grid,
+  InfoIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -699,6 +700,16 @@ export default function VideoCreation() {
                   </span>
                   {t("videoCreation.images")} {t("common.selected", "selected")}
                 </div>
+              </div>
+            )}
+
+            {(imageData ? 1 : 0) + selectedImages.length + previewUrls.length >
+              1 && (
+              <div className="text-xs text-gray-500 dark:text-gray-400 text-center px-4 py-2 bg-gradient-to-r from-purple-50/50 to-indigo-50/50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-lg border border-purple-100/30 dark:border-purple-800/30 shadow-inner">
+                <span className="flex items-center justify-center gap-1.5">
+                  <InfoIcon className="h-3.5 w-3.5 text-purple-500" />
+                  <span>{t("videoCreation.betterResultsDisclaimer")}</span>
+                </span>
               </div>
             )}
 

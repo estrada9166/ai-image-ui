@@ -58,7 +58,7 @@ export default function Navbar() {
                 </Button>
               </Link>
               <Link href="/signup">
-                <Button className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white">
+                <Button className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-semibold">
                   {t("landing.navbar.getStarted")}
                 </Button>
               </Link>
@@ -98,7 +98,7 @@ export default function Navbar() {
                 </Button>
               </Link>
               <Link href="/signup" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button className="w-full justify-center bg-gradient-to-r from-indigo-600 to-violet-600">
+                <Button className="w-full justify-center bg-gradient-to-r from-indigo-600 to-blue-600 font-semibold">
                   {t("landing.navbar.getStarted")}
                 </Button>
               </Link>
