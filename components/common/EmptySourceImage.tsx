@@ -26,8 +26,8 @@ export const EmptySourceImage = ({
   const { data: usageData } = useUsageQuery();
 
   useEffect(() => {
-    const imageEditUsage = usageData?.me?.planFeaturesUsage?.editImage;
-    if (!imageEditUsage || imageEditUsage.used >= imageEditUsage.limit) {
+    const imagesUsage = usageData?.me?.planFeaturesUsage?.images;
+    if (!imagesUsage || imagesUsage.used >= imagesUsage.limit) {
       setCanUploadImage(false);
     } else {
       setCanUploadImage(true);

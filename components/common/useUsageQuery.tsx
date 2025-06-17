@@ -10,15 +10,11 @@ const useUsageQueryDocument = graphql(/* GraphQL */ `
         planId
         startDate
         endDate
-        imageCreation {
+        images {
           limit
           used
         }
-        editImage {
-          limit
-          used
-        }
-        videoCreation {
+        videos {
           limit
           used
         }

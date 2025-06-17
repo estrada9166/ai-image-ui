@@ -238,9 +238,8 @@
   },
   "navRemainingPlan": {
     "yourPlanUsage": "Uso de Tu Plan",
-    "imageCreation": "Creación de Imágenes",
-    "imageEdit": "Edición de Imágenes",
-    "videoCreation": "Creación de Videos",
+    "images": "Imágenes",
+    "videos": "Videos",
     "left": "Restantes",
     "resetsIn": "Se restablece en {{date}}",
     "upgrade": "Mejorar Plan"
@@ -654,8 +653,7 @@
             "annual": "/año"
           },
           "features": [
-            "10 generaciones de fotos de productos por mes",
-            "10 mejoras de fotos de productos por mes",
+            "70 generaciones de fotos de productos por mes (incluye creación y mejora)",
             "2 creaciones de videos de productos por mes"
           ],
           "cta": "Comenzar Plan Tienda Pequeña",
@@ -671,11 +669,9 @@
             "annual": "/año"
           },
           "features": [
-            "70 generaciones de fotos de productos por mes",
-            "70 mejoras de fotos de productos por mes",
+            "140 generaciones de fotos de productos por mes (incluye creación y mejora)",
             "25 creaciones de videos de productos por mes",
-            "Imágenes de alta resolución listas para marketplace",
-            "Soporte prioritario para pedidos urgentes"
+            "Imágenes de alta resolución listas para marketplace"
           ],
           "cta": "Impulsa tus Ventas Ahora",
           "disclaimer": "Opción más popular"
@@ -690,11 +686,9 @@
             "annual": "/año"
           },
           "features": [
-            "140 generaciones de fotos de productos por mes",
-            "140 mejoras de fotos de productos por mes",
+            "280 generaciones de fotos de productos por mes (incluye creación y mejora)",
             "50 creaciones de videos de productos por mes",
-            "Imágenes comerciales de ultra alta resolución",
-            "Gerente de cuenta dedicado"
+            "Imágenes de alta resolución listas para marketplace"
           ],
           "cta": "Escala tu Negocio",
           "disclaimer": "Características empresariales personalizadas disponibles",

@@ -87,11 +87,8 @@ export default function VideoCreation() {
     useUsageQuery();
 
   useEffect(() => {
-    const imageCreationUsage = usageData?.me?.planFeaturesUsage?.videoCreation;
-    if (
-      !imageCreationUsage ||
-      imageCreationUsage.used >= imageCreationUsage.limit
-    ) {
+    const videosUsage = usageData?.me?.planFeaturesUsage?.videos;
+    if (!videosUsage || videosUsage.used >= videosUsage.limit) {
       setCanGenerateVideo(false);
     } else {
       setCanGenerateVideo(true);

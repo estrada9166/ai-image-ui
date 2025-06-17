@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { ImageIcon, VideoIcon, CalendarIcon, CropIcon } from "lucide-react";
+import { ImageIcon, VideoIcon, CalendarIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { format } from "date-fns";
@@ -45,24 +45,16 @@ export function NavRemainingPlan() {
             icon: (
               <ImageIcon className="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-500" />
             ),
-            label: "imageCreation",
-            data: usage?.imageCreation,
+            label: "images",
+            data: usage?.images,
             link: "/dashboard/create/image",
-          },
-          {
-            icon: (
-              <CropIcon className="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-500" />
-            ),
-            label: "imageEdit",
-            data: usage?.editImage,
-            link: "/dashboard/edit/image",
           },
           {
             icon: (
               <VideoIcon className="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-500" />
             ),
-            label: "videoCreation",
-            data: usage?.videoCreation,
+            label: "videos",
+            data: usage?.videos,
             link: "/dashboard/create/video",
           },
         ].map((item, index) => (

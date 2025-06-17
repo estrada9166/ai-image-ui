@@ -237,9 +237,8 @@
   },
   "navRemainingPlan": {
     "yourPlanUsage": "Your Plan Usage",
-    "imageCreation": "Image Creation",
-    "imageEdit": "Image Edit",
-    "videoCreation": "Video Creation",
+    "images": "Images",
+    "videos": "Videos",
     "left": "Left",
     "resetsIn": "Resets in {{date}}",
     "upgrade": "Upgrade Plan"
@@ -642,9 +641,8 @@
             "annual": "/year"
           },
           "features": [
-            "10 product photo generations per month",
-            "10 product photo enhancements per month",
-            "2 product video creations per month"
+            "70 image generations per month (includes creation and enhancement)",
+            "2 video creations per month"
           ],
           "cta": "Start Small Shop Plan",
           "disclaimer": "No commitment • Cancel anytime"
@@ -659,11 +657,9 @@
             "annual": "/year"
           },
           "features": [
-            "70 product photo generations per month",
-            "70 product photo enhancements per month",
-            "25 product video creations per month",
-            "High-resolution marketplace-ready images",
-            "Priority support for urgent orders"
+            "140 image generations per month (includes creation and enhancement)",
+            "25 video creations per month",
+            "High-resolution marketplace-ready images"
           ],
           "cta": "Boost Your Sales Now",
           "disclaimer": "Most popular choice"
@@ -678,11 +674,9 @@
             "annual": "/year"
           },
           "features": [
-            "140 product photo generations per month",
-            "140 product photo enhancements per month",
-            "50 product video creations per month",
-            "Ultra high-resolution commercial images",
-            "Dedicated account manager"
+            "280 image generations per month (includes creation and enhancement)",
+            "50 video creations per month",
+            "High-resolution marketplace-ready images"
           ],
           "cta": "Scale Your Business",
           "disclaimer": "Custom enterprise features available",

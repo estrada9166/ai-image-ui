@@ -77,11 +77,8 @@ export default function ImageCreation() {
   const [, generateImage] = useMutation(ImageCreationMutation);
 
   useEffect(() => {
-    const imageCreationUsage = usageData?.me?.planFeaturesUsage?.imageCreation;
-    if (
-      !imageCreationUsage ||
-      imageCreationUsage.used >= imageCreationUsage.limit
-    ) {
+    const imagesUsage = usageData?.me?.planFeaturesUsage?.images;
+    if (!imagesUsage || imagesUsage.used >= imagesUsage.limit) {
       setCanGenerateImage(false);
     } else {
       setCanGenerateImage(true);

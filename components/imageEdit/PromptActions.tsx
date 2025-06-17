@@ -20,8 +20,8 @@ export const PromptActions = ({
   const { data: usageData } = useUsageQuery();
 
   useEffect(() => {
-    const editImageUsage = usageData?.me?.planFeaturesUsage?.editImage;
-    if (!editImageUsage || editImageUsage.used >= editImageUsage.limit) {
+    const imagesUsage = usageData?.me?.planFeaturesUsage?.images;
+    if (!imagesUsage || imagesUsage.used >= imagesUsage.limit) {
       setCanEditImage(false);
     } else {
       setCanEditImage(true);
