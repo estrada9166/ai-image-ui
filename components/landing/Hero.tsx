@@ -172,24 +172,6 @@ export default function Hero() {
                         <Wand2 className="w-3 h-3 mr-1" />
                         {t("landing.hero.showcase.aiGenerated")}
                       </div>
-                      {currentExample.prompt && (
-                        <div className="absolute bottom-3 left-3 right-3 bg-black/60 text-white px-3 py-1.5 text-xs rounded-lg backdrop-blur-sm group">
-                          <span className="inline-block">
-                            {currentExample.prompt.length > 65 ? (
-                              <span className="group-hover:hidden">
-                                {currentExample.prompt.substring(0, 65)}...
-                              </span>
-                            ) : (
-                              currentExample.prompt
-                            )}
-                            {currentExample.prompt.length > 65 && (
-                              <span className="hidden group-hover:inline">
-                                {currentExample.prompt}
-                              </span>
-                            )}
-                          </span>
-                        </div>
-                      )}
                     </div>
                   )}
                 </div>
