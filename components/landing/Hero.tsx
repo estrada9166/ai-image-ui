@@ -21,25 +21,16 @@ export default function Hero() {
   // Showcase examples data - updated for product photography
   const showcaseExamples = [
     {
-      id: "product-creation",
-      title: t("landing.hero.showcase.imageCreation"),
-      description: t("landing.hero.showcase.imageCreationDescription"),
-      image: "/examples/hero/image-creation.png",
-      prompt: t("landing.hero.showcase.imageCreationPrompt"),
-    },
-    {
       id: "background-editing",
       title: t("landing.hero.showcase.creativeEditing"),
       description: t("landing.hero.showcase.creativeEditingDescription"),
       image: "/examples/hero/editing.png",
-      prompt: t("landing.hero.showcase.creativeEditingPrompt"),
     },
     {
       id: "lifestyle-creation",
       title: t("landing.hero.showcase.ugcCreation"),
       description: t("landing.hero.showcase.ugcCreationDescription"),
       image: "/examples/hero/ugc.png",
-      prompt: t("landing.hero.showcase.ugcCreationPrompt"),
       isUGC: true,
     },
     {
