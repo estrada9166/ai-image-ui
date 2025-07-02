@@ -183,12 +183,15 @@ export default function ImageCreation() {
     }
   };
 
-  const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    if (!isNaN(value) && value >= 18 && value <= 99) {
-      setAge(value);
+  const handleAgeChange = (value: string) => {
+    const numericValue = parseInt(value);
+    if (!isNaN(numericValue)) {
+      setAge(numericValue);
     }
   };
+
+  // Generate age options from 18 to 99
+  const ageOptions = Array.from({ length: 82 }, (_, i) => i + 18);
 
   return (
     <div className="max-w-5xl mx-auto space-y-8">
@@ -219,7 +222,11 @@ export default function ImageCreation() {
                     onValueChange={handleImageTypeChange}
                   >
                     <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all max-w-xs">
-                      <SelectValue placeholder="Select creation type" />
+                      <SelectValue
+                        placeholder={t(
+                          "imageCreation.placeholders.selectCreationType"
+                        )}
+                      />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value={ImageCreationTypeEnum.AiModel}>
@@ -247,7 +254,11 @@ export default function ImageCreation() {
                           }
                         >
                           <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
-                            <SelectValue placeholder="Camera type" />
+                            <SelectValue
+                              placeholder={t(
+                                "imageCreation.placeholders.selectCameraType"
+                              )}
+                            />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value={CameraOptionsEnum.Selfie}>
@@ -268,7 +279,11 @@ export default function ImageCreation() {
                           onValueChange={setGender as (value: string) => void}
                         >
                           <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
-                            <SelectValue placeholder="Select gender" />
+                            <SelectValue
+                              placeholder={t(
+                                "imageCreation.placeholders.selectGender"
+                              )}
+                            />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value={GenderOptionsEnum.Male}>
@@ -284,15 +299,28 @@ export default function ImageCreation() {
                         <label className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-1 block">
                           {t("imageCreation.age")}
                         </label>
-                        <input
-                          type="number"
-                          min="18"
-                          max="99"
-                          value={age}
-                          onChange={handleAgeChange}
-                          className="w-full px-3 py-2 border border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-                          placeholder="25"
-                        />
+                        <Select
+                          value={age.toString()}
+                          onValueChange={handleAgeChange}
+                        >
+                          <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
+                            <SelectValue
+                              placeholder={t(
+                                "imageCreation.placeholders.selectAge"
+                              )}
+                            />
+                          </SelectTrigger>
+                          <SelectContent className="max-h-60">
+                            {ageOptions.map((ageOption) => (
+                              <SelectItem
+                                key={ageOption}
+                                value={ageOption.toString()}
+                              >
+                                {ageOption}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </div>
                     </>
                   ) : (
@@ -305,7 +333,11 @@ export default function ImageCreation() {
                         onValueChange={setModel as (value: string) => void}
                       >
                         <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
-                          <SelectValue placeholder="Select model" />
+                          <SelectValue
+                            placeholder={t(
+                              "imageCreation.placeholders.selectModel"
+                            )}
+                          />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value={AiModelOptionsEnum.Model_1}>
@@ -329,7 +361,11 @@ export default function ImageCreation() {
                       onValueChange={setAspectRatio as (value: string) => void}
                     >
                       <SelectTrigger className="border-purple-100 dark:border-purple-900/50 focus:border-purple-300 focus:ring-purple-500 text-sm rounded-lg shadow-sm hover:border-purple-200 transition-all">
-                        <SelectValue placeholder="Aspect ratio" />
+                        <SelectValue
+                          placeholder={t(
+                            "imageCreation.placeholders.selectAspectRatio"
+                          )}
+                        />
                       </SelectTrigger>
                       <SelectContent>
                         {aspectRatios.map((ratio) => (

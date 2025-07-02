@@ -149,7 +149,15 @@
     "promptIdeas": "Prompt Ideas",
     "clear": "Clear",
     "generatingMagic": "Generating Magic...",
-    "yourCreations": "Your Creations"
+    "yourCreations": "Your Creations",
+    "placeholders": {
+      "selectCreationType": "Select creation type",
+      "selectGender": "Select gender",
+      "selectAge": "Select age",
+      "selectModel": "Select model",
+      "selectAspectRatio": "Select aspect ratio",
+      "selectCameraType": "Select camera type"
+    }
   },
   "imageCreationPromptIdeas": {
     "idea1": "A professional executive with neatly styled short brown hair wearing a tailored navy business suit and light blue shirt, standing confidently in a modern high-rise office with floor-to-ceiling windows overlooking a city skyline, soft natural lighting highlighting their determined expression, ultra-realistic 4K detail",

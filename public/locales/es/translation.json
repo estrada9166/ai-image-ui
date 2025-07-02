@@ -146,10 +146,18 @@
       "model1": "Modelo 1 (Mejor para productos)",
       "model2": "Modelo 2 (Mejor para personajes)"
     },
-    "promptIdeas": "Ideas de Prompt",
+    "promptIdeas": "Ideas de Prompts",
     "clear": "Limpiar",
     "generatingMagic": "Generando Magia...",
-    "yourCreations": "Tus Creaciones"
+    "yourCreations": "Tus Creaciones",
+    "placeholders": {
+      "selectCreationType": "Seleccionar tipo de creación",
+      "selectGender": "Seleccionar género",
+      "selectAge": "Seleccionar edad",
+      "selectModel": "Seleccionar modelo",
+      "selectAspectRatio": "Seleccionar relación de aspecto",
+      "selectCameraType": "Seleccionar tipo de cámara"
+    }
   },
   "imageCreationPromptIdeas": {
     "idea1": "Un ejecutivo profesional con cabello corto castaño bien peinado, vistiendo un traje de negocios azul marino a medida y camisa azul claro, de pie con confianza en una oficina moderna de gran altura con ventanas del suelo al techo con vista al horizonte de la ciudad, iluminación natural suave resaltando su expresión determinada, detalle ultra-realista en 4K",
